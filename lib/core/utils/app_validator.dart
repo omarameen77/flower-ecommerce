@@ -62,11 +62,13 @@ class AppValidator {
 
   //  Egyptian Phone
   static String? phone(BuildContext context, String? value) {
-    final v = AppValidation.value(value);
+    final v = value?.trim() ?? '';
 
-    if (v.isEmpty) return context.phoneRequired;
+    if (v.isEmpty) {
+      return context.phoneRequired;
+    }
 
-    final regex = RegExp(r'^01[0-2,5]{1}[0-9]{8}$');
+    final regex = RegExp(r'^01[0-9]{9}$');
 
     if (!regex.hasMatch(v)) {
       return context.invalidPhone;

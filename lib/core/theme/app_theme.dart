@@ -6,17 +6,23 @@ class AppTheme {
 
   static ThemeData get lightTheme => ThemeData(
     scaffoldBackgroundColor: AppColors.background,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.background,
+      elevation: 0,
+      foregroundColor: AppColors.textPrimary,
+      centerTitle: false,
+    ),
 
     colorScheme: const ColorScheme(
-      primary: AppColors.grey900,
+      primary: AppColors.primary,
       brightness: Brightness.light,
       onPrimary: AppColors.textWhite,
       secondary: AppColors.primaryLight,
       onSecondary: AppColors.textWhite,
       error: AppColors.error,
-      onError: AppColors.error,
+      onError: AppColors.textWhite,
       surface: AppColors.surface,
-      onSurface: AppColors.grey900,
+      onSurface: AppColors.textPrimary,
     ),
 
     // Divider
@@ -24,32 +30,46 @@ class AppTheme {
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.surface,
+      fillColor: AppColors.background,
       floatingLabelBehavior: FloatingLabelBehavior.always,
 
       hintStyle: const TextStyle(color: AppColors.textHint),
+      floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
+        if (states.contains(WidgetState.error)) {
+          return const TextStyle(color: AppColors.error);
+        }
+        if (states.contains(WidgetState.focused)) {
+          return const TextStyle(color: AppColors.textSecondary);
+        }
+        return const TextStyle(color: AppColors.textSecondary);
+      }),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: const BorderSide(color: AppColors.error),
+      ),
 
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: AppColors.textSecondary),
       ),
 
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: AppColors.textSecondary),
       ),
 
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: AppColors.textSecondary),
       ),
 
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: AppColors.error),
       ),
+      errorStyle: TextStyle(color: AppColors.error, fontSize: 12),
     ),
 
     //  Buttons

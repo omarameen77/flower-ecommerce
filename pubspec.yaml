@@ -39,6 +39,7 @@ dependencies:
 
   # Localization
   easy_localization: ^3.0.8
+  equatable: ^2.0.8
 
 
 dev_dependencies:
