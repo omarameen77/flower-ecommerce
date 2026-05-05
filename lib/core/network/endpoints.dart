@@ -1,4 +1,5 @@
 class AuthEndPoint {
+  static const baseUrl = "https://flower.elevateegy.com/api/v1";
   static const signIn = "/auth/signin";
   static const signUp = "/auth/signup";
 

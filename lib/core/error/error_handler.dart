@@ -22,8 +22,7 @@ class ErrorHandler {
 
         case DioExceptionType.badResponse:
           return Failure(
-            message:
-                error.response?.data["message"] ?? ErrorMassage.serverError,
+            message: error.response?.data["error"] ?? ErrorMassage.serverError,
           );
 
         case DioExceptionType.connectionError:
