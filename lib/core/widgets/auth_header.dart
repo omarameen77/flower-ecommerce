@@ -27,6 +27,7 @@ class AuthHeader extends StatelessWidget {
         AppSizedBox(height: AppSize.s10),
         Text(
           subtitle,
+          textAlign: TextAlign.center,
           style: getRegularStyle(
             context: context,
             fontSize: FontSizeManager.s14,

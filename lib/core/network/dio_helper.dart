@@ -15,7 +15,7 @@ class DioHelper {
         responseType: ResponseType.json,
         headers: {"Content-Type": "application/json"},
         validateStatus: (status) {
-          return status != null && status < 500;
+          return status != null && status < 400;
         },
       ),
     );

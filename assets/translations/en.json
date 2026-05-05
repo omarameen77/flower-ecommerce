@@ -37,6 +37,7 @@
     "verification_code_subtitle": "Please enter your code that send to your email address",
 
     "didnt_receive_code": "Didn't receive code?",
+    "code_sent_again": "Code sent again",
 
     "reset_password": "Reset password",
     "reset_password_condition": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
