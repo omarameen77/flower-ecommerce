@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_api.dart';
+part of 'auth_api_client.dart';
 
 // dart format off
 
@@ -10,8 +10,8 @@ part of 'auth_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
-class _AuthApi implements AuthApi {
-  _AuthApi(this._dio, {this.baseUrl, this.errorLogger});
+class _AuthApiClient implements AuthApiClient {
+  _AuthApiClient(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
