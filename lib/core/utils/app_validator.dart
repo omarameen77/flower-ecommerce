@@ -68,10 +68,10 @@ class AppValidator {
       return context.phoneRequired;
     }
 
-    final regex = RegExp(r'^01[0-9]{9}$');
+    final regex = RegExp(r'^\+\d{10,15}$');
 
     if (!regex.hasMatch(v)) {
-      return context.invalidPhone;
+      return context.phoneFormatHint;
     }
 
     return null;

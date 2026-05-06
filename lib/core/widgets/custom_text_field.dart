@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String? hintText;
   final String? labelText;
   final bool readOnly;
@@ -26,16 +26,39 @@ class CustomTextField extends StatelessWidget {
   });
 
   @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool obscureText = true;
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      validator: validator,
-      autovalidateMode: autovalidateMode,
-      obscureText: isPassword,
-      keyboardType: keyboardType,
-      readOnly: readOnly,
-      onChanged: onChanged,
-      decoration: InputDecoration(labelText: labelText, hintText: hintText),
+      controller: widget.controller,
+      validator: widget.validator,
+      autovalidateMode: widget.autovalidateMode,
+      obscureText: widget.isPassword ? obscureText : false,
+
+      keyboardType: widget.keyboardType,
+      readOnly: widget.readOnly,
+      onChanged: widget.onChanged,
+      decoration: InputDecoration(
+        labelText: widget.labelText,
+        hintText: widget.hintText,
+        suffixIcon: widget.isPassword
+            ? IconButton(
+                icon: Icon(
+                  obscureText ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+              )
+            : null,
+      ),
     );
   }
 }
