@@ -32,7 +32,7 @@ class AppTheme {
       filled: true,
       fillColor: AppColors.background,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-
+      suffixIconColor: AppColors.textSecondary,
       hintStyle: const TextStyle(color: AppColors.textHint),
       floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
         if (states.contains(WidgetState.error)) {
