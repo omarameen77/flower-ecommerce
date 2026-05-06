@@ -14,9 +14,6 @@ class DioHelper {
         receiveTimeout: const Duration(seconds: 30),
         responseType: ResponseType.json,
         headers: {"Content-Type": "application/json"},
-        validateStatus: (status) {
-          return status != null && status < 500;
-        },
       ),
     );
 
