@@ -1,10 +1,5 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/core/network/safe_api_caller.dart';
-import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/data_sources/auth_remote_data_source.dart';
-import 'package:flower/features/auth/data/models/request/forget_password_request.dart';
-import 'package:flower/features/auth/data/models/request/reset_password_request.dart';
-import 'package:flower/features/auth/data/models/request/verify_reset_code_request.dart';
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart';
 import 'package:flower/features/auth/data/models/response/reset_password_response.dart';
 import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart';
@@ -12,28 +7,31 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRemoteDs)
 class AuthRemoteDsImpl implements AuthRemoteDs {
-  final AuthApiClient _api;
-  final SafeApiCaller _safeApiCaller;
+  AuthRemoteDsImpl();
 
-  AuthRemoteDsImpl(this._api, this._safeApiCaller);
+  static const _fakeDelay = Duration(milliseconds: 500);
 
   @override
   Future<BaseResponse<ForgetPasswordResponseDto>> forgetPassword({
     required String email,
-  }) {
-    return _safeApiCaller.safeCall(
-      () => _api.forgotPassword(ForgetPasswordRequestDto(email: email)),
+  }) async {
+    await Future.delayed(_fakeDelay);
+    return SuccessBaseResponse(
+      data: ForgetPasswordResponseDto(
+        message: 'Code sent (static)',
+        info: 'check email (static)',
+      ),
     );
   }
 
   @override
   Future<BaseResponse<VerifyResetCodeResponseDto>> verifyResetCode({
     required String resetCode,
-  }) {
-    return _safeApiCaller.safeCall(
-      () => _api.verifyResetCode(
-        VerifyResetCodeRequestDto(resetCode: resetCode),
-      ),
+  }) async {
+    await Future.delayed(_fakeDelay);
+    final ok = resetCode == '1234';
+    return SuccessBaseResponse(
+      data: VerifyResetCodeResponseDto(status: ok ? 'Success' : 'Fail'),
     );
   }
 
@@ -41,10 +39,12 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
   Future<BaseResponse<ResetPasswordResponseDto>> resetPassword({
     required String email,
     required String newPassword,
-  }) {
-    return _safeApiCaller.safeCall(
-      () => _api.resetPassword(
-        ResetPasswordRequestDto(email: email, newPassword: newPassword),
+  }) async {
+    await Future.delayed(_fakeDelay);
+    return SuccessBaseResponse(
+      data: ResetPasswordResponseDto(
+        message: 'Password reset (static)',
+        token: 'fake-token',
       ),
     );
   }
