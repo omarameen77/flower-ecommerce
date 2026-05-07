@@ -49,12 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final String password = passwordController.text;
     final String phone = phoneController.text;
 
-    // check if not empty
-    if (firstName.isNotEmpty &&
-        lastName.isNotEmpty &&
-        email.isNotEmpty &&
-        password.isNotEmpty) {
-      // register
+    // register
       context.read<RegisterCubit>().doEvent(
         Register(
           firstName: firstName,
@@ -66,11 +61,6 @@ class _RegisterPageState extends State<RegisterPage> {
           gender: context.read<RegisterCubit>().state.selectedGender,
         ),
       );
-    }
-    // fields are empty => display error
-    else {
-      CustomSnackBar.error(context, context.requiredField);
-    }
   }
 
   @override
