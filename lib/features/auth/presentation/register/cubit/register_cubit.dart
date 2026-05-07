@@ -2,7 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user_entity.dart';
-import 'package:flower/features/auth/domain/usecases/register_usecase.dart';
+import 'package:flower/features/auth/domain/usecases/register_use_case.dart';
 import 'register_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -13,10 +13,9 @@ part 'register_state.dart';
 
 @injectable
 class RegisterCubit extends Cubit<RegisterState> {
-  final RegisterUsecase _registerUsecase;
+  final RegisterUseCase _registerUseCase;
 
-  RegisterCubit(this._registerUsecase)
-      : super(RegisterState(registerState: BaseState()));
+  RegisterCubit(this._registerUseCase) : super(const RegisterState());
 
   void doEvent(RegisterEvent event) {
     switch (event) {
@@ -33,7 +32,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       emit(state.copyWith(registerState: BaseState(isLoading: true)));
 
-      final result = await _registerUsecase.call(
+      final result = await _registerUseCase.call(
         RegisterParams(
           firstName: event.firstName,
           lastName: event.lastName,

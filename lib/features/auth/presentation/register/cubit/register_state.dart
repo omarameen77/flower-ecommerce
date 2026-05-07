@@ -6,7 +6,7 @@ class RegisterState extends Equatable {
   final String selectedGender;
 
   const RegisterState({
-    required this.registerState,
+    this.registerState = const BaseState(),
     this.selectedGender = '',
   });
 
