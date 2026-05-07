@@ -1,6 +1,10 @@
+import 'package:flower/core/localization_constants/auth_constants.dart';
+import 'package:flower/core/resources/app_svgs.dart';
+import 'package:flower/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../cubit/app_sections_cubit.dart';
 
 class AppSectionsPage extends StatelessWidget {
@@ -9,7 +13,7 @@ class AppSectionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppSectionsCubit(),
+      create: (_) => AppSectionsCubit(),
       child: const _AppSectionsView(),
     );
   }
@@ -18,75 +22,60 @@ class AppSectionsPage extends StatelessWidget {
 class _AppSectionsView extends StatelessWidget {
   const _AppSectionsView();
 
+  List<_BottomNavItem> _items(BuildContext context) {
+    return [
+      _BottomNavItem(
+        label: context.home,
+        icon: AppSvgs.home,
+      ),
+      _BottomNavItem(
+        label: context.category,
+        icon: AppSvgs.category,
+      ),
+      _BottomNavItem(
+        label: context.cart,
+        icon: AppSvgs.cart,
+      ),
+      _BottomNavItem(
+        label: context.profile,
+        icon: AppSvgs.profile,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AppSectionsCubit>();
     return BlocBuilder<AppSectionsCubit, AppSectionsState>(
       builder: (context, state) {
+        final cubit = context.read<AppSectionsCubit>();
+        final currentIndex = state is AppSectionsChanged ? state.currentIndex : 0;
+
         return Scaffold(
           body: IndexedStack(
-            index: cubit.currentIndex,
-            children: const [
-              _PlaceholderScreen(title: 'Home'),
-              _PlaceholderScreen(title: 'Categories'),
-              _PlaceholderScreen(title: 'Cart'),
-              _PlaceholderScreen(title: 'Profile'),
+            index: currentIndex,
+            children: [
+              _PlaceholderScreen(title: context.home),
+              _PlaceholderScreen(title: context.category),
+              _PlaceholderScreen(title: context.cart),
+              _PlaceholderScreen(title: context.profile),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
-            currentIndex: cubit.currentIndex,
+            currentIndex: currentIndex,
             onTap: cubit.changeSection,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Theme.of(context).primaryColor,
-            unselectedItemColor: Colors.grey,
-            showUnselectedLabels: true,
-            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
-            items: [
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/home.svg', colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)),
+            items: _items(context).map((item) {
+              return BottomNavigationBarItem(
+                label: item.label,
+                icon: _NavBarIcon(
+                  assetName: item.icon,
+                  isSelected: false,
                 ),
-                activeIcon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/home.svg', colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
+                activeIcon: _NavBarIcon(
+                  assetName: item.icon,
+                  isSelected: true,
                 ),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/category.svg', colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)),
-                ),
-                activeIcon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/category.svg', colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
-                ),
-                label: 'Categories',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/shopping_cart.svg', colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)),
-                ),
-                activeIcon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/shopping_cart.svg', colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
-                ),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/profile.svg', colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)),
-                ),
-                activeIcon: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: SvgPicture.asset('assets/svgs/profile.svg', colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
-                ),
-                label: 'Profile',
-              ),
-            ],
+              );
+            }).toList(),
           ),
         );
       },
@@ -94,16 +83,64 @@ class _AppSectionsView extends StatelessWidget {
   }
 }
 
+class _NavBarIcon extends StatelessWidget {
+  final String assetName;
+  final bool isSelected;
+
+  const _NavBarIcon({
+    required this.assetName,
+    required this.isSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedColor =
+        Theme.of(context).bottomNavigationBarTheme.selectedItemColor;
+
+    final unselectedColor =
+        Theme.of(context).bottomNavigationBarTheme.unselectedItemColor;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: SvgPicture.asset(
+        assetName,
+        colorFilter: ColorFilter.mode(
+          isSelected
+              ? (selectedColor ?? Theme.of(context).primaryColor)
+              : (unselectedColor ?? AppColors.grey700),
+          BlendMode.srcIn,
+        ),
+      ),
+    );
+  }
+}
+
+class _BottomNavItem {
+  final String label;
+  final String icon;
+
+  const _BottomNavItem({
+    required this.label,
+    required this.icon,
+  });
+}
+
 class _PlaceholderScreen extends StatelessWidget {
   final String title;
-  const _PlaceholderScreen({required this.title});
+
+  const _PlaceholderScreen({
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
         title,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
