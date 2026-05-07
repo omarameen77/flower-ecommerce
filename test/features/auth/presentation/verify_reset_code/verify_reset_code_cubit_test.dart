@@ -1,78 +1,96 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
-import 'package:flower/features/auth/domain/models/verify_reset_code_entity.dart';
-import 'package:flower/features/auth/domain/usecase/forget_password_use_case.dart';
-import 'package:flower/features/auth/domain/usecase/verify_reset_code_use_case.dart';
-import 'package:flower/features/auth/presentation/verify_reset_code/view_model/verify_reset_code_cubit.dart';
-import 'package:flower/features/auth/presentation/verify_reset_code/view_model/verify_reset_code_state.dart';
+import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
+import 'package:flower/features/auth/domain/usecases/forget_password_usecase.dart';
+import 'package:flower/features/auth/domain/usecases/verify_reset_code_usecase.dart';
+import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
+import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_intents.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class _MockVerifyUseCase extends Mock implements VerifyResetCodeUseCase {}
+import 'verify_reset_code_cubit_test.mocks.dart';
 
-class _MockForgetUseCase extends Mock implements ForgetPasswordUseCase {}
-
+@GenerateMocks([VerifyResetCodeUseCase, ForgetPasswordUseCase])
 void main() {
-  late _MockVerifyUseCase verifyUseCase;
-  late _MockForgetUseCase forgetUseCase;
+  late MockVerifyResetCodeUseCase verifyUseCase;
+  late MockForgetPasswordUseCase forgetUseCase;
+
+  setUpAll(() {
+    provideDummy<BaseResponse<VerifyResetCodeEntity>>(
+      ErrorBaseResponse<VerifyResetCodeEntity>(failure: Failure(message: '')),
+    );
+    provideDummy<BaseResponse<ForgetPasswordEntity>>(
+      ErrorBaseResponse<ForgetPasswordEntity>(failure: Failure(message: '')),
+    );
+  });
 
   setUp(() {
-    verifyUseCase = _MockVerifyUseCase();
-    forgetUseCase = _MockForgetUseCase();
+    verifyUseCase = MockVerifyResetCodeUseCase();
+    forgetUseCase = MockForgetPasswordUseCase();
   });
 
   VerifyResetCodeCubit buildCubit() =>
       VerifyResetCodeCubit(verifyUseCase, forgetUseCase);
 
-  blocTest<VerifyResetCodeCubit, VerifyResetCodeState>(
-    'emits success when code is valid',
-    build: () {
-      when(() => verifyUseCase(resetCode: any(named: 'resetCode'))).thenAnswer(
-        (_) async => SuccessBaseResponse(
-          data: const VerifyResetCodeEntity(status: 'Success'),
-        ),
-      );
-      return buildCubit();
-    },
-    act: (cubit) => cubit.verify('123456'),
-    expect: () => [
-      isA<VerifyResetCodeState>().having((s) => s.isLoading, 'loading', true),
-      isA<VerifyResetCodeState>().having((s) => s.data, 'data', isNotNull),
-    ],
-  );
+  test('emits success when code is valid', () async {
+    when(verifyUseCase(resetCode: anyNamed('resetCode'))).thenAnswer(
+      (_) async => SuccessBaseResponse(
+        data: const VerifyResetCodeEntity(status: 'Success'),
+      ),
+    );
+    final cubit = buildCubit();
 
-  blocTest<VerifyResetCodeCubit, VerifyResetCodeState>(
-    'emits hasError when status is not Success',
-    build: () {
-      when(() => verifyUseCase(resetCode: any(named: 'resetCode'))).thenAnswer(
-        (_) async => SuccessBaseResponse(
-          data: const VerifyResetCodeEntity(status: 'Fail'),
-        ),
-      );
-      return buildCubit();
-    },
-    act: (cubit) => cubit.verify('000000'),
-    expect: () => [
-      isA<VerifyResetCodeState>().having((s) => s.isLoading, 'loading', true),
-      isA<VerifyResetCodeState>().having((s) => s.hasError, 'hasError', true),
-    ],
-  );
+    final expectation = expectLater(
+      cubit.stream,
+      emitsInOrder([
+        isA<VerifyResetCodeState>().having((s) => s.isLoading, 'loading', true),
+        isA<VerifyResetCodeState>().having((s) => s.data, 'data', isNotNull),
+      ]),
+    );
 
-  blocTest<VerifyResetCodeCubit, VerifyResetCodeState>(
-    'emits hasError on failure',
-    build: () {
-      when(() => verifyUseCase(resetCode: any(named: 'resetCode'))).thenAnswer(
-        (_) async => ErrorBaseResponse(failure: Failure(message: 'net')),
-      );
-      return buildCubit();
-    },
-    act: (cubit) => cubit.verify('000000'),
-    expect: () => [
-      isA<VerifyResetCodeState>().having((s) => s.isLoading, 'loading', true),
-      isA<VerifyResetCodeState>()
-          .having((s) => s.hasError, 'hasError', true)
-          .having((s) => s.errorMessage, 'errorMessage', 'net'),
-    ],
-  );
+    cubit.doIntent(const VerifyIntent('123456'));
+    await expectation;
+  });
+
+  test('emits hasError when status is not Success', () async {
+    when(verifyUseCase(resetCode: anyNamed('resetCode'))).thenAnswer(
+      (_) async => SuccessBaseResponse(
+        data: const VerifyResetCodeEntity(status: 'Fail'),
+      ),
+    );
+    final cubit = buildCubit();
+
+    final expectation = expectLater(
+      cubit.stream,
+      emitsInOrder([
+        isA<VerifyResetCodeState>().having((s) => s.isLoading, 'loading', true),
+        isA<VerifyResetCodeState>().having((s) => s.hasError, 'hasError', true),
+      ]),
+    );
+
+    cubit.doIntent(const VerifyIntent('000000'));
+    await expectation;
+  });
+
+  test('emits hasError on failure', () async {
+    when(verifyUseCase(resetCode: anyNamed('resetCode'))).thenAnswer(
+      (_) async => ErrorBaseResponse(failure: Failure(message: 'net')),
+    );
+    final cubit = buildCubit();
+
+    final expectation = expectLater(
+      cubit.stream,
+      emitsInOrder([
+        isA<VerifyResetCodeState>().having((s) => s.isLoading, 'loading', true),
+        isA<VerifyResetCodeState>()
+            .having((s) => s.hasError, 'hasError', true)
+            .having((s) => s.errorMessage, 'errorMessage', 'net'),
+      ]),
+    );
+
+    cubit.doIntent(const VerifyIntent('000000'));
+    await expectation;
+  });
 }

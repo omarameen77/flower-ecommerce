@@ -1,40 +1,50 @@
-import 'package:bloc_test/bloc_test.dart';
-import 'package:flower/features/auth/domain/usecase/reset_password_use_case.dart';
-import 'package:flower/features/auth/presentation/reset_password/view_model/reset_password_cubit.dart';
-import 'package:flower/features/auth/presentation/reset_password/view_model/reset_password_state.dart';
+import 'package:flower/features/auth/domain/usecases/reset_password_usecase.dart';
+import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
+import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_intents.dart';
+import 'package:mockito/annotations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class _MockUseCase extends Mock implements ResetPasswordUseCase {}
+import 'reset_password_cubit_test.mocks.dart';
 
+@GenerateMocks([ResetPasswordUseCase])
 void main() {
-  late _MockUseCase useCase;
+  late MockResetPasswordUseCase useCase;
 
-  setUp(() => useCase = _MockUseCase());
+  setUp(() => useCase = MockResetPasswordUseCase());
 
-  blocTest<ResetPasswordCubit, ResetPasswordState>(
-    'togglePasswordVisibility flips isObscurePassword',
-    build: () => ResetPasswordCubit(useCase),
-    act: (cubit) => cubit.togglePasswordVisibility(),
-    expect: () => [
-      isA<ResetPasswordState>().having(
-        (s) => s.isObscurePassword,
-        'isObscurePassword',
-        false,
+  test('togglePasswordVisibility flips isObscurePassword', () async {
+    final cubit = ResetPasswordCubit(useCase);
+
+    final expectation = expectLater(
+      cubit.stream,
+      emits(
+        isA<ResetPasswordState>().having(
+          (s) => s.isObscurePassword,
+          'isObscurePassword',
+          false,
+        ),
       ),
-    ],
-  );
+    );
 
-  blocTest<ResetPasswordCubit, ResetPasswordState>(
-    'toggleConfirmVisibility flips isObscureConfirm',
-    build: () => ResetPasswordCubit(useCase),
-    act: (cubit) => cubit.toggleConfirmVisibility(),
-    expect: () => [
-      isA<ResetPasswordState>().having(
-        (s) => s.isObscureConfirm,
-        'isObscureConfirm',
-        false,
+    cubit.doIntent(ResetPasswordIntent.togglePasswordVisibility);
+    await expectation;
+  });
+
+  test('toggleConfirmVisibility flips isObscureConfirm', () async {
+    final cubit = ResetPasswordCubit(useCase);
+
+    final expectation = expectLater(
+      cubit.stream,
+      emits(
+        isA<ResetPasswordState>().having(
+          (s) => s.isObscureConfirm,
+          'isObscureConfirm',
+          false,
+        ),
       ),
-    ],
-  );
+    );
+
+    cubit.doIntent(ResetPasswordIntent.toggleConfirmVisibility);
+    await expectation;
+  });
 }

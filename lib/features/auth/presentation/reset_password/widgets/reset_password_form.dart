@@ -4,8 +4,8 @@ import 'package:flower/core/utils/app_validator.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/auth_header.dart';
 import 'package:flower/core/widgets/primary_button.dart';
-import 'package:flower/features/auth/presentation/reset_password/view_model/reset_password_cubit.dart';
-import 'package:flower/features/auth/presentation/reset_password/view_model/reset_password_state.dart';
+import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
+import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_intents.dart';
 import 'package:flower/features/auth/presentation/reset_password/widgets/password_field.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +52,8 @@ class ResetPasswordForm extends StatelessWidget {
       label: context.newPassword,
       hint: context.enterNewPassword,
       isObscure: state.isObscurePassword,
-      onToggle: cubit.togglePasswordVisibility,
+      onToggle: () =>
+          cubit.doIntent(ResetPasswordIntent.togglePasswordVisibility),
       validator: (v) => AppValidator.password(context, v),
     );
   }
@@ -63,7 +64,8 @@ class ResetPasswordForm extends StatelessWidget {
       label: context.confirmPassword,
       hint: context.confirmPassword,
       isObscure: state.isObscureConfirm,
-      onToggle: cubit.toggleConfirmVisibility,
+      onToggle: () =>
+          cubit.doIntent(ResetPasswordIntent.toggleConfirmVisibility),
       validator: (v) => AppValidator.confirmPassword(
         context,
         v,
@@ -78,7 +80,11 @@ class ResetPasswordForm extends StatelessWidget {
     }
     return PrimaryButton(
       text: context.confirm,
-      onTap: () => cubit.submit(email: email),
+      onTap: () {
+        if (cubit.formKey.currentState?.validate() ?? false) {
+          cubit.doIntent(SubmitResetPasswordIntent(email));
+        }
+      },
     );
   }
 }

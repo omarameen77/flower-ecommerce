@@ -1,7 +1,7 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/safe_api_caller.dart';
 import 'package:flower/features/auth/api/auth_api.dart';
-import 'package:flower/features/auth/data/data_sources/auth_remote_ds.dart';
+import 'package:flower/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:flower/features/auth/data/models/request/forget_password_request.dart';
 import 'package:flower/features/auth/data/models/request/reset_password_request.dart';
 import 'package:flower/features/auth/data/models/request/verify_reset_code_request.dart';

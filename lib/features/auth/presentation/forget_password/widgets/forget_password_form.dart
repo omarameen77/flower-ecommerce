@@ -5,7 +5,8 @@ import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/auth_header.dart';
 import 'package:flower/core/widgets/custom_text_field.dart';
 import 'package:flower/core/widgets/primary_button.dart';
-import 'package:flower/features/auth/presentation/forget_password/view_model/forget_password_cubit.dart';
+import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
+import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_intents.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPasswordForm extends StatelessWidget {
@@ -41,7 +42,14 @@ class ForgetPasswordForm extends StatelessWidget {
           const AppSizedBox(height: AppSize.s50),
           isLoading
               ? const Center(child: CircularProgressIndicator())
-              : PrimaryButton(text: context.confirm, onTap: cubit.submit),
+              : PrimaryButton(
+                  text: context.confirm,
+                  onTap: () {
+                    if (cubit.formKey.currentState?.validate() ?? false) {
+                      cubit.doIntent(ForgetPasswordIntent.submit);
+                    }
+                  },
+                ),
         ],
       ),
     );

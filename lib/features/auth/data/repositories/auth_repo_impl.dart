@@ -1,9 +1,9 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/features/auth/data/data_sources/auth_remote_ds.dart';
-import 'package:flower/features/auth/domain/models/forget_password_entity.dart';
-import 'package:flower/features/auth/domain/models/reset_password_entity.dart';
-import 'package:flower/features/auth/domain/models/verify_reset_code_entity.dart';
-import 'package:flower/features/auth/domain/repos/auth_repo.dart';
+import 'package:flower/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
+import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRepo)

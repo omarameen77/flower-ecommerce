@@ -1,4 +1,4 @@
-import 'package:flower/features/auth/domain/models/verify_reset_code_entity.dart';
+import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'verify_reset_code_response.g.dart';
 

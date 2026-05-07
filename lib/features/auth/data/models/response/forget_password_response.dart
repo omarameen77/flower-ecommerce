@@ -1,4 +1,4 @@
-import 'package:flower/features/auth/domain/models/forget_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'forget_password_response.g.dart';
 

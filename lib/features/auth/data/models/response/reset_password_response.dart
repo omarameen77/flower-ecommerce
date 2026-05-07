@@ -1,4 +1,4 @@
-import 'package:flower/features/auth/domain/models/reset_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'reset_password_response.g.dart';
 

@@ -1,26 +1,42 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
-import 'package:flower/features/auth/domain/models/verify_reset_code_entity.dart';
-import 'package:flower/features/auth/domain/repos/auth_repo.dart';
-import 'package:flower/features/auth/domain/usecase/verify_reset_code_use_case.dart';
+import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
+import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
+import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
+import 'package:flower/features/auth/domain/usecases/verify_reset_code_usecase.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class _MockRepo extends Mock implements AuthRepo {}
+import 'verify_reset_code_use_case_test.mocks.dart';
 
+@GenerateMocks([AuthRepo])
 void main() {
-  late _MockRepo repo;
+  late MockAuthRepo repo;
   late VerifyResetCodeUseCase useCase;
 
+  setUpAll(() {
+    provideDummy<BaseResponse<ForgetPasswordEntity>>(
+      ErrorBaseResponse<ForgetPasswordEntity>(failure: Failure(message: '')),
+    );
+    provideDummy<BaseResponse<VerifyResetCodeEntity>>(
+      ErrorBaseResponse<VerifyResetCodeEntity>(failure: Failure(message: '')),
+    );
+    provideDummy<BaseResponse<ResetPasswordEntity>>(
+      ErrorBaseResponse<ResetPasswordEntity>(failure: Failure(message: '')),
+    );
+  });
+
   setUp(() {
-    repo = _MockRepo();
+    repo = MockAuthRepo();
     useCase = VerifyResetCodeUseCase(repo);
   });
 
   test('returns success when repo returns valid status', () async {
     const entity = VerifyResetCodeEntity(status: 'Success');
     when(
-      () => repo.verifyResetCode(resetCode: '123456'),
+      repo.verifyResetCode(resetCode: anyNamed('resetCode')),
     ).thenAnswer((_) async => SuccessBaseResponse(data: entity));
 
     final result = await useCase(resetCode: '123456');
@@ -31,7 +47,7 @@ void main() {
 
   test('returns error when repo fails', () async {
     when(
-      () => repo.verifyResetCode(resetCode: any(named: 'resetCode')),
+      repo.verifyResetCode(resetCode: anyNamed('resetCode')),
     ).thenAnswer(
       (_) async => ErrorBaseResponse(failure: Failure(message: 'bad code')),
     );

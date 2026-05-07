@@ -1,6 +1,6 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/features/auth/domain/models/reset_password_entity.dart';
-import 'package:flower/features/auth/domain/repos/auth_repo.dart';
+import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
+import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
