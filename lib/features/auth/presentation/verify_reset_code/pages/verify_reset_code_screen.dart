@@ -4,7 +4,8 @@ import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/auth_header.dart';
-import 'package:flower/core/widgets/custom_app_bar.dart';
+import 'package:flower/core/widgets/app_loading_widget.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_intents.dart';
@@ -21,7 +22,7 @@ class VerifyResetCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: context.password),
+      appBar: CustomAppBar(title: context.password),
       body: BlocConsumer<VerifyResetCodeCubit, VerifyResetCodeState>(
         listener: (context, state) => _onStateChanged(context, state),
         builder: (context, state) => _buildBody(context, state),
@@ -77,7 +78,7 @@ class VerifyResetCodeScreen extends StatelessWidget {
             ],
             const AppSizedBox(height: AppSize.s24),
             if (state.isLoading)
-              const Center(child: CircularProgressIndicator())
+              const AppLoadingWidget()
             else
               ResendCodeRow(
                 onResend: () => context

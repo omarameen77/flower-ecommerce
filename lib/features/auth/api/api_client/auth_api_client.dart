@@ -12,11 +12,11 @@ import 'package:flower/features/auth/data/models/response/reset_password_respons
 import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart';
 import 'package:retrofit/retrofit.dart';
 
-part 'auth_api.g.dart';
+part 'auth_api_client.g.dart';
 
 @RestApi()
-abstract class AuthApi {
-  factory AuthApi(Dio dio, {String baseUrl}) = _AuthApi;
+abstract class AuthApiClient {
+  factory AuthApiClient(Dio dio, {String baseUrl}) = _AuthApiClient;
 
   @POST(AuthEndPoint.signIn)
   Future<LoginResponseDto> login(@Body() LoginRequestDto request);

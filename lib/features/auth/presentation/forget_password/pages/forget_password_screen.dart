@@ -1,7 +1,7 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
-import 'package:flower/core/widgets/custom_app_bar.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:flower/features/auth/presentation/forget_password/widgets/forget_password_form.dart';
@@ -14,7 +14,7 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: context.password),
+      appBar: CustomAppBar(title: context.password),
       body: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
         listener: _onStateChanged,
         builder: (context, state) {

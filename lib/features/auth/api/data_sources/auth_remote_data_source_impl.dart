@@ -1,6 +1,6 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/safe_api_caller.dart';
-import 'package:flower/features/auth/api/auth_api.dart';
+import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:flower/features/auth/data/models/request/forget_password_request.dart';
 import 'package:flower/features/auth/data/models/request/reset_password_request.dart';
@@ -12,7 +12,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRemoteDs)
 class AuthRemoteDsImpl implements AuthRemoteDs {
-  final AuthApi _api;
+  final AuthApiClient _api;
   final SafeApiCaller _safeApiCaller;
 
   AuthRemoteDsImpl(this._api, this._safeApiCaller);

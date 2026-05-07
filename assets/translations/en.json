@@ -66,6 +66,17 @@
     "invalid_phone": "Please enter a valid Egyptian phone number",
 
     "code_required": "Code is required",
-    "invalid_code": "Code must be 6 digits"
-  }
+    "invalid_code": "Code must be 6 digits",
+    "invalidPhone": "Invalid phone number",
+    "phone_format_hint": "Format: +[country code][number] (e.g., +201202222222)"
+  },
+  "error_massages":{
+  "noInternet": "No internet connection. Please check your network and try again.",
+  "connectionTimeout": "Connection timed out. Please try again.",
+  "sendTimeout": "Request took too long to send. Try again.",
+  "receiveTimeout": "Server is taking too long to respond. Please try again.",
+  "serverError": "Something went wrong on our side. Please try again later.",
+  "unexpectedError": "An unexpected error occurred. Please try again.",
+  "unknownError": "Something went wrong. Please try again."
+}
 }

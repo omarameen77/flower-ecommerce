@@ -87,4 +87,5 @@ extension AuthConstants on BuildContext {
   //  OTP / Code
   String get codeRequired => "validation.code_required".tr();
   String get invalidCodeVal => "validation.invalid_code".tr();
+  String get phoneFormatHint => "validation.phone_format_hint".tr();
 }

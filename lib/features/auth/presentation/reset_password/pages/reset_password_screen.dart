@@ -1,7 +1,7 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
-import 'package:flower/core/widgets/custom_app_bar.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
 import 'package:flower/features/auth/presentation/reset_password/widgets/reset_password_form.dart';
@@ -15,7 +15,7 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: context.password),
+      appBar: CustomAppBar(title: context.password),
       body: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
         listener: _onStateChanged,
         builder: (context, state) => _buildBody(context, state),

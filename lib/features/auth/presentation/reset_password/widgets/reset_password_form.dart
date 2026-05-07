@@ -3,10 +3,11 @@ import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/utils/app_validator.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/auth_header.dart';
+import 'package:flower/core/widgets/button_loading_widget.dart';
+import 'package:flower/core/widgets/custom_text_field.dart';
 import 'package:flower/core/widgets/primary_button.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_intents.dart';
-import 'package:flower/features/auth/presentation/reset_password/widgets/password_field.dart';
 import 'package:flutter/material.dart';
 
 class ResetPasswordForm extends StatelessWidget {
@@ -35,9 +36,25 @@ class ResetPasswordForm extends StatelessWidget {
               subtitle: context.resetPasswordCondition,
             ),
             const AppSizedBox(height: AppSize.s28),
-            _buildPasswordField(context),
+            CustomTextField(
+              controller: cubit.passwordController,
+              labelText: context.newPassword,
+              hintText: context.enterNewPassword,
+              isPassword: true,
+              validator: (v) => AppValidator.password(context, v),
+            ),
             const AppSizedBox(height: AppSize.s28),
-            _buildConfirmField(context),
+            CustomTextField(
+              controller: cubit.confirmPasswordController,
+              labelText: context.confirmPassword,
+              hintText: context.confirmPassword,
+              isPassword: true,
+              validator: (v) => AppValidator.confirmPassword(
+                context,
+                v,
+                cubit.passwordController.text,
+              ),
+            ),
             const AppSizedBox(height: AppSize.s50),
             _buildSubmit(context),
           ],
@@ -46,38 +63,8 @@ class ResetPasswordForm extends StatelessWidget {
     );
   }
 
-  Widget _buildPasswordField(BuildContext context) {
-    return PasswordField(
-      controller: cubit.passwordController,
-      label: context.newPassword,
-      hint: context.enterNewPassword,
-      isObscure: state.isObscurePassword,
-      onToggle: () =>
-          cubit.doIntent(ResetPasswordIntent.togglePasswordVisibility),
-      validator: (v) => AppValidator.password(context, v),
-    );
-  }
-
-  Widget _buildConfirmField(BuildContext context) {
-    return PasswordField(
-      controller: cubit.confirmPasswordController,
-      label: context.confirmPassword,
-      hint: context.confirmPassword,
-      isObscure: state.isObscureConfirm,
-      onToggle: () =>
-          cubit.doIntent(ResetPasswordIntent.toggleConfirmVisibility),
-      validator: (v) => AppValidator.confirmPassword(
-        context,
-        v,
-        cubit.passwordController.text,
-      ),
-    );
-  }
-
   Widget _buildSubmit(BuildContext context) {
-    if (state.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    if (state.isLoading) return const ButtonLoadingWidget();
     return PrimaryButton(
       text: context.confirm,
       onTap: () {

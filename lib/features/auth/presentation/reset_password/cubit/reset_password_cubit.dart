@@ -21,12 +21,6 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
 
   void doIntent(ResetPasswordIntent intent) {
     switch (intent.runtimeType) {
-      case TogglePasswordVisibilityIntent:
-        emit(state.copyWith(isObscurePassword: !state.isObscurePassword));
-        break;
-      case ToggleConfirmVisibilityIntent:
-        emit(state.copyWith(isObscureConfirm: !state.isObscureConfirm));
-        break;
       case SubmitResetPasswordIntent:
         final email = (intent as SubmitResetPasswordIntent).email;
         _submit(email);
