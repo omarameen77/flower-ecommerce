@@ -9,6 +9,7 @@ part 'auth_api_client.g.dart';
 @RestApi()
 abstract class AuthApiClient {
   @factoryMethod
+  @factoryMethod
   factory AuthApiClient(Dio dio, {String baseUrl}) = _AuthApiClient;
 
   @POST(AuthEndPoint.signUp)
