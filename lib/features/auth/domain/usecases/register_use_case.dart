@@ -5,12 +5,12 @@ import 'package:flower/features/auth/domain/usecases/register_params.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class RegisterUsecase {
+class RegisterUseCase {
   final AuthRepo registerRepoContract;
 
-  RegisterUsecase({required this.registerRepoContract});
+  RegisterUseCase({required this.registerRepoContract});
 
   Future<BaseResponse<UserEntity>> call(RegisterParams params) async {
-    return await registerRepoContract.register(params);
+    return registerRepoContract.register(params);
   }
 }
