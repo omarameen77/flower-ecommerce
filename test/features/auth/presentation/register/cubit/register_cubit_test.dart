@@ -34,7 +34,7 @@ import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user_entity.dart';
 import 'package:flower/features/auth/domain/usecases/register_params.dart';
-import 'package:flower/features/auth/domain/usecases/register_usecase.dart';
+import 'package:flower/features/auth/domain/usecases/register_use_case.dart';
 import 'package:flower/features/auth/presentation/register/cubit/register_cubit.dart';
 import 'package:flower/features/auth/presentation/register/cubit/register_event.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,10 +43,10 @@ import 'package:mockito/mockito.dart';
 
 import 'register_cubit_test.mocks.dart';
 
-@GenerateMocks([RegisterUsecase])
+@GenerateMocks([RegisterUseCase])
 void main() {
   // ARRANGE
-  late MockRegisterUsecase mockRegisterUsecase;
+  late MockRegisterUseCase mockRegisterUseCase;
   late RegisterCubit registerCubit;
 
   late String firstName;
@@ -57,10 +57,7 @@ void main() {
   late String phone;
   late String gender;
 
-  setUp(() {
-    mockRegisterUsecase = MockRegisterUsecase();
-    registerCubit = RegisterCubit(mockRegisterUsecase);
-
+  setUpAll(() {
     firstName = "firstName";
     lastName = "lastName";
     email = "test@example.com";
@@ -72,6 +69,11 @@ void main() {
     provideDummy<BaseResponse<UserEntity>>(
       SuccessBaseResponse<UserEntity>(data: UserEntity(email: email)),
     );
+  });
+
+  setUp(() {
+    mockRegisterUseCase = MockRegisterUseCase();
+    registerCubit = RegisterCubit(mockRegisterUseCase);
   });
 
   tearDown(() {
@@ -105,7 +107,7 @@ void main() {
             gender: gender,
           );
 
-          when(mockRegisterUsecase.call(params)).thenAnswer(
+          when(mockRegisterUseCase.call(params)).thenAnswer(
             (_) async => SuccessBaseResponse<UserEntity>(data: userEntity),
           );
 
@@ -149,7 +151,7 @@ void main() {
             gender: gender,
           );
 
-          when(mockRegisterUsecase.call(params)).thenAnswer(
+          when(mockRegisterUseCase.call(params)).thenAnswer(
             (_) async => ErrorBaseResponse<UserEntity>(failure: failure),
           );
 

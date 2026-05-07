@@ -2,7 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/model/user_entity.dart';
 import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
 import 'package:flower/features/auth/domain/usecases/register_params.dart';
-import 'package:flower/features/auth/domain/usecases/register_usecase.dart';
+import 'package:flower/features/auth/domain/usecases/register_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -13,7 +13,7 @@ import 'register_usecase_test.mocks.dart';
 void main() {
   // ARRANGE
   late MockAuthRepo mockAuthRepo;
-  late RegisterUsecase registerUsecase;
+  late RegisterUseCase registerUseCase;
 
   late String firstName;
   late String lastName;
@@ -24,11 +24,6 @@ void main() {
   late String gender;
 
   setUpAll(() {
-    mockAuthRepo = MockAuthRepo();
-    registerUsecase = RegisterUsecase(
-      registerRepoContract: mockAuthRepo,
-    );
-
     firstName = "firstName";
     lastName = "lastName";
     email = "test@example.com";
@@ -39,6 +34,13 @@ void main() {
 
     provideDummy<BaseResponse<UserEntity>>(
       SuccessBaseResponse<UserEntity>(data: UserEntity(email: email)),
+    );
+  });
+
+  setUp(() {
+    mockAuthRepo = MockAuthRepo();
+    registerUseCase = RegisterUseCase(
+      registerRepoContract: mockAuthRepo,
     );
   });
 
@@ -62,7 +64,7 @@ void main() {
             .thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: userEntity));
 
         // ACT
-        final result = await registerUsecase.call(params);
+        final result = await registerUseCase.call(params);
 
         // ASSERT
         expect(result, isA<SuccessBaseResponse<UserEntity>>());

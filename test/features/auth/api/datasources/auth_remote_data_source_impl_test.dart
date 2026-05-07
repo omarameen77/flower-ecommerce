@@ -25,11 +25,6 @@ void main() {
   late String gender;
 
   setUpAll(() {
-    mockAuthApiClient = MockAuthApiClient();
-    authRemoteDataSourceImpl = AuthRemoteDataSourceImpl(
-      authApiClient: mockAuthApiClient,
-    );
-
     firstName = "firstName";
     lastName = "lastName";
     email = "test@example.com";
@@ -40,6 +35,13 @@ void main() {
 
     provideDummy<RegisterResponseDto>(
       RegisterResponseDto(user: UserDto(email: email, id: "1")),
+    );
+  });
+
+  setUp(() {
+    mockAuthApiClient = MockAuthApiClient();
+    authRemoteDataSourceImpl = AuthRemoteDataSourceImpl(
+      authApiClient: mockAuthApiClient,
     );
   });
 
@@ -101,6 +103,7 @@ void main() {
 
         // ASSERT
         expect(result, isA<ErrorBaseResponse<UserDto>>());
+        expect((result as ErrorBaseResponse<UserDto>).failure.message, isNotNull);
       });
     });
   });

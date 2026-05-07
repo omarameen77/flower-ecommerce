@@ -34,11 +34,6 @@ void main() {
   late String emptyGender;
 
   setUpAll(() {
-    mockAuthRemoteDataSourceContract = MockAuthRemoteDataSourceContract();
-    authRepoImpl = AuthRepoImpl(
-      authRemoteDataSourceContract: mockAuthRemoteDataSourceContract,
-    );
-
     firstName = "firstName";
     lastName = "lastName";
     email = "test@example.com";
@@ -61,6 +56,13 @@ void main() {
     );
     provideDummy<BaseResponse<UserEntity>>(
       SuccessBaseResponse<UserEntity>(data: UserEntity(email: email)),
+    );
+  });
+
+  setUp(() {
+    mockAuthRemoteDataSourceContract = MockAuthRemoteDataSourceContract();
+    authRepoImpl = AuthRepoImpl(
+      authRemoteDataSourceContract: mockAuthRemoteDataSourceContract,
     );
   });
 
