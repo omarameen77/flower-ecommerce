@@ -1,4 +1,4 @@
-import 'package:flower/core/localization_constants/auth_constants.dart';
+import 'package:flower/core/localization_constants/layout_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -25,19 +25,19 @@ class _AppSectionsView extends StatelessWidget {
   List<_BottomNavItem> _items(BuildContext context) {
     return [
       _BottomNavItem(
-        label: context.home,
+        label: LayoutConstants.homeTab,
         icon: AppSvgs.home,
       ),
       _BottomNavItem(
-        label: context.category,
+        label: LayoutConstants.categoriesTab,
         icon: AppSvgs.category,
       ),
       _BottomNavItem(
-        label: context.cart,
+        label: LayoutConstants.cartTab,
         icon: AppSvgs.cart,
       ),
       _BottomNavItem(
-        label: context.profile,
+        label: LayoutConstants.profileTab,
         icon: AppSvgs.profile,
       ),
     ];
@@ -54,10 +54,10 @@ class _AppSectionsView extends StatelessWidget {
           body: IndexedStack(
             index: currentIndex,
             children: [
-              _PlaceholderScreen(title: context.home),
-              _PlaceholderScreen(title: context.category),
-              _PlaceholderScreen(title: context.cart),
-              _PlaceholderScreen(title: context.profile),
+              _PlaceholderScreen(title: LayoutConstants.homeTab),
+              _PlaceholderScreen(title: LayoutConstants.categoriesTab),
+              _PlaceholderScreen(title: LayoutConstants.cartTab),
+              _PlaceholderScreen(title: LayoutConstants.profileTab),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
