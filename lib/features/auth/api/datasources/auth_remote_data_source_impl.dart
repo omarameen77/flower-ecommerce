@@ -4,7 +4,7 @@ import 'package:flower/core/network/model/user.dart';
 import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:flower/features/auth/data/models/request/register_request.dart';
-import 'package:flower/features/auth/domain/usecases/register_params.dart';
+import 'package:flower/features/auth/domain/use_cases/register_params.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRemoteDataSourceContract)
