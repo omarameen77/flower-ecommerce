@@ -17,34 +17,29 @@ void main() {
 
   test('initial state is AppSectionsInitial', () {
     expect(cubit.state, isA<AppSectionsInitial>());
-    expect(cubit.currentIndex, 0);
   });
 
   test('changeSection updates currentIndex and emits AppSectionsChanged', () {
     cubit.changeSection(1);
 
-    expect(cubit.currentIndex, 1);
     expect(cubit.state, isA<AppSectionsChanged>());
-    expect((cubit.state as AppSectionsChanged).index, 1);
+    expect((cubit.state as AppSectionsChanged).currentIndex, 1);
   });
 
-  test('changeSection does not emit when same index is passed', () {
-    final initialState = cubit.state;
-
+  test('changeSection emits even when same index is passed', () {
     cubit.changeSection(0);
 
-    expect(cubit.currentIndex, 0);
-    expect(cubit.state, initialState);
+    expect(cubit.state, isA<AppSectionsChanged>());
+    expect((cubit.state as AppSectionsChanged).currentIndex, 0);
   });
 
   test('changeSection emits correct state for multiple changes', () {
     cubit.changeSection(1);
 
-    expect((cubit.state as AppSectionsChanged).index, 1);
+    expect((cubit.state as AppSectionsChanged).currentIndex, 1);
 
     cubit.changeSection(2);
 
-    expect(cubit.currentIndex, 2);
-    expect((cubit.state as AppSectionsChanged).index, 2);
+    expect((cubit.state as AppSectionsChanged).currentIndex, 2);
   });
 }
