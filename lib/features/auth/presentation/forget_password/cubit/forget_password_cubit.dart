@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
-import 'package:flower/features/auth/domain/usecases/forget_password_usecase.dart';
+import 'package:flower/features/auth/domain/use_cases/forget_password_usecase.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_intents.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';

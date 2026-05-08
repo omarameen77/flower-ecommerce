@@ -59,7 +59,7 @@
     "password_not_match": "Passwords do not match",
 
     "name_required": "Name is required",
-    "invalid_name": "Name must contain letters only",
+    "invalid_name": "Name must contain English or Arabic letters only",
     "short_name": "Name is too short",
 
     "phone_required": "Phone number is required",
@@ -78,5 +78,11 @@
   "serverError": "Something went wrong on our side. Please try again later.",
   "unexpectedError": "An unexpected error occurred. Please try again.",
   "unknownError": "Something went wrong. Please try again."
+},
+"layout": {
+  "home_tab": "Home",
+  "categories_tab": "Categories",
+  "cart_tab": "Cart",
+  "profile_tab": "Profile"
 }
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/utils/app_validator.dart';
@@ -39,7 +40,7 @@ class ForgetPasswordForm extends StatelessWidget {
             labelText: context.email,
             hintText: context.enterEmail,
             keyboardType: TextInputType.emailAddress,
-            validator: (v) => AppValidator.email(context, v),
+            validator: (v) => AppValidator.email(v)?.tr(),
           ),
           const AppSizedBox(height: AppSize.s50),
           BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(

@@ -46,6 +46,7 @@ extension AuthConstants on BuildContext {
   String get verificationCodeSubtitle => "auth.verification_code_subtitle".tr();
   String get didntReceiveCode => "auth.didnt_receive_code".tr();
   String get codeSentAgain => "auth.code_sent_again".tr();
+  String get requiredField => "auth.required".tr();
 
   // ───────── Reset Password ─────────
   String get resetPassword => "auth.reset_password".tr();
@@ -55,37 +56,4 @@ extension AuthConstants on BuildContext {
   // ───────── Terms ─────────
   String get termsAndConditionsStatement =>
       "auth.terms_and_conditions_statement".tr();
-
-  // ───────── Validation ─────────
-
-  String get requiredField => "validation.required".tr();
-
-  //  Email
-  String get emailRequired => "validation.email_required".tr();
-  String get invalidEmailVal => "validation.invalid_email".tr();
-
-  //  Password
-  String get passwordRequired => "validation.password_required".tr();
-  String get shortPassword => "validation.short_password".tr();
-  String get weakPassword => "validation.weak_password".tr();
-
-  //  Confirm Password
-  String get confirmPasswordRequired =>
-      "validation.confirm_password_required".tr();
-
-  String get passwordNotMatch => "validation.password_not_match".tr();
-
-  //  Name
-  String get nameRequired => "validation.name_required".tr();
-  String get invalidName => "validation.invalid_name".tr();
-  String get shortName => "validation.short_name".tr();
-
-  //  Phone
-  String get phoneRequired => "validation.phone_required".tr();
-  String get invalidPhone => "validation.invalid_phone".tr();
-
-  //  OTP / Code
-  String get codeRequired => "validation.code_required".tr();
-  String get invalidCodeVal => "validation.invalid_code".tr();
-  String get phoneFormatHint => "validation.phone_format_hint".tr();
 }

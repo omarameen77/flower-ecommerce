@@ -4,7 +4,7 @@ import 'package:flower/features/auth/domain/entities/forget_password_entity.dart
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
 import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
-import 'package:flower/features/auth/domain/usecases/verify_reset_code_usecase.dart';
+import 'package:flower/features/auth/domain/use_cases/verify_reset_code_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

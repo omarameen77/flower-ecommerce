@@ -8,7 +8,7 @@ import 'dart:async' as _i3;
 import 'package:flower/config/base/base_response.dart' as _i4;
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart'
     as _i5;
-import 'package:flower/features/auth/domain/usecases/forget_password_usecase.dart'
+import 'package:flower/features/auth/domain/use_cases/forget_password_usecase.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;

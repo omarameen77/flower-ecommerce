@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/utils/app_validator.dart';
@@ -44,7 +45,7 @@ class ResetPasswordForm extends StatelessWidget {
               labelText: context.newPassword,
               hintText: context.enterNewPassword,
               isPassword: true,
-              validator: (v) => AppValidator.password(context, v),
+              validator: (v) => AppValidator.password(v)?.tr(),
             ),
             const AppSizedBox(height: AppSize.s28),
             CustomTextField(
@@ -53,10 +54,9 @@ class ResetPasswordForm extends StatelessWidget {
               hintText: context.confirmPassword,
               isPassword: true,
               validator: (v) => AppValidator.confirmPassword(
-                context,
                 v,
                 passwordController.text,
-              ),
+              )?.tr(),
             ),
             const AppSizedBox(height: AppSize.s50),
             BlocBuilder<ResetPasswordCubit, ResetPasswordState>(

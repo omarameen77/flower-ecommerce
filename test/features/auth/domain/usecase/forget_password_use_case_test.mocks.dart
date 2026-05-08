@@ -6,15 +6,18 @@
 import 'dart:async' as _i3;
 
 import 'package:flower/config/base/base_response.dart' as _i4;
+import 'package:flower/core/network/model/user_entity.dart' as _i5;
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart'
-    as _i5;
-import 'package:flower/features/auth/domain/entities/reset_password_entity.dart'
     as _i8;
+import 'package:flower/features/auth/domain/entities/reset_password_entity.dart'
+    as _i10;
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart'
-    as _i7;
+    as _i9;
 import 'package:flower/features/auth/domain/repositories/auth_repo.dart' as _i2;
+import 'package:flower/features/auth/domain/use_cases/register_params.dart'
+    as _i6;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:mockito/src/dummies.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -40,30 +43,45 @@ class MockAuthRepo extends _i1.Mock implements _i2.AuthRepo {
   }
 
   @override
-  _i3.Future<_i4.BaseResponse<_i5.ForgetPasswordEntity>> forgetPassword({
+  _i3.Future<_i4.BaseResponse<_i5.UserEntity>> register(
+    _i6.RegisterParams? params,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#register, [params]),
+            returnValue: _i3.Future<_i4.BaseResponse<_i5.UserEntity>>.value(
+              _i7.dummyValue<_i4.BaseResponse<_i5.UserEntity>>(
+                this,
+                Invocation.method(#register, [params]),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i5.UserEntity>>);
+
+  @override
+  _i3.Future<_i4.BaseResponse<_i8.ForgetPasswordEntity>> forgetPassword({
     required String? email,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#forgetPassword, [], {#email: email}),
             returnValue:
-                _i3.Future<_i4.BaseResponse<_i5.ForgetPasswordEntity>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<_i5.ForgetPasswordEntity>>(
+                _i3.Future<_i4.BaseResponse<_i8.ForgetPasswordEntity>>.value(
+                  _i7.dummyValue<_i4.BaseResponse<_i8.ForgetPasswordEntity>>(
                     this,
                     Invocation.method(#forgetPassword, [], {#email: email}),
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<_i5.ForgetPasswordEntity>>);
+          as _i3.Future<_i4.BaseResponse<_i8.ForgetPasswordEntity>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<_i7.VerifyResetCodeEntity>> verifyResetCode({
+  _i3.Future<_i4.BaseResponse<_i9.VerifyResetCodeEntity>> verifyResetCode({
     required String? resetCode,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#verifyResetCode, [], {#resetCode: resetCode}),
             returnValue:
-                _i3.Future<_i4.BaseResponse<_i7.VerifyResetCodeEntity>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<_i7.VerifyResetCodeEntity>>(
+                _i3.Future<_i4.BaseResponse<_i9.VerifyResetCodeEntity>>.value(
+                  _i7.dummyValue<_i4.BaseResponse<_i9.VerifyResetCodeEntity>>(
                     this,
                     Invocation.method(#verifyResetCode, [], {
                       #resetCode: resetCode,
@@ -71,10 +89,10 @@ class MockAuthRepo extends _i1.Mock implements _i2.AuthRepo {
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<_i7.VerifyResetCodeEntity>>);
+          as _i3.Future<_i4.BaseResponse<_i9.VerifyResetCodeEntity>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<_i8.ResetPasswordEntity>> resetPassword({
+  _i3.Future<_i4.BaseResponse<_i10.ResetPasswordEntity>> resetPassword({
     required String? email,
     required String? newPassword,
   }) =>
@@ -84,8 +102,8 @@ class MockAuthRepo extends _i1.Mock implements _i2.AuthRepo {
               #newPassword: newPassword,
             }),
             returnValue:
-                _i3.Future<_i4.BaseResponse<_i8.ResetPasswordEntity>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<_i8.ResetPasswordEntity>>(
+                _i3.Future<_i4.BaseResponse<_i10.ResetPasswordEntity>>.value(
+                  _i7.dummyValue<_i4.BaseResponse<_i10.ResetPasswordEntity>>(
                     this,
                     Invocation.method(#resetPassword, [], {
                       #email: email,
@@ -94,5 +112,5 @@ class MockAuthRepo extends _i1.Mock implements _i2.AuthRepo {
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<_i8.ResetPasswordEntity>>);
+          as _i3.Future<_i4.BaseResponse<_i10.ResetPasswordEntity>>);
 }

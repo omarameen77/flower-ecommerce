@@ -1,9 +1,13 @@
 import 'package:flower/config/base/base_response.dart';
+import 'package:flower/core/network/model/user.dart';
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart';
 import 'package:flower/features/auth/data/models/response/reset_password_response.dart';
 import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart';
+import 'package:flower/features/auth/domain/use_cases/register_params.dart';
 
-abstract interface class AuthRemoteDs {
+abstract class AuthRemoteDataSourceContract {
+  Future<BaseResponse<UserDto>> register(RegisterParams params);
+
   Future<BaseResponse<ForgetPasswordResponseDto>> forgetPassword({
     required String email,
   });

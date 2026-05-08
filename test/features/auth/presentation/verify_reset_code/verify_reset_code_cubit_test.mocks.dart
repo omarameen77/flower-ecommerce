@@ -10,9 +10,9 @@ import 'package:flower/features/auth/domain/entities/forget_password_entity.dart
     as _i8;
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart'
     as _i5;
-import 'package:flower/features/auth/domain/usecases/forget_password_usecase.dart'
+import 'package:flower/features/auth/domain/use_cases/forget_password_usecase.dart'
     as _i7;
-import 'package:flower/features/auth/domain/usecases/verify_reset_code_usecase.dart'
+import 'package:flower/features/auth/domain/use_cases/verify_reset_code_usecase.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
