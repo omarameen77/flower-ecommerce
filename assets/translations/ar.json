@@ -56,9 +56,8 @@
 
     "confirm_password_required": "من فضلك أكد كلمة المرور",
     "password_not_match": "كلمتا المرور غير متطابقتين",
-
     "name_required": "الاسم مطلوب",
-    "invalid_name": "الاسم يجب أن يحتوي على حروف فقط",
+    "invalid_name": "الاسم يجب أن يحتوي على حروف عربية أو إنجليزية فقط",
     "short_name": "الاسم قصير جدًا",
 
     "phone_required": "رقم الهاتف مطلوب",
@@ -77,5 +76,11 @@
   "serverError": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا.",
   "unexpectedError": "حدث خطأ غير متوقع. حاول مرة أخرى.",
   "unknownError": "حدث خطأ ما. حاول مرة أخرى."
+},
+"layout": {
+  "home_tab": "الرئيسية",
+  "categories_tab": "الأقسام",
+  "cart_tab": "السلة",
+  "profile_tab": "حسابي"
 }
 }
