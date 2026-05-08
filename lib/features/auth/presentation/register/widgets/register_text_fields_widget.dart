@@ -32,9 +32,8 @@ class RegisterTextFieldsWidget extends StatelessWidget {
               child: CustomTextField(
                 controller: firstNameController,
                 hintText: context.enterFirstName,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 labelText: context.firstName,
-                validator: (value) => AppValidator.name(context, value),
+                validator: (value) => AppValidator.name(value),
               ),
             ),
             AppSizedBox(width: 20),
@@ -42,9 +41,8 @@ class RegisterTextFieldsWidget extends StatelessWidget {
               child: CustomTextField(
                 controller: lastNameController,
                 hintText: context.enterLastName,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 labelText: context.lastName,
-                validator: (value) => AppValidator.name(context, value),
+                validator: (value) => AppValidator.name(value),
               ),
             ),
           ],
@@ -54,9 +52,8 @@ class RegisterTextFieldsWidget extends StatelessWidget {
         CustomTextField(
           controller: emailController,
           hintText: context.enterEmail,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           labelText: context.email,
-          validator: (value) => AppValidator.email(context, value),
+          validator: (value) => AppValidator.email(value),
         ),
         AppSizedBox(height: 20),
 
@@ -66,10 +63,9 @@ class RegisterTextFieldsWidget extends StatelessWidget {
               child: CustomTextField(
                 controller: passwordController,
                 hintText: context.enterPassword,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 labelText: context.password,
                 isPassword: true,
-                validator: (value) => AppValidator.password(context, value),
+                validator: (value) => AppValidator.password(value),
               ),
             ),
             AppSizedBox(width: 20),
@@ -77,14 +73,10 @@ class RegisterTextFieldsWidget extends StatelessWidget {
               child: CustomTextField(
                 controller: rePasswordController,
                 hintText: context.password,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 labelText: context.confirmPassword,
                 isPassword: true,
-                validator: (value) => AppValidator.confirmPassword(
-                  context,
-                  value,
-                  passwordController.text,
-                ),
+                validator: (value) =>
+                    AppValidator.confirmPassword(value, passwordController.text),
               ),
             ),
           ],
@@ -93,10 +85,9 @@ class RegisterTextFieldsWidget extends StatelessWidget {
 
         CustomTextField(
           controller: phoneController,
-          hintText: context.phone,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          hintText: context.enterPhoneNumber,
           labelText: context.phone,
-          validator: (value) => AppValidator.phone(context, value),
+          validator: (value) => AppValidator.phone(value),
         ),
       ],
     );
