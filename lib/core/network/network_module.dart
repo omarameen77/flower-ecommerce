@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 import 'package:flower/core/network/dio_helper.dart';
-import 'package:flower/features/auth/api/auth_api.dart';
+import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
+import 'package:injectable/injectable.dart';
 
 @module
 abstract class NetworkModule {
-
-  @lazySingleton
+  @singleton
   Dio get dio => DioHelper.dio;
 
-  @lazySingleton
-  AuthApi authApi(Dio dio) => AuthApi(dio);
+  @singleton
+  AuthApiClient authApi(Dio dio) => AuthApiClient(dio);
 }

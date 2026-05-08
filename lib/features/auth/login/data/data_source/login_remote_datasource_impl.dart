@@ -1,6 +1,7 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/safe_api_caller.dart';
-import 'package:flower/features/auth/api/auth_api.dart';
+import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
+
 import 'package:flower/features/auth/data/models/request/login_request.dart';
 import 'package:flower/features/auth/login/data/data_source/login_remote_datasource.dart';
 import 'package:flower/features/auth/login/data/model/login_request_dto.dart';
@@ -9,7 +10,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: LoginRemoteDataSourceContract)
 class LoginRemoteDatasourceImpl implements LoginRemoteDataSourceContract {
-  final AuthApi authApi;
+  final AuthApiClient authApi;
   final SafeApiCaller executor;
 
   LoginRemoteDatasourceImpl(this.authApi, this.executor);
@@ -20,7 +21,7 @@ class LoginRemoteDatasourceImpl implements LoginRemoteDataSourceContract {
       final response = await authApi.login(
         LoginRequestDto(email: request.email, password: request.password),
       );
-final dto = response;
+      final dto = response;
 
       return LoginResponse(
         message: dto.message,

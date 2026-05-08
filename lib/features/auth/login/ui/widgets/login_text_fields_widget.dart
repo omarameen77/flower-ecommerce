@@ -6,6 +6,7 @@ import 'package:flower/features/auth/login/ui/cubit/login_intint.dart';
 import 'package:flower/features/auth/login/ui/cubit/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class LoginTextFields extends StatefulWidget {
   const LoginTextFields({super.key});
 
@@ -14,7 +15,7 @@ class LoginTextFields extends StatefulWidget {
 }
 
 class _LoginTextFieldsState extends State<LoginTextFields> {
-  bool _isPasswordVisible = false;
+  final bool _isPasswordVisible = false;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -31,7 +32,7 @@ class _LoginTextFieldsState extends State<LoginTextFields> {
           labelText: context.email,
           hintText: context.enterEmail,
           keyboardType: TextInputType.emailAddress,
-          validator: (value) => AppValidator.email(context, value),
+          validator: (value) => AppValidator.email(value),
           onChanged: (value) {
             vm.doIntent(EmailChanged(value));
           },
@@ -44,7 +45,7 @@ class _LoginTextFieldsState extends State<LoginTextFields> {
           labelText: context.password,
           hintText: context.enterPassword,
           isPassword: !_isPasswordVisible,
-          validator: (value) => AppValidator.password(context, value),
+          validator: (value) => AppValidator.password(value),
           onChanged: (value) {
             vm.doIntent(PasswordChanged(value));
           },

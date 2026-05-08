@@ -1,6 +1,7 @@
 import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
 import 'package:flower/features/auth/login/ui/cubit/login_state.dart';
 import 'package:flower/features/auth/login/ui/cubit/login_view_model.dart';
 import 'package:flower/features/auth/login/ui/widgets/login_form_widget.dart';
@@ -24,20 +25,18 @@ class LoginScreen extends StatelessWidget {
         body: BlocListener<LoginViewModel, LoginState>(
           listener: (context, state) {
             if (state.user != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Login Success")),
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const AppSectionsPage()),
               );
             }
-
             if (state.errorMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage!)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
             }
           },
-          child: const SingleChildScrollView(
-            child: LoginForm(),
-          ),
+          child: const SingleChildScrollView(child: LoginForm()),
         ),
       ),
     );

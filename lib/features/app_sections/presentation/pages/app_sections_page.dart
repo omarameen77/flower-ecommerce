@@ -1,6 +1,7 @@
 import 'package:flower/core/localization_constants/layout_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,22 +25,13 @@ class _AppSectionsView extends StatelessWidget {
 
   List<_BottomNavItem> _items(BuildContext context) {
     return [
-      _BottomNavItem(
-        label: LayoutConstants.homeTab,
-        icon: AppSvgs.home,
-      ),
+      _BottomNavItem(label: LayoutConstants.homeTab, icon: AppSvgs.home),
       _BottomNavItem(
         label: LayoutConstants.categoriesTab,
         icon: AppSvgs.category,
       ),
-      _BottomNavItem(
-        label: LayoutConstants.cartTab,
-        icon: AppSvgs.cart,
-      ),
-      _BottomNavItem(
-        label: LayoutConstants.profileTab,
-        icon: AppSvgs.profile,
-      ),
+      _BottomNavItem(label: LayoutConstants.cartTab, icon: AppSvgs.cart),
+      _BottomNavItem(label: LayoutConstants.profileTab, icon: AppSvgs.profile),
     ];
   }
 
@@ -48,7 +40,9 @@ class _AppSectionsView extends StatelessWidget {
     return BlocBuilder<AppSectionsCubit, AppSectionsState>(
       builder: (context, state) {
         final cubit = context.read<AppSectionsCubit>();
-        final currentIndex = state is AppSectionsChanged ? state.currentIndex : 0;
+        final currentIndex = state is AppSectionsChanged
+            ? state.currentIndex
+            : 0;
 
         return Scaffold(
           body: IndexedStack(
@@ -57,7 +51,7 @@ class _AppSectionsView extends StatelessWidget {
               _PlaceholderScreen(title: LayoutConstants.homeTab),
               _PlaceholderScreen(title: LayoutConstants.categoriesTab),
               _PlaceholderScreen(title: LayoutConstants.cartTab),
-              _PlaceholderScreen(title: LayoutConstants.profileTab),
+              const ProfilePage(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -66,14 +60,8 @@ class _AppSectionsView extends StatelessWidget {
             items: _items(context).map((item) {
               return BottomNavigationBarItem(
                 label: item.label,
-                icon: _NavBarIcon(
-                  assetName: item.icon,
-                  isSelected: false,
-                ),
-                activeIcon: _NavBarIcon(
-                  assetName: item.icon,
-                  isSelected: true,
-                ),
+                icon: _NavBarIcon(assetName: item.icon, isSelected: false),
+                activeIcon: _NavBarIcon(assetName: item.icon, isSelected: true),
               );
             }).toList(),
           ),
@@ -87,18 +75,17 @@ class _NavBarIcon extends StatelessWidget {
   final String assetName;
   final bool isSelected;
 
-  const _NavBarIcon({
-    required this.assetName,
-    required this.isSelected,
-  });
+  const _NavBarIcon({required this.assetName, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
-    final selectedColor =
-        Theme.of(context).bottomNavigationBarTheme.selectedItemColor;
+    final selectedColor = Theme.of(
+      context,
+    ).bottomNavigationBarTheme.selectedItemColor;
 
-    final unselectedColor =
-        Theme.of(context).bottomNavigationBarTheme.unselectedItemColor;
+    final unselectedColor = Theme.of(
+      context,
+    ).bottomNavigationBarTheme.unselectedItemColor;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
@@ -119,28 +106,20 @@ class _BottomNavItem {
   final String label;
   final String icon;
 
-  const _BottomNavItem({
-    required this.label,
-    required this.icon,
-  });
+  const _BottomNavItem({required this.label, required this.icon});
 }
 
 class _PlaceholderScreen extends StatelessWidget {
   final String title;
 
-  const _PlaceholderScreen({
-    required this.title,
-  });
+  const _PlaceholderScreen({required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     );
   }

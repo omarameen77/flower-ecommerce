@@ -46,10 +46,12 @@ class UserDto {
 
   Map<String, dynamic> toJson() => _$UserDtoToJson(this);
 
-  User? toDomain() => User(
-    firstName: firstName ?? '',
-    lastName: lastName ?? '',
-    email: email ?? '',
-    id: id ?? '',
-  );
+  User toDomain() {
+    return User(
+      id: id ?? '',
+      firstName: firstName ?? '',
+      lastName: lastName ?? '',
+      email: email ?? '',
+    );
+  }
 }

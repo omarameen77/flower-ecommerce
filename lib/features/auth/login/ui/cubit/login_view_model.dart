@@ -1,5 +1,3 @@
-
-
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/login/domain/entity/login_request.dart';
@@ -13,9 +11,8 @@ import 'package:injectable/injectable.dart';
 @injectable
 class LoginViewModel extends Cubit<LoginState> {
   final LoginUseCase useCase;
-  final SecureStorageService storage;
 
-  LoginViewModel(this.useCase, this.storage) : super(const LoginState());
+  LoginViewModel(this.useCase, SecureStorageService secureStorageService) : super(const LoginState());
 
   String email = "";
   String password = "";
@@ -58,16 +55,13 @@ class LoginViewModel extends Cubit<LoginState> {
       case SuccessBaseResponse<LoginResponse>():
         final token = response.data.token;
 
-        if (token != null && token.isNotEmpty) {
+        if (state.rememberMe && token != null && token.isNotEmpty) {
           await SecureStorageService.saveToken(token);
+        } else {
+          await SecureStorageService.deleteToken();
         }
 
-        emit(
-          state.copyWith(
-            isLoading: false,
-            user: response.data.user,
-          ),
-        );
+        emit(state.copyWith(isLoading: false, user: response.data.user));
         break;
       case ErrorBaseResponse<LoginResponse>():
         emit(

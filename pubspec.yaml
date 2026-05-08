@@ -1,7 +1,7 @@
 name: flower
 description: Flower E-commerce App
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -27,10 +27,13 @@ dependencies:
   pretty_dio_logger: ^1.4.0
 
   # Serialization
-  json_annotation: ^4.9.0
+  json_annotation: ^4.11.0
 
   # Storage
   flutter_secure_storage: ^10.0.0
+
+  # Utilities
+  uuid: ^4.5.3
 
   # UI Helpers
   cached_network_image: ^3.4.1
@@ -43,7 +46,6 @@ dependencies:
   # Utils
   equatable: ^2.0.8
   flutter_svg: ^2.2.4
-
 
 dev_dependencies:
   flutter_test:
@@ -61,10 +63,9 @@ dev_dependencies:
   retrofit_generator: ^10.2.5
   json_serializable: ^6.7.1
 
-
 flutter:
   uses-material-design: true
 
   assets:
-  
     - assets/translations/
+    - assets/svgs/

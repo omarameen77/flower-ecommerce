@@ -12,7 +12,7 @@ class FlowerApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: Routes.login,
+      initialRoute: Routes.splash,
       onGenerateRoute: AppRouter.onGenerateRoute,
       locale: context.locale,
       supportedLocales: context.supportedLocales,

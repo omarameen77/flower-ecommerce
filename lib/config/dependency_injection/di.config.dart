@@ -15,11 +15,10 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../core/network/network_module.dart' as _i234;
 import '../../core/network/safe_api_caller.dart' as _i563;
-<<<<<<< Updated upstream
-import '../../features/auth/api/api_client/auth_api_client.dart' as _i824;
-=======
 import '../../core/storage/secure_storage_service.dart' as _i64;
-import '../../features/auth/api/auth_api.dart' as _i7;
+import '../../features/app_sections/presentation/cubit/app_sections_cubit.dart'
+    as _i936;
+import '../../features/auth/api/api_client/auth_api_client.dart' as _i824;
 import '../../features/auth/login/data/data_source/login_remote_datasource.dart'
     as _i853;
 import '../../features/auth/login/data/data_source/login_remote_datasource_impl.dart'
@@ -29,8 +28,6 @@ import '../../features/auth/login/domain/repo/login_repo_contract.dart'
     as _i844;
 import '../../features/auth/login/domain/usecase/login_use_case.dart' as _i79;
 import '../../features/auth/login/ui/cubit/login_view_model.dart' as _i785;
-import 'injectable_test.dart' as _i901;
->>>>>>> Stashed changes
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -40,16 +37,18 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final networkModule = _$NetworkModule();
-    gh.factory<_i901.TestService>(() => _i901.TestService());
     gh.factory<_i563.SafeApiCaller>(() => _i563.SafeApiCaller());
-    gh.lazySingleton<_i361.Dio>(() => networkModule.dio);
+    gh.factory<_i936.AppSectionsCubit>(() => _i936.AppSectionsCubit());
+    gh.singleton<_i361.Dio>(() => networkModule.dio);
     gh.lazySingleton<_i64.SecureStorageService>(
       () => _i64.SecureStorageService(),
     );
-    gh.lazySingleton<_i7.AuthApi>(() => networkModule.authApi(gh<_i361.Dio>()));
+    gh.singleton<_i824.AuthApiClient>(
+      () => networkModule.authApi(gh<_i361.Dio>()),
+    );
     gh.factory<_i853.LoginRemoteDataSourceContract>(
       () => _i660.LoginRemoteDatasourceImpl(
-        gh<_i7.AuthApi>(),
+        gh<_i824.AuthApiClient>(),
         gh<_i563.SafeApiCaller>(),
       ),
     );
