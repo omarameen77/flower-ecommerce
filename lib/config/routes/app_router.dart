@@ -1,18 +1,22 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
 import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
+import 'package:flower/features/auth/presentation/register/pages/register_page.dart';
 import 'package:flower/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      //* example:
+
       case Routes.splash:
         return _fade(const SplashScreen());
 
       case Routes.appSections:
         return _slide(const AppSectionsPage());
+
+      case Routes.signup:
+        return _slide(const RegisterPage());
 
       default:
         return _fade(NotFoundScreen(route: settings.name ?? ''));
