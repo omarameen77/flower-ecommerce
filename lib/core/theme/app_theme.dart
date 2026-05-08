@@ -82,5 +82,13 @@ class AppTheme {
         elevation: 0,
       ),
     ),
+    // BottomNavigationBar
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: AppColors.textSecondary,
+      showUnselectedLabels: true,
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+    ),
   );
 }
