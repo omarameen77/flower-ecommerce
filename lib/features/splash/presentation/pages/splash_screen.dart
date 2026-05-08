@@ -1,5 +1,4 @@
 import 'package:flower/core/resources/app_svgs.dart';
-import 'package:flower/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flower/config/routes/routes.dart';
@@ -47,12 +46,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: Center(
         child: ScaleTransition(
           scale: _animation,
           child: SvgPicture.asset(
-            AppSvgs.appIcon,
+            AppSvgs.splashLogo,
             width: 180,
             height: 180,
           ),
