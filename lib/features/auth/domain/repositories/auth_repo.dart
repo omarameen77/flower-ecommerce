@@ -3,7 +3,7 @@ import 'package:flower/features/auth/domain/entities/forget_password_entity.dart
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
 
-abstract class AuthRepo {
+abstract interface class AuthRepo {
   Future<BaseResponse<ForgetPasswordEntity>> forgetPassword({
     required String email,
   });

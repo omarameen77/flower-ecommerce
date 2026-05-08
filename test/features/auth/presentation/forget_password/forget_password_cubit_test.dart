@@ -4,15 +4,16 @@ import 'package:flower/features/auth/domain/entities/forget_password_entity.dart
 import 'package:flower/features/auth/domain/usecases/forget_password_usecase.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_intents.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 import 'forget_password_cubit_test.mocks.dart';
 
 @GenerateMocks([ForgetPasswordUseCase])
 void main() {
   late MockForgetPasswordUseCase useCase;
+  late ForgetPasswordCubit cubit;
 
   setUpAll(() {
     provideDummy<BaseResponse<ForgetPasswordEntity>>(
@@ -20,13 +21,10 @@ void main() {
     );
   });
 
-  setUp(() => useCase = MockForgetPasswordUseCase());
-
-  ForgetPasswordCubit buildCubit() {
-    final cubit = ForgetPasswordCubit(useCase);
-    cubit.emailController.text = 'a@b.com';
-    return cubit;
-  }
+  setUp(() {
+    useCase = MockForgetPasswordUseCase();
+    cubit = ForgetPasswordCubit(useCase);
+  });
 
   test('emits [loading, success] when use case succeeds', () async {
     when(useCase(email: anyNamed('email'))).thenAnswer(
@@ -34,19 +32,22 @@ void main() {
         data: const ForgetPasswordEntity(message: 'sent', info: 'check'),
       ),
     );
-    final cubit = buildCubit();
 
     final expectation = expectLater(
       cubit.stream,
       emitsInOrder([
-        isA<ForgetPasswordState>().having((s) => s.isLoading, 'loading', true),
+        isA<ForgetPasswordState>().having(
+          (s) => s.base.isLoading,
+          'loading',
+          true,
+        ),
         isA<ForgetPasswordState>()
-            .having((s) => s.isLoading, 'loading', false)
-            .having((s) => s.data, 'data', isNotNull),
+            .having((s) => s.base.isLoading, 'loading', false)
+            .having((s) => s.base.data, 'data', isNotNull),
       ]),
     );
 
-    cubit.doIntent(ForgetPasswordIntent.submit);
+    cubit.doIntent(const SubmitForgetPasswordIntent('a@b.com'));
     await expectation;
   });
 
@@ -54,21 +55,24 @@ void main() {
     when(useCase(email: anyNamed('email'))).thenAnswer(
       (_) async => ErrorBaseResponse(failure: Failure(message: 'oops')),
     );
-    final cubit = buildCubit();
 
     final expectation = expectLater(
       cubit.stream,
       emitsInOrder([
-        isA<ForgetPasswordState>().having((s) => s.isLoading, 'loading', true),
         isA<ForgetPasswordState>().having(
-          (s) => s.errorMessage,
+          (s) => s.base.isLoading,
+          'loading',
+          true,
+        ),
+        isA<ForgetPasswordState>().having(
+          (s) => s.base.errorMessage,
           'errorMessage',
           'oops',
         ),
       ]),
     );
 
-    cubit.doIntent(ForgetPasswordIntent.submit);
+    cubit.doIntent(const SubmitForgetPasswordIntent('a@b.com'));
     await expectation;
   });
 }

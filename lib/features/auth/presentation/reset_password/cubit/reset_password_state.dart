@@ -1,24 +1,14 @@
 part of 'reset_password_cubit.dart';
 
-class ResetPasswordState extends BaseState<ResetPasswordEntity> {
-  const ResetPasswordState({
-    super.isLoading,
-    super.data,
-    super.errorMessage,
-  });
+class ResetPasswordState extends Equatable {
+  final BaseState<ResetPasswordEntity> base;
 
-  factory ResetPasswordState.initial() => const ResetPasswordState();
+  const ResetPasswordState({this.base = const BaseState()});
+
+  ResetPasswordState copyWith({BaseState<ResetPasswordEntity>? base}) {
+    return ResetPasswordState(base: base ?? this.base);
+  }
 
   @override
-  ResetPasswordState copyWith({
-    bool? isLoadingParam,
-    ResetPasswordEntity? dataParam,
-    String? errorMessageParam,
-  }) {
-    return ResetPasswordState(
-      isLoading: isLoadingParam ?? isLoading,
-      data: dataParam ?? data,
-      errorMessage: errorMessageParam,
-    );
-  }
+  List<Object?> get props => [base];
 }

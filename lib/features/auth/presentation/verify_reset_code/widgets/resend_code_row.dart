@@ -31,22 +31,18 @@ class ResendCodeRow extends StatelessWidget {
             child: CircularProgressIndicator(strokeWidth: 2),
           )
         else
-          InkWell(onTap: onResend, child: _ResendLabel()),
-      ],
-    );
-  }
-}
-
-class _ResendLabel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      context.resend,
-      style: getSemiBoldStyle(context: context, color: AppColors.primary)
-          .copyWith(
-            decoration: TextDecoration.underline,
-            decorationColor: AppColors.primary,
+          InkWell(
+            onTap: onResend,
+            child: Text(
+              context.resend,
+              style: getSemiBoldStyle(context: context, color: AppColors.primary)
+                  .copyWith(
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.primary,
+                  ),
+            ),
           ),
+      ],
     );
   }
 }

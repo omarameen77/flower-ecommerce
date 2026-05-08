@@ -13,6 +13,7 @@ import 'reset_password_cubit_test.mocks.dart';
 @GenerateMocks([ResetPasswordUseCase])
 void main() {
   late MockResetPasswordUseCase useCase;
+  late ResetPasswordCubit cubit;
 
   setUpAll(() {
     provideDummy<BaseResponse<ResetPasswordEntity>>(
@@ -20,7 +21,10 @@ void main() {
     );
   });
 
-  setUp(() => useCase = MockResetPasswordUseCase());
+  setUp(() {
+    useCase = MockResetPasswordUseCase();
+    cubit = ResetPasswordCubit(useCase);
+  });
 
   test('emits [loading, success] when submit succeeds', () async {
     when(
@@ -33,20 +37,27 @@ void main() {
         data: const ResetPasswordEntity(message: 'ok', token: 't'),
       ),
     );
-    final cubit = ResetPasswordCubit(useCase);
-    cubit.passwordController.text = 'P@ssw0rd!';
 
     final expectation = expectLater(
       cubit.stream,
       emitsInOrder([
-        isA<ResetPasswordState>().having((s) => s.isLoading, 'loading', true),
+        isA<ResetPasswordState>().having(
+          (s) => s.base.isLoading,
+          'loading',
+          true,
+        ),
         isA<ResetPasswordState>()
-            .having((s) => s.isLoading, 'loading', false)
-            .having((s) => s.data, 'data', isNotNull),
+            .having((s) => s.base.isLoading, 'loading', false)
+            .having((s) => s.base.data, 'data', isNotNull),
       ]),
     );
 
-    cubit.doIntent(const SubmitResetPasswordIntent('a@b.com'));
+    cubit.doIntent(
+      const SubmitResetPasswordIntent(
+        email: 'a@b.com',
+        newPassword: 'P@ssw0rd!',
+      ),
+    );
     await expectation;
   });
 
@@ -59,22 +70,29 @@ void main() {
     ).thenAnswer(
       (_) async => ErrorBaseResponse(failure: Failure(message: 'boom')),
     );
-    final cubit = ResetPasswordCubit(useCase);
-    cubit.passwordController.text = 'P@ssw0rd!';
 
     final expectation = expectLater(
       cubit.stream,
       emitsInOrder([
-        isA<ResetPasswordState>().having((s) => s.isLoading, 'loading', true),
         isA<ResetPasswordState>().having(
-          (s) => s.errorMessage,
+          (s) => s.base.isLoading,
+          'loading',
+          true,
+        ),
+        isA<ResetPasswordState>().having(
+          (s) => s.base.errorMessage,
           'errorMessage',
           'boom',
         ),
       ]),
     );
 
-    cubit.doIntent(const SubmitResetPasswordIntent('a@b.com'));
+    cubit.doIntent(
+      const SubmitResetPasswordIntent(
+        email: 'a@b.com',
+        newPassword: 'P@ssw0rd!',
+      ),
+    );
     await expectation;
   });
 }

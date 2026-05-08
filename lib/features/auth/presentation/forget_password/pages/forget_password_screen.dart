@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
@@ -8,39 +9,49 @@ import 'package:flower/features/auth/presentation/forget_password/widgets/forget
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ForgetPasswordScreen extends StatelessWidget {
+class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
+
+  @override
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+}
+
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: context.password),
-      body: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+      body: BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
         listener: _onStateChanged,
-        builder: (context, state) {
-          final cubit = context.read<ForgetPasswordCubit>();
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
-            child: ForgetPasswordForm(
-              isLoading: state.isLoading,
-              cubit: cubit,
-            ),
-          );
-        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
+          child: ForgetPasswordForm(
+            emailController: _emailController,
+            formKey: _formKey,
+          ),
+        ),
       ),
     );
   }
 
   void _onStateChanged(BuildContext context, ForgetPasswordState state) {
-    if (state.data != null) {
-      final email = context.read<ForgetPasswordCubit>().emailController.text;
+    if (state.base.data != null) {
       Navigator.pushNamed(
         context,
         Routes.verificationCode,
-        arguments: email.trim(),
+        arguments: state.email,
       );
-    } else if (state.errorMessage != null) {
-      CustomSnackBar.error(context, state.errorMessage!);
+    } else if (state.base.errorMessage != null) {
+      CustomSnackBar.error(context, state.base.errorMessage!.tr());
     }
   }
 }

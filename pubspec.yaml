@@ -52,7 +52,7 @@ dev_dependencies:
 
   # Testing
   test: ^1.30.0
-  mockito: ^5.4.4
+  mockito: ^5.4.6
 
   # Code Generation
   build_runner: ^2.4.13

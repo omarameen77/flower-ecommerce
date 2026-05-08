@@ -1,24 +1,24 @@
 part of 'forget_password_cubit.dart';
 
-class ForgetPasswordState extends BaseState<ForgetPasswordEntity> {
+class ForgetPasswordState extends Equatable {
+  final BaseState<ForgetPasswordEntity> base;
+  final String email;
+
   const ForgetPasswordState({
-    super.isLoading,
-    super.data,
-    super.errorMessage,
+    this.base = const BaseState(),
+    this.email = '',
   });
 
-  factory ForgetPasswordState.initial() => const ForgetPasswordState();
-
-  @override
   ForgetPasswordState copyWith({
-    bool? isLoadingParam,
-    ForgetPasswordEntity? dataParam,
-    String? errorMessageParam,
+    BaseState<ForgetPasswordEntity>? base,
+    String? email,
   }) {
     return ForgetPasswordState(
-      isLoading: isLoadingParam ?? isLoading,
-      data: dataParam ?? data,
-      errorMessage: errorMessageParam,
+      base: base ?? this.base,
+      email: email ?? this.email,
     );
   }
+
+  @override
+  List<Object?> get props => [base, email];
 }

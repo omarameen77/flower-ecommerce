@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
@@ -8,37 +9,50 @@ import 'package:flower/features/auth/presentation/reset_password/widgets/reset_p
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key, required this.email});
   final String email;
+
+  @override
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+}
+
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: context.password),
-      body: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+      body: BlocListener<ResetPasswordCubit, ResetPasswordState>(
         listener: _onStateChanged,
-        builder: (context, state) => _buildBody(context, state),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
+          child: ResetPasswordForm(
+            email: widget.email,
+            passwordController: _passwordController,
+            confirmPasswordController: _confirmPasswordController,
+            formKey: _formKey,
+          ),
+        ),
       ),
     );
   }
 
   void _onStateChanged(BuildContext context, ResetPasswordState state) {
-    if (state.data != null) {
+    if (state.base.data != null) {
       Navigator.pushNamedAndRemoveUntil(context, Routes.login, (_) => false);
-    } else if (state.errorMessage != null) {
-      CustomSnackBar.error(context, state.errorMessage!);
+    } else if (state.base.errorMessage != null) {
+      CustomSnackBar.error(context, state.base.errorMessage!.tr());
     }
-  }
-
-  Widget _buildBody(BuildContext context, ResetPasswordState state) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
-      child: ResetPasswordForm(
-        email: email,
-        cubit: context.read<ResetPasswordCubit>(),
-        state: state,
-      ),
-    );
   }
 }

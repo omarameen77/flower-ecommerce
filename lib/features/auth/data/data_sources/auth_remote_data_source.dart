@@ -3,7 +3,7 @@ import 'package:flower/features/auth/data/models/response/forget_password_respon
 import 'package:flower/features/auth/data/models/response/reset_password_response.dart';
 import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart';
 
-abstract class AuthRemoteDs {
+abstract interface class AuthRemoteDs {
   Future<BaseResponse<ForgetPasswordResponseDto>> forgetPassword({
     required String email,
   });

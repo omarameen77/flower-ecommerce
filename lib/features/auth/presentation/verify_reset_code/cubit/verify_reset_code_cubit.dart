@@ -1,6 +1,6 @@
+import 'package:equatable/equatable.dart';
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
-import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
 import 'package:flower/features/auth/domain/usecases/forget_password_usecase.dart';
 import 'package:flower/features/auth/domain/usecases/verify_reset_code_usecase.dart';
@@ -16,17 +16,15 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
   final ForgetPasswordUseCase _forgetPasswordUseCase;
 
   VerifyResetCodeCubit(this._verifyUseCase, this._forgetPasswordUseCase)
-    : super(VerifyResetCodeState.initial());
+    : super(const VerifyResetCodeState());
 
   void doIntent(VerifyResetCodeIntent intent) {
     switch (intent.runtimeType) {
       case VerifyIntent:
-        final code = (intent as VerifyIntent).code;
-        _verify(code);
+        _verify((intent as VerifyIntent).code);
         break;
       case ResendIntent:
-        final email = (intent as ResendIntent).email;
-        _resend(email);
+        _resend((intent as ResendIntent).email);
         break;
       case ClearResendStatusIntent:
         _clearResendStatus();
@@ -34,61 +32,67 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
     }
   }
 
+  Future<void> _verify(String code) async {
+    emit(
+      state.copyWith(
+        base: const BaseState(isLoading: true),
+        hasError: false,
+      ),
+    );
+    final response = await _verifyUseCase(resetCode: code);
+    switch (response) {
+      case SuccessBaseResponse<VerifyResetCodeEntity>():
+        if (response.data.isValid) {
+          emit(state.copyWith(base: BaseState(data: response.data)));
+        } else {
+          emit(state.copyWith(base: const BaseState(), hasError: true));
+        }
+        break;
+      case ErrorBaseResponse<VerifyResetCodeEntity>():
+        emit(
+          state.copyWith(
+            base: BaseState(errorMessage: response.failure.message),
+            hasError: true,
+          ),
+        );
+        break;
+    }
+  }
+
+  Future<void> _resend(String email) async {
+    if (state.isResending) return;
+    emit(
+      state.copyWith(
+        isResending: true,
+        resendSucceeded: false,
+        resendErrorMessage: null,
+      ),
+    );
+    final response = await _forgetPasswordUseCase(email: email);
+    switch (response) {
+      case SuccessBaseResponse():
+        emit(state.copyWith(isResending: false, resendSucceeded: true));
+        break;
+      case ErrorBaseResponse():
+        emit(
+          state.copyWith(
+            isResending: false,
+            resendErrorMessage: response.failure.message,
+          ),
+        );
+        break;
+    }
+  }
+
   void _clearResendStatus() {
     emit(
       VerifyResetCodeState(
-        isLoading: state.isLoading,
-        data: state.data,
-        errorMessage: state.errorMessage,
+        base: state.base,
         hasError: state.hasError,
         isResending: false,
         resendSucceeded: false,
         resendErrorMessage: null,
       ),
     );
-  }
-
-  Future<void> _verify(String code) async {
-    emit(state.copyWith(isLoadingParam: true, hasError: false));
-    final response = await _verifyUseCase(resetCode: code);
-
-    if (response is SuccessBaseResponse<VerifyResetCodeEntity>) {
-      if (response.data.isValid) {
-        emit(state.copyWith(isLoadingParam: false, dataParam: response.data));
-      } else {
-        emit(
-          state.copyWith(
-            isLoadingParam: false,
-            hasError: true,
-            errorMessageParam: 'Invalid code',
-          ),
-        );
-      }
-    } else if (response is ErrorBaseResponse<VerifyResetCodeEntity>) {
-      emit(
-        state.copyWith(
-          isLoadingParam: false,
-          hasError: true,
-          errorMessageParam: response.failure.message,
-        ),
-      );
-    }
-  }
-
-  Future<void> _resend(String email) async {
-    if (state.isResending) return;
-    emit(state.copyWith(isResending: true));
-    final response = await _forgetPasswordUseCase(email: email);
-
-    if (response is SuccessBaseResponse<ForgetPasswordEntity>) {
-      emit(state.copyWith(isResending: false, resendSucceeded: true));
-    } else if (response is ErrorBaseResponse<ForgetPasswordEntity>) {
-      emit(
-        state.copyWith(
-          isResending: false,
-          resendErrorMessage: response.failure.message,
-        ),
-      );
-    }
   }
 }

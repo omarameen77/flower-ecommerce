@@ -4,5 +4,9 @@ sealed class ResetPasswordIntent {
 
 class SubmitResetPasswordIntent extends ResetPasswordIntent {
   final String email;
-  const SubmitResetPasswordIntent(this.email);
+  final String newPassword;
+  const SubmitResetPasswordIntent({
+    required this.email,
+    required this.newPassword,
+  });
 }

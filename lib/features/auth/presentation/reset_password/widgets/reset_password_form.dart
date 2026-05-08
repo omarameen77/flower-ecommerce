@@ -9,23 +9,26 @@ import 'package:flower/core/widgets/primary_button.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_intents.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResetPasswordForm extends StatelessWidget {
   final String email;
-  final ResetPasswordCubit cubit;
-  final ResetPasswordState state;
+  final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
+  final GlobalKey<FormState> formKey;
 
   const ResetPasswordForm({
     super.key,
     required this.email,
-    required this.cubit,
-    required this.state,
+    required this.passwordController,
+    required this.confirmPasswordController,
+    required this.formKey,
   });
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: cubit.formKey,
+      key: formKey,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,7 +40,7 @@ class ResetPasswordForm extends StatelessWidget {
             ),
             const AppSizedBox(height: AppSize.s28),
             CustomTextField(
-              controller: cubit.passwordController,
+              controller: passwordController,
               labelText: context.newPassword,
               hintText: context.enterNewPassword,
               isPassword: true,
@@ -45,33 +48,40 @@ class ResetPasswordForm extends StatelessWidget {
             ),
             const AppSizedBox(height: AppSize.s28),
             CustomTextField(
-              controller: cubit.confirmPasswordController,
+              controller: confirmPasswordController,
               labelText: context.confirmPassword,
               hintText: context.confirmPassword,
               isPassword: true,
               validator: (v) => AppValidator.confirmPassword(
                 context,
                 v,
-                cubit.passwordController.text,
+                passwordController.text,
               ),
             ),
             const AppSizedBox(height: AppSize.s50),
-            _buildSubmit(context),
+            BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+              buildWhen: (prev, curr) =>
+                  prev.base.isLoading != curr.base.isLoading,
+              builder: (context, state) {
+                if (state.base.isLoading) return const ButtonLoadingWidget();
+                return PrimaryButton(
+                  text: context.confirm,
+                  onTap: () {
+                    if (formKey.currentState?.validate() ?? false) {
+                      context.read<ResetPasswordCubit>().doIntent(
+                        SubmitResetPasswordIntent(
+                          email: email,
+                          newPassword: passwordController.text,
+                        ),
+                      );
+                    }
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSubmit(BuildContext context) {
-    if (state.isLoading) return const ButtonLoadingWidget();
-    return PrimaryButton(
-      text: context.confirm,
-      onTap: () {
-        if (cubit.formKey.currentState?.validate() ?? false) {
-          cubit.doIntent(SubmitResetPasswordIntent(email));
-        }
-      },
     );
   }
 }
