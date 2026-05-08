@@ -75,11 +75,8 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state.registerState.errorMessage != null) {
             CustomSnackBar.error(context, state.registerState.errorMessage!);
           } else if (state.registerState.data != null) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.appSections,
-              (_) => false,
-            );
+            //TODO: nav to login
+            
           }
         },
         child: Scaffold(
