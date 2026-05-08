@@ -8,8 +8,8 @@ class ButtonLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColors.primary.withOpacity(0.4),
-      highlightColor: AppColors.primaryLight.withOpacity(0.6),
+      baseColor: AppColors.primary.withAlpha((0.4 * 255).round()),
+      highlightColor: AppColors.primaryLight.withAlpha((0.6 * 255).round()),
       child: Container(
         width: double.infinity,
         height: 52,
