@@ -4,7 +4,7 @@ import 'package:flower/core/network/model/user.dart';
 import 'package:flower/core/network/model/user_entity.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:flower/features/auth/data/repositories/auth_repo_impl.dart';
-import 'package:flower/features/auth/domain/usecases/register_params.dart';
+import 'package:flower/features/auth/domain/use_cases/register_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
