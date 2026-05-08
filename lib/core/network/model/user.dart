@@ -1,4 +1,4 @@
-import 'package:flower/core/network/model/user_entity.dart';
+import 'package:flower/features/auth/login/domain/entity/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
@@ -46,18 +46,10 @@ class UserDto {
 
   Map<String, dynamic> toJson() => _$UserDtoToJson(this);
 
-  UserEntity toDomain() {
-    return UserEntity(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      gender: gender,
-      phone: phone,
-      photo: phone,
-      role: role,
-      wishlist: wishlist,
-      addresses: addresses,
-      createdAt: createdAt,
-    );
-  }
+  User? toDomain() => User(
+    firstName: firstName ?? '',
+    lastName: lastName ?? '',
+    email: email ?? '',
+    id: id ?? '',
+  );
 }

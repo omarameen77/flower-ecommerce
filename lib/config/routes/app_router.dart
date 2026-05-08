@@ -1,6 +1,7 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
 import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
+import 'package:flower/features/auth/login/ui/screen/login_screen.dart';
 import 'package:flower/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,9 @@ abstract class AppRouter {
 
       case Routes.appSections:
         return _slide(const AppSectionsPage());
+
+      case Routes.login:
+        return _slide(const LoginScreen());
 
       default:
         return _fade(NotFoundScreen(route: settings.name ?? ''));
