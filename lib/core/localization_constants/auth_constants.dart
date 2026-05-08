@@ -45,6 +45,7 @@ extension AuthConstants on BuildContext {
   String get emailVerification => "auth.email_verification".tr();
   String get verificationCodeSubtitle => "auth.verification_code_subtitle".tr();
   String get didntReceiveCode => "auth.didnt_receive_code".tr();
+  String get requiredField => "auth.required".tr();
 
   // ───────── Reset Password ─────────
   String get resetPassword => "auth.reset_password".tr();
