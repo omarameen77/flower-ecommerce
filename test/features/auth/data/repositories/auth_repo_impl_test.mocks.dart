@@ -10,13 +10,14 @@ import 'package:flower/core/network/model/user.dart' as _i5;
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i2;
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart'
-    as _i8;
-import 'package:flower/features/auth/data/models/response/reset_password_response.dart'
-    as _i10;
-import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart'
     as _i9;
+import 'package:flower/features/auth/data/models/response/reset_password_response.dart'
+    as _i11;
+import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart'
+    as _i10;
+import 'package:flower/features/auth/domain/use_cases/login_params.dart' as _i6;
 import 'package:flower/features/auth/domain/use_cases/register_params.dart'
-    as _i6;
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 
@@ -45,8 +46,21 @@ class MockAuthRemoteDataSourceContract extends _i1.Mock
   }
 
   @override
+  _i3.Future<_i4.BaseResponse<_i5.UserDto>> login(_i6.LoginParams? params) =>
+      (super.noSuchMethod(
+            Invocation.method(#login, [params]),
+            returnValue: _i3.Future<_i4.BaseResponse<_i5.UserDto>>.value(
+              _i7.dummyValue<_i4.BaseResponse<_i5.UserDto>>(
+                this,
+                Invocation.method(#login, [params]),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i5.UserDto>>);
+
+  @override
   _i3.Future<_i4.BaseResponse<_i5.UserDto>> register(
-    _i6.RegisterParams? params,
+    _i8.RegisterParams? params,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#register, [params]),
@@ -60,37 +74,36 @@ class MockAuthRemoteDataSourceContract extends _i1.Mock
           as _i3.Future<_i4.BaseResponse<_i5.UserDto>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<_i8.ForgetPasswordResponseDto>> forgetPassword({
+  _i3.Future<_i4.BaseResponse<_i9.ForgetPasswordResponseDto>> forgetPassword({
     required String? email,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#forgetPassword, [], {#email: email}),
             returnValue:
                 _i3.Future<
-                  _i4.BaseResponse<_i8.ForgetPasswordResponseDto>
+                  _i4.BaseResponse<_i9.ForgetPasswordResponseDto>
                 >.value(
                   _i7.dummyValue<
-                    _i4.BaseResponse<_i8.ForgetPasswordResponseDto>
+                    _i4.BaseResponse<_i9.ForgetPasswordResponseDto>
                   >(
                     this,
                     Invocation.method(#forgetPassword, [], {#email: email}),
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<_i8.ForgetPasswordResponseDto>>);
+          as _i3.Future<_i4.BaseResponse<_i9.ForgetPasswordResponseDto>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<_i9.VerifyResetCodeResponseDto>> verifyResetCode({
-    required String? resetCode,
-  }) =>
+  _i3.Future<_i4.BaseResponse<_i10.VerifyResetCodeResponseDto>>
+  verifyResetCode({required String? resetCode}) =>
       (super.noSuchMethod(
             Invocation.method(#verifyResetCode, [], {#resetCode: resetCode}),
             returnValue:
                 _i3.Future<
-                  _i4.BaseResponse<_i9.VerifyResetCodeResponseDto>
+                  _i4.BaseResponse<_i10.VerifyResetCodeResponseDto>
                 >.value(
                   _i7.dummyValue<
-                    _i4.BaseResponse<_i9.VerifyResetCodeResponseDto>
+                    _i4.BaseResponse<_i10.VerifyResetCodeResponseDto>
                   >(
                     this,
                     Invocation.method(#verifyResetCode, [], {
@@ -99,10 +112,10 @@ class MockAuthRemoteDataSourceContract extends _i1.Mock
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<_i9.VerifyResetCodeResponseDto>>);
+          as _i3.Future<_i4.BaseResponse<_i10.VerifyResetCodeResponseDto>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<_i10.ResetPasswordResponseDto>> resetPassword({
+  _i3.Future<_i4.BaseResponse<_i11.ResetPasswordResponseDto>> resetPassword({
     required String? email,
     required String? newPassword,
   }) =>
@@ -113,10 +126,10 @@ class MockAuthRemoteDataSourceContract extends _i1.Mock
             }),
             returnValue:
                 _i3.Future<
-                  _i4.BaseResponse<_i10.ResetPasswordResponseDto>
+                  _i4.BaseResponse<_i11.ResetPasswordResponseDto>
                 >.value(
                   _i7.dummyValue<
-                    _i4.BaseResponse<_i10.ResetPasswordResponseDto>
+                    _i4.BaseResponse<_i11.ResetPasswordResponseDto>
                   >(
                     this,
                     Invocation.method(#resetPassword, [], {
@@ -126,5 +139,5 @@ class MockAuthRemoteDataSourceContract extends _i1.Mock
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<_i10.ResetPasswordResponseDto>>);
+          as _i3.Future<_i4.BaseResponse<_i11.ResetPasswordResponseDto>>);
 }
