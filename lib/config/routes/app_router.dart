@@ -5,6 +5,7 @@ import 'package:flower/core/widgets/not_found_screen.dart';
 import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:flower/features/auth/presentation/forget_password/pages/forget_password_screen.dart';
+import 'package:flower/features/auth/presentation/login/pages/login_screen.dart';
 import 'package:flower/features/auth/presentation/register/pages/register_page.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
 import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
@@ -18,6 +19,8 @@ abstract class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     try {
       switch (settings.name) {
+        case Routes.login:
+          return PageTransitions.fade(const LoginScreen());
         case Routes.splash:
           return PageTransitions.fade(const SplashScreen());
 
