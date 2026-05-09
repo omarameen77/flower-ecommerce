@@ -1,12 +1,15 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user.dart';
+import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:flower/features/auth/data/models/request/login_request.dart';
 import 'package:flower/features/auth/data/models/request/register_request.dart';
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart';
 import 'package:flower/features/auth/data/models/response/reset_password_response.dart';
 import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart';
+import 'package:flower/features/auth/domain/use_cases/login_params.dart';
 import 'package:flower/features/auth/domain/use_cases/register_params.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,6 +20,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   AuthRemoteDataSourceImpl({required this.authApiClient});
 
   static const _fakeDelay = Duration(milliseconds: 500);
+  @override
+  Future<BaseResponse<UserDto>> login(LoginParams params) async {
+    try {
+      final response = await authApiClient.login(
+        LoginRequestDto(email: params.email, password: params.password),
+      );
+
+      if (response.token != null && response.token!.isNotEmpty) {
+        await SecureStorageService.saveToken(response.token!);
+      }
+
+      return SuccessBaseResponse<UserDto>(data: response.user!);
+    } catch (e) {
+      return ErrorBaseResponse<UserDto>(failure: ErrorHandler.handle(e));
+    }
+  }
 
   @override
   Future<BaseResponse<UserDto>> register(RegisterParams params) async {

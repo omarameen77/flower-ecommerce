@@ -11,4 +11,8 @@ abstract class ErrorConstants {
   static String get serverError => "error_massages.serverError".tr();
   static String get unexpectedError => "error_massages.unexpectedError".tr();
   static String get unknownError => "error_massages.unknownError".tr();
+  static String get loginSuccessfully =>
+      "error_massages.login_successfully".tr();
+  static String get signupSuccessfully =>
+      "error_massages.signup_successfully".tr();
 }
