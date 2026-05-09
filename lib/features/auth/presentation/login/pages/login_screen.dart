@@ -1,6 +1,7 @@
 import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
+import 'package:flower/core/localization_constants/error_massage_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
@@ -18,13 +19,13 @@ class LoginScreen extends StatelessWidget {
       create: (_) => getIt<LoginCubit>(),
       child: Scaffold(
         backgroundColor: AppColors.background,
-        appBar: CustomAppBar(title: context.login),
+        appBar: CustomAppBar(title: context.login, buttonEnable: false),
         body: BlocListener<LoginCubit, LoginState>(
           listener: (context, state) {
             final loginData = state.loginState.data;
 
             if (loginData != null) {
-              CustomSnackBar.success(context, "Login Successfully");
+              CustomSnackBar.success(context, ErrorConstants.loginSuccessfully);
               Navigator.pushReplacementNamed(context, Routes.appSections);
             }
 

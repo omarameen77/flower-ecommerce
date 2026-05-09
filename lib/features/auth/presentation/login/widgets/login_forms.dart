@@ -3,6 +3,7 @@ import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
+import 'package:flower/core/widgets/button_loading_widget.dart';
 import 'package:flower/core/widgets/primary_button.dart';
 import 'package:flower/features/auth/presentation/login/cubit/login_cubit.dart';
 import 'package:flower/features/auth/presentation/login/cubit/login_event.dart';
@@ -86,6 +87,9 @@ class _LoginFormState extends State<LoginForm> {
             /// LOGIN BUTTON
             BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
+                if (state.loginState.isLoading) {
+                  return const ButtonLoadingWidget();
+                }
                 return PrimaryButton(
                   text: context.login,
                   onTap: () {
@@ -112,7 +116,13 @@ class _LoginFormState extends State<LoginForm> {
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              child: Text(context.continueAsGuest),
+              child: Text(
+                context.continueAsGuest,
+                style: getMediumStyle(
+                  context: context,
+                  color: AppColors.textPrimary,
+                ),
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -128,18 +138,22 @@ class _LoginFormState extends State<LoginForm> {
                     color: AppColors.textPrimary,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
+                AppSizedBox(width: 4),
+                GestureDetector(
+                  onTap: () {
                     Navigator.pushNamed(context, Routes.signup);
                   },
                   child: Text(
                     context.signUp,
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
-                      decorationColor: AppColors.primary,
-                    ),
+                    style:
+                        getSemiBoldStyle(
+                          context: context,
+                          color: AppColors.primary,
+                          fontSize: 14,
+                        ).copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.primary,
+                        ),
                   ),
                 ),
               ],

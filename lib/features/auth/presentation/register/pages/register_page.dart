@@ -1,7 +1,9 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/auth_constants.dart';
+import 'package:flower/core/localization_constants/error_massage_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
 import 'package:flower/core/widgets/primary_button.dart';
 import 'package:flower/core/widgets/button_loading_widget.dart';
@@ -51,17 +53,17 @@ class _RegisterPageState extends State<RegisterPage> {
     final String phone = phoneController.text;
 
     // register
-      context.read<RegisterCubit>().doEvent(
-        Register(
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          rePassword: rePasswordController.text,
-          phone: phone,
-          gender: context.read<RegisterCubit>().state.selectedGender,
-        ),
-      );
+    context.read<RegisterCubit>().doEvent(
+      Register(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        rePassword: rePasswordController.text,
+        phone: phone,
+        gender: context.read<RegisterCubit>().state.selectedGender,
+      ),
+    );
   }
 
   @override
@@ -75,12 +77,12 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state.registerState.errorMessage != null) {
             CustomSnackBar.error(context, state.registerState.errorMessage!);
           } else if (state.registerState.data != null) {
-            //TODO: nav to login
-            
+            CustomSnackBar.success(context, ErrorConstants.signupSuccessfully);
+            Navigator.pushReplacementNamed(context, Routes.login);
           }
         },
         child: Scaffold(
-          appBar: AppBar(title: Text(context.signUp)),
+          appBar: CustomAppBar(title: context.signUp),
           body: SingleChildScrollView(
             child: Center(
               child: Form(
@@ -132,7 +134,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       const AppSizedBox(height: 16),
-                      AlreadyHaveAccountWidget(),
+                      AlreadyHaveAccountWidget(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ],
                   ),
                 ),
