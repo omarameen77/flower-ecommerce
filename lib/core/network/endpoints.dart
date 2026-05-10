@@ -7,3 +7,9 @@ class AuthEndPoint {
   static const verifyResetCode = "/auth/verifyResetCode";
   static const resetPassword = "/auth/resetPassword";
 }
+
+class ProductsSectionsEndPoint {
+  static const categories = "/categories";
+  static const occasions = "/occasions";
+  static const products = "/products";
+}

@@ -27,7 +27,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
 
   # Serialization
-  json_annotation: ^4.9.0
+  json_annotation: ^4.11.0
 
   # Storage
   flutter_secure_storage: ^10.0.0
