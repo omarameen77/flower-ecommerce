@@ -9,7 +9,10 @@ class GetProductUseCase {
 
   GetProductUseCase({required this.productsSectionRepo});
 
-  Future<BaseResponse<List<ProductEntity>>> call({int? limit}) async {
-    return productsSectionRepo.getProducts(limit: limit);
+  Future<BaseResponse<List<ProductEntity>>> call({
+    int? limit,
+    String? sort,
+  }) async {
+    return productsSectionRepo.getProducts(limit: limit, sort: sort);
   }
 }

@@ -29,8 +29,14 @@ class ProductsSectionsRepoImpl implements ProductsSectionRepo {
   }
 
   @override
-  Future<BaseResponse<List<ProductEntity>>> getProducts({int? limit}) async {
-    final response = await productsSectionDataSourceContract.getProducts();
+  Future<BaseResponse<List<ProductEntity>>> getProducts({
+    int? limit,
+    String? sort,
+  }) async {
+    final response = await productsSectionDataSourceContract.getProducts(
+      limit: limit,
+      sort: sort,
+    );
 
     switch (response) {
       case SuccessBaseResponse<List<ProductDto>>():

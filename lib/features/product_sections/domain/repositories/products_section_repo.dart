@@ -4,5 +4,8 @@ import 'package:flower/features/product_sections/domain/entities/product_entity.
 
 abstract interface class ProductsSectionRepo {
   Future<BaseResponse<List<OccasionEntity>>> getOccasions({int? limit});
-  Future<BaseResponse<List<ProductEntity>>> getProducts({int? limit});
+  Future<BaseResponse<List<ProductEntity>>> getProducts({
+    int? limit,
+    String? sort,
+  });
 }

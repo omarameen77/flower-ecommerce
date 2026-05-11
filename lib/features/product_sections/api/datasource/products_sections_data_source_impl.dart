@@ -27,10 +27,14 @@ class ProductsSectionsDataSourceImpl
   }
 
   @override
-  Future<BaseResponse<List<ProductDto>>> getProducts({int? limit}) async {
+  Future<BaseResponse<List<ProductDto>>> getProducts({
+    int? limit,
+    String? sort,
+  }) async {
     try {
       final response = await productsSectionsApiClient.getProducts(
         limit: limit,
+        sort: sort,
       );
       return SuccessBaseResponse<List<ProductDto>>(data: response.products!);
     } catch (e) {

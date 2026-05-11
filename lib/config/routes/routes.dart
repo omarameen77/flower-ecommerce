@@ -7,4 +7,5 @@ abstract class Routes {
   static const String resetPassword = '/reset-password';
   static const String home = '/home';
   static const String appSections = '/app-sections';
+  static const String bestSellers = '/best-sellers';
 }
