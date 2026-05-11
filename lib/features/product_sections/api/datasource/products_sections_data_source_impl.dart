@@ -13,12 +13,18 @@ class ProductsSectionsDataSourceImpl
 
   ProductsSectionsDataSourceImpl({required this.productsSectionsApiClient});
   @override
-  Future<BaseResponse<List<OccasionDto>>> getOccasions({int? limit}) async {
+  Future<BaseResponse<List<OccasionDto>>> getOccasions({
+    int? limit,
+    int? page,
+  }) async {
     try {
       final response = await productsSectionsApiClient.getOccasions(
         limit: limit,
+        page: page,
       );
-      return SuccessBaseResponse<List<OccasionDto>>(data: response.occasions!);
+      return SuccessBaseResponse<List<OccasionDto>>(
+        data: response.occasions ?? [],
+      );
     } catch (e) {
       return ErrorBaseResponse<List<OccasionDto>>(
         failure: ErrorHandler.handle(e),
@@ -32,7 +38,9 @@ class ProductsSectionsDataSourceImpl
       final response = await productsSectionsApiClient.getProducts(
         limit: limit,
       );
-      return SuccessBaseResponse<List<ProductDto>>(data: response.products!);
+      return SuccessBaseResponse<List<ProductDto>>(
+        data: response.products ?? [],
+      );
     } catch (e) {
       return ErrorBaseResponse<List<ProductDto>>(
         failure: ErrorHandler.handle(e),

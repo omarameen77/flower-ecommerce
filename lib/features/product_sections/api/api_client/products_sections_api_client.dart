@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flower/core/network/endpoints.dart';
+import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/features/product_sections/data/models/response/categories_response.dart';
 import 'package:flower/features/product_sections/data/models/response/occasions_response.dart';
 import 'package:flower/features/product_sections/data/models/response/products_response.dart';
@@ -24,16 +25,19 @@ abstract class ProductsSectionsApiClient {
 
   @GET(ProductsSectionsEndPoint.categories)
   Future<CategoriesResponse> getCategories({
-    @Query('limit') int? limit,
+    @Query(AppStrings.limit) int? limit,
+    @Query(AppStrings.page) int? page,
   });
 
   @GET(ProductsSectionsEndPoint.occasions)
   Future<OccasionsResponse> getOccasions({
-    @Query('limit') int? limit,
+        @Query(AppStrings.limit) int? limit,
+        @Query(AppStrings.page) int? page,
+
   });
 
   @GET(ProductsSectionsEndPoint.products)
   Future<ProductsResponse> getProducts({
-    @Query('limit') int? limit,
+    @Query(AppStrings.limit) int? limit,
   });
 }

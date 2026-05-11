@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
@@ -48,7 +49,7 @@ class ProductWidget extends StatelessWidget {
           ),
           const AppSizedBox(height: 8),
           Text(
-            product.title ?? 'No name',
+            product.title ?? AppStrings.noNmae,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: getRegularStyle(
@@ -58,44 +59,48 @@ class ProductWidget extends StatelessWidget {
             ),
           ),
           const AppSizedBox(height: 4),
-          Row(
-            children: [
-              Text(
-                'EGP $discountedPrice',
-                style: getSemiBoldStyle(
-                  context: context,
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                ),
-              ),
-              const AppSizedBox(width: 6),
-              if (discount > 0) ...[
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
                 Text(
-                  '$regularPrice',
-                  style: getRegularStyle(
+                  'EGP $discountedPrice',
+                  style: getSemiBoldStyle(
                     context: context,
-                    color: AppColors.textSecondary,
-                    fontSize: 13,
-                  ).copyWith(decoration: TextDecoration.lineThrough),
-                ),
-                const AppSizedBox(width: 4),
-                Text(
-                  '$discount%',
-                  style: getRegularStyle(
-                    context: context,
-                    color: AppColors.success,
-                    fontSize: 13,
+                    color: AppColors.textPrimary,
+                    fontSize: 16,
                   ),
                 ),
+                const AppSizedBox(width: 6),
+                if (discount > 0) ...[
+                  Text(
+                    '$regularPrice',
+                    style: getRegularStyle(
+                      context: context,
+                      color: AppColors.textSecondary,
+                      fontSize: 13,
+                    ).copyWith(decoration: TextDecoration.lineThrough),
+                  ),
+                  const AppSizedBox(width: 4),
+                  Text(
+                    '$discount%',
+                    style: getRegularStyle(
+                      context: context,
+                      color: AppColors.success,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           const AppSizedBox(height: 8),
           SizedBox(
             width: double.infinity,
             height: 34,
             child: ButtonWithPrefix(
-              text: 'Add to cart',
+              text: AppStrings.addToCart,
               onTap: () {},
               prefixIcon: const Icon(
                 Icons.shopping_cart_outlined,

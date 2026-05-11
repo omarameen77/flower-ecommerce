@@ -4,12 +4,15 @@ import 'package:flower/features/product_sections/domain/repositories/products_se
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetOccasionUseCase {
+class GetOccasionsUseCase {
   final ProductsSectionRepo productsSectionRepo;
 
-  GetOccasionUseCase({required this.productsSectionRepo});
+  GetOccasionsUseCase({required this.productsSectionRepo});
 
-  Future<BaseResponse<List<OccasionEntity>>> call({int? limit}) async {
-    return productsSectionRepo.getOccasions(limit: limit);
+  Future<BaseResponse<List<OccasionEntity>>> call({
+    int? limit,
+    int? page,
+  }) async {
+    return productsSectionRepo.getOccasions(limit: limit, page: page);
   }
 }
