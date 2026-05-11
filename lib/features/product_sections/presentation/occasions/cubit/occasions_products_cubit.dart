@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flower/features/product_sections/domain/use_cases/get_occasions_use_case.dart';
+import 'package:flower/features/product_sections/domain/use_cases/get_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower/config/base/base_response.dart';
@@ -6,8 +8,6 @@ import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/product_sections/domain/entities/occasion_entity.dart';
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart';
-import 'package:flower/features/product_sections/domain/use_cases/get_occasion_use_case.dart';
-import 'package:flower/features/product_sections/domain/use_cases/get_product_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 part 'occasions_products_event.dart';
@@ -15,8 +15,8 @@ part 'occasions_products_state.dart';
 
 @injectable
 class OccasionsProductsCubit extends Cubit<OccasionsProductsState> {
-  final GetOccasionUseCase getOccasionUseCase;
-  final GetProductUseCase getProductUseCase;
+  final GetOccasionsUseCase getOccasionUseCase;
+  final GetProductsUseCase getProductUseCase;
 
   OccasionsProductsCubit({
     required this.getOccasionUseCase,
