@@ -58,37 +58,41 @@ class ProductWidget extends StatelessWidget {
             ),
           ),
           const AppSizedBox(height: 4),
-          Row(
-            children: [
-              Text(
-                'EGP $discountedPrice',
-                style: getSemiBoldStyle(
-                  context: context,
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                ),
-              ),
-              const AppSizedBox(width: 6),
-              if (discount > 0) ...[
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
                 Text(
-                  '$regularPrice',
-                  style: getRegularStyle(
+                  'EGP $discountedPrice',
+                  style: getSemiBoldStyle(
                     context: context,
-                    color: AppColors.textSecondary,
-                    fontSize: 13,
-                  ).copyWith(decoration: TextDecoration.lineThrough),
-                ),
-                const AppSizedBox(width: 4),
-                Text(
-                  '$discount%',
-                  style: getRegularStyle(
-                    context: context,
-                    color: AppColors.success,
-                    fontSize: 13,
+                    color: AppColors.textPrimary,
+                    fontSize: 16,
                   ),
                 ),
+                const AppSizedBox(width: 6),
+                if (discount > 0) ...[
+                  Text(
+                    '$regularPrice',
+                    style: getRegularStyle(
+                      context: context,
+                      color: AppColors.textSecondary,
+                      fontSize: 13,
+                    ).copyWith(decoration: TextDecoration.lineThrough),
+                  ),
+                  const AppSizedBox(width: 4),
+                  Text(
+                    '$discount%',
+                    style: getRegularStyle(
+                      context: context,
+                      color: AppColors.success,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           const AppSizedBox(height: 8),
           SizedBox(
