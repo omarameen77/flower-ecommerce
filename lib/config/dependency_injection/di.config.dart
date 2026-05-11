@@ -53,8 +53,12 @@ import '../../features/product_sections/domain/repositories/products_section_rep
     as _i386;
 import '../../features/product_sections/domain/use_cases/get_occasions_use_case.dart'
     as _i529;
+import '../../features/product_sections/domain/use_cases/get_product_by_id_use_case.dart'
+    as _i1049;
 import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i713;
+import '../../features/product_sections/presentation/product_details/cubit/product_details_cubit.dart'
+    as _i301;
 import '../../features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart'
     as _i129;
 import '../../features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart'
@@ -98,6 +102,11 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
+    gh.factory<_i1049.GetProductByIdUseCase>(
+      () => _i1049.GetProductByIdUseCase(
+        productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
+      ),
+    );
     gh.factory<_i713.GetProductsUseCase>(
       () => _i713.GetProductsUseCase(
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
@@ -131,6 +140,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1010.RegisterUseCase>(
       () => _i1010.RegisterUseCase(registerRepoContract: gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i301.ProductDetailsCubit>(
+      () => _i301.ProductDetailsCubit(
+        getProductByIdUseCase: gh<_i1049.GetProductByIdUseCase>(),
+      ),
     );
     gh.factory<_i404.RegisterCubit>(
       () => _i404.RegisterCubit(gh<_i1010.RegisterUseCase>()),

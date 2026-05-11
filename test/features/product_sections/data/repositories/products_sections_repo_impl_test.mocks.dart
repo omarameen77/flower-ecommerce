@@ -78,4 +78,17 @@ class MockProductsSectionDataSourceContract extends _i1.Mock
                 ),
           )
           as _i3.Future<_i4.BaseResponse<List<_i7.ProductDto>>>);
+
+  @override
+  _i3.Future<_i4.BaseResponse<_i7.ProductDto>> getProductById(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#getProductById, [id]),
+            returnValue: _i3.Future<_i4.BaseResponse<_i7.ProductDto>>.value(
+              _i6.dummyValue<_i4.BaseResponse<_i7.ProductDto>>(
+                this,
+                Invocation.method(#getProductById, [id]),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i7.ProductDto>>);
 }

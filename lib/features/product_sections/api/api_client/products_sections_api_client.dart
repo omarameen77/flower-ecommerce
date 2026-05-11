@@ -3,6 +3,7 @@ import 'package:flower/core/network/endpoints.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/features/product_sections/data/models/response/categories_response.dart';
 import 'package:flower/features/product_sections/data/models/response/occasions_response.dart';
+import 'package:flower/features/product_sections/data/models/response/product_details_response.dart';
 import 'package:flower/features/product_sections/data/models/response/products_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -41,4 +42,7 @@ abstract class ProductsSectionsApiClient {
     @Query(AppStrings.limit) int? limit,
     @Query('sort') String? sort,
   });
+
+  @GET(ProductsSectionsEndPoint.productById)
+  Future<ProductDetailsResponse> getProductById(@Path('id') String id);
 }

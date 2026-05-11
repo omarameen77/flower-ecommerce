@@ -25,6 +25,9 @@ void main() {
     provideDummy<BaseResponse<List<ProductDto>>>(
       SuccessBaseResponse<List<ProductDto>>(data: const []),
     );
+    provideDummy<BaseResponse<ProductDto>>(
+      SuccessBaseResponse<ProductDto>(data: ProductDto()),
+    );
   });
 
   setUp(() {
@@ -77,6 +80,50 @@ void main() {
           expect(result, isA<ErrorBaseResponse<List<ProductEntity>>>());
           expect(
             (result as ErrorBaseResponse<List<ProductEntity>>).failure,
+            failure,
+          );
+        },
+      );
+    });
+
+    group('getProductById', () {
+      const productId = '1';
+
+      test(
+        'should map DTO to entity on success',
+        () async {
+          final dto = ProductDto(id: productId, title: 'Sunny', price: 600);
+
+          when(
+            mockDataSource.getProductById(productId),
+          ).thenAnswer(
+            (_) async => SuccessBaseResponse<ProductDto>(data: dto),
+          );
+
+          final result = await repo.getProductById(productId);
+
+          expect(result, isA<SuccessBaseResponse<ProductEntity>>());
+          final data = (result as SuccessBaseResponse<ProductEntity>).data;
+          expect(data.id, productId);
+          expect(data.title, 'Sunny');
+        },
+      );
+
+      test(
+        'should preserve failure on error',
+        () async {
+          final failure = Failure(message: 'not found');
+          when(
+            mockDataSource.getProductById(productId),
+          ).thenAnswer(
+            (_) async => ErrorBaseResponse<ProductDto>(failure: failure),
+          );
+
+          final result = await repo.getProductById(productId);
+
+          expect(result, isA<ErrorBaseResponse<ProductEntity>>());
+          expect(
+            (result as ErrorBaseResponse<ProductEntity>).failure,
             failure,
           );
         },

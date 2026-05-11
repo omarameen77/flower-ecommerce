@@ -8,6 +8,5 @@ abstract interface class ProductsSectionDataSourceContract {
     int? limit,
     String? sort,
   });
+  Future<BaseResponse<ProductDto>> getProductById(String id);
 }
-
-

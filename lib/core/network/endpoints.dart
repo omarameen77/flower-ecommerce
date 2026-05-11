@@ -12,4 +12,5 @@ class ProductsSectionsEndPoint {
   static const categories = "/categories";
   static const occasions = "/occasions";
   static const products = "/products";
+  static const productById = "/products/{id}";
 }
