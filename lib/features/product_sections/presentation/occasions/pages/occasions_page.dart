@@ -3,8 +3,6 @@ import 'package:flower/core/widgets/app_loading_widget.dart';
 import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/features/product_sections/domain/entities/occasion_entity.dart';
-import 'package:flower/features/product_sections/domain/use_cases/get_occasion_use_case.dart';
-import 'package:flower/features/product_sections/domain/use_cases/get_product_use_case.dart';
 import 'package:flower/features/product_sections/presentation/occasions/cubit/occasions_products_cubit.dart';
 import 'package:flower/features/product_sections/presentation/occasions/widgets/occasion_error_view.dart';
 import 'package:flower/features/product_sections/presentation/occasions/widgets/occasion_tabs_view.dart';
@@ -27,10 +25,8 @@ class _OccasionsPageState extends State<OccasionsPage> {
   void initState() {
     super.initState();
     _cubit =
-        OccasionsProductsCubit(
-          getOccasionUseCase: getIt<GetOccasionUseCase>(),
-          getProductUseCase: getIt<GetProductUseCase>(),
-        )..doEvent(
+        getIt<OccasionsProductsCubit>()
+          ..doEvent(
           LoadInitialDataEvent(initialOccasionId: widget.initialOccasionId),
         );
     _scrollController.addListener(_onScroll);
