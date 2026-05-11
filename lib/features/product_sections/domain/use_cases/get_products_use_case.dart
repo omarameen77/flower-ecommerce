@@ -4,10 +4,10 @@ import 'package:flower/features/product_sections/domain/repositories/products_se
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetProductUseCase {
+class GetProductsUseCase {
   final ProductsSectionRepo productsSectionRepo;
 
-  GetProductUseCase({required this.productsSectionRepo});
+  GetProductsUseCase({required this.productsSectionRepo});
 
   Future<BaseResponse<List<ProductEntity>>> call({
     int? limit,

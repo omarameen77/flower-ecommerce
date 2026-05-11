@@ -58,26 +58,32 @@ class MockProductsSectionsApiClient extends _i1.Mock
   }
 
   @override
-  _i6.Future<_i2.CategoriesResponse> getCategories({int? limit}) =>
+  _i6.Future<_i2.CategoriesResponse> getCategories({int? limit, int? page}) =>
       (super.noSuchMethod(
-            Invocation.method(#getCategories, [], {#limit: limit}),
+            Invocation.method(#getCategories, [], {#limit: limit, #page: page}),
             returnValue: _i6.Future<_i2.CategoriesResponse>.value(
               _FakeCategoriesResponse_0(
                 this,
-                Invocation.method(#getCategories, [], {#limit: limit}),
+                Invocation.method(#getCategories, [], {
+                  #limit: limit,
+                  #page: page,
+                }),
               ),
             ),
           )
           as _i6.Future<_i2.CategoriesResponse>);
 
   @override
-  _i6.Future<_i3.OccasionsResponse> getOccasions({int? limit}) =>
+  _i6.Future<_i3.OccasionsResponse> getOccasions({int? limit, int? page}) =>
       (super.noSuchMethod(
-            Invocation.method(#getOccasions, [], {#limit: limit}),
+            Invocation.method(#getOccasions, [], {#limit: limit, #page: page}),
             returnValue: _i6.Future<_i3.OccasionsResponse>.value(
               _FakeOccasionsResponse_1(
                 this,
-                Invocation.method(#getOccasions, [], {#limit: limit}),
+                Invocation.method(#getOccasions, [], {
+                  #limit: limit,
+                  #page: page,
+                }),
               ),
             ),
           )

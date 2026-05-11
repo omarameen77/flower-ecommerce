@@ -10,7 +10,7 @@ import 'package:flower/features/product_sections/domain/entities/product_entity.
     as _i6;
 import 'package:flower/features/product_sections/domain/repositories/products_section_repo.dart'
     as _i2;
-import 'package:flower/features/product_sections/domain/use_cases/get_product_use_case.dart'
+import 'package:flower/features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
@@ -36,11 +36,12 @@ class _FakeProductsSectionRepo_0 extends _i1.SmartFake
     : super(parent, parentInvocation);
 }
 
-/// A class which mocks [GetProductUseCase].
+/// A class which mocks [GetProductsUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetProductUseCase extends _i1.Mock implements _i3.GetProductUseCase {
-  MockGetProductUseCase() {
+class MockGetProductsUseCase extends _i1.Mock
+    implements _i3.GetProductsUseCase {
+  MockGetProductsUseCase() {
     _i1.throwOnMissingStub(this);
   }
 

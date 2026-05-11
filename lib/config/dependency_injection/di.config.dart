@@ -51,10 +51,10 @@ import '../../features/product_sections/data/repositories/products_sections_repo
     as _i34;
 import '../../features/product_sections/domain/repositories/products_section_repo.dart'
     as _i386;
-import '../../features/product_sections/domain/use_cases/get_occasion_use_case.dart'
-    as _i620;
-import '../../features/product_sections/domain/use_cases/get_product_use_case.dart'
-    as _i804;
+import '../../features/product_sections/domain/use_cases/get_occasions_use_case.dart'
+    as _i529;
+import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
+    as _i713;
 import '../../features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart'
     as _i129;
 import '../../features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart'
@@ -93,13 +93,13 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i303.ProductsSectionDataSourceContract>(),
       ),
     );
-    gh.factory<_i620.GetOccasionUseCase>(
-      () => _i620.GetOccasionUseCase(
+    gh.factory<_i529.GetOccasionsUseCase>(
+      () => _i529.GetOccasionsUseCase(
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
-    gh.factory<_i804.GetProductUseCase>(
-      () => _i804.GetProductUseCase(
+    gh.factory<_i713.GetProductsUseCase>(
+      () => _i713.GetProductsUseCase(
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
@@ -108,16 +108,16 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSourceContract: gh<_i107.AuthRemoteDataSourceContract>(),
       ),
     );
-    gh.factory<_i538.ProductCubit>(
-      () =>
-          _i538.ProductCubit(getProductUseCase: gh<_i804.GetProductUseCase>()),
-    );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
+    gh.factory<_i538.ProductCubit>(
+      () =>
+          _i538.ProductCubit(getProductUseCase: gh<_i713.GetProductsUseCase>()),
+    );
     gh.lazySingleton<_i129.OccasionCubit>(
       () => _i129.OccasionCubit(
-        getOccasionUseCase: gh<_i620.GetOccasionUseCase>(),
+        getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
       ),
     );
     gh.factory<_i27.ForgetPasswordUseCase>(

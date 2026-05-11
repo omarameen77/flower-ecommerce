@@ -2,7 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart';
 import 'package:flower/features/product_sections/domain/repositories/products_section_repo.dart';
-import 'package:flower/features/product_sections/domain/use_cases/get_product_use_case.dart';
+import 'package:flower/features/product_sections/domain/use_cases/get_products_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -12,7 +12,7 @@ import 'get_product_use_case_test.mocks.dart';
 @GenerateMocks([ProductsSectionRepo])
 void main() {
   late MockProductsSectionRepo mockProductsSectionRepo;
-  late GetProductUseCase getProductUseCase;
+  late GetProductsUseCase getProductUseCase;
 
   late int limit;
   late String sort;
@@ -28,7 +28,7 @@ void main() {
 
   setUp(() {
     mockProductsSectionRepo = MockProductsSectionRepo();
-    getProductUseCase = GetProductUseCase(
+    getProductUseCase = GetProductsUseCase(
       productsSectionRepo: mockProductsSectionRepo,
     );
   });

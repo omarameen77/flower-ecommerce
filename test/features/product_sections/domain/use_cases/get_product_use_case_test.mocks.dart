@@ -42,14 +42,18 @@ class MockProductsSectionRepo extends _i1.Mock
   @override
   _i3.Future<_i4.BaseResponse<List<_i5.OccasionEntity>>> getOccasions({
     int? limit,
+    int? page,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#getOccasions, [], {#limit: limit}),
+            Invocation.method(#getOccasions, [], {#limit: limit, #page: page}),
             returnValue:
                 _i3.Future<_i4.BaseResponse<List<_i5.OccasionEntity>>>.value(
                   _i6.dummyValue<_i4.BaseResponse<List<_i5.OccasionEntity>>>(
                     this,
-                    Invocation.method(#getOccasions, [], {#limit: limit}),
+                    Invocation.method(#getOccasions, [], {
+                      #limit: limit,
+                      #page: page,
+                    }),
                   ),
                 ),
           )

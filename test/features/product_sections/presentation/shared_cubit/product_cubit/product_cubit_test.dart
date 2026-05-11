@@ -2,7 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart';
-import 'package:flower/features/product_sections/domain/use_cases/get_product_use_case.dart';
+import 'package:flower/features/product_sections/domain/use_cases/get_products_use_case.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,9 +11,9 @@ import 'package:mockito/mockito.dart';
 
 import 'product_cubit_test.mocks.dart';
 
-@GenerateMocks([GetProductUseCase])
+@GenerateMocks([GetProductsUseCase])
 void main() {
-  late MockGetProductUseCase mockGetProductUseCase;
+  late MockGetProductsUseCase mockGetProductsUseCase;
   late ProductCubit productCubit;
 
   late List<ProductEntity> products;
@@ -30,8 +30,8 @@ void main() {
   });
 
   setUp(() {
-    mockGetProductUseCase = MockGetProductUseCase();
-    productCubit = ProductCubit(getProductUseCase: mockGetProductUseCase);
+    mockGetProductsUseCase = MockGetProductsUseCase();
+    productCubit = ProductCubit(getProductUseCase: mockGetProductsUseCase);
   });
 
   tearDown(() {
@@ -44,7 +44,7 @@ void main() {
         'should emit [loading, success] when fetch is successful',
         () async {
           when(
-            mockGetProductUseCase.call(
+            mockGetProductsUseCase.call(
               limit: anyNamed('limit'),
               sort: anyNamed('sort'),
             ),
@@ -76,7 +76,7 @@ void main() {
         () async {
           final failure = Failure(message: 'error');
           when(
-            mockGetProductUseCase.call(
+            mockGetProductsUseCase.call(
               limit: anyNamed('limit'),
               sort: anyNamed('sort'),
             ),
@@ -111,7 +111,7 @@ void main() {
         'should call use case with the chosen sort value',
         () async {
           when(
-            mockGetProductUseCase.call(
+            mockGetProductsUseCase.call(
               limit: anyNamed('limit'),
               sort: anyNamed('sort'),
             ),
@@ -125,7 +125,7 @@ void main() {
           await Future<void>.delayed(Duration.zero);
 
           verify(
-            mockGetProductUseCase.call(limit: 8, sort: '-sold'),
+            mockGetProductsUseCase.call(limit: 8, sort: '-sold'),
           ).called(1);
         },
       );

@@ -42,14 +42,18 @@ class MockProductsSectionDataSourceContract extends _i1.Mock
   @override
   _i3.Future<_i4.BaseResponse<List<_i5.OccasionDto>>> getOccasions({
     int? limit,
+    int? page,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#getOccasions, [], {#limit: limit}),
+            Invocation.method(#getOccasions, [], {#limit: limit, #page: page}),
             returnValue:
                 _i3.Future<_i4.BaseResponse<List<_i5.OccasionDto>>>.value(
                   _i6.dummyValue<_i4.BaseResponse<List<_i5.OccasionDto>>>(
                     this,
-                    Invocation.method(#getOccasions, [], {#limit: limit}),
+                    Invocation.method(#getOccasions, [], {
+                      #limit: limit,
+                      #page: page,
+                    }),
                   ),
                 ),
           )
