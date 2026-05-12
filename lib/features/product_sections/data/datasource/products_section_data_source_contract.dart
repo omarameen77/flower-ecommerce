@@ -9,5 +9,3 @@ abstract interface class ProductsSectionDataSourceContract {
     String? sort,
   });
 }
-
-
