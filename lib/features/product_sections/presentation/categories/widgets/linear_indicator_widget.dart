@@ -16,12 +16,7 @@ class LinearIndicatorWidget extends StatelessWidget {
               child: ShaderMask(
                 shaderCallback: (bounds) {
                   return const LinearGradient(
-                    colors: [
-                      AppColors.primaryLight,
-                      AppColors.primaryLight,
-                      AppColors.warning,
-                      AppColors.background,
-                    ],
+                    colors: [AppColors.primaryLight, AppColors.primaryLight],
                   ).createShader(bounds);
                 },
                 child: const LinearProgressIndicator(
