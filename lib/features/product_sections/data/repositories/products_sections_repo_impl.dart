@@ -13,8 +13,14 @@ class ProductsSectionsRepoImpl implements ProductsSectionRepo {
 
   ProductsSectionsRepoImpl({required this.productsSectionDataSourceContract});
   @override
-  Future<BaseResponse<List<OccasionEntity>>> getOccasions({int? limit, int? page}) async {
-    final response = await productsSectionDataSourceContract.getOccasions(limit: limit, page: page);
+  Future<BaseResponse<List<OccasionEntity>>> getOccasions({
+    int? limit,
+    int? page,
+  }) async {
+    final response = await productsSectionDataSourceContract.getOccasions(
+      limit: limit,
+      page: page,
+    );
 
     switch (response) {
       case SuccessBaseResponse<List<OccasionDto>>():
@@ -32,10 +38,14 @@ class ProductsSectionsRepoImpl implements ProductsSectionRepo {
   Future<BaseResponse<List<ProductEntity>>> getProducts({
     int? limit,
     String? sort,
+    String? categoryId,
+    String? keyword,
   }) async {
     final response = await productsSectionDataSourceContract.getProducts(
       limit: limit,
       sort: sort,
+      categoryId: categoryId,
+      keyword: keyword,
     );
 
     switch (response) {

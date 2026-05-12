@@ -12,7 +12,14 @@ class GetProductsUseCase {
   Future<BaseResponse<List<ProductEntity>>> call({
     int? limit,
     String? sort,
+    String? categoryId,
+    String? keyword,
   }) async {
-    return productsSectionRepo.getProducts(limit: limit, sort: sort);
+    return productsSectionRepo.getProducts(
+      limit: limit,
+      sort: sort,
+      categoryId: categoryId,
+      keyword: keyword,
+    );
   }
 }
