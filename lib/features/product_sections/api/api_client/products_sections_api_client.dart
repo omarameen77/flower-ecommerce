@@ -39,5 +39,6 @@ abstract class ProductsSectionsApiClient {
   @GET(ProductsSectionsEndPoint.products)
   Future<ProductsResponse> getProducts({
     @Query(AppStrings.limit) int? limit,
+    @Query('sort') String? sort,
   });
 }

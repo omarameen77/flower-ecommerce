@@ -13,8 +13,11 @@ part 'product_state.dart';
 @injectable
 class ProductCubit extends Cubit<ProductState> {
   final GetProductsUseCase getProductUseCase;
+  String? _sort;
 
   ProductCubit({required this.getProductUseCase}) : super(const ProductState());
+
+  void setSort(String? sort) => _sort = sort;
 
   void doEvent(ProductEvent event) {
     switch (event) {
@@ -43,7 +46,7 @@ class ProductCubit extends Cubit<ProductState> {
         emit(state.copyWith(isLoadingMore: true));
       }
 
-      final result = await getProductUseCase.call(limit: newLimit);
+      final result = await getProductUseCase.call(limit: newLimit, sort: _sort);
 
       switch (result) {
         case SuccessBaseResponse():
