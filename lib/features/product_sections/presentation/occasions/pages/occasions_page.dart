@@ -24,11 +24,10 @@ class _OccasionsPageState extends State<OccasionsPage> {
   @override
   void initState() {
     super.initState();
-    _cubit =
-        getIt<OccasionsProductsCubit>()
-          ..doEvent(
-          LoadInitialDataEvent(initialOccasionId: widget.initialOccasionId),
-        );
+    _cubit = getIt<OccasionsProductsCubit>()
+      ..doEvent(
+        LoadInitialDataEvent(initialOccasionId: widget.initialOccasionId),
+      );
     _scrollController.addListener(_onScroll);
   }
 
@@ -48,7 +47,10 @@ class _OccasionsPageState extends State<OccasionsPage> {
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
-        appBar: const CustomAppBar(title: 'Occasion'),
+        appBar: const CustomAppBar(
+          title: 'Occasion',
+          subtitle: 'Bloom with our exquisite occasions',
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           child:
