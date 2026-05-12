@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/yassmenaabdullah/development/flutter/bin/**)",
+      "Read(//Users/yassmenaabdullah/development/flutter/bin/cache/dart-sdk/bin/snapshots/**)"
+    ]
+  }
+}

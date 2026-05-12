@@ -51,10 +51,14 @@ import '../../features/product_sections/data/repositories/products_sections_repo
     as _i34;
 import '../../features/product_sections/domain/repositories/products_section_repo.dart'
     as _i386;
+import '../../features/product_sections/domain/use_cases/get_categories_use_case.dart'
+    as _i406;
 import '../../features/product_sections/domain/use_cases/get_occasions_use_case.dart'
     as _i529;
 import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i713;
+import '../../features/product_sections/presentation/shared_cubit/category_cubit/category_cubit.dart'
+    as _i344;
 import '../../features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart'
     as _i129;
 import '../../features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart'
@@ -91,6 +95,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i34.ProductsSectionsRepoImpl(
         productsSectionDataSourceContract:
             gh<_i303.ProductsSectionDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i406.GetCategoriesUseCase>(
+      () => _i406.GetCategoriesUseCase(
+        productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
     gh.factory<_i529.GetOccasionsUseCase>(
@@ -145,6 +154,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i660.VerifyResetCodeCubit(
         gh<_i887.VerifyResetCodeUseCase>(),
         gh<_i27.ForgetPasswordUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i344.CategoryCubit>(
+      () => _i344.CategoryCubit(
+        getCategoriesUseCase: gh<_i406.GetCategoriesUseCase>(),
       ),
     );
     gh.factory<_i450.ResetPasswordCubit>(

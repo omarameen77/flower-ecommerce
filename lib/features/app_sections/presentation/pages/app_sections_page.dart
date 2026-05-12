@@ -1,6 +1,7 @@
 import 'package:flower/core/localization_constants/layout_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/features/product_sections/presentation/home/pages/home_screen.dart';
 import 'package:flower/features/profile/presentation/prorile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +49,7 @@ class _AppSectionsView extends StatelessWidget {
           body: IndexedStack(
             index: currentIndex,
             children: [
-              _PlaceholderScreen(title: LayoutConstants.homeTab),
+              HomeScreen(),
               _PlaceholderScreen(title: LayoutConstants.categoriesTab),
               _PlaceholderScreen(title: LayoutConstants.cartTab),
               ProfileScreen(),
