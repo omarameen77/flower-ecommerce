@@ -19,4 +19,23 @@ abstract class PageTransitions {
     ),
     transitionDuration: const Duration(milliseconds: 350),
   );
+
+  static PageRoute<T> search<T>(Widget page) => PageRouteBuilder<T>(
+    pageBuilder: (_, animation, __) => page,
+    transitionDuration: const Duration(milliseconds: 450),
+    reverseTransitionDuration: const Duration(milliseconds: 350),
+    transitionsBuilder: (_, animation, __, child) {
+      final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+      final scale = Tween<double>(
+        begin: 0.98,
+        end: 1,
+      ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic));
+
+      return FadeTransition(
+        opacity: fade,
+        child: ScaleTransition(scale: scale, child: child),
+      );
+    },
+  );
 }

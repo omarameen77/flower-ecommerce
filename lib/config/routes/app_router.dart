@@ -12,6 +12,9 @@ import 'package:flower/features/auth/presentation/reset_password/pages/reset_pas
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
+import 'package:flower/features/product_sections/presentation/search/search_screen.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
 import 'package:flower/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,6 +60,13 @@ abstract class AppRouter {
             BlocProvider(
               create: (_) => getIt<ResetPasswordCubit>(),
               child: ResetPasswordScreen(email: email),
+            ),
+          );
+        case Routes.searchScreen:
+          return PageTransitions.search(
+            BlocProvider(
+              create: (_) => SearchCubit(getIt()),
+              child: const SearchScreen(),
             ),
           );
 
