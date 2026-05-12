@@ -30,15 +30,6 @@ class OccasionTabsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Bloom with our exquisite occasions',
-            style: getRegularStyle(
-              context: context,
-              color: AppColors.textSecondary,
-              fontSize: 16,
-            ),
-          ),
-          const AppSizedBox(height: 12),
           TabBar(
             isScrollable: true,
             indicatorColor: AppColors.primary,
