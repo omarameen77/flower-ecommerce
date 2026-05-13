@@ -55,4 +55,20 @@ class ProductsSectionsDataSourceImpl
       );
     }
   }
+
+  @override
+  Future<BaseResponse<ProductDto>> getProductById(String id) async {
+    try {
+      final response = await productsSectionsApiClient.getProductById(id);
+      final product = response.product;
+      if (product == null) {
+        return ErrorBaseResponse<ProductDto>(
+          failure: Failure(message: 'Product not found'),
+        );
+      }
+      return SuccessBaseResponse<ProductDto>(data: product);
+    } catch (e) {
+      return ErrorBaseResponse<ProductDto>(failure: ErrorHandler.handle(e));
+    }
+  }
 }
