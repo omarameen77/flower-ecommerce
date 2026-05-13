@@ -63,9 +63,16 @@ class MockProductsSectionRepo extends _i1.Mock
   _i3.Future<_i4.BaseResponse<List<_i7.ProductEntity>>> getProducts({
     int? limit,
     String? sort,
+    String? categoryId,
+    String? keyword,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#getProducts, [], {#limit: limit, #sort: sort}),
+            Invocation.method(#getProducts, [], {
+              #limit: limit,
+              #sort: sort,
+              #categoryId: categoryId,
+              #keyword: keyword,
+            }),
             returnValue:
                 _i3.Future<_i4.BaseResponse<List<_i7.ProductEntity>>>.value(
                   _i6.dummyValue<_i4.BaseResponse<List<_i7.ProductEntity>>>(
@@ -73,6 +80,8 @@ class MockProductsSectionRepo extends _i1.Mock
                     Invocation.method(#getProducts, [], {
                       #limit: limit,
                       #sort: sort,
+                      #categoryId: categoryId,
+                      #keyword: keyword,
                     }),
                   ),
                 ),

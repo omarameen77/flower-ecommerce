@@ -85,5 +85,12 @@
   "categories_tab": "الأقسام",
   "cart_tab": "السلة",
   "profile_tab": "حسابي"
+},
+"home":{
+  "search":"بحث",
+  "searchHint":"ابحث عن المنتجات  ",
+  "product_not_found":"غير متاح",
+  "all":"الجميع",
+  "searching":"...جاري البحث"
 }
 }

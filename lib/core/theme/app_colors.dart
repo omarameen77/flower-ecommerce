@@ -41,4 +41,6 @@ class AppColors {
 
   //  DIVIDER
   static const Color divider = Color(0xFFEEEEEE);
+
+  static const Color transparent = Colors.transparent;
 }

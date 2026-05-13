@@ -43,18 +43,30 @@ import '../../features/auth/presentation/verify_reset_code/cubit/verify_reset_co
     as _i660;
 import '../../features/product_sections/api/api_client/products_sections_api_client.dart'
     as _i266;
+import '../../features/product_sections/api/datasource/categories_data_source_impl.dart'
+    as _i1014;
 import '../../features/product_sections/api/datasource/products_sections_data_source_impl.dart'
     as _i370;
+import '../../features/product_sections/data/datasource/categories_data_source_contract.dart'
+    as _i1032;
 import '../../features/product_sections/data/datasource/products_section_data_source_contract.dart'
     as _i303;
+import '../../features/product_sections/data/repositories/categories_repo_impl.dart'
+    as _i635;
 import '../../features/product_sections/data/repositories/products_sections_repo_impl.dart'
     as _i34;
+import '../../features/product_sections/domain/repositories/categories_repo.dart'
+    as _i696;
 import '../../features/product_sections/domain/repositories/products_section_repo.dart'
     as _i386;
+import '../../features/product_sections/domain/use_cases/get_categories_use_case.dart'
+    as _i406;
 import '../../features/product_sections/domain/use_cases/get_occasions_use_case.dart'
     as _i529;
 import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i713;
+import '../../features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart'
+    as _i691;
 import '../../features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart'
     as _i129;
 import '../../features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart'
@@ -77,6 +89,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i266.ProductsSectionsApiClient>(
       () => networkModule.productsApi(gh<_i361.Dio>()),
     );
+    gh.factory<_i1032.CategoriesDataSourceContract>(
+      () => _i1014.CategoriesDataSourceImpl(
+        apiClient: gh<_i266.ProductsSectionsApiClient>(),
+        call: gh<_i563.SafeApiCaller>(),
+      ),
+    );
+    gh.factory<_i696.CategoryRepoContract>(
+      () => _i635.CategoriesRepoImpl(
+        dataSource: gh<_i1032.CategoriesDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i406.GetCategoriesUseCase>(
+      () => _i406.GetCategoriesUseCase(repo: gh<_i696.CategoryRepoContract>()),
+    );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
         authApiClient: gh<_i824.AuthApiClient>(),
@@ -91,6 +117,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i34.ProductsSectionsRepoImpl(
         productsSectionDataSourceContract:
             gh<_i303.ProductsSectionDataSourceContract>(),
+      ),
+    );
+    gh.lazySingleton<_i691.CategoriesCubit>(
+      () => _i691.CategoriesCubit(
+        getCategoriesUseCase: gh<_i406.GetCategoriesUseCase>(),
       ),
     );
     gh.factory<_i529.GetOccasionsUseCase>(
