@@ -12,6 +12,7 @@ import 'package:flower/features/auth/presentation/reset_password/pages/reset_pas
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
+import 'package:flower/features/product_sections/presentation/occasions/pages/occasions_page.dart';
 import 'package:flower/features/product_sections/presentation/search/search_screen.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
@@ -36,6 +37,9 @@ abstract class AppRouter {
 
         case Routes.appSections:
           return PageTransitions.slide(const AppSectionsPage());
+
+        case Routes.occasions:
+          return PageTransitions.slide(const OccasionsPage());
 
         case Routes.forgetPassword:
           return PageTransitions.fade(

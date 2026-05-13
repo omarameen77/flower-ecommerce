@@ -9,4 +9,5 @@ abstract class Routes {
   static const String appSections = '/app-sections';
   static const String bestSellers = '/best-sellers';
   static const String searchScreen = '/search';
+  static const String occasions = '/occasions';
 }
