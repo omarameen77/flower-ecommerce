@@ -7,6 +7,8 @@ import 'dart:async' as _i6;
 
 import 'package:flower/features/product_sections/api/api_client/products_sections_api_client.dart'
     as _i5;
+import 'package:flower/features/product_sections/data/models/response/categories_response.dart'
+    as _i2;
 import 'package:flower/features/product_sections/data/models/response/occasions_response.dart'
     as _i3;
 import 'package:flower/features/product_sections/data/models/response/products_response.dart'
@@ -28,6 +30,11 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
+class _FakeCategoriesResponse_0 extends _i1.SmartFake
+    implements _i2.CategoriesResponse {
+  _FakeCategoriesResponse_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
 
 class _FakeOccasionsResponse_1 extends _i1.SmartFake
     implements _i3.OccasionsResponse {
@@ -50,7 +57,22 @@ class MockProductsSectionsApiClient extends _i1.Mock
     _i1.throwOnMissingStub(this);
   }
 
-  
+  @override
+  _i6.Future<_i2.CategoriesResponse> getCategories({int? limit, int? page}) =>
+      (super.noSuchMethod(
+            Invocation.method(#getCategories, [], {#limit: limit, #page: page}),
+            returnValue: _i6.Future<_i2.CategoriesResponse>.value(
+              _FakeCategoriesResponse_0(
+                this,
+                Invocation.method(#getCategories, [], {
+                  #limit: limit,
+                  #page: page,
+                }),
+              ),
+            ),
+          )
+          as _i6.Future<_i2.CategoriesResponse>);
+
   @override
   _i6.Future<_i3.OccasionsResponse> getOccasions({int? limit, int? page}) =>
       (super.noSuchMethod(
