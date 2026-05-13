@@ -12,6 +12,7 @@ class ProductsSectionsDataSourceImpl
   final ProductsSectionsApiClient productsSectionsApiClient;
 
   ProductsSectionsDataSourceImpl({required this.productsSectionsApiClient});
+
   @override
   Future<BaseResponse<List<OccasionDto>>> getOccasions({
     int? limit,
