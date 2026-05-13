@@ -1,15 +1,46 @@
-import 'package:flower/core/theme/app_colors.dart';
-import 'package:flower/features/product_sections/domain/entities/category_entity.dart'; // تأكد من المسار
+import 'package:flower/features/product_sections/domain/entities/category_entity.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
 import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ViewProductWidget extends StatelessWidget {
+class ViewProductWidget extends StatefulWidget {
   final List<CategoryEntity> categories;
 
   const ViewProductWidget({super.key, required this.categories});
+
+  @override
+  State<ViewProductWidget> createState() => _ViewProductWidgetState();
+}
+
+class _ViewProductWidgetState extends State<ViewProductWidget> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        final currentIndex = DefaultTabController.of(context).index;
+
+        context.read<ProductCubit>().doEvent(
+          GetProductEvent(
+            loadMore: true,
+            categoryId: widget.categories[currentIndex].id,
+          ),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,39 +53,16 @@ class ViewProductWidget extends StatelessWidget {
 
         final products = productState.productBaseState.data ?? [];
 
-        if (products.isEmpty) {
-          return RefreshIndicator(
-            onRefresh: () async {
-              final currentIndex = DefaultTabController.of(context).index;
-
-              context.read<ProductCubit>().doEvent(
-                GetProductEvent(categoryId: categories[currentIndex].id),
-              );
-            },
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              children: const [
-                SizedBox(height: 200),
-                Center(
-                  child: Text(
-                    "No Products Found",
-                    style: TextStyle(color: AppColors.grey700),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-
         return RefreshIndicator(
           onRefresh: () async {
             final currentIndex = DefaultTabController.of(context).index;
 
             context.read<ProductCubit>().doEvent(
-              GetProductEvent(categoryId: categories[currentIndex].id),
+              GetProductEvent(categoryId: widget.categories[currentIndex].id),
             );
           },
           child: GridView.builder(
+            controller: _scrollController,
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.all(16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -63,9 +71,14 @@ class ViewProductWidget extends StatelessWidget {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
-            itemCount: products.length,
-            itemBuilder: (context, index) =>
-                ProductWidget(product: products[index]),
+            itemCount: products.length + (productState.isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index >= products.length) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              return ProductWidget(product: products[index]);
+            },
           ),
         );
       },

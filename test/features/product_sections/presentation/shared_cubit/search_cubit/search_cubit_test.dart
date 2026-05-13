@@ -62,12 +62,12 @@ void main() {
 
       await cubit.search('flower');
 
-      expect(cubit.state.errorMessage, 'error');
+      expect(cubit.state.productsState.errorMessage, 'error');
     });
 
     test('clear results', () {
       cubit.clear();
-      expect(cubit.state.data, []);
+      expect(cubit.state.productsState.data, []);
     });
   });
 }

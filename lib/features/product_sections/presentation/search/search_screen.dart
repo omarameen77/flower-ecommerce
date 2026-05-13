@@ -19,6 +19,8 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController controller = TextEditingController();
 
+  final ScrollController _scrollController = ScrollController();
+
   Timer? _debounce;
 
   @override
@@ -28,10 +30,19 @@ class _SearchScreenState extends State<SearchScreen> {
     Future.microtask(() {
       context.read<SearchCubit>().clear();
     });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        context.read<SearchCubit>().loadMore();
+      }
+    });
   }
 
   void onSearch(String value) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    if (_debounce?.isActive ?? false) {
+      _debounce!.cancel();
+    }
 
     _debounce = Timer(const Duration(milliseconds: 400), () {
       final text = value.trim();
@@ -48,6 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void dispose() {
     controller.dispose();
+    _scrollController.dispose();
     _debounce?.cancel();
     super.dispose();
   }
@@ -55,7 +67,8 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<SearchCubit>().state;
-    final products = state.data ?? [];
+
+    final products = state.productsState.data ?? [];
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -82,9 +95,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-
             Expanded(
-              child: state.isLoading
+              child: state.productsState.isLoading
                   ? Center(
                       child: Text(
                         HomeConstants.searching,
@@ -107,6 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     )
                   : GridView.builder(
+                      controller: _scrollController,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       physics: const BouncingScrollPhysics(),
                       gridDelegate:
@@ -116,8 +129,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
                           ),
-                      itemCount: products.length,
+                      itemCount: state.hasReachedMax
+                          ? products.length
+                          : products.length + (state.isLoadingMore ? 1 : 0),
                       itemBuilder: (_, index) {
+                        if (index >= products.length) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
                         return ProductWidget(product: products[index]);
                       },
                     ),
