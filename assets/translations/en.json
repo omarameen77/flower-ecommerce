@@ -86,5 +86,13 @@
   "categories_tab": "Categories",
   "cart_tab": "Cart",
   "profile_tab": "Profile"
+},
+"home":{
+  "search":"Search",
+  "searchHint":"Search For Any Product You Want",
+  "product_not_found":"No Products Found",
+  "all":"All",
+  "searching":"Searching..."
+
 }
 }

@@ -1,7 +1,12 @@
+import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/localization_constants/layout_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
-import 'package:flower/features/product_sections/presentation/home/pages/home_screen.dart';
+import 'package:flower/features/product_sections/presentation/categories/pages/categories_screen.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_event.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
 import 'package:flower/features/profile/presentation/prorile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,8 +54,20 @@ class _AppSectionsView extends StatelessWidget {
           body: IndexedStack(
             index: currentIndex,
             children: [
-              HomeScreen(),
-              _PlaceholderScreen(title: LayoutConstants.categoriesTab),
+              _PlaceholderScreen(title: LayoutConstants.homeTab),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) =>
+                        getIt<CategoriesCubit>()..onEvent(GetCategoriesEvent()),
+                  ),
+                  BlocProvider(
+                    create: (_) =>
+                        getIt<ProductCubit>()..doEvent(GetProductEvent()),
+                  ),
+                ],
+                child: CategoryScreen(),
+              ),
               _PlaceholderScreen(title: LayoutConstants.cartTab),
               ProfileScreen(),
             ],

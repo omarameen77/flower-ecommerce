@@ -37,11 +37,15 @@ class ProductsSectionsDataSourceImpl
   Future<BaseResponse<List<ProductDto>>> getProducts({
     int? limit,
     String? sort,
+    String? categoryId,
+    String? keyword,
   }) async {
     try {
       final response = await productsSectionsApiClient.getProducts(
         limit: limit,
         sort: sort,
+        categoryId: categoryId,
+        keyword: keyword,
       );
       return SuccessBaseResponse<List<ProductDto>>(
         data: response.products ?? [],

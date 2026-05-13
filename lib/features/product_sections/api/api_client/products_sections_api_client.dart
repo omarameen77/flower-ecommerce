@@ -15,12 +15,11 @@ abstract class ProductsSectionsApiClient {
     Dio dio, {
     String? baseUrl,
     ParseErrorLogger? errorLogger,
-  }) =>
-      _ProductsSectionsApiClient(
-        dio,
-        baseUrl: baseUrl,
-        errorLogger: errorLogger,
-      );
+  }) => _ProductsSectionsApiClient(
+    dio,
+    baseUrl: baseUrl,
+    errorLogger: errorLogger,
+  );
 
   @GET(ProductsSectionsEndPoint.occasions)
   Future<OccasionsResponse> getOccasions({
@@ -32,5 +31,7 @@ abstract class ProductsSectionsApiClient {
   Future<ProductsResponse> getProducts({
     @Query(AppStrings.limit) int? limit,
     @Query('sort') String? sort,
+    @Query('category') String? categoryId,
+    @Query("keyword") String? keyword,
   });
 }

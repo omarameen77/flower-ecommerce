@@ -9,6 +9,8 @@ class CustomTextField extends StatefulWidget {
   final void Function(String)? onChanged;
   final bool isPassword;
   final TextInputType keyboardType;
+  final FocusNode? focusNode;
+  final Widget? prefixIcon;
 
   const CustomTextField({
     super.key,
@@ -17,6 +19,8 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.controller,
     this.onChanged,
+    this.focusNode,
+    this.prefixIcon,
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     this.readOnly = false,
@@ -35,7 +39,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       validator: widget.validator,
       obscureText: widget.isPassword ? obscureText : false,
-
+      focusNode: widget.focusNode,
       keyboardType: widget.keyboardType,
       readOnly: widget.readOnly,
       onChanged: widget.onChanged,
@@ -54,6 +58,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 },
               )
             : null,
+        prefixIcon: widget.prefixIcon,
       ),
     );
   }
