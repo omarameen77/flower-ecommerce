@@ -74,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
                       },
                       child: Text(
                         context.forgotPassword,
-                        style: getTextWithLine(context: context),
+                        style: getTextWithLine(context),
                       ),
                     ),
                   ],

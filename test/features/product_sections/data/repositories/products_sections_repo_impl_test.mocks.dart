@@ -9,9 +9,9 @@ import 'package:flower/config/base/base_response.dart' as _i4;
 import 'package:flower/features/product_sections/data/datasource/products_section_data_source_contract.dart'
     as _i2;
 import 'package:flower/features/product_sections/data/models/dtos/occasion_dto.dart'
-    as _i7;
+    as _i5;
 import 'package:flower/features/product_sections/data/models/dtos/product_dto.dart'
-    as _i8;
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 
@@ -40,15 +40,15 @@ class MockProductsSectionDataSourceContract extends _i1.Mock
   }
 
   @override
-  _i3.Future<_i4.BaseResponse<List<_i7.OccasionDto>>> getOccasions({
+  _i3.Future<_i4.BaseResponse<List<_i5.OccasionDto>>> getOccasions({
     int? limit,
     int? page,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#getOccasions, [], {#limit: limit, #page: page}),
             returnValue:
-                _i3.Future<_i4.BaseResponse<List<_i7.OccasionDto>>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<List<_i7.OccasionDto>>>(
+                _i3.Future<_i4.BaseResponse<List<_i5.OccasionDto>>>.value(
+                  _i6.dummyValue<_i4.BaseResponse<List<_i5.OccasionDto>>>(
                     this,
                     Invocation.method(#getOccasions, [], {
                       #limit: limit,
@@ -57,10 +57,10 @@ class MockProductsSectionDataSourceContract extends _i1.Mock
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<List<_i7.OccasionDto>>>);
+          as _i3.Future<_i4.BaseResponse<List<_i5.OccasionDto>>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<List<_i8.ProductDto>>> getProducts({
+  _i3.Future<_i4.BaseResponse<List<_i7.ProductDto>>> getProducts({
     int? limit,
     String? sort,
     String? categoryId,
@@ -74,8 +74,8 @@ class MockProductsSectionDataSourceContract extends _i1.Mock
               #keyword: keyword,
             }),
             returnValue:
-                _i3.Future<_i4.BaseResponse<List<_i8.ProductDto>>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<List<_i8.ProductDto>>>(
+                _i3.Future<_i4.BaseResponse<List<_i7.ProductDto>>>.value(
+                  _i6.dummyValue<_i4.BaseResponse<List<_i7.ProductDto>>>(
                     this,
                     Invocation.method(#getProducts, [], {
                       #limit: limit,
@@ -86,5 +86,5 @@ class MockProductsSectionDataSourceContract extends _i1.Mock
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<List<_i8.ProductDto>>>);
+          as _i3.Future<_i4.BaseResponse<List<_i7.ProductDto>>>);
 }

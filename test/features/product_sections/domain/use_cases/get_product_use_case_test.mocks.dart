@@ -6,12 +6,10 @@
 import 'dart:async' as _i3;
 
 import 'package:flower/config/base/base_response.dart' as _i4;
-import 'package:flower/features/product_sections/domain/entities/category_entity.dart'
-    as _i5;
 import 'package:flower/features/product_sections/domain/entities/occasion_entity.dart'
-    as _i7;
+    as _i5;
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart'
-    as _i8;
+    as _i7;
 import 'package:flower/features/product_sections/domain/repositories/products_section_repo.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -42,35 +40,15 @@ class MockProductsSectionRepo extends _i1.Mock
   }
 
   @override
-  _i3.Future<_i4.BaseResponse<List<_i5.CategoryEntity>>> getCategories({
-    int? limit,
-    int? page,
-  }) =>
-      (super.noSuchMethod(
-            Invocation.method(#getCategories, [], {#limit: limit, #page: page}),
-            returnValue:
-                _i3.Future<_i4.BaseResponse<List<_i5.CategoryEntity>>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<List<_i5.CategoryEntity>>>(
-                    this,
-                    Invocation.method(#getCategories, [], {
-                      #limit: limit,
-                      #page: page,
-                    }),
-                  ),
-                ),
-          )
-          as _i3.Future<_i4.BaseResponse<List<_i5.CategoryEntity>>>);
-
-  @override
-  _i3.Future<_i4.BaseResponse<List<_i7.OccasionEntity>>> getOccasions({
+  _i3.Future<_i4.BaseResponse<List<_i5.OccasionEntity>>> getOccasions({
     int? limit,
     int? page,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#getOccasions, [], {#limit: limit, #page: page}),
             returnValue:
-                _i3.Future<_i4.BaseResponse<List<_i7.OccasionEntity>>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<List<_i7.OccasionEntity>>>(
+                _i3.Future<_i4.BaseResponse<List<_i5.OccasionEntity>>>.value(
+                  _i6.dummyValue<_i4.BaseResponse<List<_i5.OccasionEntity>>>(
                     this,
                     Invocation.method(#getOccasions, [], {
                       #limit: limit,
@@ -79,10 +57,10 @@ class MockProductsSectionRepo extends _i1.Mock
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<List<_i7.OccasionEntity>>>);
+          as _i3.Future<_i4.BaseResponse<List<_i5.OccasionEntity>>>);
 
   @override
-  _i3.Future<_i4.BaseResponse<List<_i8.ProductEntity>>> getProducts({
+  _i3.Future<_i4.BaseResponse<List<_i7.ProductEntity>>> getProducts({
     int? limit,
     String? sort,
     String? categoryId,
@@ -96,8 +74,8 @@ class MockProductsSectionRepo extends _i1.Mock
               #keyword: keyword,
             }),
             returnValue:
-                _i3.Future<_i4.BaseResponse<List<_i8.ProductEntity>>>.value(
-                  _i6.dummyValue<_i4.BaseResponse<List<_i8.ProductEntity>>>(
+                _i3.Future<_i4.BaseResponse<List<_i7.ProductEntity>>>.value(
+                  _i6.dummyValue<_i4.BaseResponse<List<_i7.ProductEntity>>>(
                     this,
                     Invocation.method(#getProducts, [], {
                       #limit: limit,
@@ -108,5 +86,5 @@ class MockProductsSectionRepo extends _i1.Mock
                   ),
                 ),
           )
-          as _i3.Future<_i4.BaseResponse<List<_i8.ProductEntity>>>);
+          as _i3.Future<_i4.BaseResponse<List<_i7.ProductEntity>>>);
 }
