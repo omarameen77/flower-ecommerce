@@ -178,6 +178,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i27.ForgetPasswordUseCase>(),
       ),
     );
+    gh.lazySingleton<_i344.CategoryCubit>(() => _i344.CategoryCubit());
     gh.factory<_i450.ResetPasswordCubit>(
       () => _i450.ResetPasswordCubit(gh<_i348.ResetPasswordUseCase>()),
     );

@@ -1,7 +1,5 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/features/product_sections/data/datasource/products_section_data_source_contract.dart';
-import 'package:flower/features/product_sections/data/models/dtos/occasion_dto.dart';
-import 'package:flower/features/product_sections/data/models/dtos/product_dto.dart';
 import 'package:flower/features/product_sections/domain/entities/occasion_entity.dart';
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart';
 import 'package:flower/features/product_sections/domain/repositories/products_section_repo.dart';
@@ -22,15 +20,22 @@ class ProductsSectionsRepoImpl implements ProductsSectionRepo {
       page: page,
     );
 
-    switch (response) {
-      case SuccessBaseResponse<List<OccasionDto>>():
-        return SuccessBaseResponse<List<OccasionEntity>>(
-          data: response.data.map((e) => e.toDomain()).toList(),
+  @override
+  Future<BaseResponse<List<OccasionEntity>>> getOccasions({
+    int? limit,
+    int? page,
+  }) async {
+    final result = await productsSectionDataSourceContract.getOccasions(
+      limit: limit,
+      page: page,
+    );
+    switch (result) {
+      case SuccessBaseResponse():
+        return SuccessBaseResponse(
+          data: result.data.map((dto) => dto.toDomain()).toList(),
         );
-      case ErrorBaseResponse<List<OccasionDto>>():
-        return ErrorBaseResponse<List<OccasionEntity>>(
-          failure: response.failure,
-        );
+      case ErrorBaseResponse():
+        return ErrorBaseResponse(failure: result.failure);
     }
   }
 
@@ -41,22 +46,19 @@ class ProductsSectionsRepoImpl implements ProductsSectionRepo {
     String? categoryId,
     String? keyword,
   }) async {
-    final response = await productsSectionDataSourceContract.getProducts(
+    final result = await productsSectionDataSourceContract.getProducts(
       limit: limit,
       sort: sort,
       categoryId: categoryId,
       keyword: keyword,
     );
-
-    switch (response) {
-      case SuccessBaseResponse<List<ProductDto>>():
-        return SuccessBaseResponse<List<ProductEntity>>(
-          data: response.data.map((e) => e.toDomain()).toList(),
+    switch (result) {
+      case SuccessBaseResponse():
+        return SuccessBaseResponse(
+          data: result.data.map((dto) => dto.toDomain()).toList(),
         );
-      case ErrorBaseResponse<List<ProductDto>>():
-        return ErrorBaseResponse<List<ProductEntity>>(
-          failure: response.failure,
-        );
+      case ErrorBaseResponse():
+        return ErrorBaseResponse(failure: result.failure);
     }
   }
 }

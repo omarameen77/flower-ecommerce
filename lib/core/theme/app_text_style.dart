@@ -63,12 +63,18 @@ TextStyle getBoldStyle({
 }
 
 // Underlined text
-TextStyle getTextWithLine(BuildContext context) {
+TextStyle getTextWithLine({
+  required BuildContext context,
+  double fontSize = FontSizeManager.s12,
+  Color color = AppColors.textPrimary,
+  TextDecoration decoration = TextDecoration.underline,
+  Color decorationColor = AppColors.textPrimary,
+}) {
   return TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: Responsive.scale(context, FontSizeManager.s12),
+    color: color,
+    fontSize: Responsive.scale(context, fontSize),
     fontWeight: FontWeightManager.regular,
-    decoration: TextDecoration.underline,
-    decorationColor: AppColors.textPrimary,
+    decoration: decoration,
+    decorationColor: decorationColor,
   );
 }
