@@ -21,6 +21,6 @@ class SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true; // خليناها true عشان يحس بتغيير الـ Loading
+    return true;
   }
 }

@@ -35,7 +35,7 @@ class ProductCubit extends Cubit<ProductState> {
           state.copyWith(
             productBaseState: BaseState(
               isLoading: false,
-              data: _cachedCategoryProducts, // 👈 يرجع الكاتيجوري
+              data: _cachedCategoryProducts,
             ),
             limit: 8,
             isLoadingMore: false,
