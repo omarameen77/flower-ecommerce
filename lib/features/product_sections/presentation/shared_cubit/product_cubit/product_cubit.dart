@@ -14,6 +14,7 @@ part 'product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   final GetProductsUseCase getProductUseCase;
   String? _sort;
+  List<ProductEntity> _cachedCategoryProducts = [];
 
   ProductCubit({required this.getProductUseCase}) : super(const ProductState());
 
@@ -22,16 +23,35 @@ class ProductCubit extends Cubit<ProductState> {
   void doEvent(ProductEvent event) {
     switch (event) {
       case GetProductEvent():
-        _getProducts(loadMore: event.loadMore);
+        _getProducts(
+          loadMore: event.loadMore,
+          categoryId: event.categoryId,
+          keyword: event.keyword,
+        );
+        break;
+
+      case ClearProductsEvent():
+        emit(
+          state.copyWith(
+            productBaseState: BaseState(
+              isLoading: false,
+              data: _cachedCategoryProducts,
+            ),
+            limit: 8,
+            isLoadingMore: false,
+          ),
+        );
         break;
     }
   }
 
-  Future<void> _getProducts({bool loadMore = false}) async {
+  Future<void> _getProducts({
+    bool loadMore = false,
+    String? categoryId,
+    String? keyword,
+  }) async {
     try {
-      if (loadMore && state.isLoadingMore) {
-        return;
-      }
+      if (loadMore && state.isLoadingMore) return;
 
       final newLimit = loadMore ? state.limit + 8 : 8;
 
@@ -46,10 +66,17 @@ class ProductCubit extends Cubit<ProductState> {
         emit(state.copyWith(isLoadingMore: true));
       }
 
-      final result = await getProductUseCase.call(limit: newLimit, sort: _sort);
+      final result = await getProductUseCase.call(
+        limit: newLimit,
+        sort: _sort,
+        categoryId: categoryId,
+        keyword: keyword,
+      );
 
       switch (result) {
         case SuccessBaseResponse():
+          _cachedCategoryProducts = result.data;
+
           emit(
             state.copyWith(
               productBaseState: BaseState(data: result.data),
@@ -57,6 +84,7 @@ class ProductCubit extends Cubit<ProductState> {
               isLoadingMore: false,
             ),
           );
+
         case ErrorBaseResponse():
           emit(
             state.copyWith(

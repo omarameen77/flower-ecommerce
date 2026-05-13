@@ -76,9 +76,19 @@ class _ProductsSectionsApiClient implements ProductsSectionsApiClient {
   }
 
   @override
-  Future<ProductsResponse> getProducts({int? limit, String? sort}) async {
+  Future<ProductsResponse> getProducts({
+    int? limit,
+    String? sort,
+    String? categoryId,
+    String? keyword,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'limit': limit, r'sort': sort};
+    final queryParameters = <String, dynamic>{
+      r'limit': limit,
+      r'sort': sort,
+      r'category': categoryId,
+      r'keyword': keyword,
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;

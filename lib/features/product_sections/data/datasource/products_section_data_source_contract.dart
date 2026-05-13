@@ -7,7 +7,7 @@ abstract interface class ProductsSectionDataSourceContract {
   Future<BaseResponse<List<ProductDto>>> getProducts({
     int? limit,
     String? sort,
+    String? categoryId,
+    String? keyword,
   });
 }
-
-
