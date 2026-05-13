@@ -8,6 +8,7 @@ abstract class Routes {
   static const String home = '/home';
   static const String appSections = '/app-sections';
   static const String bestSellers = '/best-sellers';
+  static const String productDetails = '/product-details';
   static const String searchScreen = '/search';
   static const String occasions = '/occasions';
 }

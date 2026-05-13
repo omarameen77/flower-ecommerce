@@ -10,4 +10,5 @@ abstract interface class ProductsSectionDataSourceContract {
     String? categoryId,
     String? keyword,
   });
+  Future<BaseResponse<ProductDto>> getProductById(String id);
 }

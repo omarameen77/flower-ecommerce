@@ -13,4 +13,5 @@ abstract interface class ProductsSectionRepo {
     String? categoryId,
     String? keyword,
   });
+  Future<BaseResponse<ProductEntity>> getProductById(String id);
 }

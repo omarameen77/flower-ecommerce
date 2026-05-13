@@ -59,4 +59,18 @@ class ProductsSectionsRepoImpl implements ProductsSectionRepo {
         );
     }
   }
+
+  @override
+  Future<BaseResponse<ProductEntity>> getProductById(String id) async {
+    final response = await productsSectionDataSourceContract.getProductById(id);
+
+    switch (response) {
+      case SuccessBaseResponse<ProductDto>():
+        return SuccessBaseResponse<ProductEntity>(
+          data: response.data.toDomain(),
+        );
+      case ErrorBaseResponse<ProductDto>():
+        return ErrorBaseResponse<ProductEntity>(failure: response.failure);
+    }
+  }
 }

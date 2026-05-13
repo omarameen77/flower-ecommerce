@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -18,14 +19,24 @@ class ProductWidget extends StatelessWidget {
     final discountedPrice = product.priceAfterDiscount ?? regularPrice;
     final discount = product.discount ?? 0;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
-      ),
-      padding: const EdgeInsets.all(8),
-      child: Column(
+    final id = product.id;
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: id == null
+          ? null
+          : () => Navigator.pushNamed(
+              context,
+              Routes.productDetails,
+              arguments: id,
+            ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -110,6 +121,7 @@ class ProductWidget extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }
