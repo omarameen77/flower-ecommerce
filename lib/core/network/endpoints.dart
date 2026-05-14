@@ -7,6 +7,7 @@ class AuthEndPoint {
   static const verifyResetCode = "/auth/verifyResetCode";
   static const resetPassword = "/auth/resetPassword";
   static const profile = "/auth/profile-data";
+  static const editProfile = "/auth/editProfile";
 }
 
 class ProductsSectionsEndPoint {

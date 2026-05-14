@@ -7,8 +7,12 @@ import 'package:flower/features/auth/presentation/forget_password/cubit/forget_p
 import 'package:flower/features/auth/presentation/forget_password/pages/forget_password_screen.dart';
 import 'package:flower/features/auth/presentation/login/pages/login_screen.dart';
 import 'package:flower/features/auth/presentation/register/pages/register_page.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
 import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
+import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
+import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
+import 'package:flower/features/edit_profile/presentation/pages/edit_profile_page.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
@@ -76,6 +80,21 @@ abstract class AppRouter {
             BlocProvider(
               create: (_) => SearchCubit(getIt()),
               child: const SearchScreen(),
+            ),
+          );
+
+        case Routes.editProfile:
+          final user = settings.arguments as UserEntity?;
+          if (user == null) {
+            return PageTransitions.fade(
+              NotFoundScreen(route: Routes.editProfile),
+            );
+          }
+          return PageTransitions.slide(
+            BlocProvider(
+              create: (_) =>
+                  EditProfileCubit(getIt<EditProfileUseCase>(), user),
+              child: const EditProfilePage(),
             ),
           );
 

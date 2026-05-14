@@ -109,5 +109,17 @@
   "logout_message": "Are you sure you want to log out?",
   "cancel": "Cancel",
   "version": "v 1.0.0+1"
+},
+"edit_profile": {
+  "title": "Edit profile",
+  "first_name": "First name",
+  "last_name": "Last name",
+  "email": "Email",
+  "phone": "Phone number",
+  "password": "Password",
+  "change_password": "Change",
+  "update": "Update",
+  "no_changes": "No changes to save",
+  "update_success": "Profile updated"
 }
 }
