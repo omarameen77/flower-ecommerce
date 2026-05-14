@@ -94,5 +94,20 @@
   "all":"All",
   "searching":"Searching..."
 
+},
+"profile": {
+  "my_orders": "My orders",
+  "saved_address": "Saved address",
+  "notifications": "Notifications",
+  "language": "Language",
+  "english": "English",
+  "arabic": "Arabic",
+  "about_us": "About us",
+  "terms_conditions": "Terms & conditions",
+  "logout": "Logout",
+  "logout_title": "Log out?",
+  "logout_message": "Are you sure you want to log out?",
+  "cancel": "Cancel",
+  "version": "v 1.0.0+1"
 }
 }

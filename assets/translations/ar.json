@@ -92,5 +92,20 @@
   "product_not_found":"غير متاح",
   "all":"الجميع",
   "searching":"...جاري البحث"
+},
+"profile": {
+  "my_orders": "طلباتي",
+  "saved_address": "العنوان المحفوظ",
+  "notifications": "الإشعارات",
+  "language": "اللغة",
+  "english": "English",
+  "arabic": "العربية",
+  "about_us": "من نحن",
+  "terms_conditions": "الشروط والأحكام",
+  "logout": "تسجيل الخروج",
+  "logout_title": "تسجيل الخروج؟",
+  "logout_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "cancel": "إلغاء",
+  "version": "الإصدار 1.0.0+1"
 }
 }
