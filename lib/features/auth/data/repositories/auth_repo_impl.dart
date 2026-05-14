@@ -2,6 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/model/user.dart';
 import 'package:flower/core/network/model/user_entity.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:flower/features/auth/domain/entities/change_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';
@@ -76,6 +77,23 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     final response = await authRemoteDataSourceContract.resetPassword(
       email: email,
+      newPassword: newPassword,
+    );
+    return switch (response) {
+      SuccessBaseResponse() => SuccessBaseResponse(
+        data: response.data.toEntity(),
+      ),
+      ErrorBaseResponse() => ErrorBaseResponse(failure: response.failure),
+    };
+  }
+
+  @override
+  Future<BaseResponse<ChangePasswordEntity>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    final response = await authRemoteDataSourceContract.changePassword(
+      oldPassword: oldPassword,
       newPassword: newPassword,
     );
     return switch (response) {

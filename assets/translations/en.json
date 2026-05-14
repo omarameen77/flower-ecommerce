@@ -43,6 +43,13 @@
     "reset_password_condition": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
     "new_password": "New password",
 
+    "change_password": "Change password",
+    "current_password": "Current password",
+    "enter_current_password": "Enter your current password",
+    "confirm_new_password": "Confirm new password",
+    "password_changed_success": "Password changed successfully",
+    "update": "Update",
+
     "terms_and_conditions_statement": "Creating an account, you agree to our Terms & Conditions"
   },
   "validation": {
@@ -57,6 +64,7 @@
 
     "confirm_password_required": "Please confirm your password",
     "password_not_match": "Passwords do not match",
+    "new_password_same_as_old": "New password must be different from the current one",
 
     "name_required": "Name is required",
     "invalid_name": "Name must contain English or Arabic letters only",

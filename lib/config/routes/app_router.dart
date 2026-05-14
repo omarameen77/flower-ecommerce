@@ -3,6 +3,8 @@ import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
 import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
+import 'package:flower/features/auth/presentation/change_password/cubit/change_password_cubit.dart';
+import 'package:flower/features/auth/presentation/change_password/pages/change_password_screen.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:flower/features/auth/presentation/forget_password/pages/forget_password_screen.dart';
 import 'package:flower/features/auth/presentation/login/pages/login_screen.dart';
@@ -68,6 +70,14 @@ abstract class AppRouter {
             BlocProvider(
               create: (_) => getIt<ResetPasswordCubit>(),
               child: ResetPasswordScreen(email: email),
+            ),
+          );
+
+        case Routes.changePassword:
+          return PageTransitions.slide(
+            BlocProvider(
+              create: (_) => getIt<ChangePasswordCubit>(),
+              child: const ChangePasswordScreen(),
             ),
           );
         case Routes.searchScreen:

@@ -88,6 +88,19 @@ class AppValidator {
     return null;
   }
 
+  // New Password — must be valid AND different from the current password
+  static String? newPassword(String? value, String currentPassword) {
+    final baseError = password(value);
+    if (baseError != null) return baseError;
+
+    final v = AppValidation.value(value);
+    final current = AppValidation.value(currentPassword);
+    if (current.isNotEmpty && v == current) {
+      return ValidationConstants.newPasswordSameAsOld;
+    }
+    return null;
+  }
+
   // OTP Code (6 digits fixed)
   static String? code(String? value) {
     final v = AppValidation.value(value);

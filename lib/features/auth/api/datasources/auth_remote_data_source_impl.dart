@@ -4,8 +4,10 @@ import 'package:flower/core/network/model/user.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:flower/features/auth/data/models/request/change_password_request.dart';
 import 'package:flower/features/auth/data/models/request/login_request.dart';
 import 'package:flower/features/auth/data/models/request/register_request.dart';
+import 'package:flower/features/auth/data/models/response/change_password_response.dart';
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart';
 import 'package:flower/features/auth/data/models/response/reset_password_response.dart';
 import 'package:flower/features/auth/data/models/response/verify_reset_code_response.dart';
@@ -93,5 +95,30 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
         token: 'fake-token',
       ),
     );
+  }
+
+  @override
+  Future<BaseResponse<ChangePasswordResponseDto>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await authApiClient.changePassword(
+        ChangePasswordRequestDto(
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+        ),
+      );
+
+      if (response.token != null && response.token!.isNotEmpty) {
+        await SecureStorageService.saveToken(response.token!);
+      }
+
+      return SuccessBaseResponse<ChangePasswordResponseDto>(data: response);
+    } catch (e) {
+      return ErrorBaseResponse<ChangePasswordResponseDto>(
+        failure: ErrorHandler.handle(e),
+      );
+    }
   }
 }
