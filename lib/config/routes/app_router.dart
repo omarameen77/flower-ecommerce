@@ -43,7 +43,8 @@ abstract class AppRouter {
           return PageTransitions.slide(const AppSectionsPage());
 
         case Routes.occasions:
-          return PageTransitions.slide(const OccasionsPage());
+          final id = settings.arguments as String?;
+          return PageTransitions.slide(OccasionsPage(initialOccasionId: id));
 
         case Routes.forgetPassword:
           return PageTransitions.fade(

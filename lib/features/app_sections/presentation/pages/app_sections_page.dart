@@ -3,8 +3,11 @@ import 'package:flower/core/localization_constants/layout_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/features/product_sections/presentation/categories/pages/categories_screen.dart';
+import 'package:flower/features/product_sections/presentation/home/pages/home_screen.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_event.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_event.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
 import 'package:flower/features/profile/presentation/prorile_screen.dart';
@@ -19,8 +22,21 @@ class AppSectionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AppSectionsCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AppSectionsCubit()),
+        BlocProvider(
+          create: (_) =>
+              getIt<CategoriesCubit>()..onEvent(GetCategoriesEvent()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<ProductCubit>()..doEvent(GetProductEvent()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              getIt<OccasionCubit>()..doEvent(const GetOccasionsEvent()),
+        ),
+      ],
       child: const _AppSectionsView(),
     );
   }
@@ -31,7 +47,10 @@ class _AppSectionsView extends StatelessWidget {
 
   List<_BottomNavItem> _items(BuildContext context) {
     return [
-      _BottomNavItem(label: LayoutConstants.homeTab, icon: AppSvgs.home),
+      _BottomNavItem(
+        label: LayoutConstants.homeTab,
+        icon: AppSvgs.home,
+      ),
       _BottomNavItem(
         label: LayoutConstants.categoriesTab,
         icon: AppSvgs.category,
@@ -54,20 +73,8 @@ class _AppSectionsView extends StatelessWidget {
           body: IndexedStack(
             index: currentIndex,
             children: [
-              _PlaceholderScreen(title: LayoutConstants.homeTab),
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (_) =>
-                        getIt<CategoriesCubit>()..onEvent(GetCategoriesEvent()),
-                  ),
-                  BlocProvider(
-                    create: (_) =>
-                        getIt<ProductCubit>()..doEvent(GetProductEvent()),
-                  ),
-                ],
-                child: CategoryScreen(),
-              ),
+              const HomeScreen(),
+              const CategoryScreen(),
               _PlaceholderScreen(title: LayoutConstants.cartTab),
               ProfileScreen(),
             ],
