@@ -5,4 +5,5 @@ class AppSvgs {
   static const profile = "assets/svgs/profile.svg";
   static const cart = "assets/svgs/shopping_cart.svg";
   static const splashLogo = "assets/svgs/splashlogo.svg";
+  static const myOrders = "assets/svgs/my_orders.svg";
 }
