@@ -1,5 +1,5 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/core/network/model/user_entity.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/verify_reset_code_entity.dart';

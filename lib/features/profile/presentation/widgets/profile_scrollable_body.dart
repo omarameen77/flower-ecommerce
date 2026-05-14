@@ -1,3 +1,4 @@
+import 'package:flower/config/routes/routes.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/localization_constants/profile_constants.dart';
 import 'package:flower/core/network/model/user_models/user_entity.dart';
@@ -34,7 +35,23 @@ class ProfileScrollableBody extends StatelessWidget {
               BlocSelector<ProfileCubit, ProfileState, BaseState<UserEntity>>(
                 selector: (state) => state.profileState,
                 builder: (context, profileState) {
-                  return ProfileUserHeader(profileState: profileState);
+                  return ProfileUserHeader(
+                    profileState: profileState,
+                    onEditProfileTap: () {
+                      final user =
+                          context.read<ProfileCubit>().state.profileState.data;
+                      if (user == null) return;
+                      Navigator.pushNamed(
+                        context,
+                        Routes.editProfile,
+                        arguments: user,
+                      ).then((updated) {
+                        if (updated == true && context.mounted) {
+                          context.read<ProfileCubit>().doEvent(const LoadProfile());
+                        }
+                      });
+                    },
+                  );
                 },
               ),
               AppSizedBox(height: 24),

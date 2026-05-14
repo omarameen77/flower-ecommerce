@@ -1,5 +1,5 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/core/network/model/user.dart';
+import 'package:flower/core/network/model/user_models/user.dart';
 import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/api/datasources/auth_remote_data_source_impl.dart';
 import 'package:flower/features/auth/data/models/response/register_response.dart';

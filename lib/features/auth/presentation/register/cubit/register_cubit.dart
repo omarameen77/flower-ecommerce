@@ -1,7 +1,7 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
-import 'package:flower/core/network/model/user_entity.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/auth/domain/use_cases/register_use_case.dart';
 import 'register_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

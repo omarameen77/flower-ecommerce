@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
-import 'package:flower/core/network/model/user_entity.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/domain/use_cases/login_params.dart';
 import 'package:flower/features/auth/domain/use_cases/login_use_case.dart';
