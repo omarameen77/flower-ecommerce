@@ -1,4 +1,3 @@
- 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -32,11 +31,13 @@ class CategoryItem extends StatelessWidget {
             categoriesCubit.state.categoriesState.data?.categories ?? [];
         final index = categories.indexWhere((c) => c.id == category.id);
         if (index != -1) {
-          categoriesCubit.onEvent(ChangeSelectedCategoryEvent(index));
+          categoriesCubit.onEvent(ChangeSelectedCategoryEvent(index + 1));
         }
 
         // 3. Filter products by this category
-        context.read<ProductCubit>().doEvent(GetProductEvent(categoryId: category.id));
+        context.read<ProductCubit>().doEvent(
+          GetProductEvent(categoryId: category.id),
+        );
       },
       child: SizedBox(
         width: HomeTokens.categoryItemWidth,

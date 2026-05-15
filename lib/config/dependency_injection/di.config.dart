@@ -63,8 +63,14 @@ import '../../features/product_sections/domain/use_cases/get_categories_use_case
     as _i406;
 import '../../features/product_sections/domain/use_cases/get_occasions_use_case.dart'
     as _i529;
+import '../../features/product_sections/domain/use_cases/get_product_by_id_use_case.dart'
+    as _i1049;
 import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i713;
+import '../../features/product_sections/presentation/occasions/cubit/occasions_products_cubit.dart'
+    as _i309;
+import '../../features/product_sections/presentation/product_details/cubit/product_details_cubit.dart'
+    as _i301;
 import '../../features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart'
     as _i691;
 import '../../features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart'
@@ -129,6 +135,11 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
+    gh.factory<_i1049.GetProductByIdUseCase>(
+      () => _i1049.GetProductByIdUseCase(
+        productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
+      ),
+    );
     gh.factory<_i713.GetProductsUseCase>(
       () => _i713.GetProductsUseCase(
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
@@ -163,6 +174,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1010.RegisterUseCase>(
       () => _i1010.RegisterUseCase(registerRepoContract: gh<_i723.AuthRepo>()),
     );
+    gh.factory<_i301.ProductDetailsCubit>(
+      () => _i301.ProductDetailsCubit(
+        getProductByIdUseCase: gh<_i1049.GetProductByIdUseCase>(),
+      ),
+    );
     gh.factory<_i404.RegisterCubit>(
       () => _i404.RegisterCubit(gh<_i1010.RegisterUseCase>()),
     );
@@ -176,6 +192,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i660.VerifyResetCodeCubit(
         gh<_i887.VerifyResetCodeUseCase>(),
         gh<_i27.ForgetPasswordUseCase>(),
+      ),
+    );
+    gh.factory<_i309.OccasionsProductsCubit>(
+      () => _i309.OccasionsProductsCubit(
+        getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
+        getProductUseCase: gh<_i713.GetProductsUseCase>(),
       ),
     );
     gh.factory<_i450.ResetPasswordCubit>(

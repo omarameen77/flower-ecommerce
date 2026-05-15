@@ -94,5 +94,13 @@
   "all":"All",
   "searching":"Searching..."
 
-}
-}
+},"general": {
+  "ok": "OK",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "retry": "Retry",
+  "close": "Close",
+  "loading": "Loading...",
+  "press_back_again_to_exit": "Press back again to exit"
+}}
