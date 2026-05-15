@@ -1,9 +1,10 @@
- 
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/category_item.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/section_title.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,7 +24,13 @@ class CategoriesSection extends StatelessWidget {
             SectionTitle(
               title: 'Categories',
               onViewAll: () {
+                context.read<CategoriesCubit>().resetToAll();
+
                 context.read<AppSectionsCubit>().changeSection(1);
+
+                context.read<ProductCubit>().doEvent(
+                  GetProductEvent(categoryId: null),
+                );
               },
             ),
             const SizedBox(height: 12),
@@ -39,7 +46,8 @@ class CategoriesSection extends StatelessWidget {
                       separatorBuilder: (_, _) =>
                           const SizedBox(width: HomeTokens.sectionItemSpacing),
                       itemBuilder: (_, index) => CategoryItem(
-                        category: state.categoriesState.data!.categories![index],
+                        category:
+                            state.categoriesState.data!.categories![index],
                       ),
                     ),
             ),
