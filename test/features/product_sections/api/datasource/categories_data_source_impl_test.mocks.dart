@@ -3,20 +3,22 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i7;
 
-import 'package:flower/config/base/base_response.dart' as _i8;
-import 'package:flower/core/network/safe_api_caller.dart' as _i7;
+import 'package:flower/config/base/base_response.dart' as _i9;
+import 'package:flower/core/network/safe_api_caller.dart' as _i8;
 import 'package:flower/features/product_sections/api/api_client/products_sections_api_client.dart'
-    as _i5;
+    as _i6;
 import 'package:flower/features/product_sections/data/models/response/categories_response.dart'
     as _i2;
 import 'package:flower/features/product_sections/data/models/response/occasions_response.dart'
     as _i3;
+import 'package:flower/features/product_sections/data/models/response/product_details_response.dart'
+    as _i5;
 import 'package:flower/features/product_sections/data/models/response/products_response.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i9;
+import 'package:mockito/src/dummies.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -51,20 +53,26 @@ class _FakeProductsResponse_2 extends _i1.SmartFake
     : super(parent, parentInvocation);
 }
 
+class _FakeProductDetailsResponse_3 extends _i1.SmartFake
+    implements _i5.ProductDetailsResponse {
+  _FakeProductDetailsResponse_3(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [ProductsSectionsApiClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductsSectionsApiClient extends _i1.Mock
-    implements _i5.ProductsSectionsApiClient {
+    implements _i6.ProductsSectionsApiClient {
   MockProductsSectionsApiClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i2.CategoriesResponse> getCategories({int? limit, int? page}) =>
+  _i7.Future<_i2.CategoriesResponse> getCategories({int? limit, int? page}) =>
       (super.noSuchMethod(
             Invocation.method(#getCategories, [], {#limit: limit, #page: page}),
-            returnValue: _i6.Future<_i2.CategoriesResponse>.value(
+            returnValue: _i7.Future<_i2.CategoriesResponse>.value(
               _FakeCategoriesResponse_0(
                 this,
                 Invocation.method(#getCategories, [], {
@@ -74,13 +82,13 @@ class MockProductsSectionsApiClient extends _i1.Mock
               ),
             ),
           )
-          as _i6.Future<_i2.CategoriesResponse>);
+          as _i7.Future<_i2.CategoriesResponse>);
 
   @override
-  _i6.Future<_i3.OccasionsResponse> getOccasions({int? limit, int? page}) =>
+  _i7.Future<_i3.OccasionsResponse> getOccasions({int? limit, int? page}) =>
       (super.noSuchMethod(
             Invocation.method(#getOccasions, [], {#limit: limit, #page: page}),
-            returnValue: _i6.Future<_i3.OccasionsResponse>.value(
+            returnValue: _i7.Future<_i3.OccasionsResponse>.value(
               _FakeOccasionsResponse_1(
                 this,
                 Invocation.method(#getOccasions, [], {
@@ -90,10 +98,10 @@ class MockProductsSectionsApiClient extends _i1.Mock
               ),
             ),
           )
-          as _i6.Future<_i3.OccasionsResponse>);
+          as _i7.Future<_i3.OccasionsResponse>);
 
   @override
-  _i6.Future<_i4.ProductsResponse> getProducts({
+  _i7.Future<_i4.ProductsResponse> getProducts({
     int? limit,
     String? sort,
     String? categoryId,
@@ -106,7 +114,7 @@ class MockProductsSectionsApiClient extends _i1.Mock
               #categoryId: categoryId,
               #keyword: keyword,
             }),
-            returnValue: _i6.Future<_i4.ProductsResponse>.value(
+            returnValue: _i7.Future<_i4.ProductsResponse>.value(
               _FakeProductsResponse_2(
                 this,
                 Invocation.method(#getProducts, [], {
@@ -118,27 +126,40 @@ class MockProductsSectionsApiClient extends _i1.Mock
               ),
             ),
           )
-          as _i6.Future<_i4.ProductsResponse>);
+          as _i7.Future<_i4.ProductsResponse>);
+
+  @override
+  _i7.Future<_i5.ProductDetailsResponse> getProductById(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#getProductById, [id]),
+            returnValue: _i7.Future<_i5.ProductDetailsResponse>.value(
+              _FakeProductDetailsResponse_3(
+                this,
+                Invocation.method(#getProductById, [id]),
+              ),
+            ),
+          )
+          as _i7.Future<_i5.ProductDetailsResponse>);
 }
 
 /// A class which mocks [SafeApiCaller].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSafeApiCaller extends _i1.Mock implements _i7.SafeApiCaller {
+class MockSafeApiCaller extends _i1.Mock implements _i8.SafeApiCaller {
   MockSafeApiCaller() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i8.BaseResponse<T>> safeCall<T>(_i6.Future<T> Function()? call) =>
+  _i7.Future<_i9.BaseResponse<T>> safeCall<T>(_i7.Future<T> Function()? call) =>
       (super.noSuchMethod(
             Invocation.method(#safeCall, [call]),
-            returnValue: _i6.Future<_i8.BaseResponse<T>>.value(
-              _i9.dummyValue<_i8.BaseResponse<T>>(
+            returnValue: _i7.Future<_i9.BaseResponse<T>>.value(
+              _i10.dummyValue<_i9.BaseResponse<T>>(
                 this,
                 Invocation.method(#safeCall, [call]),
               ),
             ),
           )
-          as _i6.Future<_i8.BaseResponse<T>>);
+          as _i7.Future<_i9.BaseResponse<T>>);
 }
