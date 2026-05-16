@@ -8,7 +8,9 @@ class AuthEndPoint {
   static const resetPassword = "/auth/resetPassword";
   static const profile = "/auth/profile-data";
   static const editProfile = "/auth/editProfile";
+  static const uploadPhoto = "/auth/upload-photo";
 }
+
 
 class ProductsSectionsEndPoint {
   static const categories = "/categories";

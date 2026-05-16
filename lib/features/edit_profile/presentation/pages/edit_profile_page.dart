@@ -41,18 +41,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<EditProfileCubit, EditProfileState>(
-      listenWhen: (previous, current) =>
-          previous.submitState != current.submitState,
-      listener: (context, state) {
-        if (state.submitState.data != null) {
-          CustomSnackBar.success(context, EditProfileConstants.updateSuccess);
-          Navigator.of(context).pop(true);
-        } else if (state.submitState.errorMessage != null) {
-          CustomSnackBar.error(context, state.submitState.errorMessage!);
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<EditProfileCubit, EditProfileState>(
+          listenWhen: (previous, current) =>
+              previous.submitState != current.submitState,
+          listener: (context, state) {
+            if (state.submitState.data != null) {
+              CustomSnackBar.success(
+                  context, EditProfileConstants.updateSuccess);
+              Navigator.of(context).pop(true);
+            } else if (state.submitState.errorMessage != null) {
+              CustomSnackBar.error(context, state.submitState.errorMessage!);
+            }
+          },
+        ),
+        BlocListener<EditProfileCubit, EditProfileState>(
+          listenWhen: (previous, current) =>
+              previous.uploadPhotoState != current.uploadPhotoState,
+          listener: (context, state) {
+            if (state.uploadPhotoState.data != null) {
+              CustomSnackBar.success(
+                  context, EditProfileConstants.updateSuccess);
+            } else if (state.uploadPhotoState.errorMessage != null) {
+              CustomSnackBar.error(
+                  context, state.uploadPhotoState.errorMessage!);
+            }
+          },
+        ),
+      ],
       child: Scaffold(
+
         backgroundColor: AppColors.background,
         appBar: const EditProfileAppBar(),
         body: SafeArea(

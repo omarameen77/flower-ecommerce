@@ -11,7 +11,10 @@ import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
 import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
 import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
+import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
+import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
+
 import 'package:flower/features/edit_profile/presentation/pages/edit_profile_page.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
@@ -92,8 +95,11 @@ abstract class AppRouter {
           }
           return PageTransitions.slide(
             BlocProvider(
-              create: (_) =>
-                  EditProfileCubit(getIt<EditProfileUseCase>(), user),
+              create: (_) => EditProfileCubit(
+                getIt<EditProfileUseCase>(),
+                getIt<UploadPhotoUseCase>(),
+                user,
+              ),
               child: const EditProfilePage(),
             ),
           );

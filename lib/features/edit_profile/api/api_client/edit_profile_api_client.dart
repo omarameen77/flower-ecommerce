@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flower/core/network/endpoints.dart';
 import 'package:flower/core/network/model/profile_response/profile_response.dart';
@@ -14,4 +16,9 @@ abstract class EditProfileApiClient {
 
   @PUT(AuthEndPoint.editProfile)
   Future<ProfileResponseDto> editProfile(@Body() EditProfileRequestDto request);
+
+  @PUT(AuthEndPoint.uploadPhoto)
+  @MultiPart()
+  Future<ProfileResponseDto> uploadPhoto(@Part(name: "photo") File photo);
 }
+

@@ -30,7 +30,10 @@ class ErrorHandler {
                   data["error"]?.toString() ??
                   ErrorConstants.serverError,
             );
+          } else if (data is String) {
+            return Failure(message: data);
           }
+          return Failure(message: ErrorConstants.serverError);
 
         case DioExceptionType.connectionError:
           return Failure(message: ErrorConstants.noInternet);
@@ -38,6 +41,10 @@ class ErrorHandler {
         default:
           return Failure(message: ErrorConstants.unexpectedError);
       }
+    }
+
+    if (error is String) {
+      return Failure(message: error);
     }
 
     return Failure(message: ErrorConstants.unknownError);

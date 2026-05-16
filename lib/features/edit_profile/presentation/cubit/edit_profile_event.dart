@@ -1,3 +1,5 @@
+import 'dart:io';
+
 sealed class EditProfileEvent {
   const EditProfileEvent();
 }
@@ -22,6 +24,12 @@ final class EditProfilePhoneChanged extends EditProfileEvent {
   final String value;
 }
 
+final class EditProfilePhotoChanged extends EditProfileEvent {
+  const EditProfilePhotoChanged(this.file);
+  final File file;
+}
+
 final class EditProfileSubmitted extends EditProfileEvent {
   const EditProfileSubmitted() : super();
 }
+

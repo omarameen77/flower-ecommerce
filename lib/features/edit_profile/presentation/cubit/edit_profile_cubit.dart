@@ -1,17 +1,24 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
+
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
+import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'edit_profile_state.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
-  EditProfileCubit(this._useCase, UserEntity initialUser)
-    : _initialFirst = (initialUser.firstName ?? '').trim(),
+  EditProfileCubit(
+    this._useCase,
+    this._uploadPhotoUseCase,
+    UserEntity initialUser,
+  ) : _initialFirst = (initialUser.firstName ?? '').trim(),
       _initialLast = (initialUser.lastName ?? '').trim(),
       _initialEmail = (initialUser.email ?? '').trim(),
       _initialPhone = (initialUser.phone ?? '').trim(),
@@ -21,10 +28,13 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           lastName: initialUser.lastName ?? '',
           email: initialUser.email ?? '',
           phone: initialUser.phone ?? '',
+          profilePhotoUrl: initialUser.photo,
         ),
       );
 
+
   final EditProfileUseCase _useCase;
+  final UploadPhotoUseCase _uploadPhotoUseCase;
   final String _initialFirst;
   final String _initialLast;
   final String _initialEmail;
@@ -35,7 +45,8 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     return s.firstName.trim() != _initialFirst ||
         s.lastName.trim() != _initialLast ||
         s.email.trim() != _initialEmail ||
-        s.phone.trim() != _initialPhone;
+        s.phone.trim() != _initialPhone ||
+        s.photo != null;
   }
 
   void doEvent(EditProfileEvent event) {
@@ -52,9 +63,51 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       case EditProfilePhoneChanged(:final value):
         emit(state.copyWith(phone: value));
         break;
+      case EditProfilePhotoChanged(:final file):
+        _uploadPhoto(file);
+        break;
       case EditProfileSubmitted():
         _submit();
         break;
+    }
+  }
+
+  Future<void> _uploadPhoto(File file) async {
+    try {
+      emit(
+        state.copyWith(
+          photo: file,
+          uploadPhotoState: const BaseState(isLoading: true),
+        ),
+      );
+
+      final result = await _uploadPhotoUseCase.call(file);
+
+      if (result is SuccessBaseResponse<UserEntity>) {
+        emit(
+          state.copyWith(
+            uploadPhotoState: BaseState(isLoading: false, data: result.data),
+          ),
+        );
+      } else if (result is ErrorBaseResponse<UserEntity>) {
+        emit(
+          state.copyWith(
+            uploadPhotoState: BaseState(
+              isLoading: false,
+              errorMessage: result.failure.message,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          uploadPhotoState: BaseState(
+            isLoading: false,
+            errorMessage: ErrorHandler.handle(e).message,
+          ),
+        ),
+      );
     }
   }
 
@@ -99,3 +152,4 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     }
   }
 }
+

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/model/user_models/user_entity.dart';
 
@@ -8,4 +10,7 @@ abstract class EditProfileRepository {
     required String email,
     required String phone,
   });
+
+  Future<BaseResponse<UserEntity>> uploadPhoto(File photo);
 }
+

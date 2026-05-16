@@ -6,6 +6,7 @@ import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cub
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_event.dart';
 import 'package:flower/features/edit_profile/presentation/widgets/edit_profile_email_phone_fields.dart';
 import 'package:flower/features/edit_profile/presentation/widgets/edit_profile_name_row.dart';
+import 'package:flower/features/edit_profile/presentation/widgets/edit_profile_photo_header.dart';
 import 'package:flower/features/edit_profile/presentation/widgets/edit_profile_update_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,15 +34,21 @@ class EditProfileFormBody extends StatelessWidget {
           previous.lastName != current.lastName ||
           previous.email != current.email ||
           previous.phone != current.phone ||
-          previous.submitState != current.submitState,
+          previous.photo != current.photo ||
+          previous.submitState != current.submitState ||
+          previous.uploadPhotoState != current.uploadPhotoState,
       builder: (context, state) {
         final cubit = context.read<EditProfileCubit>();
-        final loading = state.submitState.isLoading;
+        final loading = state.submitState.isLoading || state.uploadPhotoState.isLoading;
         final canSubmit = cubit.hasChanges && !loading;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            EditProfilePhotoHeader(
+              initialImageUrl: state.profilePhotoUrl,
+            ),
+            const AppSizedBox(height: 24),
             EditProfileNameRow(
               firstNameController: firstNameController,
               lastNameController: lastNameController,

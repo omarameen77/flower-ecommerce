@@ -43,6 +43,8 @@ dependencies:
   # Utils
   equatable: ^2.0.8
   flutter_svg: ^2.2.4
+  image_picker: ^1.1.2
+
 
 
 dev_dependencies:

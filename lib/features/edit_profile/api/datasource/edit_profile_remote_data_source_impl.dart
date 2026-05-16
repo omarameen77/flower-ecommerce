@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user_models/user.dart';
@@ -26,4 +28,20 @@ class EditProfileRemoteDataSourceImpl implements EditProfileRemoteDataSource {
       return ErrorBaseResponse<UserDto>(failure: ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<BaseResponse<UserDto>> uploadPhoto(File photo) async {
+    try {
+      final response = await _apiClient.uploadPhoto(photo);
+      if (response.user != null) {
+        return SuccessBaseResponse<UserDto>(data: response.user!);
+      }
+      return ErrorBaseResponse<UserDto>(
+        failure: ErrorHandler.handle(response.message ?? 'user not found'),
+      );
+    } catch (e) {
+      return ErrorBaseResponse<UserDto>(failure: ErrorHandler.handle(e));
+    }
+  }
 }
+

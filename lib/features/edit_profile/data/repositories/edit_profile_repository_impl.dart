@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/edit_profile/data/models/edit_profile_request.dart';
@@ -33,4 +35,17 @@ class EditProfileRepositoryImpl implements EditProfileRepository {
       failure: (response as ErrorBaseResponse).failure,
     );
   }
+
+  @override
+  Future<BaseResponse<UserEntity>> uploadPhoto(File photo) async {
+    final response = await _remoteDataSource.uploadPhoto(photo);
+    if (response is SuccessBaseResponse) {
+      final dto = (response as SuccessBaseResponse).data;
+      return SuccessBaseResponse<UserEntity>(data: dto.toDomain());
+    }
+    return ErrorBaseResponse<UserEntity>(
+      failure: (response as ErrorBaseResponse).failure,
+    );
+  }
 }
+
