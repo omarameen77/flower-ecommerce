@@ -6,7 +6,7 @@
 import 'dart:async' as _i4;
 
 import 'package:flower/config/base/base_response.dart' as _i5;
-import 'package:flower/core/network/model/user_entity.dart' as _i6;
+import 'package:flower/core/network/model/user_models/user_entity.dart' as _i6;
 import 'package:flower/features/auth/domain/repositories/auth_repo.dart' as _i2;
 import 'package:flower/features/auth/domain/use_cases/register_params.dart'
     as _i7;

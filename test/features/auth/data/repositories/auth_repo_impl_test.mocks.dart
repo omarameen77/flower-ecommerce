@@ -6,7 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:flower/config/base/base_response.dart' as _i4;
-import 'package:flower/core/network/model/user.dart' as _i5;
+import 'package:flower/core/network/model/user_models/user.dart' as _i5;
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i2;
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart'

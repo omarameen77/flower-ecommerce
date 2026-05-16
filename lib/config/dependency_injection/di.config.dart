@@ -15,6 +15,16 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../core/network/network_module.dart' as _i234;
 import '../../core/network/safe_api_caller.dart' as _i563;
+import '../../core/profile/api/api_client/profile_api_client.dart' as _i458;
+import '../../core/profile/api/datasource/profile_remote_data_source_impl.dart'
+    as _i501;
+import '../../core/profile/data/datasources/profile_remote_data_source.dart'
+    as _i49;
+import '../../core/profile/data/repositories/profile_repository_impl.dart'
+    as _i865;
+import '../../core/profile/domain/repositories/profile_repository.dart'
+    as _i679;
+import '../../core/profile/domain/usecases/get_profile_use_case.dart' as _i693;
 import '../../features/app_sections/presentation/cubit/app_sections_cubit.dart'
     as _i936;
 import '../../features/auth/api/api_client/auth_api_client.dart' as _i824;
@@ -63,14 +73,22 @@ import '../../features/product_sections/domain/use_cases/get_categories_use_case
     as _i406;
 import '../../features/product_sections/domain/use_cases/get_occasions_use_case.dart'
     as _i529;
+import '../../features/product_sections/domain/use_cases/get_product_by_id_use_case.dart'
+    as _i1049;
 import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i713;
+import '../../features/product_sections/presentation/occasions/cubit/occasions_products_cubit.dart'
+    as _i309;
+import '../../features/product_sections/presentation/product_details/cubit/product_details_cubit.dart'
+    as _i301;
 import '../../features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart'
     as _i691;
 import '../../features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart'
     as _i129;
 import '../../features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart'
     as _i538;
+import '../../features/profile/presentation/cubit/get_user_data/profile_cubit.dart'
+    as _i1041;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -89,6 +107,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i266.ProductsSectionsApiClient>(
       () => networkModule.productsApi(gh<_i361.Dio>()),
     );
+    gh.singleton<_i458.ProfileApiClient>(
+      () => networkModule.profileApi(gh<_i361.Dio>()),
+    );
     gh.factory<_i1032.CategoriesDataSourceContract>(
       () => _i1014.CategoriesDataSourceImpl(
         apiClient: gh<_i266.ProductsSectionsApiClient>(),
@@ -100,8 +121,14 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i1032.CategoriesDataSourceContract>(),
       ),
     );
+    gh.lazySingleton<_i49.ProfileRemoteDataSource>(
+      () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
+    );
     gh.factory<_i406.GetCategoriesUseCase>(
       () => _i406.GetCategoriesUseCase(repo: gh<_i696.CategoryRepoContract>()),
+    );
+    gh.lazySingleton<_i679.ProfileRepository>(
+      () => _i865.ProfileRepositoryImpl(gh<_i49.ProfileRemoteDataSource>()),
     );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
@@ -112,6 +139,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i370.ProductsSectionsDataSourceImpl(
         productsSectionsApiClient: gh<_i266.ProductsSectionsApiClient>(),
       ),
+    );
+    gh.factory<_i693.GetProfileUseCase>(
+      () => _i693.GetProfileUseCase(gh<_i679.ProfileRepository>()),
+    );
+    gh.factory<_i1041.ProfileCubit>(
+      () => _i1041.ProfileCubit(gh<_i693.GetProfileUseCase>()),
     );
     gh.factory<_i386.ProductsSectionRepo>(
       () => _i34.ProductsSectionsRepoImpl(
@@ -126,6 +159,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i529.GetOccasionsUseCase>(
       () => _i529.GetOccasionsUseCase(
+        productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
+      ),
+    );
+    gh.factory<_i1049.GetProductByIdUseCase>(
+      () => _i1049.GetProductByIdUseCase(
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
@@ -163,6 +201,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1010.RegisterUseCase>(
       () => _i1010.RegisterUseCase(registerRepoContract: gh<_i723.AuthRepo>()),
     );
+    gh.factory<_i301.ProductDetailsCubit>(
+      () => _i301.ProductDetailsCubit(
+        getProductByIdUseCase: gh<_i1049.GetProductByIdUseCase>(),
+      ),
+    );
     gh.factory<_i404.RegisterCubit>(
       () => _i404.RegisterCubit(gh<_i1010.RegisterUseCase>()),
     );
@@ -176,6 +219,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i660.VerifyResetCodeCubit(
         gh<_i887.VerifyResetCodeUseCase>(),
         gh<_i27.ForgetPasswordUseCase>(),
+      ),
+    );
+    gh.factory<_i309.OccasionsProductsCubit>(
+      () => _i309.OccasionsProductsCubit(
+        getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
+        getProductUseCase: gh<_i713.GetProductsUseCase>(),
       ),
     );
     gh.factory<_i450.ResetPasswordCubit>(

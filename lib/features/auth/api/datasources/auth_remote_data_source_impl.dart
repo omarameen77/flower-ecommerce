@@ -1,6 +1,6 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
-import 'package:flower/core/network/model/user.dart';
+import 'package:flower/core/network/model/user_models/user.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';

@@ -1,4 +1,4 @@
-import 'package:flower/core/network/model/user.dart';
+import 'package:flower/core/network/model/user_models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'login_response.g.dart';
 

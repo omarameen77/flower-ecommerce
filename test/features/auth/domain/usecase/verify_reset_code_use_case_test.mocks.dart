@@ -6,7 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:flower/config/base/base_response.dart' as _i4;
-import 'package:flower/core/network/model/user_entity.dart' as _i5;
+import 'package:flower/core/network/model/user_models/user_entity.dart' as _i5;
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart'
     as _i9;
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart'

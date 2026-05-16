@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/core/theme/app_colors.dart';
@@ -51,34 +50,7 @@ class ProfileUserHeader extends StatelessWidget {
 
     return Column(
       children: [
-        ClipOval(
-          child: photo != null && photo.isNotEmpty
-              ? CachedNetworkImage(
-                  imageUrl: photo,
-                  width: 88,
-                  height: 88,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
-                    width: 88,
-                    height: 88,
-                    color: AppColors.grey200,
-                    child: const Center(
-                      child: SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) =>
-                      const ProfileAvatarPlaceholder(),
-                )
-              : const SizedBox(
-                  width: 88,
-                  height: 88,
-                  child: ProfileAvatarPlaceholder(),
-                ),
-        ),
+        ProfileAvatarPlaceholder(imageUrl: photo),
         AppSizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
