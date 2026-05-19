@@ -62,7 +62,7 @@ class CustomSnackBar {
     _show(
       context,
       message: message,
-      backgroundColor: Colors.blue,
+      backgroundColor: AppColors.textSecondary,
       icon: Icons.info,
     );
   }

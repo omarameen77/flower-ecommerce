@@ -47,4 +47,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   void _changeSelectedCategory(int index) {
     emit(state.copyWith(selectedCategoryIndex: index));
   }
+
+  void resetToAll() {
+    emit(state.copyWith(selectedCategoryIndex: 0));
+  }
 }
