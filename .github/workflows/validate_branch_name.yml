@@ -1,0 +1,35 @@
+name: Validate Branch Name
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - development
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Branch Name
+        run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "Checking branch name: $BRANCH_NAME"
+
+          # Format:
+          #   branch-type/{Ticket-Id-TicketNum}-task-name
+          #
+          # Allowed prefixes : feature, bugfix, hotfix, release
+          # Example          : feature/ECOM-27-Initialize-Project
+          REGEX="^(feature|bugfix|hotfix|release)\/[A-Z]+-[0-9]+-[A-Za-z0-9]+([-_][A-Za-z0-9]+)*$"
+
+          if [[ ! "$BRANCH_NAME" =~ $REGEX ]]; then
+            echo "❌ Invalid branch name: $BRANCH_NAME"
+            echo ""
+            echo "Expected format: <prefix>/<TICKET-NUM>-<task-name>"
+            echo "Allowed prefixes: feature, bugfix, hotfix, release"
+            echo "Example         : feature/ECOM-27-Initialize-Project"
+            exit 1
+          fi
+
+          echo "✅ Branch name is valid: $BRANCH_NAME"
