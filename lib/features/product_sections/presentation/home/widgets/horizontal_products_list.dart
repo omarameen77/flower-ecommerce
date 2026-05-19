@@ -1,4 +1,3 @@
- 
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/home_product_card.dart';
@@ -17,8 +16,7 @@ class HorizontalProductsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const listHeight =
-        HomeTokens.productCardImageHeight + 60;
+    const listHeight = HomeTokens.productCardImageHeight + 60;
 
     if (isLoading) {
       return SizedBox(
@@ -43,8 +41,7 @@ class HorizontalProductsList extends StatelessWidget {
         itemCount: items.length,
         separatorBuilder: (_, _) =>
             const SizedBox(width: HomeTokens.sectionItemSpacing),
-        itemBuilder: (_, index) =>
-            HomeProductCard(product: items[index]),
+        itemBuilder: (_, index) => HomeProductCard(product: items[index]),
       ),
     );
   }

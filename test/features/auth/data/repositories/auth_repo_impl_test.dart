@@ -52,7 +52,9 @@ void main() {
 
     // provide dummy data for the base response
     provideDummy<BaseResponse<UserDto>>(
-      SuccessBaseResponse<UserDto>(data: UserDto(email: email, id: "1")),
+      SuccessBaseResponse<UserDto>(
+        data: UserDto(email: email, id: "1"),
+      ),
     );
     provideDummy<BaseResponse<UserEntity>>(
       SuccessBaseResponse<UserEntity>(data: UserEntity(email: email)),
@@ -91,8 +93,11 @@ void main() {
             gender: gender,
           );
 
-          when(mockAuthRemoteDataSourceContract.register(registerParams))
-              .thenAnswer((_) async => SuccessBaseResponse<UserDto>(data: userDto));
+          when(
+            mockAuthRemoteDataSourceContract.register(registerParams),
+          ).thenAnswer(
+            (_) async => SuccessBaseResponse<UserDto>(data: userDto),
+          );
 
           // ACT
           final result = await authRepoImpl.register(registerParams);
@@ -101,57 +106,69 @@ void main() {
           expect(result, isA<SuccessBaseResponse<UserEntity>>());
           final successResult = result as SuccessBaseResponse<UserEntity>;
           expect(successResult.data.email, email);
-          verify(mockAuthRemoteDataSourceContract.register(registerParams)).called(1);
+          verify(
+            mockAuthRemoteDataSourceContract.register(registerParams),
+          ).called(1);
         },
       );
 
-      test("Return ErrorBaseResponse<UserEntity> when register fails", () async {
-        // ARRANGE
-        final tFailure = Failure(message: 'error');
-        final tParams = RegisterParams(
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          rePassword: rePassword,
-          phone: phone,
-          gender: gender,
-        );
+      test(
+        "Return ErrorBaseResponse<UserEntity> when register fails",
+        () async {
+          // ARRANGE
+          final tFailure = Failure(message: 'error');
+          final tParams = RegisterParams(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            rePassword: rePassword,
+            phone: phone,
+            gender: gender,
+          );
 
-        when(mockAuthRemoteDataSourceContract.register(tParams))
-            .thenAnswer((_) async => ErrorBaseResponse<UserDto>(failure: tFailure));
+          when(mockAuthRemoteDataSourceContract.register(tParams)).thenAnswer(
+            (_) async => ErrorBaseResponse<UserDto>(failure: tFailure),
+          );
 
-        // ACT
-        final result = await authRepoImpl.register(tParams);
+          // ACT
+          final result = await authRepoImpl.register(tParams);
 
-        // ASSERT
-        expect(result, isA<ErrorBaseResponse<UserEntity>>());
-        expect((result as ErrorBaseResponse<UserEntity>).failure, tFailure);
-      });
+          // ASSERT
+          expect(result, isA<ErrorBaseResponse<UserEntity>>());
+          expect((result as ErrorBaseResponse<UserEntity>).failure, tFailure);
+        },
+      );
 
-      test("Return ErrorBaseResponse<UserEntity> when fields are empty", () async {
-        // ARRANGE
-        final failure = Failure(message: 'fields are required');
-        final registerParams = RegisterParams(
-          firstName: emptyFirstName,
-          lastName: emptyLastName,
-          email: emptyEmail,
-          password: emptyPassword,
-          rePassword: emptyRePassword,
-          phone: emptyPhone,
-          gender: emptyGender,
-        );
+      test(
+        "Return ErrorBaseResponse<UserEntity> when fields are empty",
+        () async {
+          // ARRANGE
+          final failure = Failure(message: 'fields are required');
+          final registerParams = RegisterParams(
+            firstName: emptyFirstName,
+            lastName: emptyLastName,
+            email: emptyEmail,
+            password: emptyPassword,
+            rePassword: emptyRePassword,
+            phone: emptyPhone,
+            gender: emptyGender,
+          );
 
-        when(mockAuthRemoteDataSourceContract.register(registerParams))
-            .thenAnswer((_) async => ErrorBaseResponse<UserDto>(failure: failure));
+          when(
+            mockAuthRemoteDataSourceContract.register(registerParams),
+          ).thenAnswer(
+            (_) async => ErrorBaseResponse<UserDto>(failure: failure),
+          );
 
-        // ACT
-        final result = await authRepoImpl.register(registerParams);
+          // ACT
+          final result = await authRepoImpl.register(registerParams);
 
-        // ASSERT
-        expect(result, isA<ErrorBaseResponse<UserEntity>>());
-        expect((result as ErrorBaseResponse<UserEntity>).failure, failure);
-      });
+          // ASSERT
+          expect(result, isA<ErrorBaseResponse<UserEntity>>());
+          expect((result as ErrorBaseResponse<UserEntity>).failure, failure);
+        },
+      );
     });
   });
 }

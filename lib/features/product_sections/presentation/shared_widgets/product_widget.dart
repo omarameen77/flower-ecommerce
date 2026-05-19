@@ -37,90 +37,90 @@ class ProductWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(8),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                imageUrl: product.imgCover ?? '',
-                width: double.infinity,
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => const ColoredBox(
-                  color: AppColors.grey500,
-                  child: Center(
-                    child: Icon(
-                      Icons.image_not_supported_outlined,
-                      color: AppColors.grey800,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                  imageUrl: product.imgCover ?? '',
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => const ColoredBox(
+                    color: AppColors.grey500,
+                    child: Center(
+                      child: Icon(
+                        Icons.image_not_supported_outlined,
+                        color: AppColors.grey800,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          const AppSizedBox(height: 8),
-          Text(
-            product.title ?? AppStrings.noNmae,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: getRegularStyle(
-              context: context,
-              color: AppColors.textPrimary,
-              fontSize: 14,
+            const AppSizedBox(height: 8),
+            Text(
+              product.title ?? AppStrings.noNmae,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: getRegularStyle(
+                context: context,
+                color: AppColors.textPrimary,
+                fontSize: 14,
+              ),
             ),
-          ),
-          const AppSizedBox(height: 4),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: [
-                Text(
-                  'EGP $discountedPrice',
-                  style: getSemiBoldStyle(
-                    context: context,
-                    color: AppColors.textPrimary,
-                    fontSize: 16,
-                  ),
-                ),
-                const AppSizedBox(width: 6),
-                if (discount > 0) ...[
+            const AppSizedBox(height: 4),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
                   Text(
-                    '$regularPrice',
-                    style: getRegularStyle(
+                    'EGP $discountedPrice',
+                    style: getSemiBoldStyle(
                       context: context,
-                      color: AppColors.textSecondary,
-                      fontSize: 13,
-                    ).copyWith(decoration: TextDecoration.lineThrough),
-                  ),
-                  const AppSizedBox(width: 4),
-                  Text(
-                    '$discount%',
-                    style: getRegularStyle(
-                      context: context,
-                      color: AppColors.success,
-                      fontSize: 13,
+                      color: AppColors.textPrimary,
+                      fontSize: 16,
                     ),
                   ),
+                  const AppSizedBox(width: 6),
+                  if (discount > 0) ...[
+                    Text(
+                      '$regularPrice',
+                      style: getRegularStyle(
+                        context: context,
+                        color: AppColors.textSecondary,
+                        fontSize: 13,
+                      ).copyWith(decoration: TextDecoration.lineThrough),
+                    ),
+                    const AppSizedBox(width: 4),
+                    Text(
+                      '$discount%',
+                      style: getRegularStyle(
+                        context: context,
+                        color: AppColors.success,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
-            ),
-          ),
-          const AppSizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            height: 34,
-            child: ButtonWithPrefix(
-              text: AppStrings.addToCart,
-              onTap: () {},
-              prefixIcon: const Icon(
-                Icons.shopping_cart_outlined,
-                size: 16,
-                color: AppColors.textWhite,
               ),
             ),
-          ),
-        ],
+            const AppSizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              height: 34,
+              child: ButtonWithPrefix(
+                text: AppStrings.addToCart,
+                onTap: () {},
+                prefixIcon: const Icon(
+                  Icons.shopping_cart_outlined,
+                  size: 16,
+                  color: AppColors.textWhite,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
