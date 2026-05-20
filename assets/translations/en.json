@@ -103,4 +103,17 @@
   "close": "Close",
   "loading": "Loading...",
   "press_back_again_to_exit": "Press back again to exit"
-}}
+},"cart": {
+  "cart": "Cart",
+  "empty_cart": "Your cart is empty",
+  "total": "Total",
+  "subtotal": "Sub Total",
+  "checkout": "Checkout",
+  "delivery": "Delivery Fee",
+  "item_removed": "Item removed from cart",
+  "items": "Items",
+  "egp": "EGP ",
+  "go_shopping": "Go shopping",
+  "already_added": "Added"
+}
+}
