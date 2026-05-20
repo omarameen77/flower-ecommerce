@@ -21,12 +21,12 @@ class RegisterParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        firstName,
-        lastName,
-        email,
-        password,
-        rePassword,
-        phone,
-        gender,
-      ];
+    firstName,
+    lastName,
+    email,
+    password,
+    rePassword,
+    phone,
+    gender,
+  ];
 }

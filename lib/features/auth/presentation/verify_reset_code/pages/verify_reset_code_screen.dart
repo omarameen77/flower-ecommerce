@@ -79,9 +79,9 @@ class VerifyResetCodeScreen extends StatelessWidget {
       builder: (context, state) {
         if (state.base.isLoading) return const AppLoadingWidget();
         return ResendCodeRow(
-          onResend: () => context
-              .read<VerifyResetCodeCubit>()
-              .doIntent(ResendIntent(email)),
+          onResend: () => context.read<VerifyResetCodeCubit>().doIntent(
+            ResendIntent(email),
+          ),
           isLoading: state.isResending,
         );
       },

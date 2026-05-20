@@ -10,7 +10,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
-import 'package:flower/config/dependency_injection/di.dart';
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -52,7 +51,7 @@ import '../../features/cart/domain/repository/cart_repo_contract.dart' as _i425;
 import '../../features/cart/domain/usecases/add_product_to_cart_use_case.dart'
     as _i802;
 import '../../features/cart/domain/usecases/get_cart_use_case.dart' as _i488;
-import '../../features/cart/domain/usecases/remove_cart_item_use_case.dart'
+import '../../features/cart/domain/usecases/remove_cart_Item_use_case.dart'
     as _i913;
 import '../../features/cart/domain/usecases/update_cart_item_quantity_use_case.dart'
     as _i157;
@@ -185,14 +184,14 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
-    getIt.registerFactory<_i499.CartCubit>(
-  () => _i499.CartCubit(
-    getIt<_i802.AddProductToCartUseCase>(),
-    getIt<_i488.GetCartUseCase>(),
-    getIt<_i913.RemoveCartItemUseCase>(),
-    getIt<_i157.UpdateCartItemQuantityUseCase>(),
-  ),
-);
+    gh.factory<_i499.CartCubit>(
+      () => _i499.CartCubit(
+        gh<_i802.AddProductToCartUseCase>(),
+        gh<_i488.GetCartUseCase>(),
+        gh<InvalidType>(),
+        gh<_i157.UpdateCartItemQuantityUseCase>(),
+      ),
+    );
     gh.factory<_i723.AuthRepo>(
       () => _i662.AuthRepoImpl(
         authRemoteDataSourceContract: gh<_i107.AuthRemoteDataSourceContract>(),

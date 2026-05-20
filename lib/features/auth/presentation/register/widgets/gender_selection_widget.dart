@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GenderSelectionWidget extends StatelessWidget {
   const GenderSelectionWidget({super.key});
-  
+
   // I DID NOT FORGET THIS PART !! I NEED IT !! THE STRING CLASS NOT WORK WITH RADIO !!
   static const String _femaleValue = 'female';
   static const String _maleValue = 'male';
