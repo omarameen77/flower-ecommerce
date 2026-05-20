@@ -1,7 +1,7 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
-import 'package:flower/core/network/model/user.dart';
-import 'package:flower/core/network/model/user_entity.dart';
+import 'package:flower/core/network/model/user_models/user.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:flower/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:flower/features/auth/domain/use_cases/register_params.dart';

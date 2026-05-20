@@ -109,5 +109,13 @@
   "logout_message": "Are you sure you want to log out?",
   "cancel": "Cancel",
   "version": "v 1.0.0+1"
-}
-}
+},"general": {
+  "ok": "OK",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "retry": "Retry",
+  "close": "Close",
+  "loading": "Loading...",
+  "press_back_again_to_exit": "Press back again to exit"
+}}

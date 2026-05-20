@@ -1,5 +1,4 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/product_sections/domain/entities/product_entity.dart';
 import 'package:flower/features/product_sections/domain/use_cases/get_products_use_case.dart';
@@ -42,8 +41,17 @@ void main() {
       expectLater(
         cubit.stream,
         emitsInOrder([
-          const BaseState<List<ProductEntity>>(isLoading: true, data: []),
-          BaseState<List<ProductEntity>>(data: products),
+          predicate<SearchState>(
+            (state) =>
+                state.productsState.isLoading == true &&
+                state.productsState.data!.isEmpty,
+          ),
+
+          predicate<SearchState>(
+            (state) =>
+                state.productsState.isLoading == false &&
+                state.productsState.data!.length == 1,
+          ),
         ]),
       );
 
@@ -67,7 +75,9 @@ void main() {
 
     test('clear results', () {
       cubit.clear();
+
       expect(cubit.state.productsState.data, []);
+      expect(cubit.state.productsState.isLoading, false);
     });
   });
 }

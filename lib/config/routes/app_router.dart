@@ -1,4 +1,5 @@
 import 'package:flower/config/dependency_injection/di.dart';
+import 'package:flower/config/routes/exit_wrapper.dart';
 import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
@@ -40,7 +41,9 @@ abstract class AppRouter {
           return PageTransitions.slide(ProductDetailsPage(productId: id));
 
         case Routes.appSections:
-          return PageTransitions.slide(const AppSectionsPage());
+          return PageTransitions.slide(
+            ExitWrapper(child: const AppSectionsPage()),
+          );
 
         case Routes.occasions:
           final id = settings.arguments as String?;
