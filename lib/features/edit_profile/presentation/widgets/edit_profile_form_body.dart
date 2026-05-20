@@ -39,15 +39,14 @@ class EditProfileFormBody extends StatelessWidget {
           previous.uploadPhotoState != current.uploadPhotoState,
       builder: (context, state) {
         final cubit = context.read<EditProfileCubit>();
-        final loading = state.submitState.isLoading || state.uploadPhotoState.isLoading;
+        final loading =
+            state.submitState.isLoading || state.uploadPhotoState.isLoading;
         final canSubmit = cubit.hasChanges && !loading;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            EditProfilePhotoHeader(
-              initialImageUrl: state.profilePhotoUrl,
-            ),
+            EditProfilePhotoHeader(initialImageUrl: state.profilePhotoUrl),
             const AppSizedBox(height: 24),
             EditProfileNameRow(
               firstNameController: firstNameController,

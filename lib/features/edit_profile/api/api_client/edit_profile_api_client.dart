@@ -12,7 +12,8 @@ part 'edit_profile_api_client.g.dart';
 @RestApi()
 abstract class EditProfileApiClient {
   @factoryMethod
-  factory EditProfileApiClient(Dio dio, {String baseUrl}) = _EditProfileApiClient;
+  factory EditProfileApiClient(Dio dio, {String baseUrl}) =
+      _EditProfileApiClient;
 
   @PUT(AuthEndPoint.editProfile)
   Future<ProfileResponseDto> editProfile(@Body() EditProfileRequestDto request);
@@ -21,4 +22,3 @@ abstract class EditProfileApiClient {
   @MultiPart()
   Future<ProfileResponseDto> uploadPhoto(@Part(name: "photo") File photo);
 }
-

@@ -45,15 +45,13 @@ class EditProfileState extends Equatable {
 
   @override
   List<Object?> get props => [
-        firstName,
-        lastName,
-        email,
-        phone,
-        profilePhotoUrl,
-        photo,
-        submitState,
-        uploadPhotoState,
-      ];
+    firstName,
+    lastName,
+    email,
+    phone,
+    profilePhotoUrl,
+    photo,
+    submitState,
+    uploadPhotoState,
+  ];
 }
-
-

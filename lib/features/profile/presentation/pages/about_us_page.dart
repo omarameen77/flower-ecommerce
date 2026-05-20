@@ -9,9 +9,7 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ProfileConstants.aboutUs),
-      ),
+      appBar: AppBar(title: Text(ProfileConstants.aboutUs)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Text(

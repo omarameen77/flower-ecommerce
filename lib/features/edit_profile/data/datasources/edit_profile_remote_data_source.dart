@@ -8,4 +8,3 @@ abstract class EditProfileRemoteDataSource {
   Future<BaseResponse<UserDto>> editProfile(EditProfileRequestDto request);
   Future<BaseResponse<UserDto>> uploadPhoto(File photo);
 }
-

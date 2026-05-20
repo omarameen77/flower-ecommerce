@@ -32,7 +32,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         ),
       );
 
-
   final EditProfileUseCase _useCase;
   final UploadPhotoUseCase _uploadPhotoUseCase;
   final String _initialFirst;
@@ -152,4 +151,3 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     }
   }
 }
-

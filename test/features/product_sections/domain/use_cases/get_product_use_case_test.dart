@@ -44,8 +44,7 @@ void main() {
         when(
           mockProductsSectionRepo.getProducts(limit: limit, sort: sort),
         ).thenAnswer(
-          (_) async =>
-              SuccessBaseResponse<List<ProductEntity>>(data: products),
+          (_) async => SuccessBaseResponse<List<ProductEntity>>(data: products),
         );
 
         final result = await getProductUseCase.call(limit: limit, sort: sort);
@@ -61,25 +60,22 @@ void main() {
       },
     );
 
-    test(
-      'should propagate ErrorBaseResponse when repository fails',
-      () async {
-        final failure = ErrorBaseResponse<List<ProductEntity>>(
-          failure: Failure(message: 'error'),
-        );
+    test('should propagate ErrorBaseResponse when repository fails', () async {
+      final failure = ErrorBaseResponse<List<ProductEntity>>(
+        failure: Failure(message: 'error'),
+      );
 
-        when(
-          mockProductsSectionRepo.getProducts(limit: limit, sort: sort),
-        ).thenAnswer((_) async => failure);
+      when(
+        mockProductsSectionRepo.getProducts(limit: limit, sort: sort),
+      ).thenAnswer((_) async => failure);
 
-        final result = await getProductUseCase.call(limit: limit, sort: sort);
+      final result = await getProductUseCase.call(limit: limit, sort: sort);
 
-        expect(result, isA<ErrorBaseResponse<List<ProductEntity>>>());
-        expect(
-          (result as ErrorBaseResponse<List<ProductEntity>>).failure.message,
-          'error',
-        );
-      },
-    );
+      expect(result, isA<ErrorBaseResponse<List<ProductEntity>>>());
+      expect(
+        (result as ErrorBaseResponse<List<ProductEntity>>).failure.message,
+        'error',
+      );
+    });
   });
 }

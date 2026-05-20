@@ -32,4 +32,3 @@ final class EditProfilePhotoChanged extends EditProfileEvent {
 final class EditProfileSubmitted extends EditProfileEvent {
   const EditProfileSubmitted() : super();
 }
-

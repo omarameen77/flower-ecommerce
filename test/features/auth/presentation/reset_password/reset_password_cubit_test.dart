@@ -28,10 +28,7 @@ void main() {
 
   test('emits [loading, success] when submit succeeds', () async {
     when(
-      useCase(
-        email: anyNamed('email'),
-        newPassword: anyNamed('newPassword'),
-      ),
+      useCase(email: anyNamed('email'), newPassword: anyNamed('newPassword')),
     ).thenAnswer(
       (_) async => SuccessBaseResponse(
         data: const ResetPasswordEntity(message: 'ok', token: 't'),
@@ -63,10 +60,7 @@ void main() {
 
   test('emits [loading, error] when submit fails', () async {
     when(
-      useCase(
-        email: anyNamed('email'),
-        newPassword: anyNamed('newPassword'),
-      ),
+      useCase(email: anyNamed('email'), newPassword: anyNamed('newPassword')),
     ).thenAnswer(
       (_) async => ErrorBaseResponse(failure: Failure(message: 'boom')),
     );

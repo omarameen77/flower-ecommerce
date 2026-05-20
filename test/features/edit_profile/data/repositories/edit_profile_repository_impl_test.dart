@@ -116,9 +116,9 @@ void main() {
 
       test('Return ErrorBaseResponse<UserEntity> when remote fails', () async {
         final failure = Failure(message: 'Server error');
-        when(mockRemoteDataSource.editProfile(any)).thenAnswer(
-          (_) async => ErrorBaseResponse<UserDto>(failure: failure),
-        );
+        when(
+          mockRemoteDataSource.editProfile(any),
+        ).thenAnswer((_) async => ErrorBaseResponse<UserDto>(failure: failure));
 
         final result = await repository.editProfile(
           firstName: 'a',
@@ -134,16 +134,17 @@ void main() {
       });
 
       test('Sends trimmed fields in EditProfileRequestDto', () async {
-        when(mockRemoteDataSource.editProfile(any)).thenAnswer(
-          (invocation) async {
-            final req = invocation.positionalArguments[0] as EditProfileRequestDto;
-            expect(req.firstName, 'x');
-            expect(req.lastName, 'y');
-            expect(req.email, 'e@test.com');
-            expect(req.phone, '+1');
-            return SuccessBaseResponse<UserDto>(data: userDto);
-          },
-        );
+        when(mockRemoteDataSource.editProfile(any)).thenAnswer((
+          invocation,
+        ) async {
+          final req =
+              invocation.positionalArguments[0] as EditProfileRequestDto;
+          expect(req.firstName, 'x');
+          expect(req.lastName, 'y');
+          expect(req.email, 'e@test.com');
+          expect(req.phone, '+1');
+          return SuccessBaseResponse<UserDto>(data: userDto);
+        });
 
         await repository.editProfile(
           firstName: '  x ',

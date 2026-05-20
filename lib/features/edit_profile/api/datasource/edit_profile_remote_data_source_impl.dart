@@ -15,7 +15,9 @@ class EditProfileRemoteDataSourceImpl implements EditProfileRemoteDataSource {
   EditProfileRemoteDataSourceImpl(this._apiClient);
 
   @override
-  Future<BaseResponse<UserDto>> editProfile(EditProfileRequestDto request) async {
+  Future<BaseResponse<UserDto>> editProfile(
+    EditProfileRequestDto request,
+  ) async {
     try {
       final response = await _apiClient.editProfile(request);
       if (response.user != null) {
@@ -44,4 +46,3 @@ class EditProfileRemoteDataSourceImpl implements EditProfileRemoteDataSource {
     }
   }
 }
-

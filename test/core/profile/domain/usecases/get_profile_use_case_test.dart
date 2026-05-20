@@ -33,9 +33,7 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(
-        data: UserEntity(email: 'test@test.com'),
-      ),
+      SuccessBaseResponse<UserEntity>(data: UserEntity(email: 'test@test.com')),
     );
   });
 
@@ -64,8 +62,10 @@ void main() {
 
         // ASSERT
         expect(result, isA<SuccessBaseResponse<UserEntity>>());
-        expect((result as SuccessBaseResponse<UserEntity>).data.email,
-            userEntity.email);
+        expect(
+          (result as SuccessBaseResponse<UserEntity>).data.email,
+          userEntity.email,
+        );
         verify(mockProfileRepository.getProfile()).called(1);
       },
     );
@@ -84,8 +84,10 @@ void main() {
 
         // ASSERT
         expect(result, isA<ErrorBaseResponse<UserEntity>>());
-        expect((result as ErrorBaseResponse<UserEntity>).failure.message,
-            failure.message);
+        expect(
+          (result as ErrorBaseResponse<UserEntity>).failure.message,
+          failure.message,
+        );
         verify(mockProfileRepository.getProfile()).called(1);
       },
     );

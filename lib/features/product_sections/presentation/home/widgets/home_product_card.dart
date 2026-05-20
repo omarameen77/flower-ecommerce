@@ -1,4 +1,3 @@
- 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -38,13 +37,14 @@ class HomeProductCard extends StatelessWidget {
                 width: HomeTokens.productCardWidth,
                 height: HomeTokens.productCardImageHeight,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: AppColors.grey400,
-                ),
+                placeholder: (context, url) =>
+                    Container(color: AppColors.grey400),
                 errorWidget: (context, url, error) => Container(
                   color: AppColors.grey400,
-                  child: Icon(Icons.image_not_supported_outlined,
-                      color: AppColors.grey700),
+                  child: Icon(
+                    Icons.image_not_supported_outlined,
+                    color: AppColors.grey700,
+                  ),
                 ),
               ),
             ),

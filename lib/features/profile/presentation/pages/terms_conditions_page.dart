@@ -9,9 +9,7 @@ class TermsConditionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ProfileConstants.termsConditions),
-      ),
+      appBar: AppBar(title: Text(ProfileConstants.termsConditions)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Text(

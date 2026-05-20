@@ -113,9 +113,7 @@ void main() {
 
           // ASSERT later
           final expected = [
-            RegisterState(
-              registerState: const BaseState(isLoading: true),
-            ),
+            RegisterState(registerState: const BaseState(isLoading: true)),
             RegisterState(
               registerState: BaseState(data: userEntity, isLoading: false),
             ),
@@ -127,49 +125,47 @@ void main() {
         },
       );
 
-      test(
-        'should emit [loading, error] when registration fails',
-        () async {
-          // ARRANGE
-          final failure = Failure(message: 'error');
-          final event = Register(
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            rePassword: rePassword,
-            phone: phone,
-            gender: gender,
-          );
-          final params = RegisterParams(
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            rePassword: rePassword,
-            phone: phone,
-            gender: gender,
-          );
+      test('should emit [loading, error] when registration fails', () async {
+        // ARRANGE
+        final failure = Failure(message: 'error');
+        final event = Register(
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          rePassword: rePassword,
+          phone: phone,
+          gender: gender,
+        );
+        final params = RegisterParams(
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          rePassword: rePassword,
+          phone: phone,
+          gender: gender,
+        );
 
-          when(mockRegisterUseCase.call(params)).thenAnswer(
-            (_) async => ErrorBaseResponse<UserEntity>(failure: failure),
-          );
+        when(mockRegisterUseCase.call(params)).thenAnswer(
+          (_) async => ErrorBaseResponse<UserEntity>(failure: failure),
+        );
 
-          // ASSERT later
-          final expected = [
-            RegisterState(
-              registerState: const BaseState(isLoading: true),
+        // ASSERT later
+        final expected = [
+          RegisterState(registerState: const BaseState(isLoading: true)),
+          RegisterState(
+            registerState: const BaseState(
+              isLoading: false,
+              errorMessage: 'error',
             ),
-            RegisterState(
-              registerState: const BaseState(isLoading: false, errorMessage: 'error'),
-            ),
-          ];
-          expectLater(registerCubit.stream, emitsInOrder(expected));
+          ),
+        ];
+        expectLater(registerCubit.stream, emitsInOrder(expected));
 
-          // ACT
-          registerCubit.doEvent(event);
-        },
-      );
+        // ACT
+        registerCubit.doEvent(event);
+      });
     });
 
     group('change gender', () {

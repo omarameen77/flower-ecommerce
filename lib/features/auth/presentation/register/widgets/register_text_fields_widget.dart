@@ -75,8 +75,10 @@ class RegisterTextFieldsWidget extends StatelessWidget {
                 hintText: context.password,
                 labelText: context.confirmPassword,
                 isPassword: true,
-                validator: (value) =>
-                    AppValidator.confirmPassword(value, passwordController.text),
+                validator: (value) => AppValidator.confirmPassword(
+                  value,
+                  passwordController.text,
+                ),
               ),
             ),
           ],

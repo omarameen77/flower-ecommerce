@@ -1,4 +1,3 @@
-
 import 'package:flower/features/product_sections/data/models/metadata/metadata_dto.dart';
 import 'package:flower/features/product_sections/data/models/dtos/occasion_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -16,11 +15,7 @@ class OccasionsResponse {
   @JsonKey(name: "occasions")
   final List<OccasionDto>? occasions;
 
-  const OccasionsResponse({
-    this.message,
-    this.metadata,
-    this.occasions,
-  });
+  const OccasionsResponse({this.message, this.metadata, this.occasions});
 
   factory OccasionsResponse.fromJson(Map<String, dynamic> json) =>
       _$OccasionsResponseFromJson(json);

@@ -38,9 +38,7 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(
-        data: UserEntity(email: 'test@test.com'),
-      ),
+      SuccessBaseResponse<UserEntity>(data: UserEntity(email: 'test@test.com')),
     );
   });
 
@@ -172,9 +170,8 @@ void main() {
             phone: anyNamed('phone'),
           ),
         ).thenAnswer(
-          (_) async => ErrorBaseResponse<UserEntity>(
-            failure: Failure(message: 'fail'),
-          ),
+          (_) async =>
+              ErrorBaseResponse<UserEntity>(failure: Failure(message: 'fail')),
         );
 
         final expected = [

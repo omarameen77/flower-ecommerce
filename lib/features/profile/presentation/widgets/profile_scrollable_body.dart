@@ -38,8 +38,11 @@ class ProfileScrollableBody extends StatelessWidget {
                   return ProfileUserHeader(
                     profileState: profileState,
                     onEditProfileTap: () {
-                      final user =
-                          context.read<ProfileCubit>().state.profileState.data;
+                      final user = context
+                          .read<ProfileCubit>()
+                          .state
+                          .profileState
+                          .data;
                       if (user == null) return;
                       Navigator.pushNamed(
                         context,
@@ -47,7 +50,9 @@ class ProfileScrollableBody extends StatelessWidget {
                         arguments: user,
                       ).then((updated) {
                         if (updated == true && context.mounted) {
-                          context.read<ProfileCubit>().doEvent(const LoadProfile());
+                          context.read<ProfileCubit>().doEvent(
+                            const LoadProfile(),
+                          );
                         }
                       });
                     },

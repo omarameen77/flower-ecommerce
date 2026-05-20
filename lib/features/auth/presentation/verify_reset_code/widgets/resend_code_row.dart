@@ -35,8 +35,11 @@ class ResendCodeRow extends StatelessWidget {
             onTap: onResend,
             child: Text(
               context.resend,
-              style: getSemiBoldStyle(context: context, color: AppColors.primary)
-                  .copyWith(
+              style:
+                  getSemiBoldStyle(
+                    context: context,
+                    color: AppColors.primary,
+                  ).copyWith(
                     decoration: TextDecoration.underline,
                     decorationColor: AppColors.primary,
                   ),

@@ -33,9 +33,7 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(
-        data: UserEntity(email: 'test@test.com'),
-      ),
+      SuccessBaseResponse<UserEntity>(data: UserEntity(email: 'test@test.com')),
     );
   });
 
@@ -62,7 +60,9 @@ void main() {
             email: anyNamed('email'),
             phone: anyNamed('phone'),
           ),
-        ).thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: userEntity));
+        ).thenAnswer(
+          (_) async => SuccessBaseResponse<UserEntity>(data: userEntity),
+        );
 
         final result = await useCase.call(
           firstName: userEntity.firstName!,
@@ -72,8 +72,10 @@ void main() {
         );
 
         expect(result, isA<SuccessBaseResponse<UserEntity>>());
-        expect((result as SuccessBaseResponse<UserEntity>).data.email,
-            userEntity.email);
+        expect(
+          (result as SuccessBaseResponse<UserEntity>).data.email,
+          userEntity.email,
+        );
         verify(
           mockRepository.editProfile(
             firstName: userEntity.firstName,
@@ -108,8 +110,10 @@ void main() {
         );
 
         expect(result, isA<ErrorBaseResponse<UserEntity>>());
-        expect((result as ErrorBaseResponse<UserEntity>).failure.message,
-            failure.message);
+        expect(
+          (result as ErrorBaseResponse<UserEntity>).failure.message,
+          failure.message,
+        );
         verify(
           mockRepository.editProfile(
             firstName: 'a',

@@ -11,7 +11,6 @@ class AuthEndPoint {
   static const uploadPhoto = "/auth/upload-photo";
 }
 
-
 class ProductsSectionsEndPoint {
   static const categories = "/categories";
   static const occasions = "/occasions";

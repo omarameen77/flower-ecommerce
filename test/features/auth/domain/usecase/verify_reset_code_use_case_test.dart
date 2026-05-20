@@ -46,9 +46,7 @@ void main() {
   });
 
   test('returns error with failure message when repo fails', () async {
-    when(
-      repo.verifyResetCode(resetCode: anyNamed('resetCode')),
-    ).thenAnswer(
+    when(repo.verifyResetCode(resetCode: anyNamed('resetCode'))).thenAnswer(
       (_) async => ErrorBaseResponse(failure: Failure(message: 'bad code')),
     );
 

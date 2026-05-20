@@ -49,7 +49,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           listener: (context, state) {
             if (state.submitState.data != null) {
               CustomSnackBar.success(
-                  context, EditProfileConstants.updateSuccess);
+                context,
+                EditProfileConstants.updateSuccess,
+              );
               Navigator.of(context).pop(true);
             } else if (state.submitState.errorMessage != null) {
               CustomSnackBar.error(context, state.submitState.errorMessage!);
@@ -62,16 +64,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
           listener: (context, state) {
             if (state.uploadPhotoState.data != null) {
               CustomSnackBar.success(
-                  context, EditProfileConstants.updateSuccess);
+                context,
+                EditProfileConstants.updateSuccess,
+              );
             } else if (state.uploadPhotoState.errorMessage != null) {
               CustomSnackBar.error(
-                  context, state.uploadPhotoState.errorMessage!);
+                context,
+                state.uploadPhotoState.errorMessage!,
+              );
             }
           },
         ),
       ],
       child: Scaffold(
-
         backgroundColor: AppColors.background,
         appBar: const EditProfileAppBar(),
         body: SafeArea(

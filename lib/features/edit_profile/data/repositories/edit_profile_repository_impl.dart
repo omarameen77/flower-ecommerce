@@ -48,4 +48,3 @@ class EditProfileRepositoryImpl implements EditProfileRepository {
     );
   }
 }
-

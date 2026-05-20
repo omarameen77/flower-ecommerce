@@ -34,7 +34,9 @@ void main() {
 
   setUpAll(() {
     provideDummy<ProfileResponseDto>(
-      ProfileResponseDto(user: UserDto(email: 'e@test.com', id: '1')),
+      ProfileResponseDto(
+        user: UserDto(email: 'e@test.com', id: '1'),
+      ),
     );
   });
 
@@ -89,20 +91,17 @@ void main() {
         },
       );
 
-      test(
-        'Return ErrorBaseResponse<UserDto> when API throws',
-        () async {
-          // ARRANGE
-          when(mockProfileApiClient.getProfile()).thenThrow(Exception('network'));
+      test('Return ErrorBaseResponse<UserDto> when API throws', () async {
+        // ARRANGE
+        when(mockProfileApiClient.getProfile()).thenThrow(Exception('network'));
 
-          // ACT
-          final result = await dataSource.getProfile();
+        // ACT
+        final result = await dataSource.getProfile();
 
-          // ASSERT
-          expect(result, isA<ErrorBaseResponse<UserDto>>());
-          verify(mockProfileApiClient.getProfile()).called(1);
-        },
-      );
+        // ASSERT
+        expect(result, isA<ErrorBaseResponse<UserDto>>());
+        verify(mockProfileApiClient.getProfile()).called(1);
+      });
     });
   });
 }

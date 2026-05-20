@@ -13,4 +13,3 @@ abstract class EditProfileRepository {
 
   Future<BaseResponse<UserEntity>> uploadPhoto(File photo);
 }
-

@@ -27,12 +27,8 @@ class CachedNetworkImageWidget extends StatelessWidget {
         width: width ?? AppSize.s50,
         height: height ?? AppSize.s50,
       ),
-      errorWidget: (context, url, error) => Icon(
-        Icons.error,
-        color: Colors.red,
-        size: AppSize.s24,
-      ),
+      errorWidget: (context, url, error) =>
+          Icon(Icons.error, color: Colors.red, size: AppSize.s24),
     );
   }
 }
-

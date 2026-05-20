@@ -15,11 +15,7 @@ class CategoriesResponse {
   @JsonKey(name: "categories")
   final List<CategoryDto>? categories;
 
-  CategoriesResponse({
-    this.message,
-    this.metadata,
-    this.categories,
-  });
+  CategoriesResponse({this.message, this.metadata, this.categories});
 
   factory CategoriesResponse.fromJson(Map<String, dynamic> json) =>
       _$CategoriesResponseFromJson(json);

@@ -2,10 +2,7 @@ import 'package:flower/features/profile/presentation/widgets/app_logo_widget.dar
 import 'package:flutter/material.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ProfileAppBar({
-    super.key,
-    this.horizontalPadding = 20,
-  });
+  const ProfileAppBar({super.key, this.horizontalPadding = 20});
 
   final double horizontalPadding;
 

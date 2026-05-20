@@ -1,5 +1,6 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/core/network/model/user_models/user_entity.dart';import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';
+import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
 import 'package:flower/features/auth/domain/use_cases/register_params.dart';
 import 'package:flower/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,38 +39,34 @@ void main() {
 
   setUp(() {
     mockAuthRepo = MockAuthRepo();
-    registerUseCase = RegisterUseCase(
-      registerRepoContract: mockAuthRepo,
-    );
+    registerUseCase = RegisterUseCase(registerRepoContract: mockAuthRepo);
   });
 
   group('register usecase', () {
-    test(
-      'should call register on the repository',
-      () async {
-        // ARRANGE
-        final userEntity = UserEntity(email: email);
-        final params = RegisterParams(
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          rePassword: rePassword,
-          phone: phone,
-          gender: gender,
-        );
+    test('should call register on the repository', () async {
+      // ARRANGE
+      final userEntity = UserEntity(email: email);
+      final params = RegisterParams(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        rePassword: rePassword,
+        phone: phone,
+        gender: gender,
+      );
 
-        when(mockAuthRepo.register(params))
-            .thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: userEntity));
+      when(mockAuthRepo.register(params)).thenAnswer(
+        (_) async => SuccessBaseResponse<UserEntity>(data: userEntity),
+      );
 
-        // ACT
-        final result = await registerUseCase.call(params);
+      // ACT
+      final result = await registerUseCase.call(params);
 
-        // ASSERT
-        expect(result, isA<SuccessBaseResponse<UserEntity>>());
-        expect((result as SuccessBaseResponse<UserEntity>).data, userEntity);
-        verify(mockAuthRepo.register(params)).called(1);
-      },
-    );
+      // ASSERT
+      expect(result, isA<SuccessBaseResponse<UserEntity>>());
+      expect((result as SuccessBaseResponse<UserEntity>).data, userEntity);
+      verify(mockAuthRepo.register(params)).called(1);
+    });
   });
 }

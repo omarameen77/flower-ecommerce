@@ -12,7 +12,8 @@ abstract class ProfileConstants {
   static String get aboutUs => 'profile.about_us'.tr();
   static String get aboutUsContent => 'profile.about_us_content'.tr();
   static String get termsConditions => 'profile.terms_conditions'.tr();
-  static String get termsConditionsContent => 'profile.terms_conditions_content'.tr();
+  static String get termsConditionsContent =>
+      'profile.terms_conditions_content'.tr();
   static String get logout => 'profile.logout'.tr();
   static String get logoutTitle => 'profile.logout_title'.tr();
   static String get logoutMessage => 'profile.logout_message'.tr();

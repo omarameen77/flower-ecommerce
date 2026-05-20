@@ -39,9 +39,7 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(
-        data: UserEntity(email: 'test@test.com'),
-      ),
+      SuccessBaseResponse<UserEntity>(data: UserEntity(email: 'test@test.com')),
     );
   });
 
@@ -49,10 +47,7 @@ void main() {
     mockGetProfileUseCase = MockGetProfileUseCase();
     profileCubit = ProfileCubit(mockGetProfileUseCase);
 
-    userEntity = UserEntity(
-      firstName: 'Nour',
-      email: 'nour@test.com',
-    );
+    userEntity = UserEntity(firstName: 'Nour', email: 'nour@test.com');
   });
 
   tearDown(() {
@@ -85,10 +80,7 @@ void main() {
           ];
 
           // ASSERT (subscribe before ACT)
-          final done = expectLater(
-            profileCubit.stream,
-            emitsInOrder(expected),
-          );
+          final done = expectLater(profileCubit.stream, emitsInOrder(expected));
 
           // ACT
           profileCubit.doEvent(ProfileOpened(languageCode: 'ar'));
@@ -123,10 +115,7 @@ void main() {
             ),
           ];
 
-          final done = expectLater(
-            profileCubit.stream,
-            emitsInOrder(expected),
-          );
+          final done = expectLater(profileCubit.stream, emitsInOrder(expected));
 
           profileCubit.doEvent(ProfileOpened(languageCode: 'fr'));
 
