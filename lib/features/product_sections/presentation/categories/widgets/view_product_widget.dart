@@ -1,3 +1,5 @@
+import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/features/product_sections/domain/entities/category_entity.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
@@ -7,8 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ViewProductWidget extends StatefulWidget {
   final List<CategoryEntity> categories;
+  final TabController tabController;
 
-  const ViewProductWidget({super.key, required this.categories});
+  const ViewProductWidget({
+    super.key,
+    required this.categories,
+    required this.tabController,
+  });
 
   @override
   State<ViewProductWidget> createState() => _ViewProductWidgetState();
@@ -24,7 +31,7 @@ class _ViewProductWidgetState extends State<ViewProductWidget> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 200) {
-        final currentIndex = DefaultTabController.of(context).index;
+        final currentIndex = widget.tabController.index;
 
         context.read<ProductCubit>().doEvent(
           GetProductEvent(
@@ -53,9 +60,30 @@ class _ViewProductWidgetState extends State<ViewProductWidget> {
 
         final products = productState.productBaseState.data ?? [];
 
+        if (products.isEmpty) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              final currentIndex = widget.tabController.index;
+
+              context.read<ProductCubit>().doEvent(
+                GetProductEvent(categoryId: widget.categories[currentIndex].id),
+              );
+            },
+            child: Center(
+              child: Text(
+                "No products found for this category.",
+                style: getLightStyle(
+                  context: context,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          );
+        }
+
         return RefreshIndicator(
           onRefresh: () async {
-            final currentIndex = DefaultTabController.of(context).index;
+            final currentIndex = widget.tabController.index;
 
             context.read<ProductCubit>().doEvent(
               GetProductEvent(categoryId: widget.categories[currentIndex].id),

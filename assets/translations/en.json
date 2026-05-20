@@ -103,7 +103,9 @@
   "english": "English",
   "arabic": "Arabic",
   "about_us": "About us",
+  "about_us_content": "Welcome to Elevate Flower Ecommerce, your premier destination for exceptional floral arrangements and botanical gifts. Established with a passion for natural beauty and artistic design, we strive to bring joy and elegance to every occasion.\n\nOur team of expert florists meticulously curates each bouquet, sourcing only the freshest and highest-quality blooms from trusted local and international growers. Whether you are celebrating a milestone, expressing your deepest sympathies, or simply brightening someone's day, we offer a diverse selection tailored to your unique needs.\n\nAt Elevate, we believe that flowers are more than just a gift—they are a universal language of emotion. We are committed to sustainable practices, outstanding customer service, and ensuring that every delivery arrives in pristine condition. Thank you for choosing Elevate Flower Ecommerce to be a part of your life's most meaningful moments.",
   "terms_conditions": "Terms & conditions",
+  "terms_conditions_content": "1. Introduction\nWelcome to Elevate Flower Ecommerce. By downloading, accessing, or using our application, you agree to be bound by these Terms and Conditions. Please read them carefully before making any purchases.\n\n2. Use of Service\nOur app is intended for personal, non-commercial use. You agree not to misuse our services or help anyone else do so. You must be at least 18 years of age to make a purchase, or have the consent of a parent or guardian.\n\n3. Product Availability & Pricing\nAll floral products are subject to availability. We reserve the right to substitute flowers of equal or greater value if the requested blooms are unavailable. Prices are subject to change without prior notice.\n\n4. Deliveries & Returns\nWe make every effort to deliver your order on time and in perfect condition. If you are unsatisfied with your purchase, please contact our support team within 24 hours of delivery. Due to the perishable nature of flowers, returns are handled on a case-by-case basis.\n\n5. Privacy Policy\nYour privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your personal information.\n\n6. Amendments\nElevate Flower Ecommerce reserves the right to modify these terms at any time. Continued use of the app constitutes acceptance of the revised terms.",
   "logout": "Logout",
   "logout_title": "Log out?",
   "logout_message": "Are you sure you want to log out?",
@@ -121,5 +123,13 @@
   "update": "Update",
   "no_changes": "No changes to save",
   "update_success": "Profile updated"
-}
-}
+},"general": {
+  "ok": "OK",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "retry": "Retry",
+  "close": "Close",
+  "loading": "Loading...",
+  "press_back_again_to_exit": "Press back again to exit"
+}}

@@ -1,6 +1,5 @@
 import 'package:flower/config/base/base_response.dart';
-import 'package:flower/core/network/model/user_models/user_entity.dart';
-import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
+import 'package:flower/core/network/model/user_models/user_entity.dart';import 'package:flower/features/auth/domain/repositories/auth_repo.dart';
 import 'package:flower/features/auth/domain/use_cases/register_params.dart';
 import 'package:flower/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';

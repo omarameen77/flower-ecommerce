@@ -149,11 +149,18 @@ class ProfileScrollableBody extends StatelessWidget {
                 },
               ),
               AppSizedBox(height: 8),
-              ProfileMenuRow(title: ProfileConstants.aboutUs, onTap: () {}),
+              ProfileMenuRow(
+                title: ProfileConstants.aboutUs,
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.aboutUs);
+                },
+              ),
               AppSizedBox(height: 8),
               ProfileMenuRow(
                 title: ProfileConstants.termsConditions,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.termsConditions);
+                },
               ),
               AppSizedBox(height: 16),
             ],

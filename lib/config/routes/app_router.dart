@@ -1,4 +1,5 @@
 import 'package:flower/config/dependency_injection/di.dart';
+import 'package:flower/config/routes/exit_wrapper.dart';
 import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
@@ -16,6 +17,8 @@ import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_ca
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
 
 import 'package:flower/features/edit_profile/presentation/pages/edit_profile_page.dart';
+import 'package:flower/features/profile/presentation/pages/about_us_page.dart';
+import 'package:flower/features/profile/presentation/pages/terms_conditions_page.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
@@ -47,7 +50,9 @@ abstract class AppRouter {
           return PageTransitions.slide(ProductDetailsPage(productId: id));
 
         case Routes.appSections:
-          return PageTransitions.slide(const AppSectionsPage());
+          return PageTransitions.slide(
+            ExitWrapper(child: const AppSectionsPage()),
+          );
 
         case Routes.occasions:
           final id = settings.arguments as String?;
@@ -103,6 +108,11 @@ abstract class AppRouter {
               child: const EditProfilePage(),
             ),
           );
+
+        case Routes.aboutUs:
+          return PageTransitions.slide(const AboutUsPage());
+        case Routes.termsConditions:
+          return PageTransitions.slide(const TermsConditionsPage());
 
         default:
           return PageTransitions.fade(

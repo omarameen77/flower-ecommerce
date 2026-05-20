@@ -1,0 +1,57 @@
+name: Dart Lint
+
+# Runs whenever a Pull Request is opened, updated or reopened
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Required so the workflow can push the auto-formatted commit back to the PR branch
+permissions:
+  contents: write
+
+jobs:
+  lint:
+    name: Dart Format & Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Check out the PR branch (not the merge ref) so we can push the format fix back
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Clean Generated Code
+        run: flutter pub run build_runner clean
+
+      - name: Generate Code (build_runner)
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Auto-format Dart code
+        run: dart format .
+
+      - name: Commit & push formatting fix (if any)
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "style: auto-format dart code"
+            git push
+            echo "✅ Pushed formatting fix to the PR branch"
+          else
+            echo "✅ Code already formatted, nothing to commit"
+          fi
+
+      # Only ERRORS fail the workflow; warnings & infos are reported but non-blocking
+      - name: Analyze project (errors block, warnings & infos do not)
+        run: flutter analyze --no-fatal-warnings --no-fatal-infos
