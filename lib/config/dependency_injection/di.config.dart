@@ -51,8 +51,8 @@ import '../../features/cart/domain/repository/cart_repo_contract.dart' as _i425;
 import '../../features/cart/domain/usecases/add_product_to_cart_use_case.dart'
     as _i802;
 import '../../features/cart/domain/usecases/get_cart_use_case.dart' as _i488;
-import '../../features/cart/domain/usecases/remove_cart_Item_use_case.dart'
-    as _i913;
+import '../../features/cart/domain/usecases/remove_cart_item_use_case.dart'
+    as _i650;
 import '../../features/cart/domain/usecases/update_cart_item_quantity_use_case.dart'
     as _i157;
 import '../../features/cart/presentation/cubit/cart_cubit.dart' as _i499;
@@ -152,8 +152,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i488.GetCartUseCase>(
       () => _i488.GetCartUseCase(gh<_i425.CartRepoContract>()),
     );
-    gh.factory<_i913.RemoveCartItemUseCase>(
-      () => _i913.RemoveCartItemUseCase(gh<_i425.CartRepoContract>()),
+    gh.factory<_i650.RemoveCartItemUseCase>(
+      () => _i650.RemoveCartItemUseCase(gh<_i425.CartRepoContract>()),
     );
     gh.factory<_i157.UpdateCartItemQuantityUseCase>(
       () => _i157.UpdateCartItemQuantityUseCase(gh<_i425.CartRepoContract>()),
@@ -184,14 +184,6 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
-    gh.factory<_i499.CartCubit>(
-      () => _i499.CartCubit(
-        gh<_i802.AddProductToCartUseCase>(),
-        gh<_i488.GetCartUseCase>(),
-        gh<InvalidType>(),
-        gh<_i157.UpdateCartItemQuantityUseCase>(),
-      ),
-    );
     gh.factory<_i723.AuthRepo>(
       () => _i662.AuthRepoImpl(
         authRemoteDataSourceContract: gh<_i107.AuthRemoteDataSourceContract>(),
@@ -199,6 +191,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i499.CartCubit>(
+      () => _i499.CartCubit(
+        gh<_i802.AddProductToCartUseCase>(),
+        gh<_i488.GetCartUseCase>(),
+        gh<_i650.RemoveCartItemUseCase>(),
+        gh<_i157.UpdateCartItemQuantityUseCase>(),
+      ),
     );
     gh.factory<_i538.ProductCubit>(
       () =>
