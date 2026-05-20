@@ -14,3 +14,9 @@ class ProductsSectionsEndPoint {
   static const products = "/products";
   static const productById = "/products/{id}";
 }
+
+class CartEndPoints {
+  static const String cart = '/cart';
+  static const String updateCartItem = '/cart/{id}';
+  static const String removeCartItem = '/cart/{id}';
+}

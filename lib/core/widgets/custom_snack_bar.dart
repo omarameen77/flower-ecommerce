@@ -21,10 +21,14 @@ class CustomSnackBar {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
                   message,
                   style: getMediumStyle(
                     context: context,
                     color: AppColors.textWhite,
+                    fontSize: 12,
                   ),
                 ),
               ),
@@ -36,6 +40,7 @@ class CustomSnackBar {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         ),
       );
   }
@@ -58,12 +63,16 @@ class CustomSnackBar {
     );
   }
 
-  static void info(BuildContext context, String message) {
+  static void info(
+    BuildContext context,
+    String message, {
+    IconData icon = Icons.info,
+  }) {
     _show(
       context,
       message: message,
-      backgroundColor: AppColors.textSecondary,
-      icon: Icons.info,
+      backgroundColor: AppColors.grey900,
+      icon: icon,
     );
   }
 }

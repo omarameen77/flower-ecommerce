@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 
 class ButtonWithPrefix extends StatelessWidget {
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Widget prefixIcon;
   final double borderRadius;
-
   const ButtonWithPrefix({
     super.key,
     required this.text,
@@ -20,6 +19,10 @@ class ButtonWithPrefix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        disabledBackgroundColor: AppColors.grey600,
+      ),
       onPressed: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
