@@ -16,11 +16,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   ResetPasswordCubit(this._useCase) : super(const ResetPasswordState());
 
   void doIntent(ResetPasswordIntent intent) {
-    switch (intent.runtimeType) {
-      case SubmitResetPasswordIntent:
-        final i = intent as SubmitResetPasswordIntent;
-        _submit(email: i.email, newPassword: i.newPassword);
-        break;
+    if (intent is SubmitResetPasswordIntent) {
+      _submit(email: intent.email, newPassword: intent.newPassword);
     }
   }
 
@@ -30,17 +27,12 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   }) async {
     emit(state.copyWith(base: const BaseState(isLoading: true)));
     final response = await _useCase(email: email, newPassword: newPassword);
-    switch (response) {
-      case SuccessBaseResponse<ResetPasswordEntity>():
-        emit(state.copyWith(base: BaseState(data: response.data)));
-        break;
-      case ErrorBaseResponse<ResetPasswordEntity>():
-        emit(
-          state.copyWith(
-            base: BaseState(errorMessage: response.failure.message),
-          ),
-        );
-        break;
+    if (response is SuccessBaseResponse<ResetPasswordEntity>) {
+      emit(state.copyWith(base: BaseState(data: response.data)));
+    } else if (response is ErrorBaseResponse<ResetPasswordEntity>) {
+      emit(
+        state.copyWith(base: BaseState(errorMessage: response.failure.message)),
+      );
     }
   }
 }

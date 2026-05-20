@@ -21,10 +21,10 @@ abstract class PageTransitions {
   );
 
   static PageRoute<T> search<T>(Widget page) => PageRouteBuilder<T>(
-    pageBuilder: (_, animation, __) => page,
+    pageBuilder: (_, animation, _) => page,
     transitionDuration: const Duration(milliseconds: 450),
     reverseTransitionDuration: const Duration(milliseconds: 300),
-    transitionsBuilder: (_, animation, __, child) {
+    transitionsBuilder: (_, animation, _, child) {
       final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
 
       final scale = Tween<double>(
