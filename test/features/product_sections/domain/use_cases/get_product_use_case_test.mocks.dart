@@ -87,4 +87,17 @@ class MockProductsSectionRepo extends _i1.Mock
                 ),
           )
           as _i3.Future<_i4.BaseResponse<List<_i7.ProductEntity>>>);
+
+  @override
+  _i3.Future<_i4.BaseResponse<_i7.ProductEntity>> getProductById(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#getProductById, [id]),
+            returnValue: _i3.Future<_i4.BaseResponse<_i7.ProductEntity>>.value(
+              _i6.dummyValue<_i4.BaseResponse<_i7.ProductEntity>>(
+                this,
+                Invocation.method(#getProductById, [id]),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i7.ProductEntity>>);
 }
