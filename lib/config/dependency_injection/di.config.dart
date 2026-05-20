@@ -51,7 +51,7 @@ import '../../features/cart/domain/repository/cart_repo_contract.dart' as _i425;
 import '../../features/cart/domain/usecases/add_product_to_cart_use_case.dart'
     as _i802;
 import '../../features/cart/domain/usecases/get_cart_use_case.dart' as _i488;
-import '../../features/cart/domain/usecases/remove_cart_item_use_case.dart'
+import '../../features/cart/domain/usecases/remove_cart_Item_use_case.dart'
     as _i913;
 import '../../features/cart/domain/usecases/update_cart_item_quantity_use_case.dart'
     as _i157;
@@ -188,7 +188,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i499.CartCubit(
         gh<_i802.AddProductToCartUseCase>(),
         gh<_i488.GetCartUseCase>(),
-        gh<_i913.RemoveCartItemUseCase>(),
+        gh<InvalidType>(),
         gh<_i157.UpdateCartItemQuantityUseCase>(),
       ),
     );
