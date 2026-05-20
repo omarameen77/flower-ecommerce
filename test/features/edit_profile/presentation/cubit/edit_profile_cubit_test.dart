@@ -20,6 +20,7 @@ import 'package:flower/config/base/base_state.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user_models/user_entity.dart';
 import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
+import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_event.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,9 +29,10 @@ import 'package:mockito/mockito.dart';
 
 import 'edit_profile_cubit_test.mocks.dart';
 
-@GenerateMocks([EditProfileUseCase])
+@GenerateMocks([EditProfileUseCase, UploadPhotoUseCase])
 void main() {
   late MockEditProfileUseCase mockUseCase;
+  late MockUploadPhotoUseCase mockUploadPhotoUseCase;
   late EditProfileCubit cubit;
 
   late UserEntity initialUser;
@@ -44,6 +46,7 @@ void main() {
 
   setUp(() {
     mockUseCase = MockEditProfileUseCase();
+    mockUploadPhotoUseCase = MockUploadPhotoUseCase();
     initialUser = UserEntity(
       firstName: 'Nour',
       lastName: 'Mohamed',
@@ -56,7 +59,7 @@ void main() {
       email: 'nour@test.com',
       phone: '+201000000000',
     );
-    cubit = EditProfileCubit(mockUseCase, initialUser);
+    cubit = EditProfileCubit(mockUseCase, mockUploadPhotoUseCase, initialUser);
   });
 
   tearDown(() {
