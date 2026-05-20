@@ -2,6 +2,7 @@ import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/localization_constants/layout_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/features/cart/presentation/pages/cart_screen.dart';
 import 'package:flower/features/product_sections/presentation/categories/pages/categories_screen.dart';
 import 'package:flower/features/product_sections/presentation/home/pages/home_screen.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
@@ -47,10 +48,7 @@ class _AppSectionsView extends StatelessWidget {
 
   List<_BottomNavItem> _items(BuildContext context) {
     return [
-      _BottomNavItem(
-        label: LayoutConstants.homeTab,
-        icon: AppSvgs.home,
-      ),
+      _BottomNavItem(label: LayoutConstants.homeTab, icon: AppSvgs.home),
       _BottomNavItem(
         label: LayoutConstants.categoriesTab,
         icon: AppSvgs.category,
@@ -75,11 +73,12 @@ class _AppSectionsView extends StatelessWidget {
             children: [
               const HomeScreen(),
               const CategoryScreen(),
-              _PlaceholderScreen(title: LayoutConstants.cartTab),
+              CartScreen(),
               ProfileScreen(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: AppColors.background,
             currentIndex: currentIndex,
             onTap: cubit.changeSection,
             items: _items(context).map((item) {
