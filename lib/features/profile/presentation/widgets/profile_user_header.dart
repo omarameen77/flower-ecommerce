@@ -29,10 +29,7 @@ class ProfileUserHeader extends StatelessWidget {
           child: Text(
             profile.errorMessage!,
             textAlign: TextAlign.center,
-            style: getRegularStyle(
-              context: context,
-              color: AppColors.error,
-            ),
+            style: getRegularStyle(context: context, color: AppColors.error),
           ),
         );
       }

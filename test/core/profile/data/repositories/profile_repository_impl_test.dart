@@ -93,11 +93,7 @@ void main() {
         'Return SuccessBaseResponse<UserEntity> when DTO has empty string fields',
         () async {
           // ARRANGE
-          final sparseDto = UserDto(
-            firstName: '',
-            lastName: '',
-            email: '',
-          );
+          final sparseDto = UserDto(firstName: '', lastName: '', email: '');
           when(mockProfileRemoteDataSource.getProfile()).thenAnswer(
             (_) async => SuccessBaseResponse<UserDto>(data: sparseDto),
           );
@@ -115,22 +111,25 @@ void main() {
         },
       );
 
-      test('Return ErrorBaseResponse<UserEntity> when getProfile fails', () async {
-        // ARRANGE
-        final failure = Failure(message: 'Server error');
-        when(mockProfileRemoteDataSource.getProfile()).thenAnswer(
-          (_) async => ErrorBaseResponse<UserDto>(failure: failure),
-        );
+      test(
+        'Return ErrorBaseResponse<UserEntity> when getProfile fails',
+        () async {
+          // ARRANGE
+          final failure = Failure(message: 'Server error');
+          when(mockProfileRemoteDataSource.getProfile()).thenAnswer(
+            (_) async => ErrorBaseResponse<UserDto>(failure: failure),
+          );
 
-        // ACT
-        final result = await profileRepositoryImpl.getProfile();
+          // ACT
+          final result = await profileRepositoryImpl.getProfile();
 
-        // ASSERT
-        expect(result, isA<ErrorBaseResponse<UserEntity>>());
-        final error = result as ErrorBaseResponse<UserEntity>;
-        expect(error.failure.message, failure.message);
-        verify(mockProfileRemoteDataSource.getProfile()).called(1);
-      });
+          // ASSERT
+          expect(result, isA<ErrorBaseResponse<UserEntity>>());
+          final error = result as ErrorBaseResponse<UserEntity>;
+          expect(error.failure.message, failure.message);
+          verify(mockProfileRemoteDataSource.getProfile()).called(1);
+        },
+      );
     });
   });
 }

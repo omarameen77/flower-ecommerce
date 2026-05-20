@@ -26,7 +26,10 @@ class ProductWidgetShimmer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 child: Stack(
                   children: [
-                    Container(width: double.infinity, color: AppColors.primaryLight),
+                    Container(
+                      width: double.infinity,
+                      color: AppColors.primaryLight,
+                    ),
                     Align(
                       alignment: Alignment.topRight,
                       child: Container(

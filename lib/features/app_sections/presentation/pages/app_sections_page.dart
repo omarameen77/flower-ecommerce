@@ -47,10 +47,7 @@ class _AppSectionsView extends StatelessWidget {
 
   List<_BottomNavItem> _items(BuildContext context) {
     return [
-      _BottomNavItem(
-        label: LayoutConstants.homeTab,
-        icon: AppSvgs.home,
-      ),
+      _BottomNavItem(label: LayoutConstants.homeTab, icon: AppSvgs.home),
       _BottomNavItem(
         label: LayoutConstants.categoriesTab,
         icon: AppSvgs.category,

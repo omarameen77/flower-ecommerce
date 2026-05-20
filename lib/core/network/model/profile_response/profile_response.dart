@@ -10,10 +10,7 @@ class ProfileResponseDto {
   @JsonKey(name: "user")
   UserDto? user;
 
-  ProfileResponseDto({
-    this.message,
-    this.user,
-  });
+  ProfileResponseDto({this.message, this.user});
 
   factory ProfileResponseDto.fromJson(Map<String, dynamic> json) =>
       _$ProfileResponseDtoFromJson(json);

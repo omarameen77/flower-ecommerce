@@ -39,4 +39,3 @@ class ProfileAvatarPlaceholder extends StatelessWidget {
     );
   }
 }
-

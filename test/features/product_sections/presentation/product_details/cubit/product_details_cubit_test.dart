@@ -43,51 +43,44 @@ void main() {
 
   group('product details cubit', () {
     group('fetch product by id', () {
-      test(
-        'should emit [loading, success] when fetch is successful',
-        () async {
-          when(mockGetProductByIdUseCase.call(productId)).thenAnswer(
-            (_) async => SuccessBaseResponse<ProductEntity>(data: product),
-          );
+      test('should emit [loading, success] when fetch is successful', () async {
+        when(mockGetProductByIdUseCase.call(productId)).thenAnswer(
+          (_) async => SuccessBaseResponse<ProductEntity>(data: product),
+        );
 
-          final expected = [
-            const ProductDetailsState(
-              productBaseState: BaseState<ProductEntity>(isLoading: true),
+        final expected = [
+          const ProductDetailsState(
+            productBaseState: BaseState<ProductEntity>(isLoading: true),
+          ),
+          ProductDetailsState(
+            productBaseState: BaseState<ProductEntity>(data: product),
+          ),
+        ];
+        expectLater(productDetailsCubit.stream, emitsInOrder(expected));
+
+        productDetailsCubit.doEvent(GetProductDetailsEvent(productId));
+      });
+
+      test('should emit [loading, error] when fetch fails', () async {
+        final failure = Failure(message: 'not found');
+        when(mockGetProductByIdUseCase.call(productId)).thenAnswer(
+          (_) async => ErrorBaseResponse<ProductEntity>(failure: failure),
+        );
+
+        final expected = [
+          const ProductDetailsState(
+            productBaseState: BaseState<ProductEntity>(isLoading: true),
+          ),
+          const ProductDetailsState(
+            productBaseState: BaseState<ProductEntity>(
+              errorMessage: 'not found',
             ),
-            ProductDetailsState(
-              productBaseState: BaseState<ProductEntity>(data: product),
-            ),
-          ];
-          expectLater(productDetailsCubit.stream, emitsInOrder(expected));
+          ),
+        ];
+        expectLater(productDetailsCubit.stream, emitsInOrder(expected));
 
-          productDetailsCubit.doEvent(GetProductDetailsEvent(productId));
-        },
-      );
-
-      test(
-        'should emit [loading, error] when fetch fails',
-        () async {
-          final failure = Failure(message: 'not found');
-          when(mockGetProductByIdUseCase.call(productId)).thenAnswer(
-            (_) async =>
-                ErrorBaseResponse<ProductEntity>(failure: failure),
-          );
-
-          final expected = [
-            const ProductDetailsState(
-              productBaseState: BaseState<ProductEntity>(isLoading: true),
-            ),
-            const ProductDetailsState(
-              productBaseState: BaseState<ProductEntity>(
-                errorMessage: 'not found',
-              ),
-            ),
-          ];
-          expectLater(productDetailsCubit.stream, emitsInOrder(expected));
-
-          productDetailsCubit.doEvent(GetProductDetailsEvent(productId));
-        },
-      );
+        productDetailsCubit.doEvent(GetProductDetailsEvent(productId));
+      });
     });
   });
 }

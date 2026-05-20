@@ -1,4 +1,3 @@
- 
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
@@ -19,11 +18,16 @@ class HomeHeader extends StatelessWidget {
       children: [
         SvgPicture.asset(AppSvgs.splashLogo, height: 20),
         AppSizedBox(width: 8),
-        Text( 'Flowery',
-        style: getMediumStyle(
-          context: context,
-          color: AppColors.primary,
-        ).copyWith(fontSize: FontSizeManager.s20,fontWeight: FontWeight.w400,height: 1.0, letterSpacing: 0,fontFamily: GoogleFonts.imFellEnglish().fontFamily,)
+        Text(
+          'Flowery',
+          style: getMediumStyle(context: context, color: AppColors.primary)
+              .copyWith(
+                fontSize: FontSizeManager.s20,
+                fontWeight: FontWeight.w400,
+                height: 1.0,
+                letterSpacing: 0,
+                fontFamily: GoogleFonts.imFellEnglish().fontFamily,
+              ),
         ),
         AppSizedBox(width: 12),
         Expanded(
