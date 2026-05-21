@@ -24,6 +24,8 @@ import '../../features/auth/data/datasources/auth_remote_data_source.dart'
     as _i107;
 import '../../features/auth/data/repositories/auth_repo_impl.dart' as _i662;
 import '../../features/auth/domain/repositories/auth_repo.dart' as _i723;
+import '../../features/auth/domain/use_cases/change_password_usecase.dart'
+    as _i771;
 import '../../features/auth/domain/use_cases/forget_password_usecase.dart'
     as _i27;
 import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
@@ -32,6 +34,8 @@ import '../../features/auth/domain/use_cases/reset_password_usecase.dart'
     as _i348;
 import '../../features/auth/domain/use_cases/verify_reset_code_usecase.dart'
     as _i887;
+import '../../features/auth/presentation/change_password/cubit/change_password_cubit.dart'
+    as _i6;
 import '../../features/auth/presentation/forget_password/cubit/forget_password_cubit.dart'
     as _i995;
 import '../../features/auth/presentation/login/cubit/login_cubit.dart' as _i179;
@@ -162,6 +166,9 @@ extension GetItInjectableX on _i174.GetIt {
         getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
       ),
     );
+    gh.factory<_i771.ChangePasswordUseCase>(
+      () => _i771.ChangePasswordUseCase(gh<_i723.AuthRepo>()),
+    );
     gh.factory<_i27.ForgetPasswordUseCase>(
       () => _i27.ForgetPasswordUseCase(gh<_i723.AuthRepo>()),
     );
@@ -199,6 +206,9 @@ extension GetItInjectableX on _i174.GetIt {
         getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
         getProductUseCase: gh<_i713.GetProductsUseCase>(),
       ),
+    );
+    gh.factory<_i6.ChangePasswordCubit>(
+      () => _i6.ChangePasswordCubit(gh<_i771.ChangePasswordUseCase>()),
     );
     gh.factory<_i450.ResetPasswordCubit>(
       () => _i450.ResetPasswordCubit(gh<_i348.ResetPasswordUseCase>()),

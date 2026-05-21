@@ -4,10 +4,7 @@ class ForgetPasswordState extends Equatable {
   final BaseState<ForgetPasswordEntity> base;
   final String email;
 
-  const ForgetPasswordState({
-    this.base = const BaseState(),
-    this.email = '',
-  });
+  const ForgetPasswordState({this.base = const BaseState(), this.email = ''});
 
   ForgetPasswordState copyWith({
     BaseState<ForgetPasswordEntity>? base,

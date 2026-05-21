@@ -3,7 +3,6 @@
 import 'package:flower/features/app_sections/presentation/cubit/app_sections_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
   late AppSectionsCubit cubit;
 

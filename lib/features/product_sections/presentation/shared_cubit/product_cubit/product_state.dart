@@ -1,6 +1,4 @@
-
 part of 'product_cubit.dart';
-
 
 class ProductState extends Equatable {
   final BaseState<List<ProductEntity>> productBaseState;
@@ -29,9 +27,5 @@ class ProductState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        productBaseState,
-        limit,
-        isLoadingMore,
-      ];
+  List<Object?> get props => [productBaseState, limit, isLoadingMore];
 }

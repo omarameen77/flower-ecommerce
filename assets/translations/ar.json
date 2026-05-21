@@ -43,6 +43,13 @@
     "reset_password_condition": "يجب ألا تكون كلمة المرور فارغة وأن تحتوي على 6 أحرف على الأقل مع حرف كبير ورقم واحد على الأقل",
     "new_password": "كلمة مرور جديدة",
 
+    "change_password": "تغيير كلمة المرور",
+    "current_password": "كلمة المرور الحالية",
+    "enter_current_password": "أدخل كلمة المرور الحالية",
+    "confirm_new_password": "تأكيد كلمة المرور الجديدة",
+    "password_changed_success": "تم تغيير كلمة المرور بنجاح",
+    "update": "تحديث",
+
     "terms_and_conditions_statement": "بإنشاء حساب، أنت توافق على الشروط والأحكام"
   },
 "validation": {
@@ -57,6 +64,7 @@
 
     "confirm_password_required": "من فضلك أكد كلمة المرور",
     "password_not_match": "كلمتا المرور غير متطابقتين",
+    "new_password_same_as_old": "يجب أن تكون كلمة المرور الجديدة مختلفة عن الحالية",
     "name_required": "الاسم مطلوب",
     "invalid_name": "الاسم يجب أن يحتوي على حروف عربية أو إنجليزية فقط",
     "short_name": "الاسم قصير جدًا",

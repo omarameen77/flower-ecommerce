@@ -12,7 +12,7 @@ abstract class NetworkModule {
   @singleton
   AuthApiClient authApi(Dio dio) => AuthApiClient(dio);
 
-   @singleton
+  @singleton
   ProductsSectionsApiClient productsApi(Dio dio) =>
       ProductsSectionsApiClient(dio);
 }
