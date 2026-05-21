@@ -29,9 +29,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     required String oldPassword,
     required String newPassword,
   }) async {
-    emit(
-      state.copyWith(changePasswordState: const BaseState(isLoading: true)),
-    );
+    emit(state.copyWith(changePasswordState: const BaseState(isLoading: true)));
     final response = await _useCase(
       oldPassword: oldPassword,
       newPassword: newPassword,
