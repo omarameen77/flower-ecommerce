@@ -90,8 +90,7 @@ class ChangePasswordForm extends StatelessWidget {
                               if (formKey.currentState?.validate() ?? false) {
                                 context.read<ChangePasswordCubit>().doIntent(
                                   SubmitChangePasswordIntent(
-                                    oldPassword:
-                                        currentPasswordController.text,
+                                    oldPassword: currentPasswordController.text,
                                     newPassword: newPasswordController.text,
                                   ),
                                 );

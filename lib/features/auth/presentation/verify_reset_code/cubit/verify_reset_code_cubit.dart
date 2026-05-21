@@ -34,10 +34,7 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
 
   Future<void> _verify(String code) async {
     emit(
-      state.copyWith(
-        base: const BaseState(isLoading: true),
-        hasError: false,
-      ),
+      state.copyWith(base: const BaseState(isLoading: true), hasError: false),
     );
     final response = await _verifyUseCase(resetCode: code);
     switch (response) {

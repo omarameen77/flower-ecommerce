@@ -34,47 +34,36 @@ void main() {
   });
 
   group('get product by id usecase', () {
-    test(
-      'should call getProductById on the repository with the id',
-      () async {
-        const product = ProductEntity(id: '1', title: 'Sunny');
+    test('should call getProductById on the repository with the id', () async {
+      const product = ProductEntity(id: '1', title: 'Sunny');
 
-        when(
-          mockProductsSectionRepo.getProductById(productId),
-        ).thenAnswer(
-          (_) async => SuccessBaseResponse<ProductEntity>(data: product),
-        );
+      when(mockProductsSectionRepo.getProductById(productId)).thenAnswer(
+        (_) async => SuccessBaseResponse<ProductEntity>(data: product),
+      );
 
-        final result = await getProductByIdUseCase.call(productId);
+      final result = await getProductByIdUseCase.call(productId);
 
-        expect(result, isA<SuccessBaseResponse<ProductEntity>>());
-        expect(
-          (result as SuccessBaseResponse<ProductEntity>).data,
-          product,
-        );
-        verify(mockProductsSectionRepo.getProductById(productId)).called(1);
-      },
-    );
+      expect(result, isA<SuccessBaseResponse<ProductEntity>>());
+      expect((result as SuccessBaseResponse<ProductEntity>).data, product);
+      verify(mockProductsSectionRepo.getProductById(productId)).called(1);
+    });
 
-    test(
-      'should propagate ErrorBaseResponse when repository fails',
-      () async {
-        final failure = ErrorBaseResponse<ProductEntity>(
-          failure: Failure(message: 'not found'),
-        );
+    test('should propagate ErrorBaseResponse when repository fails', () async {
+      final failure = ErrorBaseResponse<ProductEntity>(
+        failure: Failure(message: 'not found'),
+      );
 
-        when(
-          mockProductsSectionRepo.getProductById(productId),
-        ).thenAnswer((_) async => failure);
+      when(
+        mockProductsSectionRepo.getProductById(productId),
+      ).thenAnswer((_) async => failure);
 
-        final result = await getProductByIdUseCase.call(productId);
+      final result = await getProductByIdUseCase.call(productId);
 
-        expect(result, isA<ErrorBaseResponse<ProductEntity>>());
-        expect(
-          (result as ErrorBaseResponse<ProductEntity>).failure.message,
-          'not found',
-        );
-      },
-    );
+      expect(result, isA<ErrorBaseResponse<ProductEntity>>());
+      expect(
+        (result as ErrorBaseResponse<ProductEntity>).failure.message,
+        'not found',
+      );
+    });
   });
 }

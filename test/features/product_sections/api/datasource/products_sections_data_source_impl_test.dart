@@ -51,10 +51,7 @@ void main() {
             ),
           ).thenAnswer((_) async => response);
 
-          final result = await dataSource.getProducts(
-            limit: limit,
-            sort: sort,
-          );
+          final result = await dataSource.getProducts(limit: limit, sort: sort);
 
           expect(result, isA<SuccessBaseResponse<List<ProductDto>>>());
           final data = (result as SuccessBaseResponse<List<ProductDto>>).data;
@@ -73,10 +70,7 @@ void main() {
             ),
           ).thenThrow(Exception('network error'));
 
-          final result = await dataSource.getProducts(
-            limit: limit,
-            sort: sort,
-          );
+          final result = await dataSource.getProducts(limit: limit, sort: sort);
 
           expect(result, isA<ErrorBaseResponse<List<ProductDto>>>());
           expect(

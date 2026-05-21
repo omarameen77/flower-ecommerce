@@ -1,4 +1,3 @@
-
 part of 'register_cubit.dart';
 
 class RegisterState extends Equatable {

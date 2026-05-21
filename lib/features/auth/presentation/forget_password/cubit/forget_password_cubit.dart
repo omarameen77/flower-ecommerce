@@ -25,12 +25,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   }
 
   Future<void> _submit(String email) async {
-    emit(
-      state.copyWith(
-        base: const BaseState(isLoading: true),
-        email: email,
-      ),
-    );
+    emit(state.copyWith(base: const BaseState(isLoading: true), email: email));
     final response = await _useCase(email: email);
     switch (response) {
       case SuccessBaseResponse<ForgetPasswordEntity>():

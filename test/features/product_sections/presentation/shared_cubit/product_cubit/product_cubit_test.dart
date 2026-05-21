@@ -40,95 +40,80 @@ void main() {
 
   group('product cubit', () {
     group('fetch products', () {
-      test(
-        'should emit [loading, success] when fetch is successful',
-        () async {
-          when(
-            mockGetProductsUseCase.call(
-              limit: anyNamed('limit'),
-              sort: anyNamed('sort'),
-            ),
-          ).thenAnswer(
-            (_) async => SuccessBaseResponse<List<ProductEntity>>(
-              data: products,
-            ),
-          );
+      test('should emit [loading, success] when fetch is successful', () async {
+        when(
+          mockGetProductsUseCase.call(
+            limit: anyNamed('limit'),
+            sort: anyNamed('sort'),
+          ),
+        ).thenAnswer(
+          (_) async => SuccessBaseResponse<List<ProductEntity>>(data: products),
+        );
 
-          final expected = [
-            const ProductState(
-              productBaseState: BaseState<List<ProductEntity>>(
-                isLoading: true,
-                data: [],
-              ),
+        final expected = [
+          const ProductState(
+            productBaseState: BaseState<List<ProductEntity>>(
+              isLoading: true,
+              data: [],
             ),
-            ProductState(
-              productBaseState: BaseState<List<ProductEntity>>(data: products),
-            ),
-          ];
-          expectLater(productCubit.stream, emitsInOrder(expected));
+          ),
+          ProductState(
+            productBaseState: BaseState<List<ProductEntity>>(data: products),
+          ),
+        ];
+        expectLater(productCubit.stream, emitsInOrder(expected));
 
-          productCubit.doEvent(const GetProductEvent());
-        },
-      );
+        productCubit.doEvent(const GetProductEvent());
+      });
 
-      test(
-        'should emit [loading, error] when fetch fails',
-        () async {
-          final failure = Failure(message: 'error');
-          when(
-            mockGetProductsUseCase.call(
-              limit: anyNamed('limit'),
-              sort: anyNamed('sort'),
-            ),
-          ).thenAnswer(
-            (_) async =>
-                ErrorBaseResponse<List<ProductEntity>>(failure: failure),
-          );
+      test('should emit [loading, error] when fetch fails', () async {
+        final failure = Failure(message: 'error');
+        when(
+          mockGetProductsUseCase.call(
+            limit: anyNamed('limit'),
+            sort: anyNamed('sort'),
+          ),
+        ).thenAnswer(
+          (_) async => ErrorBaseResponse<List<ProductEntity>>(failure: failure),
+        );
 
-          final expected = [
-            const ProductState(
-              productBaseState: BaseState<List<ProductEntity>>(
-                isLoading: true,
-                data: [],
-              ),
+        final expected = [
+          const ProductState(
+            productBaseState: BaseState<List<ProductEntity>>(
+              isLoading: true,
+              data: [],
             ),
-            const ProductState(
-              productBaseState: BaseState<List<ProductEntity>>(
-                errorMessage: 'error',
-                data: [],
-              ),
+          ),
+          const ProductState(
+            productBaseState: BaseState<List<ProductEntity>>(
+              errorMessage: 'error',
+              data: [],
             ),
-          ];
-          expectLater(productCubit.stream, emitsInOrder(expected));
+          ),
+        ];
+        expectLater(productCubit.stream, emitsInOrder(expected));
 
-          productCubit.doEvent(const GetProductEvent());
-        },
-      );
+        productCubit.doEvent(const GetProductEvent());
+      });
     });
 
     group('setSort', () {
-      test(
-        'should call use case with the chosen sort value',
-        () async {
-          when(
-            mockGetProductsUseCase.call(
-              limit: anyNamed('limit'),
-              sort: anyNamed('sort'),
-            ),
-          ).thenAnswer(
-            (_) async =>
-                SuccessBaseResponse<List<ProductEntity>>(data: const []),
-          );
+      test('should call use case with the chosen sort value', () async {
+        when(
+          mockGetProductsUseCase.call(
+            limit: anyNamed('limit'),
+            sort: anyNamed('sort'),
+          ),
+        ).thenAnswer(
+          (_) async => SuccessBaseResponse<List<ProductEntity>>(data: const []),
+        );
 
-          productCubit.setSort('-sold');
-          productCubit.doEvent(const GetProductEvent());
-          await Future<void>.delayed(Duration.zero);
+        productCubit.setSort('-sold');
+        productCubit.doEvent(const GetProductEvent());
+        await Future<void>.delayed(Duration.zero);
 
-          verify(
-            mockGetProductsUseCase.call(limit: 8, sort: '-sold'),
-          ).called(1);
-        },
-      );
+        verify(mockGetProductsUseCase.call(limit: 8, sort: '-sold')).called(1);
+      });
     });
   });
 }

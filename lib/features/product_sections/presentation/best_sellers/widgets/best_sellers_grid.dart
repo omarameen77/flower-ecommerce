@@ -102,9 +102,8 @@ class _BestSellersGridState extends State<BestSellersGrid> {
             const AppSizedBox(height: AppSize.s16),
             PrimaryButton(
               text: 'Retry',
-              onTap: () => context.read<ProductCubit>().doEvent(
-                const GetProductEvent(),
-              ),
+              onTap: () =>
+                  context.read<ProductCubit>().doEvent(const GetProductEvent()),
             ),
           ],
         ),

@@ -34,7 +34,9 @@ void main() {
     gender = "male";
 
     provideDummy<RegisterResponseDto>(
-      RegisterResponseDto(user: UserDto(email: email, id: "1")),
+      RegisterResponseDto(
+        user: UserDto(email: email, id: "1"),
+      ),
     );
   });
 
@@ -59,7 +61,10 @@ void main() {
             phone: phone,
             gender: gender,
           );
-          final tResponse = RegisterResponseDto(user: tUserDto, message: 'success');
+          final tResponse = RegisterResponseDto(
+            user: tUserDto,
+            message: 'success',
+          );
 
           final tParams = RegisterParams(
             firstName: firstName,
@@ -71,7 +76,9 @@ void main() {
             gender: gender,
           );
 
-          when(mockAuthApiClient.register(any)).thenAnswer((_) async => tResponse);
+          when(
+            mockAuthApiClient.register(any),
+          ).thenAnswer((_) async => tResponse);
 
           // ACT
           final result = await authRemoteDataSourceImpl.register(tParams);
@@ -103,7 +110,10 @@ void main() {
 
         // ASSERT
         expect(result, isA<ErrorBaseResponse<UserDto>>());
-        expect((result as ErrorBaseResponse<UserDto>).failure.message, isNotNull);
+        expect(
+          (result as ErrorBaseResponse<UserDto>).failure.message,
+          isNotNull,
+        );
       });
     });
   });

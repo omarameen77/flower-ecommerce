@@ -7,9 +7,7 @@ class ProductDetailsState extends Equatable {
     this.productBaseState = const BaseState<ProductEntity>(),
   });
 
-  ProductDetailsState copyWith({
-    BaseState<ProductEntity>? productBaseState,
-  }) {
+  ProductDetailsState copyWith({BaseState<ProductEntity>? productBaseState}) {
     return ProductDetailsState(
       productBaseState: productBaseState ?? this.productBaseState,
     );
