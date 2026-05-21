@@ -1,7 +1,9 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/model/user.dart';
 import 'package:flower/core/network/model/user_entity.dart';
+import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:flower/features/auth/data/models/response/change_password_response.dart';
 import 'package:flower/features/auth/domain/entities/change_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart';
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart';
@@ -96,11 +98,17 @@ class AuthRepoImpl implements AuthRepo {
       oldPassword: oldPassword,
       newPassword: newPassword,
     );
-    return switch (response) {
-      SuccessBaseResponse() => SuccessBaseResponse(
-        data: response.data.toEntity(),
-      ),
-      ErrorBaseResponse() => ErrorBaseResponse(failure: response.failure),
-    };
+    switch (response) {
+      case SuccessBaseResponse<ChangePasswordResponseDto>():
+        final entity = response.data.toEntity();
+        if (entity.token.isNotEmpty) {
+          await SecureStorageService.saveToken(entity.token);
+        }
+        return SuccessBaseResponse<ChangePasswordEntity>(data: entity);
+      case ErrorBaseResponse<ChangePasswordResponseDto>():
+        return ErrorBaseResponse<ChangePasswordEntity>(
+          failure: response.failure,
+        );
+    }
   }
 }

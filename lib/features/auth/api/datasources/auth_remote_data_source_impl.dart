@@ -109,11 +109,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
           newPassword: newPassword,
         ),
       );
-
-      if (response.token != null && response.token!.isNotEmpty) {
-        await SecureStorageService.saveToken(response.token!);
-      }
-
       return SuccessBaseResponse<ChangePasswordResponseDto>(data: response);
     } catch (e) {
       return ErrorBaseResponse<ChangePasswordResponseDto>(

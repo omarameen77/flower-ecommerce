@@ -38,7 +38,10 @@ void main() {
   });
 
   test('forwards old and new password to repo on success', () async {
-    const entity = ChangePasswordEntity(message: 'ok', token: 't');
+    const entity = ChangePasswordEntity(
+      message: 'Password changed successfully',
+      token: 'new-token-123',
+    );
     when(
       repo.changePassword(
         oldPassword: anyNamed('oldPassword'),
@@ -52,6 +55,9 @@ void main() {
     );
 
     expect(result, isA<SuccessBaseResponse<ChangePasswordEntity>>());
+    final data = (result as SuccessBaseResponse<ChangePasswordEntity>).data;
+    expect(data.message, 'Password changed successfully');
+    expect(data.token, 'new-token-123');
     verify(
       repo.changePassword(oldPassword: 'Old123!@', newPassword: 'New456!@'),
     ).called(1);

@@ -16,11 +16,12 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   ChangePasswordCubit(this._useCase) : super(const ChangePasswordState());
 
   void doIntent(ChangePasswordIntent intent) {
-    switch (intent.runtimeType) {
-      case SubmitChangePasswordIntent:
-        final i = intent as SubmitChangePasswordIntent;
-        _submit(oldPassword: i.oldPassword, newPassword: i.newPassword);
-        break;
+    switch (intent) {
+      case SubmitChangePasswordIntent():
+        _submit(
+          oldPassword: intent.oldPassword,
+          newPassword: intent.newPassword,
+        );
     }
   }
 
@@ -28,22 +29,26 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     required String oldPassword,
     required String newPassword,
   }) async {
-    emit(state.copyWith(base: const BaseState(isLoading: true)));
+    emit(
+      state.copyWith(changePasswordState: const BaseState(isLoading: true)),
+    );
     final response = await _useCase(
       oldPassword: oldPassword,
       newPassword: newPassword,
     );
     switch (response) {
       case SuccessBaseResponse<ChangePasswordEntity>():
-        emit(state.copyWith(base: BaseState(data: response.data)));
-        break;
+        emit(
+          state.copyWith(changePasswordState: BaseState(data: response.data)),
+        );
       case ErrorBaseResponse<ChangePasswordEntity>():
         emit(
           state.copyWith(
-            base: BaseState(errorMessage: response.failure.message),
+            changePasswordState: BaseState(
+              errorMessage: response.failure.message,
+            ),
           ),
         );
-        break;
     }
   }
 }

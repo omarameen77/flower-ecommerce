@@ -49,11 +49,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   void _onStateChanged(BuildContext context, ChangePasswordState state) {
-    if (state.base.data != null) {
+    if (state.changePasswordState.data != null) {
       CustomSnackBar.success(context, context.passwordChangedSuccess);
       Navigator.pop(context);
-    } else if (state.base.errorMessage != null) {
-      CustomSnackBar.error(context, state.base.errorMessage!.tr());
+    } else if (state.changePasswordState.errorMessage != null) {
+      CustomSnackBar.error(
+        context,
+        state.changePasswordState.errorMessage!.tr(),
+      );
     }
   }
 }

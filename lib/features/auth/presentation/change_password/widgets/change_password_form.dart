@@ -66,9 +66,12 @@ class ChangePasswordForm extends StatelessWidget {
             const AppSizedBox(height: AppSize.s50),
             BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
               buildWhen: (prev, curr) =>
-                  prev.base.isLoading != curr.base.isLoading,
+                  prev.changePasswordState.isLoading !=
+                  curr.changePasswordState.isLoading,
               builder: (context, state) {
-                if (state.base.isLoading) return const ButtonLoadingWidget();
+                if (state.changePasswordState.isLoading) {
+                  return const ButtonLoadingWidget();
+                }
                 return ListenableBuilder(
                   listenable: Listenable.merge([
                     currentPasswordController,

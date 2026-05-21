@@ -42,13 +42,13 @@ void main() {
       cubit.stream,
       emitsInOrder([
         isA<ChangePasswordState>().having(
-          (s) => s.base.isLoading,
+          (s) => s.changePasswordState.isLoading,
           'loading',
           true,
         ),
         isA<ChangePasswordState>()
-            .having((s) => s.base.isLoading, 'loading', false)
-            .having((s) => s.base.data, 'data', isNotNull),
+            .having((s) => s.changePasswordState.isLoading, 'loading', false)
+            .having((s) => s.changePasswordState.data, 'data', isNotNull),
       ]),
     );
 
@@ -76,12 +76,12 @@ void main() {
       cubit.stream,
       emitsInOrder([
         isA<ChangePasswordState>().having(
-          (s) => s.base.isLoading,
+          (s) => s.changePasswordState.isLoading,
           'loading',
           true,
         ),
         isA<ChangePasswordState>().having(
-          (s) => s.base.errorMessage,
+          (s) => s.changePasswordState.errorMessage,
           'errorMessage',
           'wrong password',
         ),
