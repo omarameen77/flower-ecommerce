@@ -10,7 +10,6 @@ import 'package:flower/features/product_sections/presentation/shared_cubit/occas
 import 'package:flower/features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_event.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
-import 'package:flower/features/profile/presentation/prorile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -73,7 +72,7 @@ class _AppSectionsView extends StatelessWidget {
               const HomeScreen(),
               const CategoryScreen(),
               _PlaceholderScreen(title: LayoutConstants.cartTab),
-              ProfileScreen(),
+              Container()
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
