@@ -78,37 +78,67 @@
     "invalidPhone": "Invalid phone number",
     "phone_format_hint": "Format: +[country code][number] (e.g., +201202222222)"
   },
-  "error_massages":{
-  "noInternet": "No internet connection. Please check your network and try again.",
-  "connectionTimeout": "Connection timed out. Please try again.",
-  "sendTimeout": "Request took too long to send. Try again.",
-  "receiveTimeout": "Server is taking too long to respond. Please try again.",
-  "serverError": "Something went wrong on our side. Please try again later.",
-  "unexpectedError": "An unexpected error occurred. Please try again.",
-  "unknownError": "Something went wrong. Please try again.",
-  "login_successfully":"Login Successfully",
-  "signup_successfully":"Created account Successfully"
-},
-"layout": {
-  "home_tab": "Home",
-  "categories_tab": "Categories",
-  "cart_tab": "Cart",
-  "profile_tab": "Profile"
-},
-"home":{
-  "search":"Search",
-  "searchHint":"Search For Any Product You Want",
-  "product_not_found":"No Products Found",
-  "all":"All",
-  "searching":"Searching..."
-
-},"general": {
-  "ok": "OK",
-  "cancel": "Cancel",
-  "yes": "Yes",
-  "no": "No",
-  "retry": "Retry",
-  "close": "Close",
-  "loading": "Loading...",
-  "press_back_again_to_exit": "Press back again to exit"
-}}
+  "error_massages": {
+    "noInternet": "No internet connection. Please check your network and try again.",
+    "connectionTimeout": "Connection timed out. Please try again.",
+    "sendTimeout": "Request took too long to send. Try again.",
+    "receiveTimeout": "Server is taking too long to respond. Please try again.",
+    "serverError": "Something went wrong on our side. Please try again later.",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "unknownError": "Something went wrong. Please try again.",
+    "login_successfully": "Login Successfully",
+    "signup_successfully": "Created account Successfully"
+  },
+  "layout": {
+    "home_tab": "Home",
+    "categories_tab": "Categories",
+    "cart_tab": "Cart",
+    "profile_tab": "Profile"
+  },
+  "home": {
+    "search": "Search",
+    "searchHint": "Search For Any Product You Want",
+    "product_not_found": "No Products Found",
+    "all": "All",
+    "searching": "Searching..."
+  },
+  "general": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "retry": "Retry",
+    "close": "Close",
+    "loading": "Loading...",
+    "press_back_again_to_exit": "Press back again to exit"
+  },
+  "edit_profile": {
+    "title": "Edit Profile",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Email",
+    "phone": "Phone number",
+    "password": "Password",
+    "change_password": "Change",
+    "update": "Update",
+    "no_changes": "No changes to save",
+    "update_success": "Profile updated successfully"
+  },
+  "profile": {
+    "my_orders": "My Orders",
+    "saved_address": "Saved Address",
+    "notifications": "Notifications",
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
+    "about_us": "About Us",
+    "about_us_content": "Welcome to Elevate Flower E-commerce, your premier destination for exceptional floral arrangements and botanical gifts. Founded with a passion for natural beauty and artistic design, we strive to bring joy and elegance to every occasion.\n\nOur team of expert florists crafts each bouquet with meticulous care, sourcing only the freshest, highest-quality flowers from trusted local and international growers. Whether you're celebrating a joyful occasion, expressing sympathy, or simply want to brighten someone's day, we offer a diverse collection to meet your unique needs.\n\nAt Elevate, we believe flowers are more than just a gift — they are a universal language of emotion. We are committed to sustainable practices, exceptional customer service, and ensuring every order arrives in perfect condition. Thank you for choosing Elevate Flower E-commerce to be part of your most important moments.",
+    "terms_conditions": "Terms & Conditions",
+    "terms_conditions_content": "1. Introduction\nWelcome to Elevate Flower E-commerce. By downloading, accessing, or using our app, you agree to be bound by these Terms & Conditions. Please read them carefully before making any purchases.\n\n2. Use of Service\nOur app is intended for personal, non-commercial use. You agree not to misuse our services or help anyone else do so. You must be at least 18 years old to make a purchase, or have parental/guardian consent.\n\n3. Product Availability & Pricing\nAll floral products are subject to availability. We reserve the right to substitute flowers of equal or greater value if requested blooms are unavailable. Prices are subject to change without prior notice.\n\n4. Delivery & Returns\nWe make every effort to deliver your order on time and in excellent condition. If you are unsatisfied with your purchase, please contact our support team within 24 hours of delivery. Due to the perishable nature of flowers, returns are handled on a case-by-case basis.\n\n5. Privacy Policy\nYour privacy matters to us. Please review our Privacy Policy to understand how we collect, use, and protect your personal information.\n\n6. Modifications\nElevate Flower E-commerce reserves the right to modify these terms at any time. Continued use of the app constitutes acceptance of the revised terms.",
+    "logout": "Logout",
+    "logout_title": "Logout?",
+    "logout_message": "Are you sure you want to logout?",
+    "cancel": "Cancel",
+    "version": "Version 1.0.0+1"
+  }
+}
