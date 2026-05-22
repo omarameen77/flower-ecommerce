@@ -68,7 +68,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 EditProfileConstants.updateSuccess,
               );
             } else if (state.uploadPhotoState.errorMessage != null) {
-              CustomSnackBar.error(
+              CustomSnackBar.success(
                 context,
                 state.uploadPhotoState.errorMessage!,
               );
