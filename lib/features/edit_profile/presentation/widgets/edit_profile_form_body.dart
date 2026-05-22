@@ -1,3 +1,4 @@
+import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/edit_profile_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -76,7 +77,11 @@ class EditProfileFormBody extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //TODO: nav to reset passowrd
+                    Navigator.pushNamed(
+                      context,
+                      Routes.resetPassword,
+                      arguments: emailController.text,
+                    );
                   },
                   child: Text(
                     EditProfileConstants.changePassword,
