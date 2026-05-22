@@ -4,11 +4,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
+import 'dart:io' as _i8;
 
 import 'package:flower/config/base/base_response.dart' as _i4;
 import 'package:flower/core/network/model/user_models/user_entity.dart' as _i5;
 import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart'
     as _i2;
+import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart'
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 
@@ -59,6 +62,29 @@ class MockEditProfileUseCase extends _i1.Mock
                   #email: email,
                   #phone: phone,
                 }),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i5.UserEntity>>);
+}
+
+/// A class which mocks [UploadPhotoUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUploadPhotoUseCase extends _i1.Mock
+    implements _i7.UploadPhotoUseCase {
+  MockUploadPhotoUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.Future<_i4.BaseResponse<_i5.UserEntity>> call(_i8.File? photo) =>
+      (super.noSuchMethod(
+            Invocation.method(#call, [photo]),
+            returnValue: _i3.Future<_i4.BaseResponse<_i5.UserEntity>>.value(
+              _i6.dummyValue<_i4.BaseResponse<_i5.UserEntity>>(
+                this,
+                Invocation.method(#call, [photo]),
               ),
             ),
           )
