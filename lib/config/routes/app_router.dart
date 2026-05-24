@@ -2,6 +2,7 @@ import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/config/routes/exit_wrapper.dart';
 import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
+import 'package:flower/core/network/model/user_entity.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
 import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
 import 'package:flower/features/auth/presentation/change_password/cubit/change_password_cubit.dart';
@@ -14,11 +15,17 @@ import 'package:flower/features/auth/presentation/reset_password/cubit/reset_pas
 import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
+import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
+import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
+import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
+import 'package:flower/features/edit_profile/presentation/pages/edit_profile_page.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
 import 'package:flower/features/product_sections/presentation/occasions/pages/occasions_page.dart';
 import 'package:flower/features/product_sections/presentation/product_details/pages/product_details_page.dart';
 import 'package:flower/features/product_sections/presentation/search/search_screen.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
+import 'package:flower/features/profile/presentation/pages/about_us_page.dart';
+import 'package:flower/features/profile/presentation/pages/terms_conditions_page.dart';
 import 'package:flower/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,6 +98,31 @@ abstract class AppRouter {
               child: const SearchScreen(),
             ),
           );
+
+          
+        case Routes.editProfile:
+          final user = settings.arguments as UserEntity?;
+          if (user == null) {
+            return PageTransitions.fade(
+              NotFoundScreen(route: Routes.editProfile),
+            );
+          }
+          return PageTransitions.slide(
+            BlocProvider(
+              create: (_) => EditProfileCubit(
+                getIt<EditProfileUseCase>(),
+                getIt<UploadPhotoUseCase>(),
+                user,
+              ),
+              child: const EditProfilePage(),
+            ),
+          );
+
+        case Routes.aboutUs:
+          return PageTransitions.slide(const AboutUsPage());
+        case Routes.termsConditions:
+          return PageTransitions.slide(const TermsConditionsPage());
+
 
         default:
           return PageTransitions.fade(

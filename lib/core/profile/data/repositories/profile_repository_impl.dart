@@ -13,13 +13,13 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<BaseResponse<UserEntity>> getProfile() async {
     final response = await _remoteDataSource.getProfile();
-    if (response is SuccessBaseResponse) {
-      final userDto = (response as SuccessBaseResponse).data;
-      return SuccessBaseResponse<UserEntity>(data: userDto.toDomain());
-    } else {
-      return ErrorBaseResponse<UserEntity>(
-        failure: (response as ErrorBaseResponse).failure,
-      );
-    }
+    return switch (response) {
+      SuccessBaseResponse() => SuccessBaseResponse<UserEntity>(
+        data: response.data.toDomain(),
+      ),
+      ErrorBaseResponse() => ErrorBaseResponse<UserEntity>(
+        failure: response.failure,
+      ),
+    };
   }
 }

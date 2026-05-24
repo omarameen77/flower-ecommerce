@@ -10,5 +10,4 @@ class AppSvgs {
   static const delete = "assets/svgs/delete.svg";
   static const minus = "assets/svgs/minus.svg";
   static const plus = "assets/svgs/plus.svg";
-  static const myOrders = "assets/svgs/my_orders.svg";
 }

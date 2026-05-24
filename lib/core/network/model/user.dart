@@ -53,7 +53,7 @@ class UserDto {
       email: email,
       gender: gender,
       phone: phone,
-      photo: phone,
+      photo: photo,
       role: role,
       wishlist: wishlist,
       addresses: addresses,
