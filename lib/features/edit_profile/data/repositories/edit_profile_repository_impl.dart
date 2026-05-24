@@ -27,24 +27,26 @@ class EditProfileRepositoryImpl implements EditProfileRepository {
       phone: phone.trim(),
     );
     final response = await _remoteDataSource.editProfile(request);
-    if (response is SuccessBaseResponse) {
-      final dto = (response as SuccessBaseResponse).data;
-      return SuccessBaseResponse<UserEntity>(data: dto.toDomain());
-    }
-    return ErrorBaseResponse<UserEntity>(
-      failure: (response as ErrorBaseResponse).failure,
-    );
+    return switch (response) {
+      SuccessBaseResponse() => SuccessBaseResponse<UserEntity>(
+        data: response.data.toDomain(),
+      ),
+      ErrorBaseResponse() => ErrorBaseResponse<UserEntity>(
+        failure: response.failure,
+      ),
+    };
   }
 
   @override
   Future<BaseResponse<UserEntity>> uploadPhoto(File photo) async {
     final response = await _remoteDataSource.uploadPhoto(photo);
-    if (response is SuccessBaseResponse) {
-      final dto = (response as SuccessBaseResponse).data;
-      return SuccessBaseResponse<UserEntity>(data: dto.toDomain());
-    }
-    return ErrorBaseResponse<UserEntity>(
-      failure: (response as ErrorBaseResponse).failure,
-    );
+    return switch (response) {
+      SuccessBaseResponse() => SuccessBaseResponse<UserEntity>(
+        data: response.data.toDomain(),
+      ),
+      ErrorBaseResponse() => ErrorBaseResponse<UserEntity>(
+        failure: response.failure,
+      ),
+    };
   }
 }

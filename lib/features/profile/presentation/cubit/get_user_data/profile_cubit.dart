@@ -45,21 +45,22 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       final result = await _getProfileUseCase.call();
 
-      if (result is SuccessBaseResponse<UserEntity>) {
-        emit(
-          state.copyWith(
-            profileState: BaseState(isLoading: false, data: result.data),
-          ),
-        );
-      } else if (result is ErrorBaseResponse<UserEntity>) {
-        emit(
-          state.copyWith(
-            profileState: BaseState(
-              isLoading: false,
-              errorMessage: result.failure.message,
+      switch (result) {
+        case SuccessBaseResponse<UserEntity>():
+          emit(
+            state.copyWith(
+              profileState: BaseState(isLoading: false, data: result.data),
             ),
-          ),
-        );
+          );
+        case ErrorBaseResponse<UserEntity>():
+          emit(
+            state.copyWith(
+              profileState: BaseState(
+                isLoading: false,
+                errorMessage: result.failure.message,
+              ),
+            ),
+          );
       }
     } catch (e) {
       emit(

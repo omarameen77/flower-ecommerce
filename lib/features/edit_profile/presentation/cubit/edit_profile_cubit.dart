@@ -82,21 +82,22 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
       final result = await _uploadPhotoUseCase.call(file);
 
-      if (result is SuccessBaseResponse<UserEntity>) {
-        emit(
-          state.copyWith(
-            uploadPhotoState: BaseState(isLoading: false, data: result.data),
-          ),
-        );
-      } else if (result is ErrorBaseResponse<UserEntity>) {
-        emit(
-          state.copyWith(
-            uploadPhotoState: BaseState(
-              isLoading: false,
-              errorMessage: result.failure.message,
+      switch (result) {
+        case SuccessBaseResponse<UserEntity>():
+          emit(
+            state.copyWith(
+              uploadPhotoState: BaseState(isLoading: false, data: result.data),
             ),
-          ),
-        );
+          );
+        case ErrorBaseResponse<UserEntity>():
+          emit(
+            state.copyWith(
+              uploadPhotoState: BaseState(
+                isLoading: false,
+                errorMessage: result.failure.message,
+              ),
+            ),
+          );
       }
     } catch (e) {
       emit(
@@ -123,21 +124,22 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         phone: state.phone,
       );
 
-      if (result is SuccessBaseResponse<UserEntity>) {
-        emit(
-          state.copyWith(
-            submitState: BaseState(isLoading: false, data: result.data),
-          ),
-        );
-      } else if (result is ErrorBaseResponse<UserEntity>) {
-        emit(
-          state.copyWith(
-            submitState: BaseState(
-              isLoading: false,
-              errorMessage: result.failure.message,
+      switch (result) {
+        case SuccessBaseResponse<UserEntity>():
+          emit(
+            state.copyWith(
+              submitState: BaseState(isLoading: false, data: result.data),
             ),
-          ),
-        );
+          );
+        case ErrorBaseResponse<UserEntity>():
+          emit(
+            state.copyWith(
+              submitState: BaseState(
+                isLoading: false,
+                errorMessage: result.failure.message,
+              ),
+            ),
+          );
       }
     } catch (e) {
       emit(
