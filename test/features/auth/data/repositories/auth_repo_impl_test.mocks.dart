@@ -9,6 +9,8 @@ import 'package:flower/config/base/base_response.dart' as _i4;
 import 'package:flower/core/network/model/user.dart' as _i5;
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i2;
+import 'package:flower/features/auth/data/models/response/change_password_response.dart'
+    as _i12;
 import 'package:flower/features/auth/data/models/response/forget_password_response.dart'
     as _i9;
 import 'package:flower/features/auth/data/models/response/reset_password_response.dart'
@@ -140,4 +142,31 @@ class MockAuthRemoteDataSourceContract extends _i1.Mock
                 ),
           )
           as _i3.Future<_i4.BaseResponse<_i11.ResetPasswordResponseDto>>);
+
+  @override
+  _i3.Future<_i4.BaseResponse<_i12.ChangePasswordResponseDto>> changePassword({
+    required String? oldPassword,
+    required String? newPassword,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#changePassword, [], {
+              #oldPassword: oldPassword,
+              #newPassword: newPassword,
+            }),
+            returnValue:
+                _i3.Future<
+                  _i4.BaseResponse<_i12.ChangePasswordResponseDto>
+                >.value(
+                  _i7.dummyValue<
+                    _i4.BaseResponse<_i12.ChangePasswordResponseDto>
+                  >(
+                    this,
+                    Invocation.method(#changePassword, [], {
+                      #oldPassword: oldPassword,
+                      #newPassword: newPassword,
+                    }),
+                  ),
+                ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i12.ChangePasswordResponseDto>>);
 }

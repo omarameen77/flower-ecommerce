@@ -33,6 +33,9 @@ abstract class ValidationConstants {
 
   static String get passwordNotMatch => "validation.password_not_match".tr();
 
+  static String get newPasswordSameAsOld =>
+      "validation.new_password_same_as_old".tr();
+
   // Code
   static String get codeRequired => "validation.code_required".tr();
 

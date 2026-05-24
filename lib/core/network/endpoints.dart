@@ -6,6 +6,10 @@ class AuthEndPoint {
   static const forgotPassword = "/auth/forgotPassword";
   static const verifyResetCode = "/auth/verifyResetCode";
   static const resetPassword = "/auth/resetPassword";
+  static const profile = "/auth/profile-data";
+  static const editProfile = "/auth/editProfile";
+  static const uploadPhoto = "/auth/upload-photo";
+  static const changePassword = "/auth/change-password";
 }
 
 class ProductsSectionsEndPoint {

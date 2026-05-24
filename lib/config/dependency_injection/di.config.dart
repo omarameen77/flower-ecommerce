@@ -15,6 +15,16 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../core/network/network_module.dart' as _i234;
 import '../../core/network/safe_api_caller.dart' as _i563;
+import '../../core/profile/api/api_client/profile_api_client.dart' as _i458;
+import '../../core/profile/api/datasource/profile_remote_data_source_impl.dart'
+    as _i501;
+import '../../core/profile/data/datasources/profile_remote_data_source.dart'
+    as _i49;
+import '../../core/profile/data/repositories/profile_repository_impl.dart'
+    as _i865;
+import '../../core/profile/domain/repositories/profile_repository.dart'
+    as _i679;
+import '../../core/profile/domain/usecases/get_profile_use_case.dart' as _i693;
 import '../../features/app_sections/presentation/cubit/app_sections_cubit.dart'
     as _i936;
 import '../../features/auth/api/api_client/auth_api_client.dart' as _i824;
@@ -24,6 +34,8 @@ import '../../features/auth/data/datasources/auth_remote_data_source.dart'
     as _i107;
 import '../../features/auth/data/repositories/auth_repo_impl.dart' as _i662;
 import '../../features/auth/domain/repositories/auth_repo.dart' as _i723;
+import '../../features/auth/domain/use_cases/change_password_usecase.dart'
+    as _i771;
 import '../../features/auth/domain/use_cases/forget_password_usecase.dart'
     as _i27;
 import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
@@ -32,6 +44,8 @@ import '../../features/auth/domain/use_cases/reset_password_usecase.dart'
     as _i348;
 import '../../features/auth/domain/use_cases/verify_reset_code_usecase.dart'
     as _i887;
+import '../../features/auth/presentation/change_password/cubit/change_password_cubit.dart'
+    as _i6;
 import '../../features/auth/presentation/forget_password/cubit/forget_password_cubit.dart'
     as _i995;
 import '../../features/auth/presentation/login/cubit/login_cubit.dart' as _i179;
@@ -52,11 +66,7 @@ import '../../features/cart/domain/usecases/add_product_to_cart_use_case.dart'
     as _i802;
 import '../../features/cart/domain/usecases/get_cart_use_case.dart' as _i488;
 import '../../features/cart/domain/usecases/remove_cart_item_use_case.dart'
-<<<<<<< HEAD
-    as _i913;
-=======
     as _i650;
->>>>>>> 1a1c1dd816eade348eff17f5000904be74c435e4
 import '../../features/cart/domain/usecases/update_cart_item_quantity_use_case.dart'
     as _i157;
 import '../../features/cart/presentation/cubit/cart_cubit.dart' as _i499;
@@ -117,6 +127,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i266.ProductsSectionsApiClient>(
       () => networkModule.productsApi(gh<_i361.Dio>()),
     );
+    gh.singleton<_i458.ProfileApiClient>(
+      () => networkModule.profileApi(gh<_i361.Dio>()),
+    );
     gh.factory<_i1032.CategoriesDataSourceContract>(
       () => _i1014.CategoriesDataSourceImpl(
         apiClient: gh<_i266.ProductsSectionsApiClient>(),
@@ -128,6 +141,9 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i1032.CategoriesDataSourceContract>(),
       ),
     );
+    gh.lazySingleton<_i49.ProfileRemoteDataSource>(
+      () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
+    );
     gh.factory<_i406.GetCategoriesUseCase>(
       () => _i406.GetCategoriesUseCase(repo: gh<_i696.CategoryRepoContract>()),
     );
@@ -136,6 +152,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i198.CartApiClient>(),
         gh<_i563.SafeApiCaller>(),
       ),
+    );
+    gh.lazySingleton<_i679.ProfileRepository>(
+      () => _i865.ProfileRepositoryImpl(gh<_i49.ProfileRemoteDataSource>()),
     );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
@@ -149,6 +168,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i425.CartRepoContract>(
       () => _i668.CartRepoImpl(gh<_i398.CartRemoteDataSourceContract>()),
+    );
+    gh.factory<_i693.GetProfileUseCase>(
+      () => _i693.GetProfileUseCase(gh<_i679.ProfileRepository>()),
     );
     gh.factory<_i802.AddProductToCartUseCase>(
       () => _i802.AddProductToCartUseCase(gh<_i425.CartRepoContract>()),
@@ -188,17 +210,6 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
-<<<<<<< HEAD
-    gh.factory<_i499.CartCubit>(
-      () => _i499.CartCubit(
-        gh<_i802.AddProductToCartUseCase>(),
-        gh<_i488.GetCartUseCase>(),
-        gh<_i913.RemoveCartItemUseCase>(),
-        gh<_i157.UpdateCartItemQuantityUseCase>(),
-      ),
-    );
-=======
->>>>>>> 1a1c1dd816eade348eff17f5000904be74c435e4
     gh.factory<_i723.AuthRepo>(
       () => _i662.AuthRepoImpl(
         authRemoteDataSourceContract: gh<_i107.AuthRemoteDataSourceContract>(),
@@ -223,6 +234,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i129.OccasionCubit(
         getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
       ),
+    );
+    gh.factory<_i771.ChangePasswordUseCase>(
+      () => _i771.ChangePasswordUseCase(gh<_i723.AuthRepo>()),
     );
     gh.factory<_i27.ForgetPasswordUseCase>(
       () => _i27.ForgetPasswordUseCase(gh<_i723.AuthRepo>()),
@@ -261,6 +275,9 @@ extension GetItInjectableX on _i174.GetIt {
         getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
         getProductUseCase: gh<_i713.GetProductsUseCase>(),
       ),
+    );
+    gh.factory<_i6.ChangePasswordCubit>(
+      () => _i6.ChangePasswordCubit(gh<_i771.ChangePasswordUseCase>()),
     );
     gh.factory<_i450.ResetPasswordCubit>(
       () => _i450.ResetPasswordCubit(gh<_i348.ResetPasswordUseCase>()),

@@ -7,6 +7,8 @@ import 'dart:async' as _i3;
 
 import 'package:flower/config/base/base_response.dart' as _i4;
 import 'package:flower/core/network/model/user_entity.dart' as _i5;
+import 'package:flower/features/auth/domain/entities/change_password_entity.dart'
+    as _i12;
 import 'package:flower/features/auth/domain/entities/forget_password_entity.dart'
     as _i9;
 import 'package:flower/features/auth/domain/entities/reset_password_entity.dart'
@@ -127,4 +129,27 @@ class MockAuthRepo extends _i1.Mock implements _i2.AuthRepo {
                 ),
           )
           as _i3.Future<_i4.BaseResponse<_i11.ResetPasswordEntity>>);
+
+  @override
+  _i3.Future<_i4.BaseResponse<_i12.ChangePasswordEntity>> changePassword({
+    required String? oldPassword,
+    required String? newPassword,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#changePassword, [], {
+              #oldPassword: oldPassword,
+              #newPassword: newPassword,
+            }),
+            returnValue:
+                _i3.Future<_i4.BaseResponse<_i12.ChangePasswordEntity>>.value(
+                  _i7.dummyValue<_i4.BaseResponse<_i12.ChangePasswordEntity>>(
+                    this,
+                    Invocation.method(#changePassword, [], {
+                      #oldPassword: oldPassword,
+                      #newPassword: newPassword,
+                    }),
+                  ),
+                ),
+          )
+          as _i3.Future<_i4.BaseResponse<_i12.ChangePasswordEntity>>);
 }

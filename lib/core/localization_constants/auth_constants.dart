@@ -53,6 +53,14 @@ extension AuthConstants on BuildContext {
   String get resetPasswordCondition => "auth.reset_password_condition".tr();
   String get newPassword => "auth.new_password".tr();
 
+  // ───────── Change Password ─────────
+  String get changePassword => "auth.change_password".tr();
+  String get currentPassword => "auth.current_password".tr();
+  String get enterCurrentPassword => "auth.enter_current_password".tr();
+  String get confirmNewPassword => "auth.confirm_new_password".tr();
+  String get passwordChangedSuccess => "auth.password_changed_success".tr();
+  String get update => "auth.update".tr();
+
   // ───────── Terms ─────────
   String get termsAndConditionsStatement =>
       "auth.terms_and_conditions_statement".tr();
