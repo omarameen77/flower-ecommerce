@@ -70,6 +70,20 @@ import '../../features/cart/domain/usecases/remove_cart_item_use_case.dart'
 import '../../features/cart/domain/usecases/update_cart_item_quantity_use_case.dart'
     as _i157;
 import '../../features/cart/presentation/cubit/cart_cubit.dart' as _i499;
+import '../../features/edit_profile/api/api_client/edit_profile_api_client.dart'
+    as _i690;
+import '../../features/edit_profile/api/datasource/edit_profile_remote_data_source_impl.dart'
+    as _i458;
+import '../../features/edit_profile/data/datasources/edit_profile_remote_data_source.dart'
+    as _i261;
+import '../../features/edit_profile/data/repositories/edit_profile_repository_impl.dart'
+    as _i337;
+import '../../features/edit_profile/domain/repositories/edit_profile_repository.dart'
+    as _i698;
+import '../../features/edit_profile/domain/usecases/edit_profile_use_case.dart'
+    as _i620;
+import '../../features/edit_profile/domain/usecases/upload_photo_use_case.dart'
+    as _i538;
 import '../../features/product_sections/api/api_client/products_sections_api_client.dart'
     as _i266;
 import '../../features/product_sections/api/datasource/categories_data_source_impl.dart'
@@ -106,6 +120,8 @@ import '../../features/product_sections/presentation/shared_cubit/occasion_cubit
     as _i129;
 import '../../features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart'
     as _i538;
+import '../../features/profile/presentation/cubit/get_user_data/profile_cubit.dart'
+    as _i1041;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -130,10 +146,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i458.ProfileApiClient>(
       () => networkModule.profileApi(gh<_i361.Dio>()),
     );
+    gh.singleton<_i690.EditProfileApiClient>(
+      () => networkModule.editProfileApi(gh<_i361.Dio>()),
+    );
     gh.factory<_i1032.CategoriesDataSourceContract>(
       () => _i1014.CategoriesDataSourceImpl(
         apiClient: gh<_i266.ProductsSectionsApiClient>(),
         call: gh<_i563.SafeApiCaller>(),
+      ),
+    );
+    gh.lazySingleton<_i261.EditProfileRemoteDataSource>(
+      () => _i458.EditProfileRemoteDataSourceImpl(
+        gh<_i690.EditProfileApiClient>(),
       ),
     );
     gh.factory<_i696.CategoryRepoContract>(
@@ -151,6 +175,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i87.CartRemoteDataSourceImpl(
         gh<_i198.CartApiClient>(),
         gh<_i563.SafeApiCaller>(),
+      ),
+    );
+    gh.lazySingleton<_i698.EditProfileRepository>(
+      () => _i337.EditProfileRepositoryImpl(
+        gh<_i261.EditProfileRemoteDataSource>(),
       ),
     );
     gh.lazySingleton<_i679.ProfileRepository>(
@@ -172,6 +201,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i693.GetProfileUseCase>(
       () => _i693.GetProfileUseCase(gh<_i679.ProfileRepository>()),
     );
+    gh.factory<_i1041.ProfileCubit>(
+      () => _i1041.ProfileCubit(gh<_i693.GetProfileUseCase>()),
+    );
     gh.factory<_i802.AddProductToCartUseCase>(
       () => _i802.AddProductToCartUseCase(gh<_i425.CartRepoContract>()),
     );
@@ -189,6 +221,12 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionDataSourceContract:
             gh<_i303.ProductsSectionDataSourceContract>(),
       ),
+    );
+    gh.factory<_i620.EditProfileUseCase>(
+      () => _i620.EditProfileUseCase(gh<_i698.EditProfileRepository>()),
+    );
+    gh.factory<_i538.UploadPhotoUseCase>(
+      () => _i538.UploadPhotoUseCase(gh<_i698.EditProfileRepository>()),
     );
     gh.lazySingleton<_i691.CategoriesCubit>(
       () => _i691.CategoriesCubit(

@@ -16,7 +16,9 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(data: UserEntity(email: "test@example.com")),
+      SuccessBaseResponse<UserEntity>(
+        data: UserEntity(email: "test@example.com"),
+      ),
     );
   });
 
@@ -32,23 +34,28 @@ void main() {
     lastName: "User",
   );
 
-  test('should return SuccessBaseResponse when repository call is successful', () async {
-    when(mockProfileRepository.getProfile())
-        .thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUserEntity));
+  test(
+    'should return SuccessBaseResponse when repository call is successful',
+    () async {
+      when(mockProfileRepository.getProfile()).thenAnswer(
+        (_) async => SuccessBaseResponse<UserEntity>(data: tUserEntity),
+      );
 
-    final result = await getProfileUseCase.call();
+      final result = await getProfileUseCase.call();
 
-    expect(result, isA<SuccessBaseResponse<UserEntity>>());
-    final successResult = result as SuccessBaseResponse<UserEntity>;
-    expect(successResult.data, tUserEntity);
-    verify(mockProfileRepository.getProfile()).called(1);
-    verifyNoMoreInteractions(mockProfileRepository);
-  });
+      expect(result, isA<SuccessBaseResponse<UserEntity>>());
+      final successResult = result as SuccessBaseResponse<UserEntity>;
+      expect(successResult.data, tUserEntity);
+      verify(mockProfileRepository.getProfile()).called(1);
+      verifyNoMoreInteractions(mockProfileRepository);
+    },
+  );
 
   test('should return ErrorBaseResponse when repository call fails', () async {
     final tFailure = Failure(message: 'Profile fetch failed');
-    when(mockProfileRepository.getProfile())
-        .thenAnswer((_) async => ErrorBaseResponse<UserEntity>(failure: tFailure));
+    when(
+      mockProfileRepository.getProfile(),
+    ).thenAnswer((_) async => ErrorBaseResponse<UserEntity>(failure: tFailure));
 
     final result = await getProfileUseCase.call();
 
