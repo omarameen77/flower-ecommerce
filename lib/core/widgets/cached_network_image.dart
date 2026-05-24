@@ -5,18 +5,24 @@ import 'package:flutter/material.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
   final String urlToImage;
-  const CachedNetworkImageWidget({super.key, required this.urlToImage});
+  final double width;
+  final double height;
+  const CachedNetworkImageWidget({
+    super.key,
+    required this.urlToImage,
+    this.width = AppSize.s60,
+    this.height = AppSize.s60,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      height: AppSize.s60,
+      height: height,
       memCacheHeight: 400,
-      width: AppSize.s60,
+      width: width,
       imageUrl: urlToImage,
       fit: BoxFit.cover,
-      placeholder: (context, url) =>
-          ImageShimmer(width: AppSize.s50, height: AppSize.s50),
+      placeholder: (context, url) => ImageShimmer(width: width, height: height),
       errorWidget: (context, url, error) =>
           Icon(Icons.error, color: Colors.red, size: AppSize.s24),
     );

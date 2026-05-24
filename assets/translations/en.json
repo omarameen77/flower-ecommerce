@@ -78,6 +78,52 @@
     "invalidPhone": "Invalid phone number",
     "phone_format_hint": "Format: +[country code][number] (e.g., +201202222222)"
   },
+  "error_massages":{
+  "noInternet": "No internet connection. Please check your network and try again.",
+  "connectionTimeout": "Connection timed out. Please try again.",
+  "sendTimeout": "Request took too long to send. Try again.",
+  "receiveTimeout": "Server is taking too long to respond. Please try again.",
+  "serverError": "Something went wrong on our side. Please try again later.",
+  "unexpectedError": "An unexpected error occurred. Please try again.",
+  "unknownError": "Something went wrong. Please try again.",
+  "login_successfully":"Login Successfully",
+  "signup_successfully":"Created account Successfully"
+},
+"layout": {
+  "home_tab": "Home",
+  "categories_tab": "Categories",
+  "cart_tab": "Cart",
+  "profile_tab": "Profile"
+},
+"home":{
+  "search":"Search",
+  "searchHint":"Search For Any Product You Want",
+  "product_not_found":"No Products Found",
+  "all":"All",
+  "searching":"Searching..."
+
+},"general": {
+  "ok": "OK",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "retry": "Retry",
+  "close": "Close",
+  "loading": "Loading...",
+  "press_back_again_to_exit": "Press back again to exit"
+},"cart": {
+  "cart": "Cart",
+  "empty_cart": "Your cart is empty",
+  "total": "Total",
+  "subtotal": "Sub Total",
+  "checkout": "Checkout",
+  "delivery": "Delivery Fee",
+  "item_removed": "Item removed from cart",
+  "items": "Items",
+  "egp": "EGP ",
+  "go_shopping": "Go shopping",
+  "already_added": "Added"
+},
   "error_massages": {
     "noInternet": "No internet connection. Please check your network and try again.",
     "connectionTimeout": "Connection timed out. Please try again.",

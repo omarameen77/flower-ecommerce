@@ -15,6 +15,16 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../core/network/network_module.dart' as _i234;
 import '../../core/network/safe_api_caller.dart' as _i563;
+import '../../core/profile/api/api_client/profile_api_client.dart' as _i458;
+import '../../core/profile/api/datasource/profile_remote_data_source_impl.dart'
+    as _i501;
+import '../../core/profile/data/datasources/profile_remote_data_source.dart'
+    as _i49;
+import '../../core/profile/data/repositories/profile_repository_impl.dart'
+    as _i865;
+import '../../core/profile/domain/repositories/profile_repository.dart'
+    as _i679;
+import '../../core/profile/domain/usecases/get_profile_use_case.dart' as _i693;
 import '../../features/app_sections/presentation/cubit/app_sections_cubit.dart'
     as _i936;
 import '../../features/auth/api/api_client/auth_api_client.dart' as _i824;
@@ -45,6 +55,21 @@ import '../../features/auth/presentation/reset_password/cubit/reset_password_cub
     as _i450;
 import '../../features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart'
     as _i660;
+import '../../features/cart/api/api_clint/cart_api_clint.dart' as _i198;
+import '../../features/cart/api/datasource/cart_remote_data_source_impl.dart'
+    as _i87;
+import '../../features/cart/data/datasource/cart_remote_data_source_contract.dart'
+    as _i398;
+import '../../features/cart/data/repository/cart_repo_impl.dart' as _i668;
+import '../../features/cart/domain/repository/cart_repo_contract.dart' as _i425;
+import '../../features/cart/domain/usecases/add_product_to_cart_use_case.dart'
+    as _i802;
+import '../../features/cart/domain/usecases/get_cart_use_case.dart' as _i488;
+import '../../features/cart/domain/usecases/remove_cart_item_use_case.dart'
+    as _i650;
+import '../../features/cart/domain/usecases/update_cart_item_quantity_use_case.dart'
+    as _i157;
+import '../../features/cart/presentation/cubit/cart_cubit.dart' as _i499;
 import '../../features/product_sections/api/api_client/products_sections_api_client.dart'
     as _i266;
 import '../../features/product_sections/api/datasource/categories_data_source_impl.dart'
@@ -96,8 +121,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i824.AuthApiClient>(
       () => networkModule.authApi(gh<_i361.Dio>()),
     );
+    gh.singleton<_i198.CartApiClient>(
+      () => networkModule.cartApi(gh<_i361.Dio>()),
+    );
     gh.singleton<_i266.ProductsSectionsApiClient>(
       () => networkModule.productsApi(gh<_i361.Dio>()),
+    );
+    gh.singleton<_i458.ProfileApiClient>(
+      () => networkModule.profileApi(gh<_i361.Dio>()),
     );
     gh.factory<_i1032.CategoriesDataSourceContract>(
       () => _i1014.CategoriesDataSourceImpl(
@@ -110,8 +141,20 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i1032.CategoriesDataSourceContract>(),
       ),
     );
+    gh.lazySingleton<_i49.ProfileRemoteDataSource>(
+      () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
+    );
     gh.factory<_i406.GetCategoriesUseCase>(
       () => _i406.GetCategoriesUseCase(repo: gh<_i696.CategoryRepoContract>()),
+    );
+    gh.factory<_i398.CartRemoteDataSourceContract>(
+      () => _i87.CartRemoteDataSourceImpl(
+        gh<_i198.CartApiClient>(),
+        gh<_i563.SafeApiCaller>(),
+      ),
+    );
+    gh.lazySingleton<_i679.ProfileRepository>(
+      () => _i865.ProfileRepositoryImpl(gh<_i49.ProfileRemoteDataSource>()),
     );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
@@ -122,6 +165,24 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i370.ProductsSectionsDataSourceImpl(
         productsSectionsApiClient: gh<_i266.ProductsSectionsApiClient>(),
       ),
+    );
+    gh.factory<_i425.CartRepoContract>(
+      () => _i668.CartRepoImpl(gh<_i398.CartRemoteDataSourceContract>()),
+    );
+    gh.factory<_i693.GetProfileUseCase>(
+      () => _i693.GetProfileUseCase(gh<_i679.ProfileRepository>()),
+    );
+    gh.factory<_i802.AddProductToCartUseCase>(
+      () => _i802.AddProductToCartUseCase(gh<_i425.CartRepoContract>()),
+    );
+    gh.factory<_i488.GetCartUseCase>(
+      () => _i488.GetCartUseCase(gh<_i425.CartRepoContract>()),
+    );
+    gh.factory<_i650.RemoveCartItemUseCase>(
+      () => _i650.RemoveCartItemUseCase(gh<_i425.CartRepoContract>()),
+    );
+    gh.factory<_i157.UpdateCartItemQuantityUseCase>(
+      () => _i157.UpdateCartItemQuantityUseCase(gh<_i425.CartRepoContract>()),
     );
     gh.factory<_i386.ProductsSectionRepo>(
       () => _i34.ProductsSectionsRepoImpl(
@@ -156,6 +217,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i499.CartCubit>(
+      () => _i499.CartCubit(
+        gh<_i802.AddProductToCartUseCase>(),
+        gh<_i488.GetCartUseCase>(),
+        gh<_i650.RemoveCartItemUseCase>(),
+        gh<_i157.UpdateCartItemQuantityUseCase>(),
+      ),
     );
     gh.factory<_i538.ProductCubit>(
       () =>

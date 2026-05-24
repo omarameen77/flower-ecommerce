@@ -27,13 +27,15 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<SearchCubit>().clear();
     });
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 200) {
+        if (!mounted) return;
         context.read<SearchCubit>().loadMore();
       }
     });
@@ -45,6 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     _debounce = Timer(const Duration(milliseconds: 400), () {
+      if (!mounted) return;
       final text = value.trim();
 
       if (text.isEmpty) {

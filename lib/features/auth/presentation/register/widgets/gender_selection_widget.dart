@@ -29,100 +29,94 @@ class GenderSelectionWidget extends StatelessWidget {
           buildWhen: (previous, current) =>
               previous.selectedGender != current.selectedGender,
           builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      context.gender,
-                      style: getMediumStyle(
-                        context: context,
-                        color: AppColors.textPrimary,
-                        fontSize: FontSizeManager.s16,
+            return RadioGroup<String>(
+              groupValue: state.selectedGender,
+              onChanged: (value) {
+                if (value == null) return;
+                context.read<RegisterCubit>().doEvent(ChangeGender(value));
+                formFieldState.didChange(value);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        context.gender,
+                        style: getMediumStyle(
+                          context: context,
+                          color: AppColors.textPrimary,
+                          fontSize: FontSizeManager.s16,
+                        ),
                       ),
-                    ),
-                    const AppSizedBox(width: 40),
-                    InkWell(
-                      onTap: () {
-                        context.read<RegisterCubit>().doEvent(
-                          ChangeGender(_femaleValue),
-                        );
-                        formFieldState.didChange(_femaleValue);
-                      },
-                      child: Row(
-                        children: [
-                          Radio<String>(
-                            value: _femaleValue,
-                            groupValue: state.selectedGender,
-                            activeColor: AppColors.primary,
-                            visualDensity: VisualDensity.compact,
-                            onChanged: (value) {
-                              context.read<RegisterCubit>().doEvent(
-                                ChangeGender(value!),
-                              );
-                              formFieldState.didChange(value);
-                            },
-                          ),
-                          Text(
-                            context.female,
-                            style: getRegularStyle(
-                              context: context,
-                              color: AppColors.textPrimary,
-                              fontSize: FontSizeManager.s14,
+                      const AppSizedBox(width: 40),
+                      InkWell(
+                        onTap: () {
+                          context.read<RegisterCubit>().doEvent(
+                            ChangeGender(_femaleValue),
+                          );
+                          formFieldState.didChange(_femaleValue);
+                        },
+                        child: Row(
+                          children: [
+                            const Radio<String>(
+                              value: _femaleValue,
+                              activeColor: AppColors.primary,
+                              visualDensity: VisualDensity.compact,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const AppSizedBox(width: 20),
-                    InkWell(
-                      onTap: () {
-                        context.read<RegisterCubit>().doEvent(
-                          ChangeGender(_maleValue),
-                        );
-                        formFieldState.didChange(_maleValue);
-                      },
-                      child: Row(
-                        children: [
-                          Radio<String>(
-                            value: _maleValue,
-                            groupValue: state.selectedGender,
-                            activeColor: AppColors.primary,
-                            visualDensity: VisualDensity.compact,
-                            onChanged: (value) {
-                              context.read<RegisterCubit>().doEvent(
-                                ChangeGender(value!),
-                              );
-                              formFieldState.didChange(value);
-                            },
-                          ),
-                          Text(
-                            context.male,
-                            style: getRegularStyle(
-                              context: context,
-                              color: AppColors.textPrimary,
-                              fontSize: FontSizeManager.s14,
+                            Text(
+                              context.female,
+                              style: getRegularStyle(
+                                context: context,
+                                color: AppColors.textPrimary,
+                                fontSize: FontSizeManager.s14,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                if (formFieldState.hasError)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 4.0),
-                    child: Text(
-                      formFieldState.errorText!,
-                      style: getRegularStyle(
-                        context: context,
-                        color: AppColors.error,
-                        fontSize: FontSizeManager.s12,
+                      const AppSizedBox(width: 20),
+                      InkWell(
+                        onTap: () {
+                          context.read<RegisterCubit>().doEvent(
+                            ChangeGender(_maleValue),
+                          );
+                          formFieldState.didChange(_maleValue);
+                        },
+                        child: Row(
+                          children: [
+                            const Radio<String>(
+                              value: _maleValue,
+                              activeColor: AppColors.primary,
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            Text(
+                              context.male,
+                              style: getRegularStyle(
+                                context: context,
+                                color: AppColors.textPrimary,
+                                fontSize: FontSizeManager.s14,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-              ],
+                  if (formFieldState.hasError)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+                      child: Text(
+                        formFieldState.errorText!,
+                        style: getRegularStyle(
+                          context: context,
+                          color: AppColors.error,
+                          fontSize: FontSizeManager.s12,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             );
           },
         );

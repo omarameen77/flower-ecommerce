@@ -8,10 +8,6 @@ import 'package:flower/features/product_sections/presentation/home/widgets/categ
 import 'package:flower/features/product_sections/presentation/home/widgets/home_header.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/location_widget.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/occasions_section.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_event.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_event.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
 import 'package:flutter/material.dart';
