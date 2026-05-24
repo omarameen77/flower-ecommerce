@@ -16,28 +16,20 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   ForgetPasswordCubit(this._useCase) : super(const ForgetPasswordState());
 
   void doIntent(ForgetPasswordIntent intent) {
-    switch (intent.runtimeType) {
-      case SubmitForgetPasswordIntent:
-        final email = (intent as SubmitForgetPasswordIntent).email;
-        _submit(email);
-        break;
+    if (intent is SubmitForgetPasswordIntent) {
+      _submit(intent.email);
     }
   }
 
   Future<void> _submit(String email) async {
     emit(state.copyWith(base: const BaseState(isLoading: true), email: email));
     final response = await _useCase(email: email);
-    switch (response) {
-      case SuccessBaseResponse<ForgetPasswordEntity>():
-        emit(state.copyWith(base: BaseState(data: response.data)));
-        break;
-      case ErrorBaseResponse<ForgetPasswordEntity>():
-        emit(
-          state.copyWith(
-            base: BaseState(errorMessage: response.failure.message),
-          ),
-        );
-        break;
+    if (response is SuccessBaseResponse<ForgetPasswordEntity>) {
+      emit(state.copyWith(base: BaseState(data: response.data)));
+    } else if (response is ErrorBaseResponse<ForgetPasswordEntity>) {
+      emit(
+        state.copyWith(base: BaseState(errorMessage: response.failure.message)),
+      );
     }
   }
 }

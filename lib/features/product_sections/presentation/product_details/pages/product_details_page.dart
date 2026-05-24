@@ -1,10 +1,15 @@
 import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/layout/app_size.dart';
+import 'package:flower/core/localization_constants/cart_constants.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_loading_widget.dart';
+import 'package:flower/core/widgets/button_loading_widget.dart';
 import 'package:flower/core/widgets/button_with_prefix.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_events.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_state.dart';
 import 'package:flower/features/product_sections/presentation/product_details/cubit/product_details_cubit.dart';
 import 'package:flower/features/product_sections/presentation/product_details/cubit/product_details_event.dart';
 import 'package:flower/features/product_sections/presentation/product_details/widgets/product_details_body.dart';
@@ -55,14 +60,53 @@ class ProductDetailsPage extends StatelessWidget {
         bottomNavigationBar: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(AppPadding.p16),
-            child: ButtonWithPrefix(
-              text: AppStrings.addToCart,
-              onTap: () {},
-              prefixIcon: const Icon(
-                Icons.shopping_cart_outlined,
-                size: AppSize.s18,
-                color: AppColors.textWhite,
-              ),
+            child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+              builder: (context, pdState) {
+                final product = pdState.productBaseState.data;
+                final productId = product?.id;
+
+                return BlocBuilder<CartCubit, CartState>(
+                  buildWhen: (previous, current) =>
+                      previous.loadingProducts != current.loadingProducts ||
+                      previous.addedProducts != current.addedProducts,
+                  builder: (context, cartState) {
+                    final isLoading =
+                        productId != null &&
+                        cartState.loadingProducts.contains(productId);
+                    final isAdded =
+                        productId != null &&
+                        cartState.addedProducts.contains(productId);
+
+                    if (isLoading) {
+                      return const SizedBox(
+                        height: 48,
+                        child: Center(child: ButtonLoadingWidget()),
+                      );
+                    }
+
+                    return ButtonWithPrefix(
+                      text: isAdded
+                          ? CartConstants.alreadyAdded
+                          : AppStrings.addToCart,
+                      onTap: productId != null && !isAdded
+                          ? () {
+                              context.read<CartCubit>().onEvent(
+                                AddToCartEvent(
+                                  productId: productId,
+                                  quantity: 1,
+                                ),
+                              );
+                            }
+                          : null,
+                      prefixIcon: const Icon(
+                        Icons.shopping_cart_outlined,
+                        size: AppSize.s18,
+                        color: AppColors.textWhite,
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ),

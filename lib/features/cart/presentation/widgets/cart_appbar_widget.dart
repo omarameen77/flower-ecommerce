@@ -1,0 +1,55 @@
+import 'package:flower/core/layout/app_size.dart';
+import 'package:flower/core/localization_constants/cart_constants.dart';
+import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/core/theme/app_text_style.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CartAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: AppColors.background,
+      surfaceTintColor: AppColors.background,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      title: BlocBuilder<CartCubit, CartState>(
+        builder: (context, state) {
+          final count = state.cart?.numOfCartItems ?? 0;
+          return Row(
+            children: [
+              Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+              Text.rich(
+                TextSpan(
+                  text: CartConstants.cart,
+                  style: getMediumStyle(
+                    context: context,
+                    color: AppColors.textPrimary,
+                    fontSize: AppSize.s18,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: ' ($count ${CartConstants.items})',
+                      style: getMediumStyle(
+                        context: context,
+                        color: AppColors.grey800,
+                        fontSize: AppSize.s16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}

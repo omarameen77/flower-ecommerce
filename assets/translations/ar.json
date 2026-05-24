@@ -110,7 +110,21 @@
   "close": "إغلاق",
   "loading": "جار التحميل...",
   "press_back_again_to_exit": "اضغط مرة أخرى للخروج"
-},"edit_profile": {
+},
+"cart": {
+  "cart": "السله",
+  "empty_cart": "سلة التسوق فارغة",
+  "total": "الإجمالي",
+  "subtotal": "المجموع الفرعي",
+  "checkout": "إتمام الشراء",
+  "delivery": "التوصيل",
+  "item_removed": "تمت إزالة المنتج من السلة",
+  "items": "منتجات",
+  "egp": "ج.م ",
+  "go_shopping": "تسوق الآن",
+  "already_added": "تمت إضافته بالفعل"
+},
+"edit_profile": {
   "title": "تعديل الملف الشخصي",
   "first_name": "الاسم الأول",
   "last_name": "اسم العائلة",

@@ -19,16 +19,12 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
     : super(const VerifyResetCodeState());
 
   void doIntent(VerifyResetCodeIntent intent) {
-    switch (intent.runtimeType) {
-      case VerifyIntent:
-        _verify((intent as VerifyIntent).code);
-        break;
-      case ResendIntent:
-        _resend((intent as ResendIntent).email);
-        break;
-      case ClearResendStatusIntent:
-        _clearResendStatus();
-        break;
+    if (intent is VerifyIntent) {
+      _verify(intent.code);
+    } else if (intent is ResendIntent) {
+      _resend(intent.email);
+    } else if (intent is ClearResendStatusIntent) {
+      _clearResendStatus();
     }
   }
 
@@ -37,22 +33,19 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
       state.copyWith(base: const BaseState(isLoading: true), hasError: false),
     );
     final response = await _verifyUseCase(resetCode: code);
-    switch (response) {
-      case SuccessBaseResponse<VerifyResetCodeEntity>():
-        if (response.data.isValid) {
-          emit(state.copyWith(base: BaseState(data: response.data)));
-        } else {
-          emit(state.copyWith(base: const BaseState(), hasError: true));
-        }
-        break;
-      case ErrorBaseResponse<VerifyResetCodeEntity>():
-        emit(
-          state.copyWith(
-            base: BaseState(errorMessage: response.failure.message),
-            hasError: true,
-          ),
-        );
-        break;
+    if (response is SuccessBaseResponse<VerifyResetCodeEntity>) {
+      if (response.data.isValid) {
+        emit(state.copyWith(base: BaseState(data: response.data)));
+      } else {
+        emit(state.copyWith(base: const BaseState(), hasError: true));
+      }
+    } else if (response is ErrorBaseResponse<VerifyResetCodeEntity>) {
+      emit(
+        state.copyWith(
+          base: BaseState(errorMessage: response.failure.message),
+          hasError: true,
+        ),
+      );
     }
   }
 
@@ -66,18 +59,16 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
       ),
     );
     final response = await _forgetPasswordUseCase(email: email);
-    switch (response) {
-      case SuccessBaseResponse():
-        emit(state.copyWith(isResending: false, resendSucceeded: true));
-        break;
-      case ErrorBaseResponse():
-        emit(
-          state.copyWith(
-            isResending: false,
-            resendErrorMessage: response.failure.message,
-          ),
-        );
-        break;
+    if (response is SuccessBaseResponse) {
+      emit(state.copyWith(isResending: false, resendSucceeded: true));
+    } else if (response is ErrorBaseResponse) {
+      final errorResponse = response as ErrorBaseResponse;
+      emit(
+        state.copyWith(
+          isResending: false,
+          resendErrorMessage: errorResponse.failure.message,
+        ),
+      );
     }
   }
 
