@@ -34,31 +34,39 @@ void main() {
   );
 
   group('getProfile', () {
-    test('should return SuccessBaseResponse<UserEntity> when remote data source is successful', () async {
-      when(mockProfileRemoteDataSource.getProfile())
-          .thenAnswer((_) async => SuccessBaseResponse<UserDto>(data: tUserDto));
+    test(
+      'should return SuccessBaseResponse<UserEntity> when remote data source is successful',
+      () async {
+        when(
+          mockProfileRemoteDataSource.getProfile(),
+        ).thenAnswer((_) async => SuccessBaseResponse<UserDto>(data: tUserDto));
 
-      final result = await profileRepositoryImpl.getProfile();
+        final result = await profileRepositoryImpl.getProfile();
 
-      expect(result, isA<SuccessBaseResponse<UserEntity>>());
-      final successResult = result as SuccessBaseResponse<UserEntity>;
-      expect(successResult.data.email, tUserDto.email);
-      verify(mockProfileRemoteDataSource.getProfile()).called(1);
-      verifyNoMoreInteractions(mockProfileRemoteDataSource);
-    });
+        expect(result, isA<SuccessBaseResponse<UserEntity>>());
+        final successResult = result as SuccessBaseResponse<UserEntity>;
+        expect(successResult.data.email, tUserDto.email);
+        verify(mockProfileRemoteDataSource.getProfile()).called(1);
+        verifyNoMoreInteractions(mockProfileRemoteDataSource);
+      },
+    );
 
-    test('should return ErrorBaseResponse<UserEntity> when remote data source fails', () async {
-      final tFailure = Failure(message: 'Remote Error');
-      when(mockProfileRemoteDataSource.getProfile())
-          .thenAnswer((_) async => ErrorBaseResponse<UserDto>(failure: tFailure));
+    test(
+      'should return ErrorBaseResponse<UserEntity> when remote data source fails',
+      () async {
+        final tFailure = Failure(message: 'Remote Error');
+        when(mockProfileRemoteDataSource.getProfile()).thenAnswer(
+          (_) async => ErrorBaseResponse<UserDto>(failure: tFailure),
+        );
 
-      final result = await profileRepositoryImpl.getProfile();
+        final result = await profileRepositoryImpl.getProfile();
 
-      expect(result, isA<ErrorBaseResponse<UserEntity>>());
-      final errorResult = result as ErrorBaseResponse<UserEntity>;
-      expect(errorResult.failure, tFailure);
-      verify(mockProfileRemoteDataSource.getProfile()).called(1);
-      verifyNoMoreInteractions(mockProfileRemoteDataSource);
-    });
+        expect(result, isA<ErrorBaseResponse<UserEntity>>());
+        final errorResult = result as ErrorBaseResponse<UserEntity>;
+        expect(errorResult.failure, tFailure);
+        verify(mockProfileRemoteDataSource.getProfile()).called(1);
+        verifyNoMoreInteractions(mockProfileRemoteDataSource);
+      },
+    );
   });
 }

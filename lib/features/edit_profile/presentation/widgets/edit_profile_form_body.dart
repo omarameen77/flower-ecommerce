@@ -79,10 +79,7 @@ class EditProfileFormBody extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      Routes.changePassword,
-                    );
+                    Navigator.pushNamed(context, Routes.changePassword);
                   },
                   child: Text(
                     EditProfileConstants.changePassword,

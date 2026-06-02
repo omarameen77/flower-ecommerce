@@ -22,7 +22,9 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(data: UserEntity(email: "test@example.com")),
+      SuccessBaseResponse<UserEntity>(
+        data: UserEntity(email: "test@example.com"),
+      ),
     );
   });
 
@@ -70,7 +72,9 @@ void main() {
       });
 
       test('updates email and hasChanges is true', () {
-        editProfileCubit.doEvent(const EditProfileEmailChanged("jane@example.com"));
+        editProfileCubit.doEvent(
+          const EditProfileEmailChanged("jane@example.com"),
+        );
         expect(editProfileCubit.state.email, "jane@example.com");
         expect(editProfileCubit.hasChanges, true);
       });
@@ -87,8 +91,9 @@ void main() {
         final tFile = File('test.png');
         final tUser = UserEntity(id: "1", photo: "new_photo_url");
 
-        when(mockUploadPhotoUseCase.call(tFile))
-            .thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
+        when(
+          mockUploadPhotoUseCase.call(tFile),
+        ).thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
 
         editProfileCubit.doEvent(EditProfilePhotoChanged(tFile));
 
@@ -107,8 +112,9 @@ void main() {
         final tFile = File('test.png');
         final tFailure = Failure(message: 'Upload error');
 
-        when(mockUploadPhotoUseCase.call(tFile))
-            .thenAnswer((_) async => ErrorBaseResponse<UserEntity>(failure: tFailure));
+        when(mockUploadPhotoUseCase.call(tFile)).thenAnswer(
+          (_) async => ErrorBaseResponse<UserEntity>(failure: tFailure),
+        );
 
         editProfileCubit.doEvent(EditProfilePhotoChanged(tFile));
 
@@ -117,19 +123,24 @@ void main() {
         await Future.delayed(Duration.zero);
 
         expect(editProfileCubit.state.uploadPhotoState.isLoading, false);
-        expect(editProfileCubit.state.uploadPhotoState.errorMessage, 'Upload error');
+        expect(
+          editProfileCubit.state.uploadPhotoState.errorMessage,
+          'Upload error',
+        );
       });
     });
 
     group('EditProfileSubmitted', () {
       test('does not call use case if hasChanges is false', () async {
         editProfileCubit.doEvent(const EditProfileSubmitted());
-        verifyNever(mockEditProfileUseCase.call(
-          firstName: anyNamed('firstName'),
-          lastName: anyNamed('lastName'),
-          email: anyNamed('email'),
-          phone: anyNamed('phone'),
-        ));
+        verifyNever(
+          mockEditProfileUseCase.call(
+            firstName: anyNamed('firstName'),
+            lastName: anyNamed('lastName'),
+            email: anyNamed('email'),
+            phone: anyNamed('phone'),
+          ),
+        );
       });
 
       test('emits loading then success when submit is successful', () async {
@@ -137,12 +148,14 @@ void main() {
         editProfileCubit.doEvent(const EditProfileFirstNameChanged("Jane"));
 
         final tUser = UserEntity(id: "1", firstName: "Jane", lastName: "Doe");
-        when(mockEditProfileUseCase.call(
-          firstName: "Jane",
-          lastName: "Doe",
-          email: "john.doe@example.com",
-          phone: "1234567890",
-        )).thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
+        when(
+          mockEditProfileUseCase.call(
+            firstName: "Jane",
+            lastName: "Doe",
+            email: "john.doe@example.com",
+            phone: "1234567890",
+          ),
+        ).thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
 
         editProfileCubit.doEvent(const EditProfileSubmitted());
 
@@ -152,24 +165,30 @@ void main() {
 
         expect(editProfileCubit.state.submitState.isLoading, false);
         expect(editProfileCubit.state.submitState.data, tUser);
-        verify(mockEditProfileUseCase.call(
-          firstName: "Jane",
-          lastName: "Doe",
-          email: "john.doe@example.com",
-          phone: "1234567890",
-        )).called(1);
+        verify(
+          mockEditProfileUseCase.call(
+            firstName: "Jane",
+            lastName: "Doe",
+            email: "john.doe@example.com",
+            phone: "1234567890",
+          ),
+        ).called(1);
       });
 
       test('emits loading then error when submit fails', () async {
         editProfileCubit.doEvent(const EditProfileFirstNameChanged("Jane"));
 
         final tFailure = Failure(message: 'Update error');
-        when(mockEditProfileUseCase.call(
-          firstName: "Jane",
-          lastName: "Doe",
-          email: "john.doe@example.com",
-          phone: "1234567890",
-        )).thenAnswer((_) async => ErrorBaseResponse<UserEntity>(failure: tFailure));
+        when(
+          mockEditProfileUseCase.call(
+            firstName: "Jane",
+            lastName: "Doe",
+            email: "john.doe@example.com",
+            phone: "1234567890",
+          ),
+        ).thenAnswer(
+          (_) async => ErrorBaseResponse<UserEntity>(failure: tFailure),
+        );
 
         editProfileCubit.doEvent(const EditProfileSubmitted());
 
