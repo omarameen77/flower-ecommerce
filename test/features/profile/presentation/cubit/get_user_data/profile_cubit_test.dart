@@ -20,7 +20,9 @@ void main() {
   setUpAll(() {
     FlutterSecureStorage.setMockInitialValues({});
     provideDummy<BaseResponse<UserEntity>>(
-      SuccessBaseResponse<UserEntity>(data: UserEntity(email: "test@example.com")),
+      SuccessBaseResponse<UserEntity>(
+        data: UserEntity(email: "test@example.com"),
+      ),
     );
   });
 
@@ -66,9 +68,10 @@ void main() {
     group('ProfileOpened', () {
       test('emits language code and loads profile', () async {
         final tUser = UserEntity(email: "test@example.com", id: "1");
-        
-        when(mockGetProfileUseCase.call())
-            .thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
+
+        when(
+          mockGetProfileUseCase.call(),
+        ).thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
 
         profileCubit.doEvent(ProfileOpened(languageCode: 'ar'));
 
@@ -84,45 +87,52 @@ void main() {
     });
 
     group('LoadProfile', () {
-      test('emits loading then success when use case returns SuccessBaseResponse', () async {
-        final tUser = UserEntity(email: "test@example.com", id: "1");
-        
-        when(mockGetProfileUseCase.call())
-            .thenAnswer((_) async => SuccessBaseResponse<UserEntity>(data: tUser));
+      test(
+        'emits loading then success when use case returns SuccessBaseResponse',
+        () async {
+          final tUser = UserEntity(email: "test@example.com", id: "1");
 
-        profileCubit.doEvent(const LoadProfile());
+          when(mockGetProfileUseCase.call()).thenAnswer(
+            (_) async => SuccessBaseResponse<UserEntity>(data: tUser),
+          );
 
-        expect(profileCubit.state.profileState.isLoading, true);
+          profileCubit.doEvent(const LoadProfile());
 
-        await Future.delayed(Duration.zero);
+          expect(profileCubit.state.profileState.isLoading, true);
 
-        expect(profileCubit.state.profileState.isLoading, false);
-        expect(profileCubit.state.profileState.data, tUser);
-        verify(mockGetProfileUseCase.call()).called(1);
-      });
+          await Future.delayed(Duration.zero);
 
-      test('emits loading then error when use case returns ErrorBaseResponse', () async {
-        final tFailure = Failure(message: 'Profile Error');
-        
-        when(mockGetProfileUseCase.call())
-            .thenAnswer((_) async => ErrorBaseResponse<UserEntity>(failure: tFailure));
+          expect(profileCubit.state.profileState.isLoading, false);
+          expect(profileCubit.state.profileState.data, tUser);
+          verify(mockGetProfileUseCase.call()).called(1);
+        },
+      );
 
-        profileCubit.doEvent(const LoadProfile());
+      test(
+        'emits loading then error when use case returns ErrorBaseResponse',
+        () async {
+          final tFailure = Failure(message: 'Profile Error');
 
-        expect(profileCubit.state.profileState.isLoading, true);
+          when(mockGetProfileUseCase.call()).thenAnswer(
+            (_) async => ErrorBaseResponse<UserEntity>(failure: tFailure),
+          );
 
-        await Future.delayed(Duration.zero);
+          profileCubit.doEvent(const LoadProfile());
 
-        expect(profileCubit.state.profileState.isLoading, false);
-        expect(profileCubit.state.profileState.errorMessage, 'Profile Error');
-      });
+          expect(profileCubit.state.profileState.isLoading, true);
+
+          await Future.delayed(Duration.zero);
+
+          expect(profileCubit.state.profileState.isLoading, false);
+          expect(profileCubit.state.profileState.errorMessage, 'Profile Error');
+        },
+      );
 
       test('emits loading then error when use case throws exception', () async {
-        when(mockGetProfileUseCase.call())
-            .thenAnswer((_) async {
-              await Future.delayed(const Duration(milliseconds: 10));
-              throw Exception('Unexpected error');
-            });
+        when(mockGetProfileUseCase.call()).thenAnswer((_) async {
+          await Future.delayed(const Duration(milliseconds: 10));
+          throw Exception('Unexpected error');
+        });
 
         profileCubit.doEvent(const LoadProfile());
 

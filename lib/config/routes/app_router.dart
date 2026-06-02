@@ -99,7 +99,6 @@ abstract class AppRouter {
             ),
           );
 
-          
         case Routes.editProfile:
           final user = settings.arguments as UserEntity?;
           if (user == null) {
@@ -122,7 +121,6 @@ abstract class AppRouter {
           return PageTransitions.slide(const AboutUsPage());
         case Routes.termsConditions:
           return PageTransitions.slide(const TermsConditionsPage());
-
 
         default:
           return PageTransitions.fade(
