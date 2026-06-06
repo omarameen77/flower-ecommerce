@@ -28,6 +28,7 @@ import '../../core/profile/data/repositories/profile_repository_impl.dart'
 import '../../core/profile/domain/repositories/profile_repository.dart'
     as _i679;
 import '../../core/profile/domain/usecases/get_profile_use_case.dart' as _i693;
+import '../../core/service/crashlytics_service.dart' as _i776;
 import '../../features/app_sections/presentation/cubit/app_sections_cubit.dart'
     as _i936;
 import '../../features/auth/api/api_client/auth_api_client.dart' as _i824;
@@ -139,6 +140,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => networkModule.dio);
     gh.lazySingleton<_i298.LocalNotificationService>(
       () => _i298.LocalNotificationService(),
+    );
+    gh.lazySingleton<_i776.CrashlyticsService>(
+      () => _i776.CrashlyticsService(),
     );
     gh.singleton<_i824.AuthApiClient>(
       () => networkModule.authApi(gh<_i361.Dio>()),
