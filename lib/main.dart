@@ -6,6 +6,7 @@ import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/network/dio_helper.dart';
 import 'package:flower/core/notifications/notification_initializer.dart';
 import 'package:flower/core/resources/app_value.dart';
+import 'package:flower/core/service/crashlytics_service.dart';
 import 'package:flower/firebase_options.dart';
 import 'package:flutter/material.dart';
 
@@ -17,10 +18,11 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  await EasyLocalization.ensureInitialized();
   DioHelper.init();
   configureDependencies();
+  await getIt<CrashlyticsService>().init();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await EasyLocalization.ensureInitialized();
   await getIt<NotificationInitializer>().initialize();
   runApp(
     EasyLocalization(
