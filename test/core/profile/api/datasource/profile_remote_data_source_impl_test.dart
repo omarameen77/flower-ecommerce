@@ -18,7 +18,9 @@ void main() {
 
   setUp(() {
     mockProfileApiClient = MockProfileApiClient();
-    profileRemoteDataSourceImpl = ProfileRemoteDataSourceImpl(mockProfileApiClient);
+    profileRemoteDataSourceImpl = ProfileRemoteDataSourceImpl(
+      mockProfileApiClient,
+    );
   });
 
   final tUserDto = UserDto(
@@ -29,47 +31,60 @@ void main() {
   );
 
   group('getProfile', () {
-    test('should return SuccessBaseResponse when api client returns user', () async {
-      final tResponse = ProfileResponseDto(message: "success", user: tUserDto);
-      
-      when(mockProfileApiClient.getProfile())
-          .thenAnswer((_) async => tResponse);
+    test(
+      'should return SuccessBaseResponse when api client returns user',
+      () async {
+        final tResponse = ProfileResponseDto(
+          message: "success",
+          user: tUserDto,
+        );
 
-      final result = await profileRemoteDataSourceImpl.getProfile();
+        when(
+          mockProfileApiClient.getProfile(),
+        ).thenAnswer((_) async => tResponse);
 
-      expect(result, isA<SuccessBaseResponse<UserDto>>());
-      final successResult = result as SuccessBaseResponse<UserDto>;
-      expect(successResult.data, tUserDto);
-      verify(mockProfileApiClient.getProfile()).called(1);
-      verifyNoMoreInteractions(mockProfileApiClient);
-    });
+        final result = await profileRemoteDataSourceImpl.getProfile();
 
-    test('should return ErrorBaseResponse when api client returns response without user', () async {
-      final tResponse = ProfileResponseDto(message: "success", user: null);
-      
-      when(mockProfileApiClient.getProfile())
-          .thenAnswer((_) async => tResponse);
+        expect(result, isA<SuccessBaseResponse<UserDto>>());
+        final successResult = result as SuccessBaseResponse<UserDto>;
+        expect(successResult.data, tUserDto);
+        verify(mockProfileApiClient.getProfile()).called(1);
+        verifyNoMoreInteractions(mockProfileApiClient);
+      },
+    );
 
-      final result = await profileRemoteDataSourceImpl.getProfile();
+    test(
+      'should return ErrorBaseResponse when api client returns response without user',
+      () async {
+        final tResponse = ProfileResponseDto(message: "success", user: null);
 
-      expect(result, isA<ErrorBaseResponse<UserDto>>());
-      final errorResult = result as ErrorBaseResponse<UserDto>;
-      expect(errorResult.failure.message, "error_massages.unknownError");
-      verify(mockProfileApiClient.getProfile()).called(1);
-      verifyNoMoreInteractions(mockProfileApiClient);
-    });
+        when(
+          mockProfileApiClient.getProfile(),
+        ).thenAnswer((_) async => tResponse);
 
-    test('should return ErrorBaseResponse when api client throws an exception', () async {
-      final tException = Exception('Network error');
-      
-      when(mockProfileApiClient.getProfile())
-          .thenThrow(tException);
+        final result = await profileRemoteDataSourceImpl.getProfile();
 
-      final result = await profileRemoteDataSourceImpl.getProfile();
+        expect(result, isA<ErrorBaseResponse<UserDto>>());
+        final errorResult = result as ErrorBaseResponse<UserDto>;
+        expect(errorResult.failure.message, "error_massages.unknownError");
+        verify(mockProfileApiClient.getProfile()).called(1);
+        verifyNoMoreInteractions(mockProfileApiClient);
+      },
+    );
 
-      expect(result, isA<ErrorBaseResponse<UserDto>>());
-      verify(mockProfileApiClient.getProfile()).called(1);
-      verifyNoMoreInteractions(mockProfileApiClient);
-    });
+    test(
+      'should return ErrorBaseResponse when api client throws an exception',
+      () async {
+        final tException = Exception('Network error');
+
+        when(mockProfileApiClient.getProfile()).thenThrow(tException);
+
+        final result = await profileRemoteDataSourceImpl.getProfile();
+
+        expect(result, isA<ErrorBaseResponse<UserDto>>());
+        verify(mockProfileApiClient.getProfile()).called(1);
+        verifyNoMoreInteractions(mockProfileApiClient);
+      },
+    );
   });
 }
