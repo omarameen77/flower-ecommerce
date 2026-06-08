@@ -27,9 +27,7 @@ void main() {
     group('getAddresses', () {
       test('returns SuccessBaseResponse when api call succeeds', () async {
         final response = AddressesResponseDto(addresses: const []);
-        when(
-          mockApiClient.getAddresses(),
-        ).thenAnswer((_) async => response);
+        when(mockApiClient.getAddresses()).thenAnswer((_) async => response);
 
         final result = await dataSource.getAddresses();
 
@@ -56,9 +54,7 @@ void main() {
       test('returns SuccessBaseResponse when api call succeeds', () async {
         final request = AddAddressRequestDto(street: 'Home', city: 'Giza');
         final response = AddressesResponseDto(address: const []);
-        when(
-          mockApiClient.addAddress(any),
-        ).thenAnswer((_) async => response);
+        when(mockApiClient.addAddress(any)).thenAnswer((_) async => response);
 
         final result = await dataSource.addAddress(request);
 

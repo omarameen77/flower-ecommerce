@@ -35,8 +35,7 @@ class _DeliverToWidgetState extends State<DeliverToWidget> {
           prev.addressesState != curr.addressesState ||
           prev.selectedAddressId != curr.selectedAddressId,
       builder: (context, state) {
-        final addresses =
-            state.addressesState.data ?? const <AddressEntity>[];
+        final addresses = state.addressesState.data ?? const <AddressEntity>[];
         if (addresses.isEmpty) {
           return _CreateAddressButton(
             onTap: () => Navigator.pushNamed(context, Routes.addAddress),

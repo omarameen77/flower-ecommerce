@@ -61,10 +61,7 @@ class _AddAddressViewState extends State<_AddAddressView> {
       return;
     }
     context.read<AddAddressCubit>().doIntent(
-      LocationPickedIntent(
-        lat: loc.lat.toString(),
-        long: loc.long.toString(),
-      ),
+      LocationPickedIntent(lat: loc.lat.toString(), long: loc.long.toString()),
     );
   }
 
@@ -85,9 +82,7 @@ class _AddAddressViewState extends State<_AddAddressView> {
     final s = state.addAddressState;
     if (s.data != null) {
       CustomSnackBar.success(context, context.addressSaved);
-      context.read<SavedAddressesCubit>().doIntent(
-        const LoadAddressesIntent(),
-      );
+      context.read<SavedAddressesCubit>().doIntent(const LoadAddressesIntent());
       Navigator.pop(context, true);
     } else if (s.errorMessage != null) {
       CustomSnackBar.error(context, s.errorMessage!.tr());

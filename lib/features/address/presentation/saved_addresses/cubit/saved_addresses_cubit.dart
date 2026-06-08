@@ -36,9 +36,7 @@ class SavedAddressesCubit extends Cubit<SavedAddressesState> {
     final response = await _getAddressesUseCase();
     switch (response) {
       case SuccessBaseResponse<List<AddressEntity>>():
-        emit(
-          state.copyWith(addressesState: BaseState(data: response.data)),
-        );
+        emit(state.copyWith(addressesState: BaseState(data: response.data)));
       case ErrorBaseResponse<List<AddressEntity>>():
         emit(
           state.copyWith(

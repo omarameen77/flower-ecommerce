@@ -21,10 +21,8 @@ Future<void> showAddressPickerSheet(BuildContext context) {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (_) => BlocProvider.value(
-      value: cubit,
-      child: const _AddressPickerSheet(),
-    ),
+    builder: (_) =>
+        BlocProvider.value(value: cubit, child: const _AddressPickerSheet()),
   );
 }
 
@@ -129,10 +127,7 @@ class _AddressPickerSheet extends StatelessWidget {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, Routes.addAddress);
                     },
-                    icon: const Icon(
-                      Icons.add,
-                      color: AppColors.primary,
-                    ),
+                    icon: const Icon(Icons.add, color: AppColors.primary),
                     label: Text(
                       context.addNewAddress,
                       style: getMediumStyle(

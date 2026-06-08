@@ -18,9 +18,7 @@ void main() {
 
   setUpAll(() {
     provideDummy<BaseResponse<AddressesResponseDto>>(
-      SuccessBaseResponse<AddressesResponseDto>(
-        data: AddressesResponseDto(),
-      ),
+      SuccessBaseResponse<AddressesResponseDto>(data: AddressesResponseDto()),
     );
   });
 
@@ -80,9 +78,7 @@ void main() {
     group('addAddress', () {
       test('should map DTO list to entity list on success', () async {
         final responseDto = AddressesResponseDto(
-          address: [
-            AddressDto(id: '2', street: 'Home', city: 'Giza'),
-          ],
+          address: [AddressDto(id: '2', street: 'Home', city: 'Giza')],
         );
         when(
           mockDataSource.addAddress(any),
@@ -106,9 +102,9 @@ void main() {
 
       test('should preserve failure on error', () async {
         final failure = Failure(message: 'boom');
-        when(mockDataSource.addAddress(any)).thenAnswer(
-          (_) async => ErrorBaseResponse(failure: failure),
-        );
+        when(
+          mockDataSource.addAddress(any),
+        ).thenAnswer((_) async => ErrorBaseResponse(failure: failure));
 
         final result = await repo.addAddress(
           street: 'Home',
@@ -151,10 +147,7 @@ void main() {
 
         expect(result, isA<SuccessBaseResponse<List<AddressEntity>>>());
         verify(
-          mockDataSource.updateAddress(
-            id: '1',
-            request: anyNamed('request'),
-          ),
+          mockDataSource.updateAddress(id: '1', request: anyNamed('request')),
         ).called(1);
       });
 
@@ -200,9 +193,9 @@ void main() {
 
       test('should preserve failure on error', () async {
         final failure = Failure(message: 'boom');
-        when(mockDataSource.removeAddress('1')).thenAnswer(
-          (_) async => ErrorBaseResponse(failure: failure),
-        );
+        when(
+          mockDataSource.removeAddress('1'),
+        ).thenAnswer((_) async => ErrorBaseResponse(failure: failure));
 
         final result = await repo.removeAddress('1');
 

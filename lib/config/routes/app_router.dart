@@ -97,9 +97,7 @@ abstract class AppRouter {
 
         case Routes.addAddress:
           final edit = settings.arguments as AddressEntity?;
-          return PageTransitions.slide(
-            AddAddressScreen(editAddress: edit),
-          );
+          return PageTransitions.slide(AddAddressScreen(editAddress: edit));
 
         case Routes.savedAddresses:
           return PageTransitions.slide(const SavedAddressesScreen());

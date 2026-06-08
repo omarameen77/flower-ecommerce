@@ -77,9 +77,7 @@ class AddAddressCubit extends Cubit<AddAddressState> {
           );
     switch (response) {
       case SuccessBaseResponse<List<AddressEntity>>():
-        emit(
-          state.copyWith(addAddressState: BaseState(data: response.data)),
-        );
+        emit(state.copyWith(addAddressState: BaseState(data: response.data)));
       case ErrorBaseResponse<List<AddressEntity>>():
         emit(
           state.copyWith(

@@ -194,8 +194,7 @@ void main() {
 
       test('returns the last entry when nothing is selected', () async {
         when(mockGetUseCase()).thenAnswer(
-          (_) async =>
-              SuccessBaseResponse(data: const [...addresses, second]),
+          (_) async => SuccessBaseResponse(data: const [...addresses, second]),
         );
         cubit.doIntent(const LoadAddressesIntent());
         await Future<void>.delayed(Duration.zero);
@@ -205,8 +204,7 @@ void main() {
 
       test('returns the matched entry when selectedAddressId is set', () async {
         when(mockGetUseCase()).thenAnswer(
-          (_) async =>
-              SuccessBaseResponse(data: const [...addresses, second]),
+          (_) async => SuccessBaseResponse(data: const [...addresses, second]),
         );
         cubit.doIntent(const LoadAddressesIntent());
         await Future<void>.delayed(Duration.zero);
