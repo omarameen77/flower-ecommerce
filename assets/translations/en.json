@@ -111,7 +111,31 @@
   "close": "Close",
   "loading": "Loading...",
   "press_back_again_to_exit": "Press back again to exit"
-},"cart": {
+},
+"address": {
+  "title": "Address",
+  "address_label": "Address",
+  "enter_address": "Enter the address",
+  "phone_number": "Phone number",
+  "enter_phone_number": "Enter the phone number",
+  "recipient_name": "Recipient name",
+  "enter_recipient_name": "Enter the recipient name",
+  "city": "City",
+  "area": "Area",
+  "select_city": "Select city",
+  "select_area": "Select area",
+  "save_address": "Save address",
+  "address_saved": "Address saved successfully",
+  "location_permission_denied": "Location permission denied. Please enable location to add address.",
+  "saved_address_title": "Saved address",
+  "add_new_address": "Add new address",
+  "no_saved_addresses": "You have no saved addresses yet",
+  "delete_address_title": "Delete address",
+  "delete_address_message": "Are you sure you want to delete this address?",
+  "cancel": "Cancel",
+  "delete": "Delete"
+},
+"cart": {
   "cart": "Cart",
   "empty_cart": "Your cart is empty",
   "total": "Total",

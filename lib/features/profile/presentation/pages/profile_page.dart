@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_cubit.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flower/features/profile/presentation/cubit/get_user_data/profile_cubit.dart';
 import 'package:flower/features/profile/presentation/cubit/get_user_data/profile_event.dart';
 import 'package:flower/features/profile/presentation/widgets/profile_app_bar.dart';
@@ -68,6 +70,8 @@ class _ProfilePageView extends StatelessWidget {
             previous.logoutState != current.logoutState,
         listener: (context, state) {
           if (state.logoutState.data == true) {
+            context.read<CartCubit>().reset();
+            context.read<SavedAddressesCubit>().reset();
             Navigator.of(
               context,
             ).pushNamedAndRemoveUntil(Routes.login, (route) => false);

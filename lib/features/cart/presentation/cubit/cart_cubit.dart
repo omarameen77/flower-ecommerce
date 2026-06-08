@@ -27,6 +27,8 @@ class CartCubit extends Cubit<CartState> {
     this.updateCartItemQuantityUseCase,
   ) : super(const CartState());
 
+  void reset() => emit(const CartState());
+
   Future<void> onEvent(CartEvent event) async {
     switch (event) {
       case GetCartEvent():

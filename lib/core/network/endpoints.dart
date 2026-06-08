@@ -24,3 +24,8 @@ class CartEndPoints {
   static const String updateCartItem = '/cart/{id}';
   static const String removeCartItem = '/cart/{id}';
 }
+
+class AddressEndPoints {
+  static const String addresses = '/addresses';
+  static const String addressById = '/addresses/{id}';
+}

@@ -5,6 +5,9 @@ import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/network/model/user_entity.dart';
 import 'package:flower/core/widgets/not_found_screen.dart';
 import 'package:flower/features/app_sections/presentation/pages/app_sections_page.dart';
+import 'package:flower/features/address/domain/entities/address_entity.dart';
+import 'package:flower/features/address/presentation/add_address/pages/add_address_screen.dart';
+import 'package:flower/features/address/presentation/saved_addresses/pages/saved_addresses_screen.dart';
 import 'package:flower/features/auth/presentation/change_password/cubit/change_password_cubit.dart';
 import 'package:flower/features/auth/presentation/change_password/pages/change_password_screen.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
@@ -91,6 +94,15 @@ abstract class AppRouter {
               child: const ChangePasswordScreen(),
             ),
           );
+
+        case Routes.addAddress:
+          final edit = settings.arguments as AddressEntity?;
+          return PageTransitions.slide(
+            AddAddressScreen(editAddress: edit),
+          );
+
+        case Routes.savedAddresses:
+          return PageTransitions.slide(const SavedAddressesScreen());
         case Routes.searchScreen:
           return PageTransitions.search(
             BlocProvider(
