@@ -13,12 +13,11 @@ part 'product_state.dart';
 @injectable
 class ProductCubit extends Cubit<ProductState> {
   final GetProductsUseCase getProductUseCase;
-  String? _sort;
   List<ProductEntity> _cachedCategoryProducts = [];
 
   ProductCubit({required this.getProductUseCase}) : super(const ProductState());
 
-  void setSort(String? sort) => _sort = sort;
+  void setSort(String? sort) => emit(state.copyWith(currentSort: sort));
 
   void doEvent(ProductEvent event) {
     switch (event) {
@@ -68,7 +67,7 @@ class ProductCubit extends Cubit<ProductState> {
 
       final result = await getProductUseCase.call(
         limit: newLimit,
-        sort: _sort,
+        sort: state.currentSort,
         categoryId: categoryId,
         keyword: keyword,
       );
