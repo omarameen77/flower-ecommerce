@@ -26,6 +26,8 @@ class SavedAddressesCubit extends Cubit<SavedAddressesState> {
         _loadAddresses();
       case DeleteAddressIntent():
         _deleteAddress(intent.id);
+      case SelectAddressIntent():
+        emit(state.copyWith(selectedAddressId: intent.id));
     }
   }
 

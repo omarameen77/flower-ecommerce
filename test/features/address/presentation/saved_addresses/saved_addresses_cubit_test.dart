@@ -166,6 +166,55 @@ void main() {
       expect(cubit.state.addressesState.data, isNull);
       expect(cubit.state.deletingId, isEmpty);
       expect(cubit.state.deleteErrorMessage, isNull);
+      expect(cubit.state.selectedAddressId, isNull);
+    });
+
+    group('select address', () {
+      test('SelectAddressIntent updates selectedAddressId in state', () {
+        cubit.doIntent(const SelectAddressIntent('1'));
+
+        expect(cubit.state.selectedAddressId, '1');
+      });
+    });
+
+    group('currentAddress getter', () {
+      const second = AddressEntity(
+        id: '2',
+        street: 'Second',
+        phone: '01010700700',
+        city: 'Cairo',
+        lat: '30.0',
+        long: '31.0',
+        username: 'farghali',
+      );
+
+      test('returns null when the list is empty', () {
+        expect(cubit.state.currentAddress, isNull);
+      });
+
+      test('returns the last entry when nothing is selected', () async {
+        when(mockGetUseCase()).thenAnswer(
+          (_) async =>
+              SuccessBaseResponse(data: const [...addresses, second]),
+        );
+        cubit.doIntent(const LoadAddressesIntent());
+        await Future<void>.delayed(Duration.zero);
+
+        expect(cubit.state.currentAddress?.id, '2');
+      });
+
+      test('returns the matched entry when selectedAddressId is set', () async {
+        when(mockGetUseCase()).thenAnswer(
+          (_) async =>
+              SuccessBaseResponse(data: const [...addresses, second]),
+        );
+        cubit.doIntent(const LoadAddressesIntent());
+        await Future<void>.delayed(Duration.zero);
+
+        cubit.doIntent(const SelectAddressIntent('1'));
+
+        expect(cubit.state.currentAddress?.id, '1');
+      });
     });
   });
 }

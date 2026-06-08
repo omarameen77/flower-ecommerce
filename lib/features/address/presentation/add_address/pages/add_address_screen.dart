@@ -8,6 +8,8 @@ import 'package:flower/features/address/domain/entities/address_entity.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_cubit.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_intents.dart';
 import 'package:flower/features/address/presentation/add_address/widgets/add_address_form.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_cubit.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_intents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -83,6 +85,9 @@ class _AddAddressViewState extends State<_AddAddressView> {
     final s = state.addAddressState;
     if (s.data != null) {
       CustomSnackBar.success(context, context.addressSaved);
+      context.read<SavedAddressesCubit>().doIntent(
+        const LoadAddressesIntent(),
+      );
       Navigator.pop(context, true);
     } else if (s.errorMessage != null) {
       CustomSnackBar.error(context, s.errorMessage!.tr());

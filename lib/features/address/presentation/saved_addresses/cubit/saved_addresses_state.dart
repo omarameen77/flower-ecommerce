@@ -5,11 +5,13 @@ class SavedAddressesState extends Equatable {
 
   final String deletingId;
   final String? deleteErrorMessage;
+  final String? selectedAddressId;
 
   const SavedAddressesState({
     this.addressesState = const BaseState(),
     this.deletingId = '',
     this.deleteErrorMessage,
+    this.selectedAddressId,
   });
 
   SavedAddressesState copyWith({
@@ -17,6 +19,7 @@ class SavedAddressesState extends Equatable {
     String? deletingId,
     String? deleteErrorMessage,
     bool clearDeleteError = false,
+    String? selectedAddressId,
   }) {
     return SavedAddressesState(
       addressesState: addressesState ?? this.addressesState,
@@ -24,9 +27,26 @@ class SavedAddressesState extends Equatable {
       deleteErrorMessage: clearDeleteError
           ? null
           : (deleteErrorMessage ?? this.deleteErrorMessage),
+      selectedAddressId: selectedAddressId ?? this.selectedAddressId,
     );
   }
 
+  AddressEntity? get currentAddress {
+    final list = addressesState.data ?? const <AddressEntity>[];
+    if (list.isEmpty) return null;
+    if (selectedAddressId != null) {
+      for (final a in list) {
+        if (a.id == selectedAddressId) return a;
+      }
+    }
+    return list.last;
+  }
+
   @override
-  List<Object?> get props => [addressesState, deletingId, deleteErrorMessage];
+  List<Object?> get props => [
+    addressesState,
+    deletingId,
+    deleteErrorMessage,
+    selectedAddressId,
+  ];
 }
