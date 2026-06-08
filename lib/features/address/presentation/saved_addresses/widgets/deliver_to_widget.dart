@@ -76,7 +76,7 @@ class _DeliverToRow extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Deliver to ',
+                      text: context.deliverTo,
                       style: getRegularStyle(
                         context: context,
                         fontSize: FontSizeManager.s14,

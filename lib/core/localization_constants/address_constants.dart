@@ -25,4 +25,5 @@ extension AddressConstants on BuildContext {
   String get deleteAddressMessage => 'address.delete_address_message'.tr();
   String get cancel => 'address.cancel'.tr();
   String get delete => 'address.delete'.tr();
+  String get deliverTo => 'address.deliver_to'.tr();
 }

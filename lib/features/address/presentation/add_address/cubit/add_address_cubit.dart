@@ -30,7 +30,7 @@ class AddAddressCubit extends Cubit<AddAddressState> {
       case LocationPickedIntent():
         emit(state.copyWith(lat: intent.lat, long: intent.long));
       case SubmitAddAddressIntent():
-        _submit(intent);
+        _submitAddress(intent);
     }
   }
 
@@ -54,7 +54,7 @@ class AddAddressCubit extends Cubit<AddAddressState> {
     );
   }
 
-  Future<void> _submit(SubmitAddAddressIntent intent) async {
+  Future<void> _submitAddress(SubmitAddAddressIntent intent) async {
     emit(state.copyWith(addAddressState: const BaseState(isLoading: true)));
     final city = state.selectedCity?.nameEn ?? '';
     final response = intent.editingId != null

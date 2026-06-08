@@ -29,7 +29,8 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
   void initState() {
     super.initState();
     final cubit = context.read<SavedAddressesCubit>();
-    if (cubit.state.addressesState.data == null) {
+    if (cubit.state.addressesState.data == null &&
+        !cubit.state.addressesState.isLoading) {
       cubit.doIntent(const LoadAddressesIntent());
     }
   }

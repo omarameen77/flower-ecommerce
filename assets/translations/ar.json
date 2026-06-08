@@ -132,7 +132,8 @@
   "delete_address_title": "حذف العنوان",
   "delete_address_message": "هل أنت متأكد أنك تريد حذف هذا العنوان؟",
   "cancel": "إلغاء",
-  "delete": "حذف"
+  "delete": "حذف",
+  "deliver_to": "التوصيل إلى "
 },
 "cart": {
   "cart": "السله",

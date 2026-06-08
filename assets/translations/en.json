@@ -133,7 +133,8 @@
   "delete_address_title": "Delete address",
   "delete_address_message": "Are you sure you want to delete this address?",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "deliver_to": "Deliver to "
 },
 "cart": {
   "cart": "Cart",

@@ -27,5 +27,5 @@ class CartEndPoints {
 
 class AddressEndPoints {
   static const String addresses = '/addresses';
-  static const String addressById = '/addresses/{id}';
+  static const String addressById = '$addresses/{id}';
 }
