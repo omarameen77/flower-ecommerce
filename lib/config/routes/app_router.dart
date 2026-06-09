@@ -19,6 +19,7 @@ import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_ca
 import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
 import 'package:flower/features/edit_profile/presentation/pages/edit_profile_page.dart';
+import 'package:flower/features/notifications/ui/pages/notifications_page.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
 import 'package:flower/features/product_sections/presentation/occasions/pages/occasions_page.dart';
 import 'package:flower/features/product_sections/presentation/product_details/pages/product_details_page.dart';
@@ -121,6 +122,8 @@ abstract class AppRouter {
           return PageTransitions.slide(const AboutUsPage());
         case Routes.termsConditions:
           return PageTransitions.slide(const TermsConditionsPage());
+        case Routes.notifications:
+          return PageTransitions.slide(const NotificationsPage());
 
         default:
           return PageTransitions.fade(
