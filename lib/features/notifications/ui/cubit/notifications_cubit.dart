@@ -1,7 +1,7 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
 import 'package:flower/features/notifications/domain/entity/notifications_response_entity.dart';
-import 'package:flower/features/notifications/domain/entity/un_read_count_entity.dart';
+import 'package:flower/features/notifications/domain/entity/notification_unread_count_entity.dart';
 import 'package:flower/features/notifications/domain/usecases/get_un_read_notification_count_use_case.dart';
 import 'package:flower/features/notifications/domain/usecases/get_user_notifications_use_case.dart';
 import 'package:flower/features/notifications/ui/cubit/notifications_event.dart';
@@ -12,6 +12,7 @@ import 'package:equatable/equatable.dart';
 part 'notifications_state.dart';
 
 @injectable
+@LazySingleton()
 class NotificationsCubit extends Cubit<NotificationsState> {
   final GetUserNotificationsUseCase getUserNotificationsUseCase;
   final GetUnReadNotificationCountUseCase getUnreadCountUseCase;
@@ -51,16 +52,14 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     }
   }
 
-  int _unreadCount = 0;
   Future<void> _getNotificationCount() async {
     final response = await getUnreadCountUseCase.call();
 
     switch (response) {
-      case SuccessBaseResponse<UnReadCountEntity>():
-        _unreadCount = response.data.unreadCount ?? 0;
-        emit(state.copyWith(unreadCount: _unreadCount));
+      case SuccessBaseResponse<NotificationUnReadCountEntity>():
+        emit(state.copyWith(unreadCount: response.data.unreadCount));
 
-      case ErrorBaseResponse<UnReadCountEntity>():
+      case ErrorBaseResponse<NotificationUnReadCountEntity>():
         emit(state.copyWith(unreadCount: 0));
     }
   }

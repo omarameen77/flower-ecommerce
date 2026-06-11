@@ -1,7 +1,8 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
+import 'package:flower/features/notifications/domain/entity/metadata_notification_entity.dart';
+import 'package:flower/features/notifications/domain/entity/notification_unread_count_entity.dart';
 import 'package:flower/features/notifications/domain/entity/notifications_response_entity.dart';
-import 'package:flower/features/notifications/domain/entity/un_read_count_entity.dart';
 import 'package:flower/features/notifications/domain/usecases/get_un_read_notification_count_use_case.dart';
 import 'package:flower/features/notifications/domain/usecases/get_user_notifications_use_case.dart';
 import 'package:flower/features/notifications/ui/cubit/notifications_cubit.dart';
@@ -19,6 +20,29 @@ void main() {
   mockGetUnReadNotificationCountUseCase;
   late NotificationsCubit notificationsCubit;
 
+  setUpAll(() {
+    provideDummy<BaseResponse<NotificationsResponseEntity>>(
+      SuccessBaseResponse<NotificationsResponseEntity>(
+        data: NotificationsResponseEntity(
+          message: '',
+          metadata: const MetadataNotificationEntity(
+            currentPage: 1,
+            totalPages: 1,
+            limit: 0,
+            totalItems: 0,
+            unreadCount: 0,
+          ),
+          notifications: const [],
+        ),
+      ),
+    );
+
+    provideDummy<BaseResponse<NotificationUnReadCountEntity>>(
+      SuccessBaseResponse<NotificationUnReadCountEntity>(
+        data: const NotificationUnReadCountEntity(message: '', unreadCount: 0),
+      ),
+    );
+  });
   setUp(() {
     mockGetUserNotificationsUseCase = MockGetUserNotificationsUseCase();
     mockGetUnReadNotificationCountUseCase =
@@ -27,15 +51,6 @@ void main() {
     notificationsCubit = NotificationsCubit(
       getUserNotificationsUseCase: mockGetUserNotificationsUseCase,
       getUnreadCountUseCase: mockGetUnReadNotificationCountUseCase,
-    );
-
-    provideDummy<BaseResponse<NotificationsResponseEntity>>(
-      SuccessBaseResponse<NotificationsResponseEntity>(
-        data: NotificationsResponseEntity(),
-      ),
-    );
-    provideDummy<BaseResponse<UnReadCountEntity>>(
-      SuccessBaseResponse<UnReadCountEntity>(data: UnReadCountEntity()),
     );
   });
 
@@ -69,7 +84,17 @@ void main() {
   test(
     'onEvent GetNotificationsEvent success updates notificationsState data',
     () async {
-      final response = NotificationsResponseEntity();
+      final response = NotificationsResponseEntity(
+        message: '',
+        metadata: const MetadataNotificationEntity(
+          currentPage: 1,
+          totalPages: 1,
+          limit: 0,
+          totalItems: 0,
+          unreadCount: 0,
+        ),
+        notifications: const [],
+      );
 
       when(mockGetUserNotificationsUseCase.call()).thenAnswer(
         (_) async =>
@@ -94,10 +119,14 @@ void main() {
   );
 
   test('onEvent GetUnreadCountEvent success updates unreadCount', () async {
-    final response = UnReadCountEntity(unreadCount: 7);
+    final response = const NotificationUnReadCountEntity(
+      message: '',
+      unreadCount: 7,
+    );
 
     when(mockGetUnReadNotificationCountUseCase.call()).thenAnswer(
-      (_) async => SuccessBaseResponse<UnReadCountEntity>(data: response),
+      (_) async =>
+          SuccessBaseResponse<NotificationUnReadCountEntity>(data: response),
     );
 
     final future = expectLater(

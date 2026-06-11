@@ -2,8 +2,8 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/network/safe_api_caller.dart';
 import 'package:flower/features/notifications/api/api_client/notifications_api_clint.dart';
 import 'package:flower/features/notifications/api/datasource/notifications_remote_data_source_impl.dart';
+import 'package:flower/features/notifications/data/model/notification_unread_count_response.dart';
 import 'package:flower/features/notifications/data/model/notifications_response_dto.dart';
-import 'package:flower/features/notifications/data/model/un_read_count_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -20,8 +20,10 @@ void main() {
     provideDummy<BaseResponse<NotificationsResponse>>(
       SuccessBaseResponse<NotificationsResponse>(data: NotificationsResponse()),
     );
-    provideDummy<BaseResponse<UnReadCountResponse>>(
-      SuccessBaseResponse<UnReadCountResponse>(data: UnReadCountResponse()),
+    provideDummy<BaseResponse<NotificationUnreadCountResponse>>(
+      SuccessBaseResponse<NotificationUnreadCountResponse>(
+        data: NotificationUnreadCountResponse(),
+      ),
     );
     provideDummy<BaseResponse<dynamic>>(
       SuccessBaseResponse<dynamic>(data: NotificationsResponse()),
@@ -62,16 +64,20 @@ void main() {
       test(
         'should return SuccessBaseResponse<UnReadCountResponse> when api call succeeds',
         () async {
-          final responseDto = UnReadCountResponse();
+          final responseDto = NotificationUnreadCountResponse();
 
           when(mockSafeApiCaller.safeCall(any)).thenAnswer(
-            (_) async =>
-                SuccessBaseResponse<UnReadCountResponse>(data: responseDto),
+            (_) async => SuccessBaseResponse<NotificationUnreadCountResponse>(
+              data: responseDto,
+            ),
           );
 
           final result = await dataSource.getUserNotificationsCount();
 
-          expect(result, isA<SuccessBaseResponse<UnReadCountResponse>>());
+          expect(
+            result,
+            isA<SuccessBaseResponse<NotificationUnreadCountResponse>>(),
+          );
           verify(mockSafeApiCaller.safeCall(any)).called(1);
         },
       );

@@ -4,12 +4,12 @@ import 'package:flower/features/notifications/domain/entity/notifications_entity
 extension NotificationsMapper on NotificationsDto {
   NotificationsEntity toDomain() {
     return NotificationsEntity(
-      id: id,
-      title: title,
-      body: body,
-      type: type,
-      isRead: isRead,
-      createdAt: createdAt,
+      id: id ?? '',
+      title: title ?? '',
+      body: body ?? '',
+      type: type ?? '',
+      isRead: isRead ?? false,
+      createdAt: createdAt ?? DateTime.now(),
     );
   }
 }

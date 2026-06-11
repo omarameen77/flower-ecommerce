@@ -1,5 +1,6 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
+import 'package:flower/features/notifications/domain/entity/metadata_notification_entity.dart';
 import 'package:flower/features/notifications/domain/entity/notifications_response_entity.dart';
 import 'package:flower/features/notifications/domain/repository/notifications_repo_contract.dart';
 import 'package:flower/features/notifications/domain/usecases/get_user_notifications_use_case.dart';
@@ -16,12 +17,20 @@ void main() {
   late NotificationsResponseEntity responseEntity;
 
   setUpAll(() {
-    responseEntity = NotificationsResponseEntity();
+    responseEntity = NotificationsResponseEntity(
+      message: '',
+      metadata: const MetadataNotificationEntity(
+        currentPage: 1,
+        totalPages: 1,
+        limit: 0,
+        totalItems: 0,
+        unreadCount: 0,
+      ),
+      notifications: const [],
+    );
 
     provideDummy<BaseResponse<NotificationsResponseEntity>>(
-      SuccessBaseResponse<NotificationsResponseEntity>(
-        data: NotificationsResponseEntity(),
-      ),
+      SuccessBaseResponse<NotificationsResponseEntity>(data: responseEntity),
     );
   });
 

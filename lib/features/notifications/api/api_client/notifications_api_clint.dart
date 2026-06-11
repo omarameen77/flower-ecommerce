@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flower/core/network/endpoints.dart';
 import 'package:flower/features/notifications/data/model/notifications_response_dto.dart';
-import 'package:flower/features/notifications/data/model/un_read_count_response.dart';
+import 'package:flower/features/notifications/data/model/notification_unread_count_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -17,5 +17,5 @@ abstract class NotificationsApiClient {
   Future<NotificationsResponse> getUserNotifications();
 
   @GET(NotificationsEndPoints.unReadCount)
-  Future<UnReadCountResponse> getUserNotificationsCount();
+  Future<NotificationUnreadCountResponse> getUserNotificationsCount();
 }

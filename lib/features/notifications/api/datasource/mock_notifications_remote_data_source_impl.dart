@@ -2,7 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/features/notifications/data/datasource/notifications_remote_data_source_contract.dart';
 import 'package:flower/features/notifications/data/model/notifications_dto.dart';
 import 'package:flower/features/notifications/data/model/notifications_response_dto.dart';
-import 'package:flower/features/notifications/data/model/un_read_count_response.dart';
+import 'package:flower/features/notifications/data/model/notification_unread_count_response.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: NotificationsRemoteDataSourceContract)
@@ -62,14 +62,17 @@ class MockNotificationsRemoteDataSourceImpl
   }
 
   @override
-  Future<BaseResponse<UnReadCountResponse>> getUserNotificationsCount() async {
+  Future<BaseResponse<NotificationUnreadCountResponse>>
+  getUserNotificationsCount() async {
     await Future.delayed(const Duration(seconds: 1));
 
-    final mockCountResponse = UnReadCountResponse(
+    final mockCountResponse = NotificationUnreadCountResponse(
       message: "success",
       unreadCount: 5,
     );
 
-    return SuccessBaseResponse<UnReadCountResponse>(data: mockCountResponse);
+    return SuccessBaseResponse<NotificationUnreadCountResponse>(
+      data: mockCountResponse,
+    );
   }
 }

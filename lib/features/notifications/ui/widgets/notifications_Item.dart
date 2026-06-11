@@ -29,7 +29,7 @@ class NotificationItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  notification.title ?? '',
+                  notification.title,
                   style: getMediumStyle(
                     context: context,
                     color: AppColors.textPrimary,
@@ -38,7 +38,7 @@ class NotificationItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  notification.body ?? '',
+                  notification.body,
                   style: getRegularStyle(
                     context: context,
                     color: AppColors.grey800,

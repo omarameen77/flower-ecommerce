@@ -40,6 +40,8 @@ class NotificationsBody extends StatelessWidget {
               title: NotificationsConstants.dummyLoadingTitle,
               body: NotificationsConstants.dummyLoadingBody,
               isRead: false,
+              type: '',
+              createdAt: DateTime.now(),
             ),
           );
         }

@@ -1,11 +1,12 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/notifications/data/datasource/notifications_remote_data_source_contract.dart';
+import 'package:flower/features/notifications/data/model/notification_unread_count_response.dart';
 import 'package:flower/features/notifications/data/model/notifications_response_dto.dart';
-import 'package:flower/features/notifications/data/model/un_read_count_response.dart';
 import 'package:flower/features/notifications/data/repository/notifications_repo_impl.dart';
+import 'package:flower/features/notifications/domain/entity/metadata_notification_entity.dart';
+import 'package:flower/features/notifications/domain/entity/notification_unread_count_entity.dart';
 import 'package:flower/features/notifications/domain/entity/notifications_response_entity.dart';
-import 'package:flower/features/notifications/domain/entity/un_read_count_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -21,16 +22,30 @@ void main() {
     provideDummy<BaseResponse<NotificationsResponse>>(
       SuccessBaseResponse<NotificationsResponse>(data: NotificationsResponse()),
     );
-    provideDummy<BaseResponse<UnReadCountResponse>>(
-      SuccessBaseResponse<UnReadCountResponse>(data: UnReadCountResponse()),
+    provideDummy<BaseResponse<NotificationUnreadCountResponse>>(
+      SuccessBaseResponse<NotificationUnreadCountResponse>(
+        data: NotificationUnreadCountResponse(),
+      ),
     );
     provideDummy<BaseResponse<NotificationsResponseEntity>>(
       SuccessBaseResponse<NotificationsResponseEntity>(
-        data: NotificationsResponseEntity(),
+        data: NotificationsResponseEntity(
+          message: '',
+          metadata: const MetadataNotificationEntity(
+            currentPage: 1,
+            totalPages: 1,
+            limit: 0,
+            totalItems: 0,
+            unreadCount: 0,
+          ),
+          notifications: const [],
+        ),
       ),
     );
-    provideDummy<BaseResponse<UnReadCountEntity>>(
-      SuccessBaseResponse<UnReadCountEntity>(data: UnReadCountEntity()),
+    provideDummy<BaseResponse<NotificationUnReadCountEntity>>(
+      SuccessBaseResponse<NotificationUnReadCountEntity>(
+        data: const NotificationUnReadCountEntity(message: '', unreadCount: 0),
+      ),
     );
   });
 
@@ -84,15 +99,19 @@ void main() {
       test(
         'should return SuccessBaseResponse<UnReadCountEntity> when datasource succeeds',
         () async {
-          final dto = UnReadCountResponse();
+          final dto = NotificationUnreadCountResponse();
 
           when(mockRemoteDataSource.getUserNotificationsCount()).thenAnswer(
-            (_) async => SuccessBaseResponse<UnReadCountResponse>(data: dto),
+            (_) async =>
+                SuccessBaseResponse<NotificationUnreadCountResponse>(data: dto),
           );
 
           final result = await repo.getUnReadNotificationsCount();
 
-          expect(result, isA<SuccessBaseResponse<UnReadCountEntity>>());
+          expect(
+            result,
+            isA<SuccessBaseResponse<NotificationUnReadCountEntity>>(),
+          );
           verify(mockRemoteDataSource.getUserNotificationsCount()).called(1);
         },
       );
@@ -101,14 +120,18 @@ void main() {
         final failure = Failure(message: 'error');
 
         when(mockRemoteDataSource.getUserNotificationsCount()).thenAnswer(
-          (_) async => ErrorBaseResponse<UnReadCountResponse>(failure: failure),
+          (_) async => ErrorBaseResponse<NotificationUnreadCountResponse>(
+            failure: failure,
+          ),
         );
 
         final result = await repo.getUnReadNotificationsCount();
 
-        expect(result, isA<ErrorBaseResponse<UnReadCountEntity>>());
+        expect(result, isA<ErrorBaseResponse<NotificationUnReadCountEntity>>());
         expect(
-          (result as ErrorBaseResponse<UnReadCountEntity>).failure.message,
+          (result as ErrorBaseResponse<NotificationUnReadCountEntity>)
+              .failure
+              .message,
           'error',
         );
       });

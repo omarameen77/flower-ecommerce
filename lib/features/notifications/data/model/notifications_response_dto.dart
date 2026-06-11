@@ -16,6 +16,4 @@ class NotificationsResponse {
 
   factory NotificationsResponse.fromJson(Map<String, dynamic> json) =>
       _$NotificationsResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$NotificationsResponseToJson(this);
 }

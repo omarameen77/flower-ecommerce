@@ -1,15 +1,26 @@
-class MetadataNotificationEntity {
-  int? currentPage;
-  int? totalPages;
-  int? limit;
-  int? totalItems;
-  int? unreadCount;
+import 'package:equatable/equatable.dart';
 
-  MetadataNotificationEntity({
-    this.currentPage,
-    this.totalPages,
-    this.limit,
-    this.totalItems,
-    this.unreadCount,
+class MetadataNotificationEntity extends Equatable {
+  final int currentPage;
+  final int totalPages;
+  final int limit;
+  final int totalItems;
+  final int unreadCount;
+
+  const MetadataNotificationEntity({
+    required this.currentPage,
+    required this.totalPages,
+    required this.limit,
+    required this.totalItems,
+    required this.unreadCount,
   });
+
+  @override
+  List<Object> get props => [
+    currentPage,
+    totalPages,
+    limit,
+    totalItems,
+    unreadCount,
+  ];
 }
