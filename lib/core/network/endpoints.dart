@@ -24,3 +24,8 @@ class CartEndPoints {
   static const String updateCartItem = '/cart/{id}';
   static const String removeCartItem = '/cart/{id}';
 }
+
+class NotificationsEndPoints {
+  static const String getUserNotifications = '/notifications/user';
+  static const String unReadCount = '/notifications/unread-count';
+}

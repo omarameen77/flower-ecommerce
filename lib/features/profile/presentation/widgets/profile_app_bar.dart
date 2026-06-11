@@ -1,3 +1,4 @@
+import 'package:flower/features/notifications/ui/widgets/notifications_bell_wigdet.dart';
 import 'package:flower/features/profile/presentation/widgets/app_logo_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -18,15 +19,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Padding(
           padding: const EdgeInsetsDirectional.only(end: 8),
-          child: Badge(
-            child: IconButton(
-              icon: const Icon(
-                Icons.notifications_outlined,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            ),
-          ),
+          child: NotificationBellWidget(),
         ),
       ],
     );
