@@ -1,16 +1,22 @@
-import 'package:flower/core/localization_constants/profile_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class AboutUsPage extends StatefulWidget {
-  const AboutUsPage({super.key});
+class WebViewPage extends StatefulWidget {
+  final String url;
+  final String title;
+
+  const WebViewPage({
+    super.key,
+    required this.url,
+    required this.title,
+  });
 
   @override
-  State<AboutUsPage> createState() => _AboutUsPageState();
+  State<WebViewPage> createState() => _WebViewPageState();
 }
 
-class _AboutUsPageState extends State<AboutUsPage> {
+class _WebViewPageState extends State<WebViewPage> {
   late final WebViewController _controller;
   bool _isLoading = true;
 
@@ -21,14 +27,11 @@ class _AboutUsPageState extends State<AboutUsPage> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onPageFinished: (_) {
-            setState(() => _isLoading = false);
-          },
+          onPageStarted: (_) => setState(() => _isLoading = true),
+          onPageFinished: (_) => setState(() => _isLoading = false),
         ),
       )
-      ..loadRequest(
-        Uri.parse('https://elevate-flutter-team.github.io/flower_app_web_views/about.html'),
-      );
+      ..loadRequest(Uri.parse(widget.url));
   }
 
   @override
@@ -37,7 +40,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textWhite,
-        title: Text(ProfileConstants.aboutUs),
+        title: Text(widget.title),
       ),
       body: Stack(
         children: [
