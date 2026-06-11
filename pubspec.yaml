@@ -44,6 +44,7 @@ dependencies:
   equatable: ^2.0.8
   flutter_svg: ^2.2.4
   image_picker: ^1.2.2
+  webview_flutter: ^4.10.0
 
 
 dev_dependencies:

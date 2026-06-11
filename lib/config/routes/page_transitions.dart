@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 abstract class PageTransitions {
-  static PageRoute<T> fade<T>(Widget page) => PageRouteBuilder<T>(
+  static PageRoute<dynamic> fade(Widget page) => PageRouteBuilder<dynamic>(
     pageBuilder: (_, _, _) => page,
     transitionsBuilder: (_, a, _, child) =>
         FadeTransition(opacity: a, child: child),
     transitionDuration: const Duration(milliseconds: 300),
   );
 
-  static PageRoute<T> slide<T>(Widget page) => PageRouteBuilder<T>(
+  static PageRoute<dynamic> slide(Widget page) => PageRouteBuilder<dynamic>(
     pageBuilder: (_, _, _) => page,
     transitionsBuilder: (_, a, _, child) => SlideTransition(
       position: Tween<Offset>(
@@ -20,7 +20,7 @@ abstract class PageTransitions {
     transitionDuration: const Duration(milliseconds: 350),
   );
 
-  static PageRoute<T> search<T>(Widget page) => PageRouteBuilder<T>(
+  static PageRoute<dynamic> search(Widget page) => PageRouteBuilder<dynamic>(
     pageBuilder: (_, animation, _) => page,
     transitionDuration: const Duration(milliseconds: 450),
     reverseTransitionDuration: const Duration(milliseconds: 300),

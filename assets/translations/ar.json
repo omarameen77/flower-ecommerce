@@ -124,8 +124,40 @@
   "go_shopping": "تسوق الآن",
   "already_added": "تمت إضافته بالفعل"
 },
-"edit_profile": {
-  "title": "تعديل الملف الشخصي",
+  "checkout": {
+    "title": "إتمام الشراء",
+    "shipping_address": "عنوان الشحن",
+    "add_new_address": "إضافة عنوان جديد",
+    "payment_method": "طريقة الدفع",
+    "cash_on_delivery": "الدفع عند الاستلام",
+    "credit_card": "بطاقة ائتمان",
+    "send_as_gift": "إرسال كهدية",
+    "receiver_name": "اسم المستلم",
+    "receiver_phone": "هاتف المستلم",
+    "receiver_address": "عنوان المستلم",
+    "place_order": "تأكيد الطلب",
+    "order_placed": "تم تأكيد الطلب!",
+    "thank_you": "شكراً لك!",
+    "thank_you_message": "تم تقديم طلبك بنجاح.",
+    "continue_shopping": "متابعة التسوق",
+    "subtotal": "المجموع الفرعي",
+    "delivery": "التوصيل",
+    "total": "الإجمالي",
+    "delivery_time": "وقت التوصيل",
+    "instant": "فوري",
+    "payment_completed": "تم الدفع"
+  },
+  "orders": {
+    "my_orders": "طلباتي",
+    "active": "نشط",
+    "completed": "مكتمل",
+    "no_active_orders": "لا توجد طلبات نشطة",
+    "no_completed_orders": "لا توجد طلبات مكتملة",
+    "order_number": "طلب #{number}",
+    "track_order": "تتبع الطلب"
+  },
+  "edit_profile": {
+    "title": "تعديل الملف الشخصي",
   "first_name": "الاسم الأول",
   "last_name": "اسم العائلة",
   "email": "البريد الإلكتروني",

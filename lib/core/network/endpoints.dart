@@ -24,3 +24,12 @@ class CartEndPoints {
   static const String updateCartItem = '/cart/{id}';
   static const String removeCartItem = '/cart/{id}';
 }
+
+class CheckoutEndPoints {
+  static const createCashOrder = '/orders';
+  static const checkoutSession = '/orders/checkout';
+}
+
+class OrdersEndPoints {
+  static const getOrders = '/orders';
+}
