@@ -1,11 +1,13 @@
-import 'package:flower/core/location_data/egypt_location_loader.dart';
+import 'package:flower/features/address/domain/entities/address_entity.dart';
+import 'package:flower/features/address/domain/entities/location_item.dart';
 
 sealed class AddAddressIntent {
   const AddAddressIntent();
 }
 
 class LoadLookupsIntent extends AddAddressIntent {
-  const LoadLookupsIntent();
+  final AddressEntity? editAddress;
+  const LoadLookupsIntent({this.editAddress});
 }
 
 class CitySelectedIntent extends AddAddressIntent {
@@ -22,6 +24,10 @@ class LocationPickedIntent extends AddAddressIntent {
   final String lat;
   final String long;
   const LocationPickedIntent({required this.lat, required this.long});
+}
+
+class ResolveCurrentLocationIntent extends AddAddressIntent {
+  const ResolveCurrentLocationIntent();
 }
 
 class SubmitAddAddressIntent extends AddAddressIntent {

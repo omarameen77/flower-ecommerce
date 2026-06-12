@@ -128,14 +128,6 @@ class _CreateAddressButton extends StatelessWidget {
             color: AppColors.primary,
           ),
         ),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.primary,
-          side: const BorderSide(color: AppColors.primary),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 10),
-        ),
       ),
     );
   }

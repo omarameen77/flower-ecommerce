@@ -4,6 +4,7 @@ import 'package:flower/features/address/data/models/request/add_address_request.
 import 'package:flower/features/address/data/models/response/addresses_response.dart';
 import 'package:flower/features/address/domain/entities/address_entity.dart';
 import 'package:flower/features/address/domain/repositories/address_repo.dart';
+import 'package:flower/features/address/domain/use_cases/address_params.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: AddressRepo)
@@ -23,6 +24,15 @@ class AddressRepoImpl implements AddressRepo {
     }
   }
 
+  AddAddressRequestDto _toDto(AddressParams p) => AddAddressRequestDto(
+    street: p.street,
+    phone: p.phone,
+    city: p.city,
+    lat: p.lat,
+    long: p.long,
+    username: p.username,
+  );
+
   @override
   Future<BaseResponse<List<AddressEntity>>> getAddresses() async {
     final response = await addressRemoteDataSourceContract.getAddresses();
@@ -30,23 +40,11 @@ class AddressRepoImpl implements AddressRepo {
   }
 
   @override
-  Future<BaseResponse<List<AddressEntity>>> addAddress({
-    required String street,
-    required String phone,
-    required String city,
-    required String lat,
-    required String long,
-    required String username,
-  }) async {
+  Future<BaseResponse<List<AddressEntity>>> addAddress(
+    AddressParams params,
+  ) async {
     final response = await addressRemoteDataSourceContract.addAddress(
-      AddAddressRequestDto(
-        street: street,
-        phone: phone,
-        city: city,
-        lat: lat,
-        long: long,
-        username: username,
-      ),
+      _toDto(params),
     );
     return _map(response);
   }
@@ -54,23 +52,11 @@ class AddressRepoImpl implements AddressRepo {
   @override
   Future<BaseResponse<List<AddressEntity>>> updateAddress({
     required String id,
-    required String street,
-    required String phone,
-    required String city,
-    required String lat,
-    required String long,
-    required String username,
+    required AddressParams params,
   }) async {
     final response = await addressRemoteDataSourceContract.updateAddress(
       id: id,
-      request: AddAddressRequestDto(
-        street: street,
-        phone: phone,
-        city: city,
-        lat: lat,
-        long: long,
-        username: username,
-      ),
+      request: _toDto(params),
     );
     return _map(response);
   }

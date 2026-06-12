@@ -1,5 +1,5 @@
 import 'package:flower/core/layout/app_size.dart';
-import 'package:flower/core/location_data/egypt_location_loader.dart';
+import 'package:flower/features/address/domain/entities/location_item.dart';
 import 'package:flower/core/localization_constants/address_constants.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_cubit.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_intents.dart';

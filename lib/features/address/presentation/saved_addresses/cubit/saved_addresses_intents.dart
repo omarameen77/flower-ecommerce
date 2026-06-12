@@ -15,3 +15,7 @@ class SelectAddressIntent extends SavedAddressesIntent {
   final String id;
   const SelectAddressIntent(this.id);
 }
+
+class ResetSavedAddressesIntent extends SavedAddressesIntent {
+  const ResetSavedAddressesIntent();
+}

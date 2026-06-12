@@ -34,13 +34,29 @@ import '../../features/address/api/datasources/address_remote_data_source_impl.d
     as _i505;
 import '../../features/address/data/datasources/address_remote_data_source.dart'
     as _i139;
+import '../../features/address/data/datasources/current_location_data_source.dart'
+    as _i582;
+import '../../features/address/data/datasources/egypt_location_local_data_source.dart'
+    as _i935;
 import '../../features/address/data/repositories/address_repo_impl.dart'
     as _i235;
+import '../../features/address/data/repositories/current_location_repo_impl.dart'
+    as _i339;
+import '../../features/address/data/repositories/egypt_location_repo_impl.dart'
+    as _i16;
 import '../../features/address/domain/repositories/address_repo.dart' as _i767;
+import '../../features/address/domain/repositories/current_location_repo.dart'
+    as _i124;
+import '../../features/address/domain/repositories/egypt_location_repo.dart'
+    as _i603;
 import '../../features/address/domain/use_cases/add_address_use_case.dart'
     as _i458;
 import '../../features/address/domain/use_cases/get_addresses_use_case.dart'
     as _i594;
+import '../../features/address/domain/use_cases/get_current_location_use_case.dart'
+    as _i990;
+import '../../features/address/domain/use_cases/load_location_lookups_use_case.dart'
+    as _i114;
 import '../../features/address/domain/use_cases/remove_address_use_case.dart'
     as _i465;
 import '../../features/address/domain/use_cases/update_address_use_case.dart'
@@ -164,6 +180,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i776.CrashlyticsService>(
       () => _i776.CrashlyticsService(),
     );
+    gh.lazySingleton<_i582.CurrentLocationDataSource>(
+      () => _i582.CurrentLocationDataSourceImpl(),
+    );
     gh.singleton<_i824.AuthApiClient>(
       () => networkModule.authApi(gh<_i361.Dio>()),
     );
@@ -182,6 +201,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i218.AddressApiClient>(
       () => networkModule.addressApi(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i935.EgyptLocationLocalDataSource>(
+      () => _i935.EgyptLocationLocalDataSourceImpl(),
+    );
     gh.factory<_i1032.CategoriesDataSourceContract>(
       () => _i1014.CategoriesDataSourceImpl(
         apiClient: gh<_i266.ProductsSectionsApiClient>(),
@@ -198,13 +220,17 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i1032.CategoriesDataSourceContract>(),
       ),
     );
-    gh.lazySingleton<_i139.AddressRemoteDataSourceContract>(
+    gh.factory<_i139.AddressRemoteDataSourceContract>(
       () => _i505.AddressRemoteDataSourceImpl(
         addressApiClient: gh<_i218.AddressApiClient>(),
       ),
     );
     gh.lazySingleton<_i49.ProfileRemoteDataSource>(
       () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
+    );
+    gh.lazySingleton<_i603.EgyptLocationRepo>(
+      () =>
+          _i16.EgyptLocationRepoImpl(gh<_i935.EgyptLocationLocalDataSource>()),
     );
     gh.factory<_i406.GetCategoriesUseCase>(
       () => _i406.GetCategoriesUseCase(repo: gh<_i696.CategoryRepoContract>()),
@@ -223,8 +249,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i261.EditProfileRemoteDataSource>(),
       ),
     );
+    gh.lazySingleton<_i124.CurrentLocationRepo>(
+      () =>
+          _i339.CurrentLocationRepoImpl(gh<_i582.CurrentLocationDataSource>()),
+    );
     gh.lazySingleton<_i679.ProfileRepository>(
       () => _i865.ProfileRepositoryImpl(gh<_i49.ProfileRemoteDataSource>()),
+    );
+    gh.factory<_i114.LoadLocationLookupsUseCase>(
+      () => _i114.LoadLocationLookupsUseCase(gh<_i603.EgyptLocationRepo>()),
     );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
@@ -280,6 +313,9 @@ extension GetItInjectableX on _i174.GetIt {
         getCategoriesUseCase: gh<_i406.GetCategoriesUseCase>(),
       ),
     );
+    gh.factory<_i990.GetCurrentLocationUseCase>(
+      () => _i990.GetCurrentLocationUseCase(gh<_i124.CurrentLocationRepo>()),
+    );
     gh.factory<_i529.GetOccasionsUseCase>(
       () => _i529.GetOccasionsUseCase(
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
@@ -318,13 +354,7 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSourceContract: gh<_i107.AuthRemoteDataSourceContract>(),
       ),
     );
-    gh.factory<_i644.AddAddressCubit>(
-      () => _i644.AddAddressCubit(
-        gh<_i458.AddAddressUseCase>(),
-        gh<_i130.UpdateAddressUseCase>(),
-      ),
-    );
-    gh.factory<_i1050.SavedAddressesCubit>(
+    gh.lazySingleton<_i1050.SavedAddressesCubit>(
       () => _i1050.SavedAddressesCubit(
         gh<_i594.GetAddressesUseCase>(),
         gh<_i465.RemoveAddressUseCase>(),
@@ -333,7 +363,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
-    gh.factory<_i499.CartCubit>(
+    gh.lazySingleton<_i499.CartCubit>(
       () => _i499.CartCubit(
         gh<_i802.AddProductToCartUseCase>(),
         gh<_i488.GetCartUseCase>(),
@@ -361,6 +391,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i887.VerifyResetCodeUseCase>(
       () => _i887.VerifyResetCodeUseCase(gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i644.AddAddressCubit>(
+      () => _i644.AddAddressCubit(
+        gh<_i458.AddAddressUseCase>(),
+        gh<_i130.UpdateAddressUseCase>(),
+        gh<_i114.LoadLocationLookupsUseCase>(),
+        gh<_i990.GetCurrentLocationUseCase>(),
+      ),
     );
     gh.factory<_i1010.RegisterUseCase>(
       () => _i1010.RegisterUseCase(registerRepoContract: gh<_i723.AuthRepo>()),

@@ -12,6 +12,7 @@ class AddAddressState extends Equatable {
 
   final String lat;
   final String long;
+  final bool locationDenied;
 
   const AddAddressState({
     this.addAddressState = const BaseState(),
@@ -22,6 +23,7 @@ class AddAddressState extends Equatable {
     this.selectedArea,
     this.lat = '',
     this.long = '',
+    this.locationDenied = false,
   });
 
   AddAddressState copyWith({
@@ -34,6 +36,7 @@ class AddAddressState extends Equatable {
     bool clearSelectedArea = false,
     String? lat,
     String? long,
+    bool? locationDenied,
   }) {
     return AddAddressState(
       addAddressState: addAddressState ?? this.addAddressState,
@@ -46,6 +49,7 @@ class AddAddressState extends Equatable {
           : (selectedArea ?? this.selectedArea),
       lat: lat ?? this.lat,
       long: long ?? this.long,
+      locationDenied: locationDenied ?? this.locationDenied,
     );
   }
 
@@ -59,5 +63,6 @@ class AddAddressState extends Equatable {
     selectedArea,
     lat,
     long,
+    locationDenied,
   ];
 }

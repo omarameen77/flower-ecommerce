@@ -153,21 +153,24 @@ void main() {
       });
     });
 
-    test('reset() wipes the cached list back to initial', () async {
-      when(
-        mockGetUseCase(),
-      ).thenAnswer((_) async => SuccessBaseResponse(data: addresses));
-      cubit.doIntent(const LoadAddressesIntent());
-      await Future<void>.delayed(Duration.zero);
-      expect(cubit.state.addressesState.data, addresses);
+    test(
+      'ResetSavedAddressesIntent wipes the cached list back to initial',
+      () async {
+        when(
+          mockGetUseCase(),
+        ).thenAnswer((_) async => SuccessBaseResponse(data: addresses));
+        cubit.doIntent(const LoadAddressesIntent());
+        await Future<void>.delayed(Duration.zero);
+        expect(cubit.state.addressesState.data, addresses);
 
-      cubit.reset();
+        cubit.doIntent(const ResetSavedAddressesIntent());
 
-      expect(cubit.state.addressesState.data, isNull);
-      expect(cubit.state.deletingId, isEmpty);
-      expect(cubit.state.deleteErrorMessage, isNull);
-      expect(cubit.state.selectedAddressId, isNull);
-    });
+        expect(cubit.state.addressesState.data, isNull);
+        expect(cubit.state.deletingId, isEmpty);
+        expect(cubit.state.deleteErrorMessage, isNull);
+        expect(cubit.state.selectedAddressId, isNull);
+      },
+    );
 
     group('select address', () {
       test('SelectAddressIntent updates selectedAddressId in state', () {

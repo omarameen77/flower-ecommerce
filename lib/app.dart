@@ -15,9 +15,9 @@ class FlowerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CartCubit>(create: (_) => getIt<CartCubit>()),
-        BlocProvider<SavedAddressesCubit>(
-          create: (_) => getIt<SavedAddressesCubit>(),
+        BlocProvider<CartCubit>.value(value: getIt<CartCubit>()),
+        BlocProvider<SavedAddressesCubit>.value(
+          value: getIt<SavedAddressesCubit>(),
         ),
       ],
       child: MaterialApp(

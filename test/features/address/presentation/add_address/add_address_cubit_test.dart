@@ -1,7 +1,12 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/address/domain/entities/address_entity.dart';
+import 'package:flower/features/address/domain/entities/current_location.dart';
+import 'package:flower/features/address/domain/entities/location_item.dart';
 import 'package:flower/features/address/domain/use_cases/add_address_use_case.dart';
+import 'package:flower/features/address/domain/use_cases/address_params.dart';
+import 'package:flower/features/address/domain/use_cases/get_current_location_use_case.dart';
+import 'package:flower/features/address/domain/use_cases/load_location_lookups_use_case.dart';
 import 'package:flower/features/address/domain/use_cases/update_address_use_case.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_cubit.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_intents.dart';
@@ -11,10 +16,17 @@ import 'package:mockito/mockito.dart';
 
 import 'add_address_cubit_test.mocks.dart';
 
-@GenerateMocks([AddAddressUseCase, UpdateAddressUseCase])
+@GenerateMocks([
+  AddAddressUseCase,
+  UpdateAddressUseCase,
+  LoadLocationLookupsUseCase,
+  GetCurrentLocationUseCase,
+])
 void main() {
   late MockAddAddressUseCase mockAddUseCase;
   late MockUpdateAddressUseCase mockUpdateUseCase;
+  late MockLoadLocationLookupsUseCase mockLoadLookupsUseCase;
+  late MockGetCurrentLocationUseCase mockGetCurrentLocationUseCase;
   late AddAddressCubit cubit;
 
   setUpAll(() {
@@ -26,7 +38,14 @@ void main() {
   setUp(() {
     mockAddUseCase = MockAddAddressUseCase();
     mockUpdateUseCase = MockUpdateAddressUseCase();
-    cubit = AddAddressCubit(mockAddUseCase, mockUpdateUseCase);
+    mockLoadLookupsUseCase = MockLoadLocationLookupsUseCase();
+    mockGetCurrentLocationUseCase = MockGetCurrentLocationUseCase();
+    cubit = AddAddressCubit(
+      mockAddUseCase,
+      mockUpdateUseCase,
+      mockLoadLookupsUseCase,
+      mockGetCurrentLocationUseCase,
+    );
   });
 
   tearDown(() {
@@ -39,6 +58,73 @@ void main() {
 
       expect(cubit.state.lat, '30.04');
       expect(cubit.state.long, '31.23');
+    });
+
+    test('LoadLookupsIntent populates cities and areas', () async {
+      const cities = [CityItem(id: '1', nameEn: 'Giza', nameAr: 'الجيزة')];
+      const areas = [
+        AreaItem(
+          id: 'a1',
+          cityId: '1',
+          nameEn: 'Dokki',
+          nameAr: 'الدقي',
+        ),
+      ];
+      when(mockLoadLookupsUseCase()).thenAnswer(
+        (_) async => const LocationLookups(cities: cities, areas: areas),
+      );
+
+      final expectation = expectLater(
+        cubit.stream,
+        emitsInOrder([
+          isA<AddAddressState>()
+              .having((s) => s.cities, 'cities', cities)
+              .having((s) => s.allAreas, 'allAreas', areas),
+        ]),
+      );
+
+      cubit.doIntent(const LoadLookupsIntent());
+      await expectation;
+    });
+
+    test('ResolveCurrentLocationIntent emits lat/long when granted', () async {
+      when(mockGetCurrentLocationUseCase()).thenAnswer(
+        (_) async =>
+            const CurrentLocation(lat: 30.04, long: 31.23, granted: true),
+      );
+
+      final expectation = expectLater(
+        cubit.stream,
+        emitsInOrder([
+          isA<AddAddressState>()
+              .having((s) => s.lat, 'lat', '30.04')
+              .having((s) => s.long, 'long', '31.23')
+              .having((s) => s.locationDenied, 'locationDenied', false),
+        ]),
+      );
+
+      cubit.doIntent(const ResolveCurrentLocationIntent());
+      await expectation;
+    });
+
+    test('ResolveCurrentLocationIntent flips locationDenied when denied', () async {
+      when(
+        mockGetCurrentLocationUseCase(),
+      ).thenAnswer((_) async => CurrentLocation.fallback);
+
+      final expectation = expectLater(
+        cubit.stream,
+        emitsInOrder([
+          isA<AddAddressState>().having(
+            (s) => s.locationDenied,
+            'locationDenied',
+            true,
+          ),
+        ]),
+      );
+
+      cubit.doIntent(const ResolveCurrentLocationIntent());
+      await expectation;
     });
 
     group('submit (add mode)', () {
@@ -61,14 +147,7 @@ void main() {
           ),
         ];
         when(
-          mockAddUseCase(
-            street: anyNamed('street'),
-            phone: anyNamed('phone'),
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: anyNamed('username'),
-          ),
+          mockAddUseCase(any),
         ).thenAnswer((_) async => SuccessBaseResponse(data: addresses));
 
         final expectation = expectLater(
@@ -90,38 +169,24 @@ void main() {
 
         verify(
           mockAddUseCase(
-            street: 'Home',
-            phone: '01010700700',
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: 'hamza',
+            argThat(
+              isA<AddressParams>()
+                  .having((p) => p.street, 'street', 'Home')
+                  .having((p) => p.phone, 'phone', '01010700700')
+                  .having((p) => p.username, 'username', 'hamza'),
+            ),
           ),
         ).called(1);
         verifyNever(
           mockUpdateUseCase(
             id: anyNamed('id'),
-            street: anyNamed('street'),
-            phone: anyNamed('phone'),
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: anyNamed('username'),
+            params: anyNamed('params'),
           ),
         );
       });
 
       test('emits [loading, error] when add fails', () async {
-        when(
-          mockAddUseCase(
-            street: anyNamed('street'),
-            phone: anyNamed('phone'),
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: anyNamed('username'),
-          ),
-        ).thenAnswer(
+        when(mockAddUseCase(any)).thenAnswer(
           (_) async => ErrorBaseResponse(failure: Failure(message: 'boom')),
         );
 
@@ -158,12 +223,7 @@ void main() {
         when(
           mockUpdateUseCase(
             id: anyNamed('id'),
-            street: anyNamed('street'),
-            phone: anyNamed('phone'),
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: anyNamed('username'),
+            params: anyNamed('params'),
           ),
         ).thenAnswer((_) async => SuccessBaseResponse(data: const []));
 
@@ -187,24 +247,16 @@ void main() {
         verify(
           mockUpdateUseCase(
             id: '1',
-            street: 'Hom',
-            phone: '01010700700',
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: 'hamza',
+            params: argThat(
+              isA<AddressParams>()
+                  .having((p) => p.street, 'street', 'Hom')
+                  .having((p) => p.phone, 'phone', '01010700700')
+                  .having((p) => p.username, 'username', 'hamza'),
+              named: 'params',
+            ),
           ),
         ).called(1);
-        verifyNever(
-          mockAddUseCase(
-            street: anyNamed('street'),
-            phone: anyNamed('phone'),
-            city: anyNamed('city'),
-            lat: anyNamed('lat'),
-            long: anyNamed('long'),
-            username: anyNamed('username'),
-          ),
-        );
+        verifyNever(mockAddUseCase(any));
       });
     });
   });

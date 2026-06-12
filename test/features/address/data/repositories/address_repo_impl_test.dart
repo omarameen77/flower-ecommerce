@@ -5,6 +5,7 @@ import 'package:flower/features/address/data/models/response/address_dto.dart';
 import 'package:flower/features/address/data/models/response/addresses_response.dart';
 import 'package:flower/features/address/data/repositories/address_repo_impl.dart';
 import 'package:flower/features/address/domain/entities/address_entity.dart';
+import 'package:flower/features/address/domain/use_cases/address_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -75,6 +76,15 @@ void main() {
       });
     });
 
+    const params = AddressParams(
+      street: 'Home',
+      phone: '01010700700',
+      city: 'Giza',
+      lat: '30.04',
+      long: '31.23',
+      username: 'hamza',
+    );
+
     group('addAddress', () {
       test('should map DTO list to entity list on success', () async {
         final responseDto = AddressesResponseDto(
@@ -84,14 +94,7 @@ void main() {
           mockDataSource.addAddress(any),
         ).thenAnswer((_) async => SuccessBaseResponse(data: responseDto));
 
-        final result = await repo.addAddress(
-          street: 'Home',
-          phone: '01010700700',
-          city: 'Giza',
-          lat: '30.04',
-          long: '31.23',
-          username: 'hamza',
-        );
+        final result = await repo.addAddress(params);
 
         expect(result, isA<SuccessBaseResponse<List<AddressEntity>>>());
         final data = (result as SuccessBaseResponse<List<AddressEntity>>).data;
@@ -106,14 +109,7 @@ void main() {
           mockDataSource.addAddress(any),
         ).thenAnswer((_) async => ErrorBaseResponse(failure: failure));
 
-        final result = await repo.addAddress(
-          street: 'Home',
-          phone: '01010700700',
-          city: 'Giza',
-          lat: '30.04',
-          long: '31.23',
-          username: 'hamza',
-        );
+        final result = await repo.addAddress(params);
 
         expect(result, isA<ErrorBaseResponse<List<AddressEntity>>>());
         expect(
@@ -135,15 +131,7 @@ void main() {
           ),
         ).thenAnswer((_) async => SuccessBaseResponse(data: responseDto));
 
-        final result = await repo.updateAddress(
-          id: '1',
-          street: 'Hom',
-          phone: '01010700700',
-          city: 'Giza',
-          lat: '30.04',
-          long: '31.23',
-          username: 'hamza',
-        );
+        final result = await repo.updateAddress(id: '1', params: params);
 
         expect(result, isA<SuccessBaseResponse<List<AddressEntity>>>());
         verify(
@@ -160,15 +148,7 @@ void main() {
           ),
         ).thenAnswer((_) async => ErrorBaseResponse(failure: failure));
 
-        final result = await repo.updateAddress(
-          id: '1',
-          street: 'Hom',
-          phone: '01010700700',
-          city: 'Giza',
-          lat: '30.04',
-          long: '31.23',
-          username: 'hamza',
-        );
+        final result = await repo.updateAddress(id: '1', params: params);
 
         expect(result, isA<ErrorBaseResponse<List<AddressEntity>>>());
       });

@@ -1,27 +1,15 @@
+import 'package:flower/features/address/domain/entities/current_location.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:injectable/injectable.dart';
 
-class CurrentLocation {
-  final double lat;
-  final double long;
-  final bool granted;
-
-  const CurrentLocation({
-    required this.lat,
-    required this.long,
-    required this.granted,
-  });
-
-  static const fallback = CurrentLocation(
-    lat: 30.0444,
-    long: 31.2357,
-    granted: false,
-  );
+abstract interface class CurrentLocationDataSource {
+  Future<CurrentLocation> getCurrent();
 }
 
-class CurrentLocationService {
-  CurrentLocationService._();
-
-  static Future<CurrentLocation> getCurrent() async {
+@LazySingleton(as: CurrentLocationDataSource)
+class CurrentLocationDataSourceImpl implements CurrentLocationDataSource {
+  @override
+  Future<CurrentLocation> getCurrent() async {
     final servicesOn = await Geolocator.isLocationServiceEnabled();
     if (!servicesOn) return CurrentLocation.fallback;
 

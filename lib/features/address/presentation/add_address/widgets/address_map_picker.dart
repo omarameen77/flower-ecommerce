@@ -1,3 +1,4 @@
+import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_cubit.dart';
 import 'package:flower/features/address/presentation/add_address/cubit/add_address_intents.dart';
@@ -78,9 +79,8 @@ class _AddressMapPickerState extends State<AddressMapPicker> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.flower.ecommerce',
+                    urlTemplate: AppStrings.osmTileUrl,
+                    userAgentPackageName: AppStrings.osmUserAgent,
                   ),
                 ],
               ),

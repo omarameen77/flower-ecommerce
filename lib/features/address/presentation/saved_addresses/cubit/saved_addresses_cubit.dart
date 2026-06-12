@@ -10,15 +10,13 @@ import 'package:injectable/injectable.dart';
 
 part 'saved_addresses_state.dart';
 
-@injectable
+@lazySingleton
 class SavedAddressesCubit extends Cubit<SavedAddressesState> {
   final GetAddressesUseCase _getAddressesUseCase;
   final RemoveAddressUseCase _removeAddressUseCase;
 
   SavedAddressesCubit(this._getAddressesUseCase, this._removeAddressUseCase)
     : super(const SavedAddressesState());
-
-  void reset() => emit(const SavedAddressesState());
 
   void doIntent(SavedAddressesIntent intent) {
     switch (intent) {
@@ -28,6 +26,8 @@ class SavedAddressesCubit extends Cubit<SavedAddressesState> {
         _deleteAddress(intent.id);
       case SelectAddressIntent():
         emit(state.copyWith(selectedAddressId: intent.id));
+      case ResetSavedAddressesIntent():
+        emit(const SavedAddressesState());
     }
   }
 

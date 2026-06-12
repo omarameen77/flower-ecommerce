@@ -16,7 +16,7 @@ class AddAddressRequestDto {
   @JsonKey(name: 'username')
   final String? username;
 
-  AddAddressRequestDto({
+  const AddAddressRequestDto({
     this.street,
     this.phone,
     this.city,

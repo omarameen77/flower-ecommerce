@@ -6,7 +6,7 @@ import 'package:flower/features/address/data/models/request/add_address_request.
 import 'package:flower/features/address/data/models/response/addresses_response.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: AddressRemoteDataSourceContract)
+@Injectable(as: AddressRemoteDataSourceContract)
 class AddressRemoteDataSourceImpl implements AddressRemoteDataSourceContract {
   final AddressApiClient addressApiClient;
 

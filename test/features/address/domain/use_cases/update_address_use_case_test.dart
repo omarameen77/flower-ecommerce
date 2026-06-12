@@ -2,6 +2,7 @@ import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/features/address/domain/entities/address_entity.dart';
 import 'package:flower/features/address/domain/repositories/address_repo.dart';
+import 'package:flower/features/address/domain/use_cases/address_params.dart';
 import 'package:flower/features/address/domain/use_cases/update_address_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -25,66 +26,33 @@ void main() {
     useCase = UpdateAddressUseCase(repo);
   });
 
-  test('forwards id and all fields to repo.updateAddress on success', () async {
+  const params = AddressParams(
+    street: 'Home',
+    phone: '01010700700',
+    city: 'Giza',
+    lat: '30.04',
+    long: '31.23',
+    username: 'hamza',
+  );
+
+  test('forwards id and params to repo.updateAddress on success', () async {
     when(
-      repo.updateAddress(
-        id: anyNamed('id'),
-        street: anyNamed('street'),
-        phone: anyNamed('phone'),
-        city: anyNamed('city'),
-        lat: anyNamed('lat'),
-        long: anyNamed('long'),
-        username: anyNamed('username'),
-      ),
+      repo.updateAddress(id: anyNamed('id'), params: anyNamed('params')),
     ).thenAnswer((_) async => SuccessBaseResponse(data: const []));
 
-    final result = await useCase(
-      id: '1',
-      street: 'Home',
-      phone: '01010700700',
-      city: 'Giza',
-      lat: '30.04',
-      long: '31.23',
-      username: 'hamza',
-    );
+    final result = await useCase(id: '1', params: params);
 
     expect(result, isA<SuccessBaseResponse<List<AddressEntity>>>());
-    verify(
-      repo.updateAddress(
-        id: '1',
-        street: 'Home',
-        phone: '01010700700',
-        city: 'Giza',
-        lat: '30.04',
-        long: '31.23',
-        username: 'hamza',
-      ),
-    ).called(1);
+    verify(repo.updateAddress(id: '1', params: params)).called(1);
   });
 
   test('propagates error from repo', () async {
     final failure = Failure(message: 'boom');
     when(
-      repo.updateAddress(
-        id: anyNamed('id'),
-        street: anyNamed('street'),
-        phone: anyNamed('phone'),
-        city: anyNamed('city'),
-        lat: anyNamed('lat'),
-        long: anyNamed('long'),
-        username: anyNamed('username'),
-      ),
+      repo.updateAddress(id: anyNamed('id'), params: anyNamed('params')),
     ).thenAnswer((_) async => ErrorBaseResponse(failure: failure));
 
-    final result = await useCase(
-      id: '1',
-      street: 'Home',
-      phone: '01010700700',
-      city: 'Giza',
-      lat: '30.04',
-      long: '31.23',
-      username: 'hamza',
-    );
+    final result = await useCase(id: '1', params: params);
 
     expect(result, isA<ErrorBaseResponse<List<AddressEntity>>>());
     expect(

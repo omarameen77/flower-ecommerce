@@ -19,7 +19,7 @@ class AddressDto {
   @JsonKey(name: 'username')
   final String? username;
 
-  AddressDto({
+  const AddressDto({
     this.id,
     this.street,
     this.phone,
