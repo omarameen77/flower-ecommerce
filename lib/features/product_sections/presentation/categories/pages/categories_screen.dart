@@ -1,5 +1,6 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/home_constants.dart';
+import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/custom_text_field.dart';
@@ -90,7 +91,7 @@ class _CategoryScreenState extends State<CategoryScreen>
                       children: [
                         Expanded(
                           child: Hero(
-                            tag: "search-field",
+                            tag: AppStrings.searchFieldHeroTag,
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(

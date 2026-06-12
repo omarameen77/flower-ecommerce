@@ -64,9 +64,12 @@ class _SortFilterSheetState extends State<_SortFilterSheet> {
   }
 
   void _apply() {
-    final cubit = context.read<ProductCubit>();
-    cubit.setSort(_selected);
-    cubit.doEvent(GetProductEvent(categoryId: widget.activeCategoryId));
+    context.read<ProductCubit>().doEvent(
+      GetProductEvent(
+        sort: _selected,
+        categoryId: widget.activeCategoryId,
+      ),
+    );
     Navigator.pop(context);
   }
 

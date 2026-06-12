@@ -17,8 +17,6 @@ class ProductCubit extends Cubit<ProductState> {
 
   ProductCubit({required this.getProductUseCase}) : super(const ProductState());
 
-  void setSort(String? sort) => emit(state.copyWith(currentSort: sort));
-
   void doEvent(ProductEvent event) {
     switch (event) {
       case GetProductEvent():
@@ -26,6 +24,7 @@ class ProductCubit extends Cubit<ProductState> {
           loadMore: event.loadMore,
           categoryId: event.categoryId,
           keyword: event.keyword,
+          sort: event.sort,
         );
         break;
 
@@ -48,6 +47,7 @@ class ProductCubit extends Cubit<ProductState> {
     bool loadMore = false,
     String? categoryId,
     String? keyword,
+    String? sort,
   }) async {
     try {
       if (loadMore && state.isLoadingMore) return;
@@ -65,9 +65,11 @@ class ProductCubit extends Cubit<ProductState> {
         emit(state.copyWith(isLoadingMore: true));
       }
 
+      final effectiveSort = sort ?? state.currentSort;
+
       final result = await getProductUseCase.call(
         limit: newLimit,
-        sort: state.currentSort,
+        sort: effectiveSort,
         categoryId: categoryId,
         keyword: keyword,
       );
@@ -81,6 +83,7 @@ class ProductCubit extends Cubit<ProductState> {
               productBaseState: BaseState(data: result.data),
               limit: newLimit,
               isLoadingMore: false,
+              currentSort: effectiveSort,
             ),
           );
 
