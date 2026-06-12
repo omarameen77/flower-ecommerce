@@ -88,6 +88,22 @@ import '../../features/edit_profile/domain/usecases/edit_profile_use_case.dart'
     as _i620;
 import '../../features/edit_profile/domain/usecases/upload_photo_use_case.dart'
     as _i538;
+import '../../features/notifications/api/api_client/notifications_api_clint.dart'
+    as _i1031;
+import '../../features/notifications/api/datasource/mock_notifications_remote_data_source_impl.dart'
+    as _i817;
+import '../../features/notifications/data/datasource/notifications_remote_data_source_contract.dart'
+    as _i703;
+import '../../features/notifications/data/repository/notifications_repo_impl.dart'
+    as _i220;
+import '../../features/notifications/domain/repository/notifications_repo_contract.dart'
+    as _i688;
+import '../../features/notifications/domain/usecases/get_un_read_notification_count_use_case.dart'
+    as _i837;
+import '../../features/notifications/domain/usecases/get_user_notifications_use_case.dart'
+    as _i392;
+import '../../features/notifications/ui/cubit/notifications_cubit.dart'
+    as _i532;
 import '../../features/product_sections/api/api_client/products_sections_api_client.dart'
     as _i266;
 import '../../features/product_sections/api/datasource/categories_data_source_impl.dart'
@@ -144,6 +160,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i776.CrashlyticsService>(
       () => _i776.CrashlyticsService(),
     );
+    gh.factory<_i703.NotificationsRemoteDataSourceContract>(
+      () => _i817.MockNotificationsRemoteDataSourceImpl(),
+    );
     gh.singleton<_i824.AuthApiClient>(
       () => networkModule.authApi(gh<_i361.Dio>()),
     );
@@ -158,6 +177,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i690.EditProfileApiClient>(
       () => networkModule.editProfileApi(gh<_i361.Dio>()),
+    );
+    gh.singleton<_i1031.NotificationsApiClient>(
+      () => networkModule.notificationsApi(gh<_i361.Dio>()),
     );
     gh.factory<_i1032.CategoriesDataSourceContract>(
       () => _i1014.CategoriesDataSourceImpl(
@@ -178,6 +200,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i49.ProfileRemoteDataSource>(
       () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
     );
+    gh.factory<_i688.NotificationsRepoContract>(
+      () => _i220.NotificationsRepoImpl(
+        gh<_i703.NotificationsRemoteDataSourceContract>(),
+      ),
+    );
     gh.factory<_i406.GetCategoriesUseCase>(
       () => _i406.GetCategoriesUseCase(repo: gh<_i696.CategoryRepoContract>()),
     );
@@ -197,6 +224,16 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i679.ProfileRepository>(
       () => _i865.ProfileRepositoryImpl(gh<_i49.ProfileRemoteDataSource>()),
+    );
+    gh.factory<_i392.GetUserNotificationsUseCase>(
+      () => _i392.GetUserNotificationsUseCase(
+        gh<_i688.NotificationsRepoContract>(),
+      ),
+    );
+    gh.factory<_i837.GetUnReadNotificationCountUseCase>(
+      () => _i837.GetUnReadNotificationCountUseCase(
+        gh<_i688.NotificationsRepoContract>(),
+      ),
     );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
@@ -240,6 +277,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i538.UploadPhotoUseCase>(
       () => _i538.UploadPhotoUseCase(gh<_i698.EditProfileRepository>()),
+    );
+    gh.factory<_i532.NotificationsCubit>(
+      () => _i532.NotificationsCubit(
+        getUserNotificationsUseCase: gh<_i392.GetUserNotificationsUseCase>(),
+        getUnreadCountUseCase: gh<_i837.GetUnReadNotificationCountUseCase>(),
+      ),
     );
     gh.lazySingleton<_i691.CategoriesCubit>(
       () => _i691.CategoriesCubit(
