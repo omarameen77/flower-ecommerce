@@ -26,16 +26,14 @@ class AppSectionsPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AppSectionsCubit()),
-        BlocProvider(
-          create: (_) =>
-              getIt<CategoriesCubit>()..onEvent(GetCategoriesEvent()),
+        BlocProvider.value(
+          value: getIt<CategoriesCubit>()..onEvent(GetCategoriesEvent()),
         ),
         BlocProvider(
           create: (_) => getIt<ProductCubit>()..doEvent(GetProductEvent()),
         ),
-        BlocProvider(
-          create: (_) =>
-              getIt<OccasionCubit>()..doEvent(const GetOccasionsEvent()),
+        BlocProvider.value(
+          value: getIt<OccasionCubit>()..doEvent(const GetOccasionsEvent()),
         ),
       ],
       child: const _AppSectionsView(),
