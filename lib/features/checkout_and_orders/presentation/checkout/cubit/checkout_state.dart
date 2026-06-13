@@ -9,10 +9,6 @@ class CheckoutState extends Equatable {
   final bool isGift;
   final String? paymentUrl;
   final String? successUrl;
-  // TODO: static default address — replace with fetched user address after address feature
-  final String street;
-  final String phone;
-  final String city;
 
   const CheckoutState({
     this.status = CheckoutStatus.initial,
@@ -21,9 +17,6 @@ class CheckoutState extends Equatable {
     this.isGift = false,
     this.paymentUrl,
     this.successUrl,
-    this.street = '2XVP+XC - Sheikh Zayed.....',
-    this.phone = '+201202222222',
-    this.city = 'Sheikh Zayed',
   });
 
   CheckoutState copyWith({
@@ -33,9 +26,6 @@ class CheckoutState extends Equatable {
     bool? isGift,
     String? paymentUrl,
     String? successUrl,
-    String? street,
-    String? phone,
-    String? city,
     bool clearError = false,
   }) {
     return CheckoutState(
@@ -45,13 +35,10 @@ class CheckoutState extends Equatable {
       isGift: isGift ?? this.isGift,
       paymentUrl: paymentUrl ?? this.paymentUrl,
       successUrl: successUrl ?? this.successUrl,
-      street: street ?? this.street,
-      phone: phone ?? this.phone,
-      city: city ?? this.city,
     );
   }
 
   @override
   List<Object?> get props =>
-      [status, errorMessage, selectedPayment, isGift, paymentUrl, successUrl, street, phone, city];
+      [status, errorMessage, selectedPayment, isGift, paymentUrl, successUrl];
 }

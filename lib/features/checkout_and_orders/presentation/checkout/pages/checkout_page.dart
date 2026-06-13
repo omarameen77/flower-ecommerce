@@ -1,9 +1,10 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/checkout_constants.dart';
-import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_cubit.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_intents.dart';
 import 'package:flower/features/checkout_and_orders/presentation/checkout/cubit/checkout_cubit.dart';
 import 'package:flower/features/checkout_and_orders/presentation/checkout/cubit/checkout_event.dart';
 import 'package:flower/features/checkout_and_orders/presentation/checkout/widgets/checkout_address_card.dart';
@@ -30,6 +31,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final _receiverPhoneController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final cubit = context.read<SavedAddressesCubit>();
+    if (cubit.state.addressesState.data == null &&
+        !cubit.state.addressesState.isLoading) {
+      cubit.doIntent(const LoadAddressesIntent());
+    }
+  }
+
+  @override
   void dispose() {
     _receiverNameController.dispose();
     _receiverPhoneController.dispose();
@@ -37,30 +48,37 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void _placeOrder() {
-    final cubit = context.read<CheckoutCubit>();
-    final state = cubit.state;
+    final checkoutCubit = context.read<CheckoutCubit>();
+    final address = context.read<SavedAddressesCubit>().state.currentAddress;
+
+    if (address == null) {
+      CustomSnackBar.error(context, 'Please select a shipping address');
+      return;
+    }
+
+    final state = checkoutCubit.state;
     final isCard = state.selectedPayment == 1;
 
     if (isCard) {
-      cubit.doEvent(
+      checkoutCubit.doEvent(
         PlaceOrderWithCard(
-          street: state.street,
-          phone: state.phone,
-          city: state.city,
-          lat: '0',
-          long: '0',
+          street: address.street,
+          phone: address.phone,
+          city: address.city,
+          lat: address.lat,
+          long: address.long,
           receiverName: _receiverNameController.text,
           receiverPhone: _receiverPhoneController.text,
         ),
       );
     } else {
-      cubit.doEvent(
+      checkoutCubit.doEvent(
         PlaceOrderWithCash(
-          street: state.street,
-          phone: state.phone,
-          city: state.city,
-          lat: '0',
-          long: '0',
+          street: address.street,
+          phone: address.phone,
+          city: address.city,
+          lat: address.lat,
+          long: address.long,
         ),
       );
     }
