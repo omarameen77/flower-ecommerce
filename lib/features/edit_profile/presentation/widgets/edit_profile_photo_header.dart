@@ -48,7 +48,7 @@ class EditProfilePhotoHeader extends StatelessWidget {
                 ),
                 child: ClipOval(
                   child: photoFile != null
-                      ? Image.file(photoFile, fit: BoxFit.cover, height: 10,)
+                      ? Image.file(photoFile, fit: BoxFit.cover, height: 10)
                       : ProfileAvatarPlaceholder(
                           imageUrl: initialImageUrl,
                           width: 100,

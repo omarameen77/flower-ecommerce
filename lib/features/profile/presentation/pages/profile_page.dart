@@ -2,6 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_cubit.dart';
+import 'package:flower/features/address/presentation/saved_addresses/cubit/saved_addresses_intents.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:flower/features/cart/presentation/cubit/cart_events.dart';
+import 'package:flower/features/notifications/ui/cubit/notifications_cubit.dart';
+import 'package:flower/features/notifications/ui/cubit/notifications_event.dart';
 import 'package:flower/features/profile/presentation/cubit/get_user_data/profile_cubit.dart';
 import 'package:flower/features/profile/presentation/cubit/get_user_data/profile_event.dart';
 import 'package:flower/features/profile/presentation/widgets/profile_app_bar.dart';
@@ -14,8 +20,14 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<ProfileCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProfileCubit>(create: (_) => getIt<ProfileCubit>()),
+        BlocProvider(
+          create: (_) =>
+              getIt<NotificationsCubit>()..onEvent(GetUnreadCountEvent()),
+        ),
+      ],
       child: const _ProfilePageBootstrap(),
     );
   }
@@ -68,6 +80,10 @@ class _ProfilePageView extends StatelessWidget {
             previous.logoutState != current.logoutState,
         listener: (context, state) {
           if (state.logoutState.data == true) {
+            context.read<CartCubit>().onEvent(const ResetCartEvent());
+            context.read<SavedAddressesCubit>().doIntent(
+              const ResetSavedAddressesIntent(),
+            );
             Navigator.of(
               context,
             ).pushNamedAndRemoveUntil(Routes.login, (route) => false);

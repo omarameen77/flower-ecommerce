@@ -17,12 +17,7 @@ class ProfileAvatarPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl != null && imageUrl!.isNotEmpty) {
-      return ClipOval(
-        child: CachedNetworkImageWidget(
-          urlToImage: imageUrl!,
-          
-        ),
-      );
+      return ClipOval(child: CachedNetworkImageWidget(urlToImage: imageUrl!));
     }
 
     return Container(

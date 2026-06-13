@@ -1,10 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-abstract class CartEvent extends Equatable {
+sealed class CartEvent extends Equatable {
   const CartEvent();
 
   @override
   List<Object?> get props => [];
+}
+
+class ResetCartEvent extends CartEvent {
+  const ResetCartEvent();
 }
 
 class AddToCartEvent extends CartEvent {

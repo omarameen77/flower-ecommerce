@@ -108,8 +108,7 @@ void main() {
           (_) async => SuccessBaseResponse<List<ProductEntity>>(data: const []),
         );
 
-        productCubit.setSort('-sold');
-        productCubit.doEvent(const GetProductEvent());
+        productCubit.doEvent(const GetProductEvent(sort: '-sold'));
         await Future<void>.delayed(Duration.zero);
 
         verify(mockGetProductsUseCase.call(limit: 8, sort: '-sold')).called(1);

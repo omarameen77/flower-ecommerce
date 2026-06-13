@@ -5,8 +5,8 @@ import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/best_sellers_section.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/categories_section.dart';
+import 'package:flower/features/address/presentation/saved_addresses/widgets/deliver_to_widget.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/home_header.dart';
-import 'package:flower/features/product_sections/presentation/home/widgets/location_widget.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/occasions_section.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
@@ -31,14 +31,13 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 12),
               const HomeHeader(),
               const AppSizedBox(height: AppSize.s16),
-              const LocationWidget(),
+              const DeliverToWidget(),
               const AppSizedBox(height: AppSize.s24),
               const CategoriesSection(),
               const AppSizedBox(height: AppSize.s24),
               BlocProvider(
                 create: (_) => getIt<ProductCubit>()
-                  ..setSort('-sold')
-                  ..doEvent(const GetProductEvent()),
+                  ..doEvent(const GetProductEvent(sort: '-sold')),
                 child: const BestSellersSection(),
               ),
               const AppSizedBox(height: AppSize.s24),

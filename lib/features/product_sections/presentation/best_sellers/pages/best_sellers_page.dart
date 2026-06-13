@@ -12,9 +12,8 @@ class BestSellersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<ProductCubit>()
-        ..setSort('-sold')
-        ..doEvent(const GetProductEvent()),
+      create: (_) =>
+          getIt<ProductCubit>()..doEvent(const GetProductEvent(sort: '-sold')),
       child: const Scaffold(
         appBar: CustomAppBar(
           title: 'Best seller',

@@ -82,7 +82,8 @@ class ProfileScrollableBody extends StatelessWidget {
                   color: Colors.black,
                 ),
                 title: ProfileConstants.savedAddress,
-                onTap: () {},
+                onTap: () =>
+                    Navigator.pushNamed(context, Routes.savedAddresses),
               ),
               AppSizedBox(height: 16),
             ],
@@ -116,10 +117,15 @@ class ProfileScrollableBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 14,
-                        color: Colors.black,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.notifications);
+                        },
+                        child: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 14,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                   );

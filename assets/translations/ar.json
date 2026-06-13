@@ -99,7 +99,14 @@
   "searchHint":"ابحث عن المنتجات  ",
   "product_not_found":"غير متاح",
   "all":"الجميع",
-  "searching":"...جاري البحث"
+  "searching":"...جاري البحث",
+  "sort_by":"ترتيب حسب",
+  "lowest_price":"الأقل سعراً",
+  "highest_price":"الأعلى سعراً",
+  "new":"الأحدث",
+  "old":"الأقدم",
+  "discount":"الخصم",
+  "filter":"تصفية"
 },
 "general": {
   "ok": "حسناً",
@@ -110,6 +117,30 @@
   "close": "إغلاق",
   "loading": "جار التحميل...",
   "press_back_again_to_exit": "اضغط مرة أخرى للخروج"
+},
+"address": {
+  "title": "العنوان",
+  "address_label": "العنوان",
+  "enter_address": "أدخل العنوان",
+  "phone_number": "رقم الهاتف",
+  "enter_phone_number": "أدخل رقم الهاتف",
+  "recipient_name": "اسم المستلم",
+  "enter_recipient_name": "أدخل اسم المستلم",
+  "city": "المدينة",
+  "area": "المنطقة",
+  "select_city": "اختر المدينة",
+  "select_area": "اختر المنطقة",
+  "save_address": "حفظ العنوان",
+  "address_saved": "تم حفظ العنوان بنجاح",
+  "location_permission_denied": "تم رفض إذن الموقع. يرجى تفعيل الموقع لإضافة العنوان.",
+  "saved_address_title": "العناوين المحفوظة",
+  "add_new_address": "إضافة عنوان جديد",
+  "no_saved_addresses": "لا يوجد لديك عناوين محفوظة",
+  "delete_address_title": "حذف العنوان",
+  "delete_address_message": "هل أنت متأكد أنك تريد حذف هذا العنوان؟",
+  "cancel": "إلغاء",
+  "delete": "حذف",
+  "deliver_to": "التوصيل إلى "
 },
 "cart": {
   "cart": "السله",
