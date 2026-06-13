@@ -4,10 +4,5 @@ class CreditCardModel {
   final String? url;
   final String? successUrl;
 
-  CreditCardModel({
-    this.error,
-    this.message,
-    this.url,
-    this.successUrl,
-  });
+  CreditCardModel({this.error, this.message, this.url, this.successUrl});
 }

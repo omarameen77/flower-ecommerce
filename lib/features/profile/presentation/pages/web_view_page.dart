@@ -6,11 +6,7 @@ class WebViewPage extends StatefulWidget {
   final String url;
   final String title;
 
-  const WebViewPage({
-    super.key,
-    required this.url,
-    required this.title,
-  });
+  const WebViewPage({super.key, required this.url, required this.title});
 
   @override
   State<WebViewPage> createState() => _WebViewPageState();
@@ -45,8 +41,7 @@ class _WebViewPageState extends State<WebViewPage> {
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-          if (_isLoading)
-            const Center(child: CircularProgressIndicator()),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );

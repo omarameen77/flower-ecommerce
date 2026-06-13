@@ -16,7 +16,8 @@ import 'checkout_repo_impl_test.mocks.dart';
 @GenerateMocks([CheckoutRemoteDataSourceContract])
 void main() {
   late CheckoutRepoImpl checkoutRepoImpl;
-  late MockCheckoutRemoteDataSourceContract mockCheckoutRemoteDataSourceContract;
+  late MockCheckoutRemoteDataSourceContract
+  mockCheckoutRemoteDataSourceContract;
 
   setUpAll(() {
     provideDummy<BaseResponse<CashOnDeliveryDto>>(
@@ -32,9 +33,11 @@ void main() {
   });
 
   setUp(() {
-    mockCheckoutRemoteDataSourceContract = MockCheckoutRemoteDataSourceContract();
-    checkoutRepoImpl =
-        CheckoutRepoImpl(remoteDataSource: mockCheckoutRemoteDataSourceContract);
+    mockCheckoutRemoteDataSourceContract =
+        MockCheckoutRemoteDataSourceContract();
+    checkoutRepoImpl = CheckoutRepoImpl(
+      remoteDataSource: mockCheckoutRemoteDataSourceContract,
+    );
   });
 
   final tCheckoutParams = CheckoutParams(
@@ -57,88 +60,118 @@ void main() {
 
   group('checkoutWithCashOnDelivery', () {
     test(
-        'should return SuccessBaseResponse<CashOnDeliveryModel> when remote data source is successful',
-        () async {
-      when(mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
-        tCheckoutParams,
-      )).thenAnswer((_) async =>
-          SuccessBaseResponse<CashOnDeliveryDto>(data: tCashOnDeliveryDto));
+      'should return SuccessBaseResponse<CashOnDeliveryModel> when remote data source is successful',
+      () async {
+        when(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
+            tCheckoutParams,
+          ),
+        ).thenAnswer(
+          (_) async =>
+              SuccessBaseResponse<CashOnDeliveryDto>(data: tCashOnDeliveryDto),
+        );
 
-      final result =
-          await checkoutRepoImpl.checkoutWithCashOnDelivery(tCheckoutParams);
+        final result = await checkoutRepoImpl.checkoutWithCashOnDelivery(
+          tCheckoutParams,
+        );
 
-      expect(result, isA<SuccessBaseResponse<CashOnDeliveryModel>>());
-      final successResult = result as SuccessBaseResponse<CashOnDeliveryModel>;
-      expect(successResult.data.orderNumber, "ORD-123");
-      expect(successResult.data.paymentType, "cash");
-      verify(mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
-        tCheckoutParams,
-      )).called(1);
-      verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
-    });
+        expect(result, isA<SuccessBaseResponse<CashOnDeliveryModel>>());
+        final successResult =
+            result as SuccessBaseResponse<CashOnDeliveryModel>;
+        expect(successResult.data.orderNumber, "ORD-123");
+        expect(successResult.data.paymentType, "cash");
+        verify(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
+            tCheckoutParams,
+          ),
+        ).called(1);
+        verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
+      },
+    );
 
     test(
-        'should return ErrorBaseResponse<CashOnDeliveryModel> when remote data source fails',
-        () async {
-      final tFailure = Failure(message: 'Remote Error');
-      when(mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
-        tCheckoutParams,
-      )).thenAnswer((_) async =>
-          ErrorBaseResponse<CashOnDeliveryDto>(failure: tFailure));
+      'should return ErrorBaseResponse<CashOnDeliveryModel> when remote data source fails',
+      () async {
+        final tFailure = Failure(message: 'Remote Error');
+        when(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
+            tCheckoutParams,
+          ),
+        ).thenAnswer(
+          (_) async => ErrorBaseResponse<CashOnDeliveryDto>(failure: tFailure),
+        );
 
-      final result =
-          await checkoutRepoImpl.checkoutWithCashOnDelivery(tCheckoutParams);
+        final result = await checkoutRepoImpl.checkoutWithCashOnDelivery(
+          tCheckoutParams,
+        );
 
-      expect(result, isA<ErrorBaseResponse<CashOnDeliveryModel>>());
-      final errorResult = result as ErrorBaseResponse<CashOnDeliveryModel>;
-      expect(errorResult.failure, tFailure);
-      verify(mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
-        tCheckoutParams,
-      )).called(1);
-      verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
-    });
+        expect(result, isA<ErrorBaseResponse<CashOnDeliveryModel>>());
+        final errorResult = result as ErrorBaseResponse<CashOnDeliveryModel>;
+        expect(errorResult.failure, tFailure);
+        verify(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCashOnDelivery(
+            tCheckoutParams,
+          ),
+        ).called(1);
+        verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
+      },
+    );
   });
 
   group('checkoutWithCreditCard', () {
     test(
-        'should return SuccessBaseResponse<CreditCardModel> when remote data source is successful',
-        () async {
-      when(mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
-        tCheckoutParams,
-      )).thenAnswer((_) async =>
-          SuccessBaseResponse<CreditCardDto>(data: tCreditCardDto));
+      'should return SuccessBaseResponse<CreditCardModel> when remote data source is successful',
+      () async {
+        when(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
+            tCheckoutParams,
+          ),
+        ).thenAnswer(
+          (_) async => SuccessBaseResponse<CreditCardDto>(data: tCreditCardDto),
+        );
 
-      final result =
-          await checkoutRepoImpl.checkoutWithCreditCard(tCheckoutParams);
+        final result = await checkoutRepoImpl.checkoutWithCreditCard(
+          tCheckoutParams,
+        );
 
-      expect(result, isA<SuccessBaseResponse<CreditCardModel>>());
-      final successResult = result as SuccessBaseResponse<CreditCardModel>;
-      expect(successResult.data.url, "https://checkout.stripe.com/test");
-      verify(mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
-        tCheckoutParams,
-      )).called(1);
-      verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
-    });
+        expect(result, isA<SuccessBaseResponse<CreditCardModel>>());
+        final successResult = result as SuccessBaseResponse<CreditCardModel>;
+        expect(successResult.data.url, "https://checkout.stripe.com/test");
+        verify(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
+            tCheckoutParams,
+          ),
+        ).called(1);
+        verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
+      },
+    );
 
     test(
-        'should return ErrorBaseResponse<CreditCardModel> when remote data source fails',
-        () async {
-      final tFailure = Failure(message: 'Remote Error');
-      when(mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
-        tCheckoutParams,
-      )).thenAnswer((_) async =>
-          ErrorBaseResponse<CreditCardDto>(failure: tFailure));
+      'should return ErrorBaseResponse<CreditCardModel> when remote data source fails',
+      () async {
+        final tFailure = Failure(message: 'Remote Error');
+        when(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
+            tCheckoutParams,
+          ),
+        ).thenAnswer(
+          (_) async => ErrorBaseResponse<CreditCardDto>(failure: tFailure),
+        );
 
-      final result =
-          await checkoutRepoImpl.checkoutWithCreditCard(tCheckoutParams);
+        final result = await checkoutRepoImpl.checkoutWithCreditCard(
+          tCheckoutParams,
+        );
 
-      expect(result, isA<ErrorBaseResponse<CreditCardModel>>());
-      final errorResult = result as ErrorBaseResponse<CreditCardModel>;
-      expect(errorResult.failure, tFailure);
-      verify(mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
-        tCheckoutParams,
-      )).called(1);
-      verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
-    });
+        expect(result, isA<ErrorBaseResponse<CreditCardModel>>());
+        final errorResult = result as ErrorBaseResponse<CreditCardModel>;
+        expect(errorResult.failure, tFailure);
+        verify(
+          mockCheckoutRemoteDataSourceContract.checkoutWithCreditCard(
+            tCheckoutParams,
+          ),
+        ).called(1);
+        verifyNoMoreInteractions(mockCheckoutRemoteDataSourceContract);
+      },
+    );
   });
 }

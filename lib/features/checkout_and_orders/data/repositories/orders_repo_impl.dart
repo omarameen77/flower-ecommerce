@@ -15,14 +15,12 @@ class OrdersRepoImpl implements OrdersRepo {
   Future<BaseResponse<List<OrderModel>>> getOrders(int page, int limit) async {
     final response = await remoteDataSource.getOrders(page, limit);
     return switch (response) {
-      SuccessBaseResponse<OrdersResponseDto>() => SuccessBaseResponse<List<OrderModel>>(
-        data: (response.data.orders ?? [])
-            .map((e) => e.toModel())
-            .toList(),
-      ),
-      ErrorBaseResponse<OrdersResponseDto>() => ErrorBaseResponse<List<OrderModel>>(
-        failure: response.failure,
-      ),
+      SuccessBaseResponse<OrdersResponseDto>() =>
+        SuccessBaseResponse<List<OrderModel>>(
+          data: (response.data.orders ?? []).map((e) => e.toModel()).toList(),
+        ),
+      ErrorBaseResponse<OrdersResponseDto>() =>
+        ErrorBaseResponse<List<OrderModel>>(failure: response.failure),
     };
   }
 }

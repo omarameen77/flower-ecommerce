@@ -12,18 +12,14 @@ class CreditCardDto {
   @JsonKey(name: "session")
   Session? session;
 
-  CreditCardDto({
-    this.error,
-    this.message,
-    this.session,
-  });
+  CreditCardDto({this.error, this.message, this.session});
 
   CreditCardModel toModel() => CreditCardModel(
-        error: error,
-        message: message,
-        url: session?.url,
-        successUrl: session?.successUrl,
-      );
+    error: error,
+    message: message,
+    url: session?.url,
+    successUrl: session?.successUrl,
+  );
 
   factory CreditCardDto.fromJson(Map<String, dynamic> json) =>
       _$CreditCardDtoFromJson(json);
@@ -85,7 +81,8 @@ class Session {
     this.url,
   });
 
-  factory Session.fromJson(Map<String, dynamic> json) => _$SessionFromJson(json);
+  factory Session.fromJson(Map<String, dynamic> json) =>
+      _$SessionFromJson(json);
 
   Map<String, dynamic> toJson() => _$SessionToJson(this);
 }

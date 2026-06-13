@@ -31,16 +31,11 @@ class CheckoutBottomButton extends StatelessWidget {
         child: switch (status) {
           CheckoutStatus.loading => const ButtonLoadingWidget(),
           CheckoutStatus.paymentPending => PrimaryButton(
-              text: CheckoutConstants.paymentCompleted,
-              onTap: () => Navigator.pushReplacementNamed(
-                context,
-                Routes.thankYou,
-              ),
-            ),
-          _ => PrimaryButton(
-              text: CheckoutConstants.placeOrder,
-              onTap: onTap,
-            ),
+            text: CheckoutConstants.paymentCompleted,
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, Routes.thankYou),
+          ),
+          _ => PrimaryButton(text: CheckoutConstants.placeOrder, onTap: onTap),
         },
       ),
     );

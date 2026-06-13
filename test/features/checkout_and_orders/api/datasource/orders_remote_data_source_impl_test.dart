@@ -15,8 +15,9 @@ void main() {
 
   setUp(() {
     mockOrdersApiClient = MockOrdersApiClient();
-    ordersRemoteDataSourceImpl =
-        OrdersRemoteDataSourceImpl(ordersApiClient: mockOrdersApiClient);
+    ordersRemoteDataSourceImpl = OrdersRemoteDataSourceImpl(
+      ordersApiClient: mockOrdersApiClient,
+    );
   });
 
   final tPage = 1;
@@ -47,30 +48,42 @@ void main() {
   );
 
   group('getOrders', () {
-    test('should return SuccessBaseResponse when api client returns orders',
-        () async {
-      when(mockOrdersApiClient.getOrders(tPage, tLimit))
-          .thenAnswer((_) async => tOrdersResponseDto);
+    test(
+      'should return SuccessBaseResponse when api client returns orders',
+      () async {
+        when(
+          mockOrdersApiClient.getOrders(tPage, tLimit),
+        ).thenAnswer((_) async => tOrdersResponseDto);
 
-      final result = await ordersRemoteDataSourceImpl.getOrders(tPage, tLimit);
+        final result = await ordersRemoteDataSourceImpl.getOrders(
+          tPage,
+          tLimit,
+        );
 
-      expect(result, isA<SuccessBaseResponse<OrdersResponseDto>>());
-      final successResult = result as SuccessBaseResponse<OrdersResponseDto>;
-      expect(successResult.data, tOrdersResponseDto);
-      verify(mockOrdersApiClient.getOrders(tPage, tLimit)).called(1);
-      verifyNoMoreInteractions(mockOrdersApiClient);
-    });
+        expect(result, isA<SuccessBaseResponse<OrdersResponseDto>>());
+        final successResult = result as SuccessBaseResponse<OrdersResponseDto>;
+        expect(successResult.data, tOrdersResponseDto);
+        verify(mockOrdersApiClient.getOrders(tPage, tLimit)).called(1);
+        verifyNoMoreInteractions(mockOrdersApiClient);
+      },
+    );
 
-    test('should return ErrorBaseResponse when api client throws an exception',
-        () async {
-      when(mockOrdersApiClient.getOrders(tPage, tLimit))
-          .thenThrow(Exception('Network error'));
+    test(
+      'should return ErrorBaseResponse when api client throws an exception',
+      () async {
+        when(
+          mockOrdersApiClient.getOrders(tPage, tLimit),
+        ).thenThrow(Exception('Network error'));
 
-      final result = await ordersRemoteDataSourceImpl.getOrders(tPage, tLimit);
+        final result = await ordersRemoteDataSourceImpl.getOrders(
+          tPage,
+          tLimit,
+        );
 
-      expect(result, isA<ErrorBaseResponse<OrdersResponseDto>>());
-      verify(mockOrdersApiClient.getOrders(tPage, tLimit)).called(1);
-      verifyNoMoreInteractions(mockOrdersApiClient);
-    });
+        expect(result, isA<ErrorBaseResponse<OrdersResponseDto>>());
+        verify(mockOrdersApiClient.getOrders(tPage, tLimit)).called(1);
+        verifyNoMoreInteractions(mockOrdersApiClient);
+      },
+    );
   });
 }

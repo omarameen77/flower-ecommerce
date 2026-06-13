@@ -17,8 +17,7 @@ class CheckoutAddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<SavedAddressesCubit>().state;
-    final addresses =
-        state.addressesState.data ?? const <AddressEntity>[];
+    final addresses = state.addressesState.data ?? const <AddressEntity>[];
     final current = state.currentAddress;
 
     return Container(
@@ -53,20 +52,16 @@ class CheckoutAddressCard extends StatelessWidget {
               ),
             )
           else
-            ...addresses.map((a) => _AddressTile(
-                  address: a,
-                  isSelected: a.id == current?.id,
-                )),
+            ...addresses.map(
+              (a) => _AddressTile(address: a, isSelected: a.id == current?.id),
+            ),
           const AppSizedBox(height: AppSize.s8),
           TextButton.icon(
             onPressed: () => Navigator.pushNamed(context, Routes.addAddress),
             icon: const Icon(Icons.add, size: AppSize.s18),
             label: Text(
               CheckoutConstants.addNewAddress,
-              style: getMediumStyle(
-                context: context,
-                color: AppColors.primary,
-              ),
+              style: getMediumStyle(context: context, color: AppColors.primary),
             ),
           ),
         ],
@@ -79,25 +74,25 @@ class _AddressTile extends StatelessWidget {
   final AddressEntity address;
   final bool isSelected;
 
-  const _AddressTile({
-    required this.address,
-    required this.isSelected,
-  });
+  const _AddressTile({required this.address, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context
-            .read<SavedAddressesCubit>()
-            .doIntent(SelectAddressIntent(address.id));
+        context.read<SavedAddressesCubit>().doIntent(
+          SelectAddressIntent(address.id),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: AppSize.s4),
         child: Row(
           children: [
-            const Icon(Icons.location_on_outlined,
-                color: AppColors.textPrimary, size: AppSize.s20),
+            const Icon(
+              Icons.location_on_outlined,
+              color: AppColors.textPrimary,
+              size: AppSize.s20,
+            ),
             const AppSizedBox(width: AppSize.s8),
             Expanded(
               child: Column(
@@ -125,9 +120,9 @@ class _AddressTile extends StatelessWidget {
               value: address.id,
               groupValue: isSelected ? address.id : null,
               onChanged: (_) {
-                context
-                    .read<SavedAddressesCubit>()
-                    .doIntent(SelectAddressIntent(address.id));
+                context.read<SavedAddressesCubit>().doIntent(
+                  SelectAddressIntent(address.id),
+                );
               },
               activeColor: AppColors.primary,
             ),
