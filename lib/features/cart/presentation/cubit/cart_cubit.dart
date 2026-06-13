@@ -10,7 +10,7 @@ import 'package:flower/features/cart/domain/usecases/update_cart_item_quantity_u
 import 'cart_events.dart';
 import 'cart_state.dart';
 
-@injectable
+@lazySingleton
 class CartCubit extends Cubit<CartState> {
   final AddProductToCartUseCase addProductToCartUseCase;
 
@@ -40,6 +40,9 @@ class CartCubit extends Cubit<CartState> {
 
       case UpdateCartQuantityEvent():
         await _onUpdateQuantity(event);
+
+      case ResetCartEvent():
+        emit(const CartState());
     }
   }
 

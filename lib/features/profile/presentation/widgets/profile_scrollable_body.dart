@@ -80,7 +80,8 @@ class ProfileScrollableBody extends StatelessWidget {
                   color: Colors.black,
                 ),
                 title: ProfileConstants.savedAddress,
-                onTap: () {},
+                onTap: () =>
+                    Navigator.pushNamed(context, Routes.savedAddresses),
               ),
               AppSizedBox(height: 16),
             ],
