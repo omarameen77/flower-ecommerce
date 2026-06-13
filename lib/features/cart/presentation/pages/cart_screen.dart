@@ -1,3 +1,4 @@
+import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/cart_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
@@ -100,7 +101,14 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     child: PrimaryButton(
                       text: CartConstants.checkOut,
-                      onTap: () {},
+                      onTap: () {
+                        final subtotal = state.cart?.cart?.totalPrice ?? 0;
+                        Navigator.pushNamed(
+                          context,
+                          Routes.checkout,
+                          arguments: subtotal,
+                        );
+                      },
                     ),
                   ),
                 ],

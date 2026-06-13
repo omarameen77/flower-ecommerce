@@ -71,7 +71,9 @@ class ProfileScrollableBody extends StatelessWidget {
                   ),
                 ),
                 title: ProfileConstants.myOrders,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.orders);
+                },
               ),
               AppSizedBox(height: 14),
               ProfileMenuRow(

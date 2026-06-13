@@ -182,6 +182,38 @@
     "loading": "Loading...",
     "press_back_again_to_exit": "Press back again to exit"
   },
+  "checkout": {
+    "title": "Checkout",
+    "shipping_address": "Shipping Address",
+    "add_new_address": "Add new address",
+    "payment_method": "Payment Method",
+    "cash_on_delivery": "Cash on Delivery",
+    "credit_card": "Credit Card",
+    "send_as_gift": "Send as a gift",
+    "receiver_name": "Receiver Name",
+    "receiver_phone": "Receiver Phone",
+    "receiver_address": "Receiver Address",
+    "place_order": "Place Order",
+    "order_placed": "Order Placed!",
+    "thank_you": "Thank You!",
+    "thank_you_message": "Your order has been placed successfully.",
+    "continue_shopping": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "delivery": "Delivery",
+    "total": "Total",
+    "delivery_time": "Delivery Time",
+    "instant": "Instant",
+    "payment_completed": "Payment Completed"
+  },
+  "orders": {
+    "my_orders": "My Orders",
+    "active": "Active",
+    "completed": "Completed",
+    "no_active_orders": "No active orders",
+    "no_completed_orders": "No completed orders",
+    "order_number": "Order #{number}",
+    "track_order": "Track Order"
+  },
   "edit_profile": {
     "title": "Edit Profile",
     "first_name": "First name",

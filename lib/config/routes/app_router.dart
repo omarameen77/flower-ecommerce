@@ -18,6 +18,12 @@ import 'package:flower/features/auth/presentation/reset_password/cubit/reset_pas
 import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
+import 'package:flower/features/checkout_and_orders/presentation/checkout/cubit/checkout_cubit.dart';
+import 'package:flower/features/checkout_and_orders/presentation/checkout/pages/checkout_page.dart';
+import 'package:flower/features/checkout_and_orders/presentation/checkout/pages/payment_web_view_page.dart';
+import 'package:flower/features/checkout_and_orders/presentation/checkout/pages/thank_you_page.dart';
+import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_cubit.dart';
+import 'package:flower/features/checkout_and_orders/presentation/orders/pages/orders_page.dart';
 import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
 import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
@@ -134,6 +140,31 @@ abstract class AppRouter {
           return PageTransitions.slide(const TermsConditionsPage());
         case Routes.notifications:
           return PageTransitions.slide(const NotificationsPage());
+        case Routes.checkout:
+          final subtotal = settings.arguments as int? ?? 0;
+          return PageTransitions.slide(
+            BlocProvider(
+              create: (_) => getIt<CheckoutCubit>(),
+              child: CheckoutPage(subtotal: subtotal),
+            ),
+          );
+
+        case Routes.thankYou:
+          return PageTransitions.slide(const ThankYouPage());
+
+        case Routes.paymentWebView:
+          final args = settings.arguments as Map<String, dynamic>? ?? {};
+          final url = args['url'] as String? ?? '';
+          final successUrl = args['successUrl'] as String?;
+          return PageTransitions.slide(PaymentWebViewPage(url: url, successUrl: successUrl));
+
+        case Routes.orders:
+          return PageTransitions.slide(
+            BlocProvider(
+              create: (_) => getIt<OrdersCubit>(),
+              child: const OrdersPage(),
+            ),
+          );
 
         default:
           return PageTransitions.fade(
