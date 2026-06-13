@@ -69,10 +69,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(CheckoutConstants.title),
-        backgroundColor: AppColors.surface,
       ),
       body: BlocListener<CheckoutCubit, CheckoutState>(
         listenWhen: (previous, current) =>
