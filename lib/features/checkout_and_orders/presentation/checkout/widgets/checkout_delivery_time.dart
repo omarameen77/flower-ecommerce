@@ -56,9 +56,7 @@ class CheckoutDeliveryTime extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(AppSize.s16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

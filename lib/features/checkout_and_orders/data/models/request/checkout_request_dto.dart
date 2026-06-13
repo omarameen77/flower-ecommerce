@@ -7,9 +7,7 @@ class CheckoutRequestDto {
   @JsonKey(name: "shippingAddress")
   final ShippingAddressDto shippingAddress;
 
-  CheckoutRequestDto({
-    required this.shippingAddress,
-  });
+  CheckoutRequestDto({required this.shippingAddress});
 
   factory CheckoutRequestDto.fromJson(Map<String, dynamic> json) =>
       _$CheckoutRequestDtoFromJson(json);

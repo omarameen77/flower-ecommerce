@@ -16,16 +16,18 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   final CheckoutWithCardUseCase _checkoutWithCardUseCase;
 
   CheckoutCubit(this._checkoutWithCashUseCase, this._checkoutWithCardUseCase)
-      : super(const CheckoutState());
+    : super(const CheckoutState());
 
   Future<void> doEvent(CheckoutEvent event) async {
     switch (event) {
       case ChangePaymentMethod():
-        emit(state.copyWith(
-          selectedPayment: event.index,
-          clearError: true,
-          paymentUrl: null,
-        ));
+        emit(
+          state.copyWith(
+            selectedPayment: event.index,
+            clearError: true,
+            paymentUrl: null,
+          ),
+        );
       case ToggleGift():
         emit(state.copyWith(isGift: event.value, clearError: true));
       case PlaceOrderWithCash():
@@ -34,15 +36,13 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         await _placeOrderWithCard(event);
       case PaymentCompleted():
         if (event.success) {
-          emit(state.copyWith(
-            status: CheckoutStatus.success,
-            paymentUrl: null,
-          ));
+          emit(
+            state.copyWith(status: CheckoutStatus.success, paymentUrl: null),
+          );
         } else {
-          emit(state.copyWith(
-            status: CheckoutStatus.error,
-            errorMessage: null,
-          ));
+          emit(
+            state.copyWith(status: CheckoutStatus.error, errorMessage: null),
+          );
         }
     }
   }
@@ -62,15 +62,14 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
     switch (response) {
       case SuccessBaseResponse():
-        emit(state.copyWith(
-          status: CheckoutStatus.success,
-          paymentUrl: null,
-        ));
+        emit(state.copyWith(status: CheckoutStatus.success, paymentUrl: null));
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          status: CheckoutStatus.error,
-          errorMessage: response.failure.message,
-        ));
+        emit(
+          state.copyWith(
+            status: CheckoutStatus.error,
+            errorMessage: response.failure.message,
+          ),
+        );
     }
   }
 
@@ -89,16 +88,20 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
     switch (response) {
       case SuccessBaseResponse<CreditCardModel>():
-        emit(state.copyWith(
-          status: CheckoutStatus.paymentPending,
-          paymentUrl: response.data.url,
-          successUrl: response.data.successUrl,
-        ));
+        emit(
+          state.copyWith(
+            status: CheckoutStatus.paymentPending,
+            paymentUrl: response.data.url,
+            successUrl: response.data.successUrl,
+          ),
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          status: CheckoutStatus.error,
-          errorMessage: response.failure.message,
-        ));
+        emit(
+          state.copyWith(
+            status: CheckoutStatus.error,
+            errorMessage: response.failure.message,
+          ),
+        );
     }
   }
 }

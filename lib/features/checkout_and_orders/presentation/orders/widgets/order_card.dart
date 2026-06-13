@@ -75,7 +75,10 @@ class OrderCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,
-                  child: PrimaryButton(text: OrdersConstants.trackOrder, onTap: () {}),
+                  child: PrimaryButton(
+                    text: OrdersConstants.trackOrder,
+                    onTap: () {},
+                  ),
                 ),
               ],
             ),

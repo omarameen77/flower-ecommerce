@@ -27,7 +27,9 @@ class _TermsConditionsPageState extends State<TermsConditionsPage> {
         ),
       )
       ..loadRequest(
-        Uri.parse('https://elevate-flutter-team.github.io/flower_app_web_views/terms.html'),
+        Uri.parse(
+          'https://elevate-flutter-team.github.io/flower_app_web_views/terms.html',
+        ),
       );
   }
 
@@ -42,8 +44,7 @@ class _TermsConditionsPageState extends State<TermsConditionsPage> {
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-          if (_isLoading)
-            const Center(child: CircularProgressIndicator()),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );

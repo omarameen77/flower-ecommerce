@@ -42,26 +42,30 @@ void main() {
   );
 
   test(
-      'should return SuccessBaseResponse when repository call is successful',
-      () async {
-    when(mockCheckoutRepo.checkoutWithCreditCard(tCheckoutParams))
-        .thenAnswer((_) async =>
-            SuccessBaseResponse<CreditCardModel>(data: tCreditCardModel));
+    'should return SuccessBaseResponse when repository call is successful',
+    () async {
+      when(mockCheckoutRepo.checkoutWithCreditCard(tCheckoutParams)).thenAnswer(
+        (_) async =>
+            SuccessBaseResponse<CreditCardModel>(data: tCreditCardModel),
+      );
 
-    final result = await checkoutWithCardUseCase.call(tCheckoutParams);
+      final result = await checkoutWithCardUseCase.call(tCheckoutParams);
 
-    expect(result, isA<SuccessBaseResponse<CreditCardModel>>());
-    final successResult = result as SuccessBaseResponse<CreditCardModel>;
-    expect(successResult.data, tCreditCardModel);
-    verify(mockCheckoutRepo.checkoutWithCreditCard(tCheckoutParams)).called(1);
-    verifyNoMoreInteractions(mockCheckoutRepo);
-  });
+      expect(result, isA<SuccessBaseResponse<CreditCardModel>>());
+      final successResult = result as SuccessBaseResponse<CreditCardModel>;
+      expect(successResult.data, tCreditCardModel);
+      verify(
+        mockCheckoutRepo.checkoutWithCreditCard(tCheckoutParams),
+      ).called(1);
+      verifyNoMoreInteractions(mockCheckoutRepo);
+    },
+  );
 
   test('should return ErrorBaseResponse when repository call fails', () async {
     final tFailure = Failure(message: 'Checkout failed');
-    when(mockCheckoutRepo.checkoutWithCreditCard(tCheckoutParams))
-        .thenAnswer((_) async =>
-            ErrorBaseResponse<CreditCardModel>(failure: tFailure));
+    when(mockCheckoutRepo.checkoutWithCreditCard(tCheckoutParams)).thenAnswer(
+      (_) async => ErrorBaseResponse<CreditCardModel>(failure: tFailure),
+    );
 
     final result = await checkoutWithCardUseCase.call(tCheckoutParams);
 

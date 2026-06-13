@@ -12,17 +12,14 @@ class CashOnDeliveryDto {
   @JsonKey(name: "order")
   Order? order;
 
-  CashOnDeliveryDto({
-    this.message,
-    this.order,
-  });
+  CashOnDeliveryDto({this.message, this.order});
 
   CashOnDeliveryModel toModel() => CashOnDeliveryModel(
-        error: error,
-        message: message,
-        orderNumber: order?.orderNumber,
-        paymentType: order?.paymentType,
-      );
+    error: error,
+    message: message,
+    orderNumber: order?.orderNumber,
+    paymentType: order?.paymentType,
+  );
 
   factory CashOnDeliveryDto.fromJson(Map<String, dynamic> json) =>
       _$CashOnDeliveryDtoFromJson(json);
@@ -86,11 +83,7 @@ class OrderItem {
   @JsonKey(name: "_id")
   String? id;
 
-  OrderItem({
-    this.price,
-    this.quantity,
-    this.id,
-  });
+  OrderItem({this.price, this.quantity, this.id});
 
   factory OrderItem.fromJson(Map<String, dynamic> json) =>
       _$OrderItemFromJson(json);
