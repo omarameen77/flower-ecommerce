@@ -36,8 +36,9 @@ class HomeScreen extends StatelessWidget {
               const CategoriesSection(),
               const AppSizedBox(height: AppSize.s24),
               BlocProvider(
-                create: (_) => getIt<ProductCubit>()
-                  ..doEvent(const GetProductEvent(sort: '-sold')),
+                create: (_) =>
+                    getIt<ProductCubit>()
+                      ..doEvent(const GetProductEvent(sort: '-sold')),
                 child: const BestSellersSection(),
               ),
               const AppSizedBox(height: AppSize.s24),
