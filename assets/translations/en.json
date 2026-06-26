@@ -100,8 +100,14 @@
   "searchHint":"Search For Any Product You Want",
   "product_not_found":"No Products Found",
   "all":"All",
-  "searching":"Searching..."
-
+  "searching":"Searching...",
+  "sort_by":"Sort by",
+  "lowest_price":"Lowest Price",
+  "highest_price":"Highest Price",
+  "new":"New",
+  "old":"Old",
+  "discount":"Discount",
+  "filter":"Filter"
 },"general": {
   "ok": "OK",
   "cancel": "Cancel",
@@ -165,13 +171,6 @@
     "categories_tab": "Categories",
     "cart_tab": "Cart",
     "profile_tab": "Profile"
-  },
-  "home": {
-    "search": "Search",
-    "searchHint": "Search For Any Product You Want",
-    "product_not_found": "No Products Found",
-    "all": "All",
-    "searching": "Searching..."
   },
   "general": {
     "ok": "OK",

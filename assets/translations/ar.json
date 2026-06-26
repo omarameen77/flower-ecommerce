@@ -99,7 +99,14 @@
   "searchHint":"ابحث عن المنتجات  ",
   "product_not_found":"غير متاح",
   "all":"الجميع",
-  "searching":"...جاري البحث"
+  "searching":"...جاري البحث",
+  "sort_by":"ترتيب حسب",
+  "lowest_price":"الأقل سعراً",
+  "highest_price":"الأعلى سعراً",
+  "new":"الأحدث",
+  "old":"الأقدم",
+  "discount":"الخصم",
+  "filter":"تصفية"
 },
 "general": {
   "ok": "حسناً",

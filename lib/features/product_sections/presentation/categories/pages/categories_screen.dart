@@ -1,11 +1,13 @@
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/home_constants.dart';
+import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/custom_text_field.dart';
 import 'package:flower/features/product_sections/domain/entities/category_entity.dart';
 import 'package:flower/features/product_sections/presentation/categories/widgets/linear_indicator_widget.dart';
 import 'package:flower/features/product_sections/presentation/categories/widgets/sliver_tab_bar_delegate.dart';
+import 'package:flower/features/product_sections/presentation/categories/widgets/sort_filter_bottom_sheet.dart';
 import 'package:flower/features/product_sections/presentation/categories/widgets/view_product_widget.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_event.dart';
@@ -89,7 +91,7 @@ class _CategoryScreenState extends State<CategoryScreen>
                       children: [
                         Expanded(
                           child: Hero(
-                            tag: "search-field",
+                            tag: AppStrings.searchFieldHeroTag,
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
@@ -111,7 +113,10 @@ class _CategoryScreenState extends State<CategoryScreen>
                           ),
                         ),
                         const AppSizedBox(width: 10),
-                        _buildFilterButton(),
+                        _buildFilterButton(
+                          context,
+                          categories[state.selectedCategoryIndex].id,
+                        ),
                       ],
                     ),
                   ),
@@ -177,15 +182,20 @@ class _CategoryScreenState extends State<CategoryScreen>
     );
   }
 
-  Widget _buildFilterButton() {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.textSecondary),
-        borderRadius: BorderRadius.circular(8),
+  Widget _buildFilterButton(BuildContext context, String? activeCategoryId) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () =>
+          showSortFilterSheet(context, activeCategoryId: activeCategoryId),
+      child: Container(
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.textSecondary),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Center(child: Icon(Icons.filter_list_sharp)),
       ),
-      child: const Center(child: Icon(Icons.filter_list_sharp)),
     );
   }
 }

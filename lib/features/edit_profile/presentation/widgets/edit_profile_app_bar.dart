@@ -10,22 +10,6 @@ class EditProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomAppBar(
-      title: EditProfileConstants.title,
-      actions: [
-        Padding(
-          padding: const EdgeInsetsDirectional.only(end: 8),
-          child: Badge(
-            child: IconButton(
-              icon: const Icon(
-                Icons.notifications_outlined,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            ),
-          ),
-        ),
-      ],
-    );
+    return CustomAppBar(title: EditProfileConstants.title);
   }
 }

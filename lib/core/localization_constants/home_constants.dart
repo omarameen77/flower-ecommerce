@@ -8,4 +8,11 @@ abstract class HomeConstants {
   static String get notFound => "home.product_not_found".tr();
   static String get all => "home.all".tr();
   static String get searching => "home.searching".tr();
+  static String get sortBy => "home.sort_by".tr();
+  static String get lowestPrice => "home.lowest_price".tr();
+  static String get highestPrice => "home.highest_price".tr();
+  static String get newest => "home.new".tr();
+  static String get oldest => "home.old".tr();
+  static String get discount => "home.discount".tr();
+  static String get filter => "home.filter".tr();
 }
