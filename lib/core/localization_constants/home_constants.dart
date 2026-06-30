@@ -15,4 +15,5 @@ abstract class HomeConstants {
   static String get oldest => "home.old".tr();
   static String get discount => "home.discount".tr();
   static String get filter => "home.filter".tr();
+  static String get productloading => "loading...";
 }

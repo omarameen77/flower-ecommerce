@@ -25,7 +25,21 @@ class CartEndPoints {
   static const String removeCartItem = '/cart/{id}';
 }
 
+class CheckoutEndPoints {
+  static const createCashOrder = '/orders';
+  static const checkoutSession = '/orders/checkout';
+}
+
+class OrdersEndPoints {
+  static const getOrders = '/orders';
+}
+
 class NotificationsEndPoints {
   static const String getUserNotifications = '/notifications/user';
   static const String unReadCount = '/notifications/unread-count';
+}
+
+class AddressEndPoints {
+  static const String addresses = '/addresses';
+  static const String addressById = '$addresses/{id}';
 }
