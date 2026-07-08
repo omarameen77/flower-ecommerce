@@ -187,6 +187,28 @@
     "order_number": "طلب #{number}",
     "track_order": "تتبع الطلب"
   },
+  "track_order": {
+    "track_order": "تتبع الطلب",
+    "order_confirmed": "تم تأكيد الطلب بنجاح",
+    "order_not_found": "الطلب غير موجود",
+    "order_delivered": "تم التوصيل!",
+    "thank_you_message": "شكراً لك! تم توصيل طلبك بنجاح.",
+    "continue_shopping": "متابعة التسوق",
+    "pending": "قيد الانتظار",
+    "picked": "تم التجهيز",
+    "in_progress": "قيد التنفيذ",
+    "out_for_delivery": "خرج للتوصيل",
+    "arrived": "وصل",
+    "delivered": "تم التوصيل",
+    "order_status": "حالة الطلب",
+    "current": "الحالية",
+    "confirm_delivery": "تأكيد التوصيل",
+    "store": "المتجر",
+    "order_items": "منتجات الطلب",
+    "qty": "الكمية",
+    "total": "الإجمالي",
+    "payment": "الدفع"
+  },
   "edit_profile": {
     "title": "تعديل الملف الشخصي",
   "first_name": "الاسم الأول",

@@ -1,3 +1,4 @@
+import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/checkout_constants.dart';
 import 'package:flower/core/localization_constants/orders_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
@@ -75,7 +76,31 @@ class OrderCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,
-                  child: PrimaryButton(text: OrdersConstants.trackOrder, onTap: () {}),
+                  child: PrimaryButton(
+                    text: OrdersConstants.trackOrder,
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      Routes.trackOrder,
+                      arguments: {
+                        'orderId': order.id,
+                        'orderData': {
+                          'orderId': order.id,
+                          'state': order.state,
+                          'isDelivered': order.isDelivered,
+                          'order': {
+                            'id': order.id,
+                            'orderNumber': order.orderNumber,
+                            'totalPrice': order.totalPrice,
+                            'paymentType': order.paymentType,
+                            'isPaid': order.isPaid,
+                            'isDelivered': order.isDelivered,
+                            'state': order.state,
+                            'createdAt': order.createdAt,
+                          },
+                        },
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),

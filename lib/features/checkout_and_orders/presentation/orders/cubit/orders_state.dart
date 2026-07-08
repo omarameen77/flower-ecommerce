@@ -1,12 +1,9 @@
 part of 'orders_cubit.dart';
 
-enum OrdersTab { active, completed }
-
 class OrdersState extends Equatable {
   final bool isLoading;
   final bool isLoadingMore;
   final List<OrderModel> allOrders;
-  final OrdersTab selectedTab;
   final String? errorMessage;
   final int currentPage;
   final int totalPages;
@@ -16,7 +13,6 @@ class OrdersState extends Equatable {
     this.isLoading = false,
     this.isLoadingMore = false,
     this.allOrders = const [],
-    this.selectedTab = OrdersTab.active,
     this.errorMessage,
     this.currentPage = 1,
     this.totalPages = 1,
@@ -24,21 +20,13 @@ class OrdersState extends Equatable {
   });
 
   List<OrderModel> get filteredOrders {
-    if (selectedTab == OrdersTab.active) {
-      return allOrders
-          .where((o) => o.state == 'pending' || o.state == 'processing')
-          .toList();
-    }
-    return allOrders
-        .where((o) => o.state == 'delivered' || o.state == 'cancelled')
-        .toList();
+    return allOrders.where((o) => o.state == 'inProgress').toList();
   }
 
   OrdersState copyWith({
     bool? isLoading,
     bool? isLoadingMore,
     List<OrderModel>? allOrders,
-    OrdersTab? selectedTab,
     String? errorMessage,
     int? currentPage,
     int? totalPages,
@@ -48,8 +36,7 @@ class OrdersState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       allOrders: allOrders ?? this.allOrders,
-      selectedTab: selectedTab ?? this.selectedTab,
-      errorMessage: errorMessage,
+      errorMessage: errorMessage ?? this.errorMessage,
       currentPage: currentPage ?? this.currentPage,
       totalPages: totalPages ?? this.totalPages,
       hasMore: hasMore ?? this.hasMore,
@@ -61,7 +48,6 @@ class OrdersState extends Equatable {
     isLoading,
     isLoadingMore,
     allOrders,
-    selectedTab,
     errorMessage,
     currentPage,
     totalPages,

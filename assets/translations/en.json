@@ -205,6 +205,28 @@
     "instant": "Instant",
     "payment_completed": "Payment Completed"
   },
+  "track_order": {
+    "track_order": "Track Order",
+    "order_confirmed": "Order confirmed successfully",
+    "order_not_found": "Order not found",
+    "order_delivered": "Order Delivered!",
+    "thank_you_message": "Thank you! Your order has been delivered successfully.",
+    "continue_shopping": "Continue Shopping",
+    "pending": "Pending",
+    "picked": "Picked",
+    "in_progress": "In Progress",
+    "out_for_delivery": "Out for Delivery",
+    "arrived": "Arrived",
+    "delivered": "Delivered",
+    "order_status": "Order Status",
+    "current": "Current",
+    "confirm_delivery": "Confirm Delivery",
+    "store": "Store",
+    "order_items": "Order Items",
+    "qty": "Qty",
+    "total": "Total",
+    "payment": "Payment"
+  },
   "orders": {
     "my_orders": "My Orders",
     "active": "Active",

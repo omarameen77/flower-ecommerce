@@ -3,11 +3,11 @@ import 'package:flower/core/localization_constants/orders_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
+import 'package:flower/core/widgets/app_error_widget.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_cubit.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_event.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/widgets/order_card.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/widgets/order_card_shimmer.dart';
-import 'package:flower/features/checkout_and_orders/presentation/orders/widgets/orders_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,6 +38,10 @@ class _OrdersPageState extends State<OrdersPage> {
   }
 
   void _onScroll() {
+    if (!_scrollController.hasClients ||
+        _scrollController.position.maxScrollExtent <= 0) {
+      return;
+    }
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       context.read<OrdersCubit>().doEvent(const LoadMoreOrdersEvent());
@@ -64,17 +68,7 @@ class _OrdersPageState extends State<OrdersPage> {
       ),
       body: BlocBuilder<OrdersCubit, OrdersState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              OrdersTabBar(
-                selectedTab: state.selectedTab,
-                onTabSelected: (tab) {
-                  context.read<OrdersCubit>().doEvent(SelectTabEvent(tab));
-                },
-              ),
-              Expanded(child: _buildContent(context, state)),
-            ],
-          );
+          return _buildContent(context, state);
         },
       ),
     );
@@ -90,45 +84,41 @@ class _OrdersPageState extends State<OrdersPage> {
       );
     }
 
-    if (state.errorMessage != null) {
-      return Center(
-        child: Text(
-          state.errorMessage!,
-          style: getRegularStyle(context: context, color: AppColors.error),
-        ),
-      );
-    }
-
     final orders = state.filteredOrders;
 
-    if (orders.isEmpty) {
-      return Center(
-        child: Text(
-          state.selectedTab == OrdersTab.active
-              ? OrdersConstants.noActiveOrders
-              : OrdersConstants.noCompletedOrders,
-          style: getRegularStyle(
-            context: context,
-            fontSize: FontSizeManager.s16,
-            color: AppColors.textSecondary,
-          ),
-        ),
+    if (orders.isNotEmpty) {
+      return ListView.builder(
+        controller: _scrollController,
+        padding: const EdgeInsets.only(top: 8, bottom: 24),
+        itemCount: orders.length + (state.isLoadingMore ? 1 : 0),
+        itemBuilder: (context, index) {
+          if (index == orders.length) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSize.s8),
+              child: OrderCardShimmer(),
+            );
+          }
+          return OrderCard(order: orders[index]);
+        },
       );
     }
 
-    return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.only(top: 8, bottom: 24),
-      itemCount: orders.length + (state.isLoadingMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index == orders.length) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: AppSize.s8),
-            child: OrderCardShimmer(),
-          );
-        }
-        return OrderCard(order: orders[index]);
-      },
+    if (state.errorMessage != null) {
+      return AppErrorWidget(
+        errorMessage: state.errorMessage!,
+        onRetry: () => context.read<OrdersCubit>().doEvent(const GetOrdersEvent()),
+      );
+    }
+
+    return Center(
+      child: Text(
+        OrdersConstants.noActiveOrders,
+        style: getRegularStyle(
+          context: context,
+          fontSize: FontSizeManager.s16,
+          color: AppColors.textSecondary,
+        ),
+      ),
     );
   }
 }

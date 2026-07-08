@@ -74,7 +74,7 @@ class OrderDto {
       orderItems: (json['orderItems'] as List<dynamic>?)
           ?.map((e) => OrderItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      totalPrice: json['totalPrice'] as int?,
+      totalPrice: (json['totalPrice'] as num?)?.toInt(),
       paymentType: json['paymentType'] as String?,
       isPaid: json['isPaid'] as bool?,
       isDelivered: json['isDelivered'] as bool?,

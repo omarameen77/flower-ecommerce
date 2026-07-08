@@ -20,9 +20,6 @@ class OrdersCubit extends Cubit<OrdersState> {
         await _getOrders(event.page, event.limit);
       case LoadMoreOrdersEvent():
         await _loadMoreOrders();
-      case SelectTabEvent():
-        if (state.selectedTab == event.tab) return;
-        emit(state.copyWith(selectedTab: event.tab));
     }
   }
 

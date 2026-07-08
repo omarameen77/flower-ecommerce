@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -208,6 +209,24 @@ import '../../features/product_sections/presentation/shared_cubit/product_cubit/
     as _i538;
 import '../../features/profile/presentation/cubit/get_user_data/profile_cubit.dart'
     as _i1041;
+import '../../features/track_order/api/datasource/track_order_firestore_data_source_impl.dart'
+    as _i726;
+import '../../features/track_order/data/datasources/track_order_firestore_data_source.dart'
+    as _i574;
+import '../../features/track_order/data/repositories/track_order_repo_impl.dart'
+    as _i558;
+import '../../features/track_order/domain/repositories/track_order_repo.dart'
+    as _i528;
+import '../../features/track_order/domain/usecases/confirm_delivery_use_case.dart'
+    as _i585;
+import '../../features/track_order/domain/usecases/get_current_order_use_case.dart'
+    as _i1061;
+import '../../features/track_order/domain/usecases/save_current_order_use_case.dart'
+    as _i772;
+import '../../features/track_order/domain/usecases/watch_order_state_use_case.dart'
+    as _i293;
+import '../../features/track_order/presentation/cubit/track_order_cubit.dart'
+    as _i932;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -220,6 +239,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i563.SafeApiCaller>(() => _i563.SafeApiCaller());
     gh.factory<_i936.AppSectionsCubit>(() => _i936.AppSectionsCubit());
     gh.singleton<_i361.Dio>(() => networkModule.dio);
+    gh.singleton<_i974.FirebaseFirestore>(() => networkModule.firestore);
     gh.lazySingleton<_i298.LocalNotificationService>(
       () => _i298.LocalNotificationService(),
     );
@@ -309,6 +329,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i563.SafeApiCaller>(),
       ),
     );
+    gh.factory<_i574.TrackOrderDataSourceContract>(
+      () => _i726.TrackOrderDataSourceImpl(
+        firestore: gh<_i974.FirebaseFirestore>(),
+      ),
+    );
     gh.lazySingleton<_i761.FcmService>(
       () => _i761.FcmService(gh<_i298.LocalNotificationService>()),
     );
@@ -383,6 +408,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i157.UpdateCartItemQuantityUseCase>(
       () => _i157.UpdateCartItemQuantityUseCase(gh<_i425.CartRepoContract>()),
+    );
+    gh.factory<_i528.TrackOrderRepoContract>(
+      () => _i558.TrackOrderRepoImpl(
+        dataSource: gh<_i574.TrackOrderDataSourceContract>(),
+      ),
     );
     gh.factory<_i821.CheckoutWithCardUseCase>(
       () => _i821.CheckoutWithCardUseCase(gh<_i997.CheckoutRepo>()),
@@ -486,6 +516,18 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i538.ProductCubit(getProductUseCase: gh<_i713.GetProductsUseCase>()),
     );
+    gh.factory<_i585.ConfirmDeliveryUseCase>(
+      () => _i585.ConfirmDeliveryUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
+    gh.factory<_i1061.GetCurrentOrderUseCase>(
+      () => _i1061.GetCurrentOrderUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
+    gh.factory<_i772.SaveCurrentOrderUseCase>(
+      () => _i772.SaveCurrentOrderUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
+    gh.factory<_i293.WatchOrderStateUseCase>(
+      () => _i293.WatchOrderStateUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
     gh.factory<_i1012.GetOrdersUseCase>(
       () => _i1012.GetOrdersUseCase(gh<_i856.OrdersRepo>()),
     );
@@ -538,6 +580,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i660.VerifyResetCodeCubit(
         gh<_i887.VerifyResetCodeUseCase>(),
         gh<_i27.ForgetPasswordUseCase>(),
+      ),
+    );
+    gh.factory<_i932.TrackOrderCubit>(
+      () => _i932.TrackOrderCubit(
+        gh<_i293.WatchOrderStateUseCase>(),
+        gh<_i585.ConfirmDeliveryUseCase>(),
+        gh<_i772.SaveCurrentOrderUseCase>(),
+        gh<_i1061.GetCurrentOrderUseCase>(),
       ),
     );
     gh.factory<_i309.OccasionsProductsCubit>(

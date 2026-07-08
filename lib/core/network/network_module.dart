@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flower/core/network/dio_helper.dart';
 import 'package:flower/core/profile/api/api_client/profile_api_client.dart';
@@ -15,6 +16,9 @@ import 'package:injectable/injectable.dart';
 abstract class NetworkModule {
   @singleton
   Dio get dio => DioHelper.dio;
+
+  @singleton
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   @singleton
   AuthApiClient authApi(Dio dio) => AuthApiClient(dio);
