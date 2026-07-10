@@ -180,9 +180,13 @@
   },
   "orders": {
     "my_orders": "طلباتي",
-    "active": "نشط",
+    "pending": "قيد الانتظار",
+    "in_progress": "قيد التنفيذ",
+    "canceled": "ملغي",
     "completed": "مكتمل",
-    "no_active_orders": "لا توجد طلبات نشطة",
+    "no_pending_orders": "لا توجد طلبات قيد الانتظار",
+    "no_in_progress_orders": "لا توجد طلبات قيد التنفيذ",
+    "no_canceled_orders": "لا توجد طلبات ملغاة",
     "no_completed_orders": "لا توجد طلبات مكتملة",
     "order_number": "طلب #{number}",
     "track_order": "تتبع الطلب"
@@ -207,7 +211,8 @@
     "order_items": "منتجات الطلب",
     "qty": "الكمية",
     "total": "الإجمالي",
-    "payment": "الدفع"
+    "payment": "الدفع",
+    "driver_info": "معلومات السائق"
   },
   "edit_profile": {
     "title": "تعديل الملف الشخصي",

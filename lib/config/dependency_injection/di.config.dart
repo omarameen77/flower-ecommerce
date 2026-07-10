@@ -117,18 +117,26 @@ import '../../features/checkout_and_orders/api/api_client/orders_api_client.dart
     as _i1;
 import '../../features/checkout_and_orders/api/datasources/checkout_remote_data_source_impl.dart'
     as _i1046;
+import '../../features/checkout_and_orders/api/datasources/order_user_info_firestore_data_source_impl.dart'
+    as _i1069;
 import '../../features/checkout_and_orders/api/datasources/orders_remote_data_source_impl.dart'
     as _i495;
 import '../../features/checkout_and_orders/data/datasources/checkout_remote_data_source.dart'
     as _i903;
+import '../../features/checkout_and_orders/data/datasources/order_user_info_firestore_data_source.dart'
+    as _i1034;
 import '../../features/checkout_and_orders/data/datasources/orders_remote_data_source.dart'
     as _i508;
 import '../../features/checkout_and_orders/data/repositories/checkout_repo_impl.dart'
     as _i380;
+import '../../features/checkout_and_orders/data/repositories/order_user_info_repo_impl.dart'
+    as _i518;
 import '../../features/checkout_and_orders/data/repositories/orders_repo_impl.dart'
     as _i854;
 import '../../features/checkout_and_orders/domain/repositories/checkout_repo.dart'
     as _i997;
+import '../../features/checkout_and_orders/domain/repositories/order_user_info_repo.dart'
+    as _i430;
 import '../../features/checkout_and_orders/domain/repositories/orders_repo.dart'
     as _i856;
 import '../../features/checkout_and_orders/domain/usecases/checkout_with_card_usecase.dart'
@@ -137,6 +145,8 @@ import '../../features/checkout_and_orders/domain/usecases/checkout_with_cash_us
     as _i685;
 import '../../features/checkout_and_orders/domain/usecases/get_orders_usecase.dart'
     as _i1012;
+import '../../features/checkout_and_orders/domain/usecases/save_order_user_info_use_case.dart'
+    as _i67;
 import '../../features/checkout_and_orders/presentation/checkout/cubit/checkout_cubit.dart'
     as _i713;
 import '../../features/checkout_and_orders/presentation/orders/cubit/orders_cubit.dart'
@@ -308,6 +318,11 @@ extension GetItInjectableX on _i174.GetIt {
         addressApiClient: gh<_i218.AddressApiClient>(),
       ),
     );
+    gh.factory<_i1034.OrderUserInfoFirestoreDataSourceContract>(
+      () => _i1069.OrderUserInfoFirestoreDataSourceImpl(
+        firestore: gh<_i974.FirebaseFirestore>(),
+      ),
+    );
     gh.lazySingleton<_i49.ProfileRemoteDataSource>(
       () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
     );
@@ -318,6 +333,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i688.NotificationsRepoContract>(
       () => _i220.NotificationsRepoImpl(
         gh<_i703.NotificationsRemoteDataSourceContract>(),
+      ),
+    );
+    gh.lazySingleton<_i430.OrderUserInfoRepo>(
+      () => _i518.OrderUserInfoRepoImpl(
+        gh<_i1034.OrderUserInfoFirestoreDataSourceContract>(),
       ),
     );
     gh.factory<_i406.GetCategoriesUseCase>(
@@ -372,6 +392,9 @@ extension GetItInjectableX on _i174.GetIt {
         authApiClient: gh<_i824.AuthApiClient>(),
       ),
     );
+    gh.factory<_i67.SaveOrderUserInfoUseCase>(
+      () => _i67.SaveOrderUserInfoUseCase(gh<_i430.OrderUserInfoRepo>()),
+    );
     gh.factory<_i303.ProductsSectionDataSourceContract>(
       () => _i370.ProductsSectionsDataSourceImpl(
         productsSectionsApiClient: gh<_i266.ProductsSectionsApiClient>(),
@@ -419,12 +442,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i685.CheckoutWithCashUseCase>(
       () => _i685.CheckoutWithCashUseCase(gh<_i997.CheckoutRepo>()),
-    );
-    gh.factory<_i713.CheckoutCubit>(
-      () => _i713.CheckoutCubit(
-        gh<_i685.CheckoutWithCashUseCase>(),
-        gh<_i821.CheckoutWithCardUseCase>(),
-      ),
     );
     gh.factory<_i386.ProductsSectionRepo>(
       () => _i34.ProductsSectionsRepoImpl(
@@ -476,6 +493,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i838.NotificationInitializer(
         gh<_i761.FcmService>(),
         gh<_i298.LocalNotificationService>(),
+      ),
+    );
+    gh.factory<_i713.CheckoutCubit>(
+      () => _i713.CheckoutCubit(
+        gh<_i685.CheckoutWithCashUseCase>(),
+        gh<_i821.CheckoutWithCardUseCase>(),
+        gh<_i67.SaveOrderUserInfoUseCase>(),
+        gh<_i693.GetProfileUseCase>(),
       ),
     );
     gh.factory<_i458.AddAddressUseCase>(

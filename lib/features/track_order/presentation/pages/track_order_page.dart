@@ -8,6 +8,7 @@ import 'package:flower/features/track_order/presentation/cubit/track_order_cubit
 import 'package:flower/features/track_order/presentation/cubit/track_order_event.dart';
 import 'package:flower/features/track_order/presentation/widgets/confirm_delivery_button.dart';
 import 'package:flower/features/track_order/presentation/widgets/delivered_view_widget.dart';
+import 'package:flower/features/track_order/presentation/widgets/driver_info_widget.dart';
 import 'package:flower/features/track_order/presentation/widgets/order_header_widget.dart';
 import 'package:flower/features/track_order/presentation/widgets/order_items_widget.dart';
 import 'package:flower/features/track_order/presentation/widgets/status_tracker_widget.dart';
@@ -126,6 +127,8 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           OrderHeaderWidget(order: order),
+          const SizedBox(height: 24),
+          DriverInfoWidget(user: entity.user),
           const SizedBox(height: 24),
           StatusTrackerWidget(entity: entity),
           const SizedBox(height: 24),

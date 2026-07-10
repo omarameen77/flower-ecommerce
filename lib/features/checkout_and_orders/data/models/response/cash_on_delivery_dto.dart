@@ -22,6 +22,7 @@ class CashOnDeliveryDto {
         message: message,
         orderNumber: order?.orderNumber,
         paymentType: order?.paymentType,
+        orderId: order?.id,
       );
 
   factory CashOnDeliveryDto.fromJson(Map<String, dynamic> json) =>

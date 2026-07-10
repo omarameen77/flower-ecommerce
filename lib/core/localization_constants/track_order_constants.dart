@@ -23,4 +23,5 @@ abstract class TrackOrderConstants {
   static String get qty => 'track_order.qty'.tr();
   static String get total => 'track_order.total'.tr();
   static String get payment => 'track_order.payment'.tr();
+  static String get driverInfo => 'track_order.driver_info'.tr();
 }

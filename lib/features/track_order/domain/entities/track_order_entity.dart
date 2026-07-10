@@ -23,9 +23,31 @@ class TrackOrderEntity {
       driverRequestedDelivery: data['driverRequestedDelivery'] == true,
       order: data['order'] != null ? OrderData.fromMap(data['order'] as Map<String, dynamic>) : null,
       store: data['store'] != null ? StoreData.fromMap(data['store'] as Map<String, dynamic>) : null,
-      user: data['user'] != null ? UserData.fromMap(data['user'] as Map<String, dynamic>) : null,
+      user: _resolveUser(data),
       state: TrackingStatus.fromString(data['state'] as String?),
     );
+  }
+
+  static UserData? _resolveUser(Map<String, dynamic> data) {
+    if (data['user'] != null && data['user'] is Map<String, dynamic>) {
+      return UserData.fromMap(data['user'] as Map<String, dynamic>);
+    }
+
+    final driverName = data['driverName'] as String?;
+    final driverPhone = data['driverPhone'] as String?;
+    final driverId = data['driverId'] as String?;
+
+    if (driverName != null || driverPhone != null) {
+      final nameParts = (driverName ?? '').split(' ');
+      return UserData(
+        id: driverId,
+        firstName: nameParts.isNotEmpty ? nameParts.first : null,
+        lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : null,
+        phone: driverPhone,
+      );
+    }
+
+    return null;
   }
 
   Map<String, dynamic> toMap() {

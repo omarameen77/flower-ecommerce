@@ -19,8 +19,28 @@ class OrdersState extends Equatable {
     this.hasMore = false,
   });
 
-  List<OrderModel> get filteredOrders {
-    return allOrders.where((o) => o.state == 'inProgress').toList();
+  List<OrderModel> get pendingOrders {
+    return allOrders
+        .where((o) => o.state == 'pending')
+        .toList();
+  }
+
+  List<OrderModel> get inProgressOrders {
+    return allOrders
+        .where((o) => o.state == 'inProgress')
+        .toList();
+  }
+
+  List<OrderModel> get canceledOrders {
+    return allOrders
+        .where((o) => o.state == 'canceled')
+        .toList();
+  }
+
+  List<OrderModel> get completedOrders {
+    return allOrders
+        .where((o) => o.state == 'completed')
+        .toList();
   }
 
   OrdersState copyWith({

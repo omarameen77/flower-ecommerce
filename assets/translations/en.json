@@ -225,13 +225,18 @@
     "order_items": "Order Items",
     "qty": "Qty",
     "total": "Total",
-    "payment": "Payment"
+    "payment": "Payment",
+    "driver_info": "Driver Info"
   },
   "orders": {
     "my_orders": "My Orders",
-    "active": "Active",
+    "pending": "Pending",
+    "in_progress": "In Progress",
+    "canceled": "Canceled",
     "completed": "Completed",
-    "no_active_orders": "No active orders",
+    "no_pending_orders": "No pending orders",
+    "no_in_progress_orders": "No in-progress orders",
+    "no_canceled_orders": "No canceled orders",
     "no_completed_orders": "No completed orders",
     "order_number": "Order #{number}",
     "track_order": "Track Order"

@@ -23,6 +23,7 @@ class CreditCardDto {
         message: message,
         url: session?.url,
         successUrl: session?.successUrl,
+        orderId: session?.clientReferenceId,
       );
 
   factory CreditCardDto.fromJson(Map<String, dynamic> json) =>
