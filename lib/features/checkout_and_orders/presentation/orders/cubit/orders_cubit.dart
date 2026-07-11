@@ -31,17 +31,21 @@ class OrdersCubit extends Cubit<OrdersState> {
 
     switch (response) {
       case SuccessBaseResponse<List<OrderModel>>():
-        emit(state.copyWith(
-          isLoading: false,
-          allOrders: response.data,
-          currentPage: page,
-          hasMore: response.data.length >= limit,
-        ));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            allOrders: response.data,
+            currentPage: page,
+            hasMore: response.data.length >= limit,
+          ),
+        );
       case ErrorBaseResponse<List<OrderModel>>():
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: response.failure.message,
-        ));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            errorMessage: response.failure.message,
+          ),
+        );
     }
   }
 
@@ -57,17 +61,21 @@ class OrdersCubit extends Cubit<OrdersState> {
 
     switch (response) {
       case SuccessBaseResponse<List<OrderModel>>():
-        emit(state.copyWith(
-          isLoadingMore: false,
-          allOrders: [...state.allOrders, ...response.data],
-          currentPage: nextPage,
-          hasMore: response.data.length >= limit,
-        ));
+        emit(
+          state.copyWith(
+            isLoadingMore: false,
+            allOrders: [...state.allOrders, ...response.data],
+            currentPage: nextPage,
+            hasMore: response.data.length >= limit,
+          ),
+        );
       case ErrorBaseResponse<List<OrderModel>>():
-        emit(state.copyWith(
-          isLoadingMore: false,
-          errorMessage: response.failure.message,
-        ));
+        emit(
+          state.copyWith(
+            isLoadingMore: false,
+            errorMessage: response.failure.message,
+          ),
+        );
     }
   }
 }

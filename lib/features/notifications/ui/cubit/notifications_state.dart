@@ -1,26 +1,41 @@
 part of 'notifications_cubit.dart';
 
 class NotificationsState extends Equatable {
-  final BaseState<NotificationsResponseEntity> notificationsState;
+  final List<NotificationsEntity> notifications;
+
+  final bool isLoading;
+
+  final String? errorMessage;
+
   final int unreadCount;
 
   const NotificationsState({
-    this.notificationsState = const BaseState<NotificationsResponseEntity>(
-      isLoading: false,
-    ),
+    this.notifications = const [],
+    this.isLoading = false,
+    this.errorMessage,
     this.unreadCount = 0,
   });
 
   NotificationsState copyWith({
-    BaseState<NotificationsResponseEntity>? notificationsState,
+    List<NotificationsEntity>? notifications,
+    bool? isLoading,
+    String? errorMessage,
+    bool clearError = false,
     int? unreadCount,
   }) {
     return NotificationsState(
-      notificationsState: notificationsState ?? this.notificationsState,
+      notifications: notifications ?? this.notifications,
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
       unreadCount: unreadCount ?? this.unreadCount,
     );
   }
 
   @override
-  List<Object?> get props => [notificationsState, unreadCount];
+  List<Object?> get props => [
+    notifications,
+    isLoading,
+    errorMessage,
+    unreadCount,
+  ];
 }

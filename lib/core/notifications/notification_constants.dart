@@ -5,7 +5,7 @@ class NotificationConstants {
 
   static const channelId = 'flower_notifications';
   static const channelName = 'Flower Notifications';
-  static const channelDescription = 'General notifications for Flower app';
+  static const channelDescription = 'General notifications for Flower App';
 
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
     channelId,

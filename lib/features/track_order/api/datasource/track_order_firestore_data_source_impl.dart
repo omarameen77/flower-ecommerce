@@ -16,11 +16,9 @@ class TrackOrderDataSourceImpl implements TrackOrderDataSourceContract {
 
   @override
   Stream<TrackOrderEntity?> watchOrder({required String orderId}) {
-    return firestore
-        .collection(_collection)
-        .doc(orderId)
-        .snapshots()
-        .map((snapshot) {
+    return firestore.collection(_collection).doc(orderId).snapshots().map((
+      snapshot,
+    ) {
       final data = snapshot.data();
       if (data == null) return null;
       return TrackOrderEntity.fromMap({...data, 'orderId': orderId});

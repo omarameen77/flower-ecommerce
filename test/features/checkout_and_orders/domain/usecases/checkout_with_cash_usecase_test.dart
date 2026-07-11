@@ -43,35 +43,44 @@ void main() {
   );
 
   test(
-      'should return SuccessBaseResponse when repository call is successful',
-      () async {
-    when(mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams))
-        .thenAnswer((_) async =>
-            SuccessBaseResponse<CashOnDeliveryModel>(data: tCashOnDeliveryModel));
+    'should return SuccessBaseResponse when repository call is successful',
+    () async {
+      when(
+        mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams),
+      ).thenAnswer(
+        (_) async => SuccessBaseResponse<CashOnDeliveryModel>(
+          data: tCashOnDeliveryModel,
+        ),
+      );
 
-    final result = await checkoutWithCashUseCase.call(tCheckoutParams);
+      final result = await checkoutWithCashUseCase.call(tCheckoutParams);
 
-    expect(result, isA<SuccessBaseResponse<CashOnDeliveryModel>>());
-    final successResult = result as SuccessBaseResponse<CashOnDeliveryModel>;
-    expect(successResult.data, tCashOnDeliveryModel);
-    verify(mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams))
-        .called(1);
-    verifyNoMoreInteractions(mockCheckoutRepo);
-  });
+      expect(result, isA<SuccessBaseResponse<CashOnDeliveryModel>>());
+      final successResult = result as SuccessBaseResponse<CashOnDeliveryModel>;
+      expect(successResult.data, tCashOnDeliveryModel);
+      verify(
+        mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams),
+      ).called(1);
+      verifyNoMoreInteractions(mockCheckoutRepo);
+    },
+  );
 
   test('should return ErrorBaseResponse when repository call fails', () async {
     final tFailure = Failure(message: 'Checkout failed');
-    when(mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams))
-        .thenAnswer((_) async =>
-            ErrorBaseResponse<CashOnDeliveryModel>(failure: tFailure));
+    when(
+      mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams),
+    ).thenAnswer(
+      (_) async => ErrorBaseResponse<CashOnDeliveryModel>(failure: tFailure),
+    );
 
     final result = await checkoutWithCashUseCase.call(tCheckoutParams);
 
     expect(result, isA<ErrorBaseResponse<CashOnDeliveryModel>>());
     final errorResult = result as ErrorBaseResponse<CashOnDeliveryModel>;
     expect(errorResult.failure, tFailure);
-    verify(mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams))
-        .called(1);
+    verify(
+      mockCheckoutRepo.checkoutWithCashOnDelivery(tCheckoutParams),
+    ).called(1);
     verifyNoMoreInteractions(mockCheckoutRepo);
   });
 }

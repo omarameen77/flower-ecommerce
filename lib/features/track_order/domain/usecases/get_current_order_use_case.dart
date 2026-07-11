@@ -9,9 +9,7 @@ class GetCurrentOrderUseCase {
 
   GetCurrentOrderUseCase(this.repo);
 
-  Future<BaseResponse<TrackOrderEntity?>> call({
-    required String orderId,
-  }) {
+  Future<BaseResponse<TrackOrderEntity?>> call({required String orderId}) {
     return repo.getCurrentOrder(orderId: orderId);
   }
 }

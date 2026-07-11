@@ -1,7 +1,7 @@
-import 'package:flower/features/notifications/domain/entity/notifications_entity.dart';
+import 'package:flower/features/notifications/data/model/notifications_dto.dart';
 
-abstract interface class NotificationsRepoContract {
-  Stream<List<NotificationsEntity>> getUserNotifications(String userId);
+abstract interface class NotificationsFirestoreDataSourceContract {
+  Stream<List<NotificationsDto>> getUserNotifications(String userId);
 
   Stream<int> getUnreadNotificationsCount(String userId);
 

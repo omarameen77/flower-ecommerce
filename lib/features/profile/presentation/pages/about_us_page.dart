@@ -27,7 +27,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
         ),
       )
       ..loadRequest(
-        Uri.parse('https://elevate-flutter-team.github.io/flower_app_web_views/about.html'),
+        Uri.parse(
+          'https://elevate-flutter-team.github.io/flower_app_web_views/about.html',
+        ),
       );
   }
 
@@ -42,8 +44,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-          if (_isLoading)
-            const Center(child: CircularProgressIndicator()),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );

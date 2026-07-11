@@ -1,6 +1,8 @@
 import 'package:flower/config/base/base_response.dart';
+import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/error/error_handler.dart';
 import 'package:flower/core/network/model/user.dart';
+import 'package:flower/core/notifications/fcm_service.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/auth/api/api_client/auth_api_client.dart';
 import 'package:flower/features/auth/data/datasources/auth_remote_data_source.dart';
@@ -29,8 +31,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
         LoginRequestDto(email: params.email, password: params.password),
       );
 
-      if (response.token != null && response.token!.isNotEmpty) {
+      if (response.token != null &&
+          response.token!.isNotEmpty &&
+          response.user != null) {
         await SecureStorageService.saveToken(response.token!);
+        await SecureStorageService.saveUserId(response.user!.id.toString());
+        await getIt<FcmService>().saveCurrentUserToken();
       }
 
       return SuccessBaseResponse<UserDto>(data: response.user!);

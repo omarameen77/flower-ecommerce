@@ -1,19 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'notifications_dto.g.dart';
 
 @JsonSerializable()
 class NotificationsDto {
-  @JsonKey(name: "_id")
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? id;
-  @JsonKey(name: "title")
+
   String? title;
-  @JsonKey(name: "body")
   String? body;
-  @JsonKey(name: "type")
   String? type;
-  @JsonKey(name: "isRead")
   bool? isRead;
-  @JsonKey(name: "createdAt")
+
+  @JsonKey(fromJson: _fromTimestamp, toJson: _toTimestamp)
   DateTime? createdAt;
 
   NotificationsDto({
@@ -29,4 +29,23 @@ class NotificationsDto {
       _$NotificationsDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$NotificationsDtoToJson(this);
+
+  static DateTime? _fromTimestamp(dynamic value) {
+    if (value == null) return null;
+
+    if (value is Timestamp) {
+      return value.toDate();
+    }
+
+    if (value is String) {
+      return DateTime.parse(value);
+    }
+
+    return null;
+  }
+
+  static dynamic _toTimestamp(DateTime? value) {
+    if (value == null) return null;
+    return Timestamp.fromDate(value);
+  }
 }

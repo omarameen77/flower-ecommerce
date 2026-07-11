@@ -19,12 +19,20 @@ class OrderHeaderWidget extends StatelessWidget {
             children: [
               Text(
                 order?.orderNumber ?? '',
-                style: getBoldStyle(context: context, fontSize: 22, color: AppColors.textPrimary),
+                style: getBoldStyle(
+                  context: context,
+                  fontSize: 22,
+                  color: AppColors.textPrimary,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
                 (order?.state?.name ?? '').toUpperCase(),
-                style: getMediumStyle(context: context, fontSize: 14, color: AppColors.primary),
+                style: getMediumStyle(
+                  context: context,
+                  fontSize: 14,
+                  color: AppColors.primary,
+                ),
               ),
             ],
           ),
@@ -32,7 +40,11 @@ class OrderHeaderWidget extends StatelessWidget {
         if (order?.totalPrice != null)
           Text(
             '${CheckoutConstants.egp}${order!.totalPrice!.toStringAsFixed(2)}',
-            style: getBoldStyle(context: context, fontSize: 20, color: AppColors.textPrimary),
+            style: getBoldStyle(
+              context: context,
+              fontSize: 20,
+              color: AppColors.textPrimary,
+            ),
           ),
       ],
     );

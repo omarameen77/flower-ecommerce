@@ -71,7 +71,6 @@ class _SummaryRow extends StatelessWidget {
               ? getSemiBoldStyle(context: context, color: AppColors.textPrimary)
               : getRegularStyle(context: context, color: AppColors.textPrimary),
         ),
-        
       ],
     );
   }

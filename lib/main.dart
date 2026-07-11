@@ -18,12 +18,12 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   DioHelper.init();
   configureDependencies();
-  await getIt<CrashlyticsService>().init();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await EasyLocalization.ensureInitialized();
   await getIt<NotificationInitializer>().initialize();
+  await getIt<CrashlyticsService>().init();
   runApp(
     EasyLocalization(
       supportedLocales: const [

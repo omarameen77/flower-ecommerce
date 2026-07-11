@@ -33,7 +33,8 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
             setState(() => _isLoading = false);
           },
           onNavigationRequest: (request) {
-            if (widget.successUrl != null && request.url.startsWith(widget.successUrl!)) {
+            if (widget.successUrl != null &&
+                request.url.startsWith(widget.successUrl!)) {
               Navigator.of(context).pop(true);
               return NavigationDecision.prevent;
             }
@@ -55,8 +56,7 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-          if (_isLoading)
-            const Center(child: CircularProgressIndicator()),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );

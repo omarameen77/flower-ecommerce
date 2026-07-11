@@ -1,6 +1,7 @@
-import 'package:flower/core/notifications/notification_constants.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
+
+import 'notification_constants.dart';
 
 @lazySingleton
 class LocalNotificationService {
@@ -12,14 +13,16 @@ class LocalNotificationService {
       '@mipmap/ic_launcher',
     );
 
-    const initSettings = InitializationSettings(
+    const iosSettings = DarwinInitializationSettings();
+
+    const settings = InitializationSettings(
       android: androidSettings,
-      iOS: DarwinInitializationSettings(),
+      iOS: iosSettings,
     );
 
     await _localNotifications.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: (response) {},
+      settings,
+      onDidReceiveNotificationResponse: _onNotificationTapped,
     );
 
     final androidPlugin = _localNotifications
@@ -32,9 +35,20 @@ class LocalNotificationService {
     );
   }
 
+  void _onNotificationTapped(NotificationResponse response) {
+    final payload = response.payload;
+
+    if (payload == null) return;
+
+    print("Notification Payload : $payload");
+
+    /// Navigation later
+  }
+
   Future<void> showNotification({
     required String? title,
     required String? body,
+    String? payload,
   }) async {
     await _localNotifications.show(
       DateTime.now().millisecondsSinceEpoch ~/ 1000,
@@ -49,7 +63,9 @@ class LocalNotificationService {
           priority: Priority.high,
           icon: '@mipmap/ic_launcher',
         ),
+        iOS: const DarwinNotificationDetails(),
       ),
+      payload: payload,
     );
   }
 }

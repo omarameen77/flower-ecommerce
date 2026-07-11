@@ -26,7 +26,12 @@ class OrdersMetadataDto {
   final int? limit;
   final int? totalItems;
 
-  OrdersMetadataDto({this.currentPage, this.totalPages, this.limit, this.totalItems});
+  OrdersMetadataDto({
+    this.currentPage,
+    this.totalPages,
+    this.limit,
+    this.totalItems,
+  });
 
   factory OrdersMetadataDto.fromJson(Map<String, dynamic> json) {
     return OrdersMetadataDto(

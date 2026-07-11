@@ -49,19 +49,31 @@ class OrderItemCardWidget extends StatelessWidget {
               children: [
                 Text(
                   product?.title ?? '',
-                  style: getRegularStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+                  style: getRegularStyle(
+                    context: context,
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${TrackOrderConstants.qty}: ${item.quantity ?? 1}',
-                  style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textSecondary),
+                  style: getRegularStyle(
+                    context: context,
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${CheckoutConstants.egp}${item.price?.toStringAsFixed(2) ?? '0.00'}',
-                  style: getBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary),
+                  style: getBoldStyle(
+                    context: context,
+                    fontSize: 16,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ],
             ),
