@@ -23,8 +23,9 @@ void main() {
 
   setUp(() {
     mockOrdersRemoteDataSourceContract = MockOrdersRemoteDataSourceContract();
-    ordersRepoImpl =
-        OrdersRepoImpl(remoteDataSource: mockOrdersRemoteDataSourceContract);
+    ordersRepoImpl = OrdersRepoImpl(
+      remoteDataSource: mockOrdersRemoteDataSourceContract,
+    );
   });
 
   final tPage = 1;
@@ -56,39 +57,48 @@ void main() {
 
   group('getOrders', () {
     test(
-        'should return SuccessBaseResponse<List<OrderModel>> when remote data source is successful',
-        () async {
-      when(mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit))
-          .thenAnswer((_) async =>
-              SuccessBaseResponse<OrdersResponseDto>(data: tOrdersResponseDto));
+      'should return SuccessBaseResponse<List<OrderModel>> when remote data source is successful',
+      () async {
+        when(
+          mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit),
+        ).thenAnswer(
+          (_) async =>
+              SuccessBaseResponse<OrdersResponseDto>(data: tOrdersResponseDto),
+        );
 
-      final result = await ordersRepoImpl.getOrders(tPage, tLimit);
+        final result = await ordersRepoImpl.getOrders(tPage, tLimit);
 
-      expect(result, isA<SuccessBaseResponse<List<OrderModel>>>());
-      final successResult = result as SuccessBaseResponse<List<OrderModel>>;
-      expect(successResult.data.length, 1);
-      expect(successResult.data.first.orderNumber, "ORD-123");
-      verify(mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit))
-          .called(1);
-      verifyNoMoreInteractions(mockOrdersRemoteDataSourceContract);
-    });
+        expect(result, isA<SuccessBaseResponse<List<OrderModel>>>());
+        final successResult = result as SuccessBaseResponse<List<OrderModel>>;
+        expect(successResult.data.length, 1);
+        expect(successResult.data.first.orderNumber, "ORD-123");
+        verify(
+          mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit),
+        ).called(1);
+        verifyNoMoreInteractions(mockOrdersRemoteDataSourceContract);
+      },
+    );
 
     test(
-        'should return ErrorBaseResponse<List<OrderModel>> when remote data source fails',
-        () async {
-      final tFailure = Failure(message: 'Remote Error');
-      when(mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit))
-          .thenAnswer((_) async =>
-              ErrorBaseResponse<OrdersResponseDto>(failure: tFailure));
+      'should return ErrorBaseResponse<List<OrderModel>> when remote data source fails',
+      () async {
+        final tFailure = Failure(message: 'Remote Error');
+        when(
+          mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit),
+        ).thenAnswer(
+          (_) async => ErrorBaseResponse<OrdersResponseDto>(failure: tFailure),
+        );
 
-      final result = await ordersRepoImpl.getOrders(tPage, tLimit);
+        final result = await ordersRepoImpl.getOrders(tPage, tLimit);
 
-      expect(result, isA<ErrorBaseResponse<List<OrderModel>>>());
-      final errorResult = result as ErrorBaseResponse<List<OrderModel>>;
-      expect(errorResult.failure, tFailure);
-      verify(mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit))
-          .called(1);
-      verifyNoMoreInteractions(mockOrdersRemoteDataSourceContract);
-    });
+        expect(result, isA<ErrorBaseResponse<List<OrderModel>>>());
+        final errorResult = result as ErrorBaseResponse<List<OrderModel>>;
+        expect(errorResult.failure, tFailure);
+        verify(
+          mockOrdersRemoteDataSourceContract.getOrders(tPage, tLimit),
+        ).called(1);
+        verifyNoMoreInteractions(mockOrdersRemoteDataSourceContract);
+      },
+    );
   });
 }

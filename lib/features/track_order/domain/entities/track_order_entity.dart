@@ -21,8 +21,12 @@ class TrackOrderEntity {
     return TrackOrderEntity(
       orderId: data['orderId'] as String?,
       driverRequestedDelivery: data['driverRequestedDelivery'] == true,
-      order: data['order'] != null ? OrderData.fromMap(data['order'] as Map<String, dynamic>) : null,
-      store: data['store'] != null ? StoreData.fromMap(data['store'] as Map<String, dynamic>) : null,
+      order: data['order'] != null
+          ? OrderData.fromMap(data['order'] as Map<String, dynamic>)
+          : null,
+      store: data['store'] != null
+          ? StoreData.fromMap(data['store'] as Map<String, dynamic>)
+          : null,
       user: _resolveUser(data),
       state: TrackingStatus.fromString(data['state'] as String?),
     );
@@ -102,7 +106,9 @@ class OrderData {
       paymentType: data['paymentType'] as String?,
       shippingAddress: data['shippingAddress'] as String?,
       state: TrackingStatus.fromString(data['state'] as String?),
-      orderItems: items?.map((e) => OrderItemData.fromMap(e as Map<String, dynamic>)).toList(),
+      orderItems: items
+          ?.map((e) => OrderItemData.fromMap(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 
@@ -118,7 +124,8 @@ class OrderData {
       if (paymentType != null) 'paymentType': paymentType,
       if (shippingAddress != null) 'shippingAddress': shippingAddress,
       if (state != null) 'state': state!.name,
-      if (orderItems != null) 'orderItems': orderItems!.map((e) => e.toMap()).toList(),
+      if (orderItems != null)
+        'orderItems': orderItems!.map((e) => e.toMap()).toList(),
     };
   }
 }
@@ -136,7 +143,9 @@ class OrderItemData {
       id: data['id'] as String?,
       price: (data['price'] as num?)?.toDouble(),
       quantity: (data['quantity'] as num?)?.toInt(),
-      product: data['product'] != null ? ProductData.fromMap(data['product'] as Map<String, dynamic>) : null,
+      product: data['product'] != null
+          ? ProductData.fromMap(data['product'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -185,7 +194,14 @@ class StoreData {
   final String? name;
   final String? phoneNumber;
 
-  StoreData({this.address, this.image, this.lat, this.long, this.name, this.phoneNumber});
+  StoreData({
+    this.address,
+    this.image,
+    this.lat,
+    this.long,
+    this.name,
+    this.phoneNumber,
+  });
 
   factory StoreData.fromMap(Map<String, dynamic> data) {
     return StoreData(
@@ -220,7 +236,16 @@ class UserData {
   final String? photo;
   final String? state;
 
-  UserData({this.id, this.email, this.firstName, this.lastName, this.gender, this.phone, this.photo, this.state});
+  UserData({
+    this.id,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.gender,
+    this.phone,
+    this.photo,
+    this.state,
+  });
 
   factory UserData.fromMap(Map<String, dynamic> data) {
     return UserData(

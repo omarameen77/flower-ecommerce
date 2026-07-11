@@ -19,7 +19,11 @@ class OrderItemsWidget extends StatelessWidget {
       children: [
         Text(
           TrackOrderConstants.orderItems,
-          style: getSemiBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary),
+          style: getSemiBoldStyle(
+            context: context,
+            fontSize: 16,
+            color: AppColors.textPrimary,
+          ),
         ),
         const SizedBox(height: 12),
         ...items.map((item) => OrderItemCardWidget(item: item)),

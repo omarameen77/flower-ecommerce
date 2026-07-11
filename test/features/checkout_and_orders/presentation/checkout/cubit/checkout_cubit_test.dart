@@ -34,8 +34,10 @@ void main() {
   setUp(() {
     mockCheckoutWithCashUseCase = MockCheckoutWithCashUseCase();
     mockCheckoutWithCardUseCase = MockCheckoutWithCardUseCase();
-    checkoutCubit =
-        CheckoutCubit(mockCheckoutWithCashUseCase, mockCheckoutWithCardUseCase);
+    checkoutCubit = CheckoutCubit(
+      mockCheckoutWithCashUseCase,
+      mockCheckoutWithCardUseCase,
+    );
   });
 
   tearDown(() {
@@ -80,109 +82,129 @@ void main() {
 
     group('PlaceOrderWithCash', () {
       test(
-          'emits loading then success when use case returns SuccessBaseResponse',
-          () async {
-        when(mockCheckoutWithCashUseCase.call(any)).thenAnswer((_) async =>
-            SuccessBaseResponse<CashOnDeliveryModel>(
+        'emits loading then success when use case returns SuccessBaseResponse',
+        () async {
+          when(mockCheckoutWithCashUseCase.call(any)).thenAnswer(
+            (_) async => SuccessBaseResponse<CashOnDeliveryModel>(
               data: CashOnDeliveryModel(
                 message: "success",
                 orderNumber: "ORD-123",
               ),
-            ));
+            ),
+          );
 
-        checkoutCubit.doEvent(const PlaceOrderWithCash(
-          street: "123 Main St",
-          phone: "1234567890",
-          city: "New York",
-          lat: "40.7128",
-          long: "74.0060",
-        ));
+          checkoutCubit.doEvent(
+            const PlaceOrderWithCash(
+              street: "123 Main St",
+              phone: "1234567890",
+              city: "New York",
+              lat: "40.7128",
+              long: "74.0060",
+            ),
+          );
 
-        expect(checkoutCubit.state.status, CheckoutStatus.loading);
+          expect(checkoutCubit.state.status, CheckoutStatus.loading);
 
-        await Future.delayed(Duration.zero);
+          await Future.delayed(Duration.zero);
 
-        expect(checkoutCubit.state.status, CheckoutStatus.success);
-        expect(checkoutCubit.state.paymentUrl, isNull);
-        verify(mockCheckoutWithCashUseCase.call(any)).called(1);
-      });
+          expect(checkoutCubit.state.status, CheckoutStatus.success);
+          expect(checkoutCubit.state.paymentUrl, isNull);
+          verify(mockCheckoutWithCashUseCase.call(any)).called(1);
+        },
+      );
 
-      test('emits loading then error when use case returns ErrorBaseResponse',
-          () async {
-        when(mockCheckoutWithCashUseCase.call(any)).thenAnswer((_) async =>
-            ErrorBaseResponse<CashOnDeliveryModel>(
+      test(
+        'emits loading then error when use case returns ErrorBaseResponse',
+        () async {
+          when(mockCheckoutWithCashUseCase.call(any)).thenAnswer(
+            (_) async => ErrorBaseResponse<CashOnDeliveryModel>(
               failure: Failure(message: 'Checkout error'),
-            ));
+            ),
+          );
 
-        checkoutCubit.doEvent(const PlaceOrderWithCash(
-          street: "123 Main St",
-          phone: "1234567890",
-          city: "New York",
-          lat: "40.7128",
-          long: "74.0060",
-        ));
+          checkoutCubit.doEvent(
+            const PlaceOrderWithCash(
+              street: "123 Main St",
+              phone: "1234567890",
+              city: "New York",
+              lat: "40.7128",
+              long: "74.0060",
+            ),
+          );
 
-        expect(checkoutCubit.state.status, CheckoutStatus.loading);
+          expect(checkoutCubit.state.status, CheckoutStatus.loading);
 
-        await Future.delayed(Duration.zero);
+          await Future.delayed(Duration.zero);
 
-        expect(checkoutCubit.state.status, CheckoutStatus.error);
-        expect(checkoutCubit.state.errorMessage, 'Checkout error');
-      });
+          expect(checkoutCubit.state.status, CheckoutStatus.error);
+          expect(checkoutCubit.state.errorMessage, 'Checkout error');
+        },
+      );
     });
 
     group('PlaceOrderWithCard', () {
       test(
-          'emits loading then paymentPending when use case returns SuccessBaseResponse',
-          () async {
-        when(mockCheckoutWithCardUseCase.call(any)).thenAnswer((_) async =>
-            SuccessBaseResponse<CreditCardModel>(
+        'emits loading then paymentPending when use case returns SuccessBaseResponse',
+        () async {
+          when(mockCheckoutWithCardUseCase.call(any)).thenAnswer(
+            (_) async => SuccessBaseResponse<CreditCardModel>(
               data: CreditCardModel(
                 message: "success",
                 url: "https://checkout.stripe.com/test",
               ),
-            ));
+            ),
+          );
 
-        checkoutCubit.doEvent(const PlaceOrderWithCard(
-          street: "123 Main St",
-          phone: "1234567890",
-          city: "New York",
-          lat: "40.7128",
-          long: "74.0060",
-        ));
+          checkoutCubit.doEvent(
+            const PlaceOrderWithCard(
+              street: "123 Main St",
+              phone: "1234567890",
+              city: "New York",
+              lat: "40.7128",
+              long: "74.0060",
+            ),
+          );
 
-        expect(checkoutCubit.state.status, CheckoutStatus.loading);
+          expect(checkoutCubit.state.status, CheckoutStatus.loading);
 
-        await Future.delayed(Duration.zero);
+          await Future.delayed(Duration.zero);
 
-        expect(checkoutCubit.state.status, CheckoutStatus.paymentPending);
-        expect(
-            checkoutCubit.state.paymentUrl, "https://checkout.stripe.com/test");
-        verify(mockCheckoutWithCardUseCase.call(any)).called(1);
-      });
+          expect(checkoutCubit.state.status, CheckoutStatus.paymentPending);
+          expect(
+            checkoutCubit.state.paymentUrl,
+            "https://checkout.stripe.com/test",
+          );
+          verify(mockCheckoutWithCardUseCase.call(any)).called(1);
+        },
+      );
 
-      test('emits loading then error when use case returns ErrorBaseResponse',
-          () async {
-        when(mockCheckoutWithCardUseCase.call(any)).thenAnswer((_) async =>
-            ErrorBaseResponse<CreditCardModel>(
+      test(
+        'emits loading then error when use case returns ErrorBaseResponse',
+        () async {
+          when(mockCheckoutWithCardUseCase.call(any)).thenAnswer(
+            (_) async => ErrorBaseResponse<CreditCardModel>(
               failure: Failure(message: 'Card error'),
-            ));
+            ),
+          );
 
-        checkoutCubit.doEvent(const PlaceOrderWithCard(
-          street: "123 Main St",
-          phone: "1234567890",
-          city: "New York",
-          lat: "40.7128",
-          long: "74.0060",
-        ));
+          checkoutCubit.doEvent(
+            const PlaceOrderWithCard(
+              street: "123 Main St",
+              phone: "1234567890",
+              city: "New York",
+              lat: "40.7128",
+              long: "74.0060",
+            ),
+          );
 
-        expect(checkoutCubit.state.status, CheckoutStatus.loading);
+          expect(checkoutCubit.state.status, CheckoutStatus.loading);
 
-        await Future.delayed(Duration.zero);
+          await Future.delayed(Duration.zero);
 
-        expect(checkoutCubit.state.status, CheckoutStatus.error);
-        expect(checkoutCubit.state.errorMessage, 'Card error');
-      });
+          expect(checkoutCubit.state.status, CheckoutStatus.error);
+          expect(checkoutCubit.state.errorMessage, 'Card error');
+        },
+      );
     });
 
     group('PaymentCompleted', () {

@@ -33,11 +33,19 @@ class TotalSectionWidget extends StatelessWidget {
             children: [
               Text(
                 TrackOrderConstants.total,
-                style: getMediumStyle(context: context, fontSize: 16, color: AppColors.textPrimary),
+                style: getMediumStyle(
+                  context: context,
+                  fontSize: 16,
+                  color: AppColors.textPrimary,
+                ),
               ),
               Text(
                 '${CheckoutConstants.egp}${order.totalPrice?.toStringAsFixed(2) ?? '0.00'}',
-                style: getBoldStyle(context: context, fontSize: 18, color: AppColors.textPrimary),
+                style: getBoldStyle(
+                  context: context,
+                  fontSize: 18,
+                  color: AppColors.textPrimary,
+                ),
               ),
             ],
           ),
@@ -48,11 +56,19 @@ class TotalSectionWidget extends StatelessWidget {
               children: [
                 Text(
                   TrackOrderConstants.payment,
-                  style: getRegularStyle(context: context, fontSize: 14, color: AppColors.textSecondary),
+                  style: getRegularStyle(
+                    context: context,
+                    fontSize: 14,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
                 Text(
                   order.paymentType!.toUpperCase(),
-                  style: getMediumStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+                  style: getMediumStyle(
+                    context: context,
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ],
             ),

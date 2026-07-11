@@ -19,9 +19,9 @@ class DriverInfoWidget extends StatelessWidget {
       await launchUrl(uri);
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Call $phone')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Call $phone')));
       }
     }
   }
@@ -36,9 +36,9 @@ class DriverInfoWidget extends StatelessWidget {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('WhatsApp $phone')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('WhatsApp $phone')));
       }
     }
   }
@@ -87,7 +87,11 @@ class DriverInfoWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   initial,
-                  style: getBoldStyle(context: context, fontSize: 22, color: AppColors.primary),
+                  style: getBoldStyle(
+                    context: context,
+                    fontSize: 22,
+                    color: AppColors.primary,
+                  ),
                 ),
               ),
             ),
@@ -98,13 +102,21 @@ class DriverInfoWidget extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: getSemiBoldStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+                  style: getSemiBoldStyle(
+                    context: context,
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 if (phone != null && phone.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
                     phone,
-                    style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textSecondary),
+                    style: getRegularStyle(
+                      context: context,
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ],
               ],

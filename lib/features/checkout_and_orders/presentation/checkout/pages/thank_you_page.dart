@@ -54,7 +54,8 @@ class ThankYouPage extends StatelessWidget {
               const Spacer(flex: 2),
               PrimaryButton(
                 text: CheckoutConstants.continueShopping,
-                onTap: () => Navigator.pushReplacementNamed(context, Routes.appSections),
+                onTap: () =>
+                    Navigator.pushReplacementNamed(context, Routes.appSections),
               ),
               const SizedBox(height: 32),
             ],

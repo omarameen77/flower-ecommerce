@@ -24,24 +24,37 @@ class DeliveredViewWidget extends StatelessWidget {
                 color: AppColors.success,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.check, size: 64, color: AppColors.textWhite),
+              child: const Icon(
+                Icons.check,
+                size: 64,
+                color: AppColors.textWhite,
+              ),
             ),
             const SizedBox(height: 32),
             Text(
               TrackOrderConstants.orderDelivered,
               textAlign: TextAlign.center,
-              style: getBoldStyle(context: context, fontSize: 24, color: AppColors.textPrimary),
+              style: getBoldStyle(
+                context: context,
+                fontSize: 24,
+                color: AppColors.textPrimary,
+              ),
             ),
             const SizedBox(height: 16),
             Text(
               TrackOrderConstants.thankYouMessage,
               textAlign: TextAlign.center,
-              style: getRegularStyle(context: context, fontSize: 16, color: AppColors.textSecondary),
+              style: getRegularStyle(
+                context: context,
+                fontSize: 16,
+                color: AppColors.textSecondary,
+              ),
             ),
             const Spacer(flex: 2),
             PrimaryButton(
               text: TrackOrderConstants.continueShopping,
-              onTap: () => Navigator.pushReplacementNamed(context, Routes.appSections),
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, Routes.appSections),
             ),
             const SizedBox(height: 32),
           ],

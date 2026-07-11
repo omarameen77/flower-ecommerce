@@ -43,12 +43,20 @@ class StoreInfoWidget extends StatelessWidget {
               children: [
                 Text(
                   store.name ?? TrackOrderConstants.store,
-                  style: getSemiBoldStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+                  style: getSemiBoldStyle(
+                    context: context,
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   store.address ?? '',
-                  style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textSecondary),
+                  style: getRegularStyle(
+                    context: context,
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),

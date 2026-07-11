@@ -36,7 +36,9 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
     if (widget.orderId.isEmpty) return;
     _cubit = context.read<TrackOrderCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _cubit?.doEvent(WatchOrder(orderId: widget.orderId, orderData: widget.orderData));
+      _cubit?.doEvent(
+        WatchOrder(orderId: widget.orderId, orderData: widget.orderData),
+      );
     });
   }
 
@@ -56,7 +58,11 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
         ),
         title: Text(
           TrackOrderConstants.trackOrder,
-          style: getMediumStyle(context: context, fontSize: 20, color: AppColors.textPrimary),
+          style: getMediumStyle(
+            context: context,
+            fontSize: 20,
+            color: AppColors.textPrimary,
+          ),
         ),
       ),
       body: BlocConsumer<TrackOrderCubit, TrackOrderState>(
@@ -66,7 +72,10 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
             context.read<TrackOrderCubit>().resetConfirmSuccess();
           }
           if (state.confirmDeliveryState.errorMessage != null) {
-            CustomSnackBar.error(context, state.confirmDeliveryState.errorMessage!);
+            CustomSnackBar.error(
+              context,
+              state.confirmDeliveryState.errorMessage!,
+            );
           }
         },
         builder: (context, state) {
@@ -74,7 +83,10 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
             return Center(
               child: Text(
                 TrackOrderConstants.orderNotFound,
-                style: getRegularStyle(context: context, color: AppColors.textSecondary),
+                style: getRegularStyle(
+                  context: context,
+                  color: AppColors.textSecondary,
+                ),
               ),
             );
           }
@@ -87,7 +99,10 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
             return Center(
               child: Text(
                 state.orderData.errorMessage!,
-                style: getRegularStyle(context: context, color: AppColors.error),
+                style: getRegularStyle(
+                  context: context,
+                  color: AppColors.error,
+                ),
               ),
             );
           }
@@ -97,12 +112,16 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
             return Center(
               child: Text(
                 TrackOrderConstants.orderNotFound,
-                style: getRegularStyle(context: context, color: AppColors.textSecondary),
+                style: getRegularStyle(
+                  context: context,
+                  color: AppColors.textSecondary,
+                ),
               ),
             );
           }
 
-          final isDelivered = entity.order?.isDelivered == true ||
+          final isDelivered =
+              entity.order?.isDelivered == true ||
               entity.order?.state?.isDelivered == true ||
               entity.state?.isDelivered == true;
 
@@ -132,7 +151,8 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
           const SizedBox(height: 24),
           StatusTrackerWidget(entity: entity),
           const SizedBox(height: 24),
-          if (entity.state?.isArrived == true || entity.order?.state?.isArrived == true) ...[
+          if (entity.state?.isArrived == true ||
+              entity.order?.state?.isArrived == true) ...[
             ConfirmDeliveryButton(orderId: widget.orderId),
             const SizedBox(height: 24),
           ],

@@ -24,22 +24,31 @@ class ConfirmDeliveryButton extends StatelessWidget {
             ? null
             : () {
                 context.read<TrackOrderCubit>().doEvent(
-                      ConfirmDelivery(orderId: orderId),
-                    );
+                  ConfirmDelivery(orderId: orderId),
+                );
               },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
         ),
         child: isLoading
             ? const SizedBox(
                 width: 20,
                 height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.textWhite),
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: AppColors.textWhite,
+                ),
               )
             : Text(
                 TrackOrderConstants.confirmDelivery,
-                style: getSemiBoldStyle(context: context, fontSize: 16, color: AppColors.textWhite),
+                style: getSemiBoldStyle(
+                  context: context,
+                  fontSize: 16,
+                  color: AppColors.textWhite,
+                ),
               ),
       ),
     );

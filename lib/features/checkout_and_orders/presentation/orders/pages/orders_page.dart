@@ -19,7 +19,8 @@ class OrdersPage extends StatefulWidget {
   State<OrdersPage> createState() => _OrdersPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateMixin {
+class _OrdersPageState extends State<OrdersPage>
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   final _scrollControllers = List.generate(4, (_) => ScrollController());
 
@@ -47,8 +48,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
 
   void _onScroll() {
     for (final controller in _scrollControllers) {
-      if (!controller.hasClients ||
-          controller.position.maxScrollExtent <= 0) {
+      if (!controller.hasClients || controller.position.maxScrollExtent <= 0) {
         continue;
       }
       if (controller.position.pixels >=
@@ -107,7 +107,8 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
     if (state.errorMessage != null) {
       return AppErrorWidget(
         errorMessage: state.errorMessage!,
-        onRetry: () => context.read<OrdersCubit>().doEvent(const GetOrdersEvent()),
+        onRetry: () =>
+            context.read<OrdersCubit>().doEvent(const GetOrdersEvent()),
       );
     }
 
@@ -122,7 +123,11 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
     );
   }
 
-  Widget _buildOrderList(List<OrderModel> orders, bool isLoadingMore, int index) {
+  Widget _buildOrderList(
+    List<OrderModel> orders,
+    bool isLoadingMore,
+    int index,
+  ) {
     if (orders.isEmpty) {
       final emptyMessages = [
         OrdersConstants.noPendingOrders,
