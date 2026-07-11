@@ -1,5 +1,4 @@
-import 'package:flower/config/base/base_response.dart';
-import 'package:flower/features/notifications/domain/entity/notifications_response_entity.dart';
+import 'package:flower/features/notifications/domain/entity/notifications_entity.dart';
 import 'package:flower/features/notifications/domain/repository/notifications_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,7 +8,7 @@ class GetUserNotificationsUseCase {
 
   GetUserNotificationsUseCase(this.repository);
 
-  Future<BaseResponse<NotificationsResponseEntity>> call() async {
-    return await repository.getUserNotifications();
+  Stream<List<NotificationsEntity>> call(String userId) {
+    return repository.getUserNotifications(userId);
   }
 }

@@ -1,6 +1,6 @@
-import 'package:flower/core/notifications/fcm_service.dart';
-import 'package:flower/core/notifications/local_notification_service.dart';
 import 'package:injectable/injectable.dart';
+import 'fcm_service.dart';
+import 'local_notification_service.dart';
 
 @lazySingleton
 class NotificationInitializer {

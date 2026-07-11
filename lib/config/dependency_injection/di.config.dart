@@ -9,13 +9,16 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../core/network/firebase_module.dart' as _i236;
 import '../../core/network/network_module.dart' as _i234;
 import '../../core/network/safe_api_caller.dart' as _i563;
 import '../../core/notifications/fcm_service.dart' as _i761;
+import '../../core/notifications/firestore_notification_service.dart' as _i415;
 import '../../core/notifications/local_notification_service.dart' as _i298;
 import '../../core/notifications/notification_initializer.dart' as _i838;
 import '../../core/profile/api/api_client/profile_api_client.dart' as _i458;
@@ -116,18 +119,26 @@ import '../../features/checkout_and_orders/api/api_client/orders_api_client.dart
     as _i1;
 import '../../features/checkout_and_orders/api/datasources/checkout_remote_data_source_impl.dart'
     as _i1046;
+import '../../features/checkout_and_orders/api/datasources/order_user_info_firestore_data_source_impl.dart'
+    as _i1069;
 import '../../features/checkout_and_orders/api/datasources/orders_remote_data_source_impl.dart'
     as _i495;
 import '../../features/checkout_and_orders/data/datasources/checkout_remote_data_source.dart'
     as _i903;
+import '../../features/checkout_and_orders/data/datasources/order_user_info_firestore_data_source.dart'
+    as _i1034;
 import '../../features/checkout_and_orders/data/datasources/orders_remote_data_source.dart'
     as _i508;
 import '../../features/checkout_and_orders/data/repositories/checkout_repo_impl.dart'
     as _i380;
+import '../../features/checkout_and_orders/data/repositories/order_user_info_repo_impl.dart'
+    as _i518;
 import '../../features/checkout_and_orders/data/repositories/orders_repo_impl.dart'
     as _i854;
 import '../../features/checkout_and_orders/domain/repositories/checkout_repo.dart'
     as _i997;
+import '../../features/checkout_and_orders/domain/repositories/order_user_info_repo.dart'
+    as _i430;
 import '../../features/checkout_and_orders/domain/repositories/orders_repo.dart'
     as _i856;
 import '../../features/checkout_and_orders/domain/usecases/checkout_with_card_usecase.dart'
@@ -136,6 +147,8 @@ import '../../features/checkout_and_orders/domain/usecases/checkout_with_cash_us
     as _i685;
 import '../../features/checkout_and_orders/domain/usecases/get_orders_usecase.dart'
     as _i1012;
+import '../../features/checkout_and_orders/domain/usecases/save_order_user_info_use_case.dart'
+    as _i67;
 import '../../features/checkout_and_orders/presentation/checkout/cubit/checkout_cubit.dart'
     as _i713;
 import '../../features/checkout_and_orders/presentation/orders/cubit/orders_cubit.dart'
@@ -154,20 +167,22 @@ import '../../features/edit_profile/domain/usecases/edit_profile_use_case.dart'
     as _i620;
 import '../../features/edit_profile/domain/usecases/upload_photo_use_case.dart'
     as _i538;
-import '../../features/notifications/api/api_client/notifications_api_clint.dart'
-    as _i1031;
-import '../../features/notifications/api/datasource/mock_notifications_remote_data_source_impl.dart'
-    as _i817;
-import '../../features/notifications/data/datasource/notifications_remote_data_source_contract.dart'
-    as _i703;
+import '../../features/notifications/api/datasource/notifications_firestore_data_source_impl.dart'
+    as _i711;
+import '../../features/notifications/data/datasource/notifications_firestore_data_source_contract.dart'
+    as _i588;
 import '../../features/notifications/data/repository/notifications_repo_impl.dart'
     as _i220;
 import '../../features/notifications/domain/repository/notifications_repo_contract.dart'
     as _i688;
+import '../../features/notifications/domain/usecases/delete_notifications_use_case.dart'
+    as _i516;
 import '../../features/notifications/domain/usecases/get_un_read_notification_count_use_case.dart'
     as _i837;
 import '../../features/notifications/domain/usecases/get_user_notifications_use_case.dart'
     as _i392;
+import '../../features/notifications/domain/usecases/mark_as_reaed_notification_use_case.dart'
+    as _i1043;
 import '../../features/notifications/ui/cubit/notifications_cubit.dart'
     as _i532;
 import '../../features/product_sections/api/api_client/products_sections_api_client.dart'
@@ -208,6 +223,24 @@ import '../../features/product_sections/presentation/shared_cubit/product_cubit/
     as _i538;
 import '../../features/profile/presentation/cubit/get_user_data/profile_cubit.dart'
     as _i1041;
+import '../../features/track_order/api/datasource/track_order_firestore_data_source_impl.dart'
+    as _i726;
+import '../../features/track_order/data/datasources/track_order_firestore_data_source.dart'
+    as _i574;
+import '../../features/track_order/data/repositories/track_order_repo_impl.dart'
+    as _i558;
+import '../../features/track_order/domain/repositories/track_order_repo.dart'
+    as _i528;
+import '../../features/track_order/domain/usecases/confirm_delivery_use_case.dart'
+    as _i585;
+import '../../features/track_order/domain/usecases/get_current_order_use_case.dart'
+    as _i1061;
+import '../../features/track_order/domain/usecases/save_current_order_use_case.dart'
+    as _i772;
+import '../../features/track_order/domain/usecases/watch_order_state_use_case.dart'
+    as _i293;
+import '../../features/track_order/presentation/cubit/track_order_cubit.dart'
+    as _i932;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -216,18 +249,18 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final firebaseModule = _$FirebaseModule();
     final networkModule = _$NetworkModule();
     gh.factory<_i563.SafeApiCaller>(() => _i563.SafeApiCaller());
     gh.factory<_i936.AppSectionsCubit>(() => _i936.AppSectionsCubit());
+    gh.singleton<_i974.FirebaseFirestore>(() => firebaseModule.firestore);
     gh.singleton<_i361.Dio>(() => networkModule.dio);
+    gh.lazySingleton<_i415.FirestoreService>(() => _i415.FirestoreService());
     gh.lazySingleton<_i298.LocalNotificationService>(
       () => _i298.LocalNotificationService(),
     );
     gh.lazySingleton<_i776.CrashlyticsService>(
       () => _i776.CrashlyticsService(),
-    );
-    gh.factory<_i703.NotificationsRemoteDataSourceContract>(
-      () => _i817.MockNotificationsRemoteDataSourceImpl(),
     );
     gh.lazySingleton<_i582.CurrentLocationDataSource>(
       () => _i582.CurrentLocationDataSourceImpl(),
@@ -255,9 +288,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i218.AddressApiClient>(
       () => networkModule.addressApi(gh<_i361.Dio>()),
-    );
-    gh.singleton<_i1031.NotificationsApiClient>(
-      () => networkModule.notificationsApi(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i935.EgyptLocationLocalDataSource>(
       () => _i935.EgyptLocationLocalDataSourceImpl(),
@@ -288,6 +318,23 @@ extension GetItInjectableX on _i174.GetIt {
         addressApiClient: gh<_i218.AddressApiClient>(),
       ),
     );
+    gh.lazySingleton<_i761.FcmService>(
+      () => _i761.FcmService(
+        gh<_i298.LocalNotificationService>(),
+        gh<_i415.FirestoreService>(),
+      ),
+    );
+    gh.factory<_i1034.OrderUserInfoFirestoreDataSourceContract>(
+      () => _i1069.OrderUserInfoFirestoreDataSourceImpl(
+        firestore: gh<_i974.FirebaseFirestore>(),
+      ),
+    );
+    gh.lazySingleton<_i838.NotificationInitializer>(
+      () => _i838.NotificationInitializer(
+        gh<_i761.FcmService>(),
+        gh<_i298.LocalNotificationService>(),
+      ),
+    );
     gh.lazySingleton<_i49.ProfileRemoteDataSource>(
       () => _i501.ProfileRemoteDataSourceImpl(gh<_i458.ProfileApiClient>()),
     );
@@ -295,9 +342,9 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i16.EgyptLocationRepoImpl(gh<_i935.EgyptLocationLocalDataSource>()),
     );
-    gh.factory<_i688.NotificationsRepoContract>(
-      () => _i220.NotificationsRepoImpl(
-        gh<_i703.NotificationsRemoteDataSourceContract>(),
+    gh.lazySingleton<_i430.OrderUserInfoRepo>(
+      () => _i518.OrderUserInfoRepoImpl(
+        gh<_i1034.OrderUserInfoFirestoreDataSourceContract>(),
       ),
     );
     gh.factory<_i406.GetCategoriesUseCase>(
@@ -309,8 +356,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i563.SafeApiCaller>(),
       ),
     );
-    gh.lazySingleton<_i761.FcmService>(
-      () => _i761.FcmService(gh<_i298.LocalNotificationService>()),
+    gh.factory<_i574.TrackOrderDataSourceContract>(
+      () => _i726.TrackOrderDataSourceImpl(
+        firestore: gh<_i974.FirebaseFirestore>(),
+      ),
     );
     gh.lazySingleton<_i698.EditProfileRepository>(
       () => _i337.EditProfileRepositoryImpl(
@@ -320,6 +369,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i508.OrdersRemoteDataSourceContract>(
       () => _i495.OrdersRemoteDataSourceImpl(
         ordersApiClient: gh<_i1.OrdersApiClient>(),
+      ),
+    );
+    gh.factory<_i588.NotificationsFirestoreDataSourceContract>(
+      () => _i711.NotificationsFirestoreDataSourceImpl(
+        gh<_i974.FirebaseFirestore>(),
       ),
     );
     gh.lazySingleton<_i124.CurrentLocationRepo>(
@@ -332,20 +386,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i114.LoadLocationLookupsUseCase>(
       () => _i114.LoadLocationLookupsUseCase(gh<_i603.EgyptLocationRepo>()),
     );
-    gh.factory<_i392.GetUserNotificationsUseCase>(
-      () => _i392.GetUserNotificationsUseCase(
-        gh<_i688.NotificationsRepoContract>(),
-      ),
-    );
-    gh.factory<_i837.GetUnReadNotificationCountUseCase>(
-      () => _i837.GetUnReadNotificationCountUseCase(
-        gh<_i688.NotificationsRepoContract>(),
-      ),
-    );
     gh.lazySingleton<_i107.AuthRemoteDataSourceContract>(
       () => _i723.AuthRemoteDataSourceImpl(
         authApiClient: gh<_i824.AuthApiClient>(),
       ),
+    );
+    gh.factory<_i67.SaveOrderUserInfoUseCase>(
+      () => _i67.SaveOrderUserInfoUseCase(gh<_i430.OrderUserInfoRepo>()),
     );
     gh.factory<_i303.ProductsSectionDataSourceContract>(
       () => _i370.ProductsSectionsDataSourceImpl(
@@ -362,6 +409,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i693.GetProfileUseCase>(
       () => _i693.GetProfileUseCase(gh<_i679.ProfileRepository>()),
+    );
+    gh.factory<_i688.NotificationsRepoContract>(
+      () => _i220.NotificationsRepoImpl(
+        gh<_i588.NotificationsFirestoreDataSourceContract>(),
+      ),
     );
     gh.factory<_i1041.ProfileCubit>(
       () => _i1041.ProfileCubit(gh<_i693.GetProfileUseCase>()),
@@ -384,17 +436,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i157.UpdateCartItemQuantityUseCase>(
       () => _i157.UpdateCartItemQuantityUseCase(gh<_i425.CartRepoContract>()),
     );
+    gh.factory<_i528.TrackOrderRepoContract>(
+      () => _i558.TrackOrderRepoImpl(
+        dataSource: gh<_i574.TrackOrderDataSourceContract>(),
+      ),
+    );
     gh.factory<_i821.CheckoutWithCardUseCase>(
       () => _i821.CheckoutWithCardUseCase(gh<_i997.CheckoutRepo>()),
     );
     gh.factory<_i685.CheckoutWithCashUseCase>(
       () => _i685.CheckoutWithCashUseCase(gh<_i997.CheckoutRepo>()),
-    );
-    gh.factory<_i713.CheckoutCubit>(
-      () => _i713.CheckoutCubit(
-        gh<_i685.CheckoutWithCashUseCase>(),
-        gh<_i821.CheckoutWithCardUseCase>(),
-      ),
     );
     gh.factory<_i386.ProductsSectionRepo>(
       () => _i34.ProductsSectionsRepoImpl(
@@ -407,12 +458,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i538.UploadPhotoUseCase>(
       () => _i538.UploadPhotoUseCase(gh<_i698.EditProfileRepository>()),
-    );
-    gh.factory<_i532.NotificationsCubit>(
-      () => _i532.NotificationsCubit(
-        getUserNotificationsUseCase: gh<_i392.GetUserNotificationsUseCase>(),
-        getUnreadCountUseCase: gh<_i837.GetUnReadNotificationCountUseCase>(),
-      ),
     );
     gh.lazySingleton<_i691.CategoriesCubit>(
       () => _i691.CategoriesCubit(
@@ -442,10 +487,12 @@ extension GetItInjectableX on _i174.GetIt {
         productsSectionRepo: gh<_i386.ProductsSectionRepo>(),
       ),
     );
-    gh.lazySingleton<_i838.NotificationInitializer>(
-      () => _i838.NotificationInitializer(
-        gh<_i761.FcmService>(),
-        gh<_i298.LocalNotificationService>(),
+    gh.factory<_i713.CheckoutCubit>(
+      () => _i713.CheckoutCubit(
+        gh<_i685.CheckoutWithCashUseCase>(),
+        gh<_i821.CheckoutWithCardUseCase>(),
+        gh<_i67.SaveOrderUserInfoUseCase>(),
+        gh<_i693.GetProfileUseCase>(),
       ),
     );
     gh.factory<_i458.AddAddressUseCase>(
@@ -482,9 +529,41 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i157.UpdateCartItemQuantityUseCase>(),
       ),
     );
+    gh.factory<_i516.DeleteNotificationUseCase>(
+      () => _i516.DeleteNotificationUseCase(
+        gh<_i688.NotificationsRepoContract>(),
+      ),
+    );
+    gh.factory<_i837.GetUnreadNotificationCountUseCase>(
+      () => _i837.GetUnreadNotificationCountUseCase(
+        gh<_i688.NotificationsRepoContract>(),
+      ),
+    );
+    gh.factory<_i392.GetUserNotificationsUseCase>(
+      () => _i392.GetUserNotificationsUseCase(
+        gh<_i688.NotificationsRepoContract>(),
+      ),
+    );
+    gh.factory<_i1043.MarkNotificationAsReadUseCase>(
+      () => _i1043.MarkNotificationAsReadUseCase(
+        gh<_i688.NotificationsRepoContract>(),
+      ),
+    );
     gh.factory<_i538.ProductCubit>(
       () =>
           _i538.ProductCubit(getProductUseCase: gh<_i713.GetProductsUseCase>()),
+    );
+    gh.factory<_i585.ConfirmDeliveryUseCase>(
+      () => _i585.ConfirmDeliveryUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
+    gh.factory<_i1061.GetCurrentOrderUseCase>(
+      () => _i1061.GetCurrentOrderUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
+    gh.factory<_i772.SaveCurrentOrderUseCase>(
+      () => _i772.SaveCurrentOrderUseCase(gh<_i528.TrackOrderRepoContract>()),
+    );
+    gh.factory<_i293.WatchOrderStateUseCase>(
+      () => _i293.WatchOrderStateUseCase(gh<_i528.TrackOrderRepoContract>()),
     );
     gh.factory<_i1012.GetOrdersUseCase>(
       () => _i1012.GetOrdersUseCase(gh<_i856.OrdersRepo>()),
@@ -540,6 +619,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i27.ForgetPasswordUseCase>(),
       ),
     );
+    gh.factory<_i932.TrackOrderCubit>(
+      () => _i932.TrackOrderCubit(
+        gh<_i293.WatchOrderStateUseCase>(),
+        gh<_i585.ConfirmDeliveryUseCase>(),
+        gh<_i772.SaveCurrentOrderUseCase>(),
+        gh<_i1061.GetCurrentOrderUseCase>(),
+      ),
+    );
     gh.factory<_i309.OccasionsProductsCubit>(
       () => _i309.OccasionsProductsCubit(
         getOccasionUseCase: gh<_i529.GetOccasionsUseCase>(),
@@ -549,11 +636,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i6.ChangePasswordCubit>(
       () => _i6.ChangePasswordCubit(gh<_i771.ChangePasswordUseCase>()),
     );
+    gh.factory<_i532.NotificationsCubit>(
+      () => _i532.NotificationsCubit(
+        getUserNotificationsUseCase: gh<_i392.GetUserNotificationsUseCase>(),
+        getUnreadCountUseCase: gh<_i837.GetUnreadNotificationCountUseCase>(),
+        markNotificationAsReadUseCase:
+            gh<_i1043.MarkNotificationAsReadUseCase>(),
+        deleteNotificationUseCase: gh<_i516.DeleteNotificationUseCase>(),
+      ),
+    );
     gh.factory<_i450.ResetPasswordCubit>(
       () => _i450.ResetPasswordCubit(gh<_i348.ResetPasswordUseCase>()),
     );
     return this;
   }
 }
+
+class _$FirebaseModule extends _i236.FirebaseModule {}
 
 class _$NetworkModule extends _i234.NetworkModule {}
