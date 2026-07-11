@@ -46,26 +46,27 @@ void main() {
   ];
 
   test(
-      'should return SuccessBaseResponse when repository call is successful',
-      () async {
-    when(mockOrdersRepo.getOrders(tPage, tLimit))
-        .thenAnswer((_) async =>
-            SuccessBaseResponse<List<OrderModel>>(data: tOrdersList));
+    'should return SuccessBaseResponse when repository call is successful',
+    () async {
+      when(mockOrdersRepo.getOrders(tPage, tLimit)).thenAnswer(
+        (_) async => SuccessBaseResponse<List<OrderModel>>(data: tOrdersList),
+      );
 
-    final result = await getOrdersUseCase.call(tPage, tLimit);
+      final result = await getOrdersUseCase.call(tPage, tLimit);
 
-    expect(result, isA<SuccessBaseResponse<List<OrderModel>>>());
-    final successResult = result as SuccessBaseResponse<List<OrderModel>>;
-    expect(successResult.data, tOrdersList);
-    verify(mockOrdersRepo.getOrders(tPage, tLimit)).called(1);
-    verifyNoMoreInteractions(mockOrdersRepo);
-  });
+      expect(result, isA<SuccessBaseResponse<List<OrderModel>>>());
+      final successResult = result as SuccessBaseResponse<List<OrderModel>>;
+      expect(successResult.data, tOrdersList);
+      verify(mockOrdersRepo.getOrders(tPage, tLimit)).called(1);
+      verifyNoMoreInteractions(mockOrdersRepo);
+    },
+  );
 
   test('should return ErrorBaseResponse when repository call fails', () async {
     final tFailure = Failure(message: 'Orders fetch failed');
-    when(mockOrdersRepo.getOrders(tPage, tLimit))
-        .thenAnswer((_) async =>
-            ErrorBaseResponse<List<OrderModel>>(failure: tFailure));
+    when(mockOrdersRepo.getOrders(tPage, tLimit)).thenAnswer(
+      (_) async => ErrorBaseResponse<List<OrderModel>>(failure: tFailure),
+    );
 
     final result = await getOrdersUseCase.call(tPage, tLimit);
 

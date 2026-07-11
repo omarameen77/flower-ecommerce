@@ -20,12 +20,10 @@ class CheckoutRepoImpl implements CheckoutRepo {
   ) async {
     final response = await remoteDataSource.checkoutWithCashOnDelivery(params);
     return switch (response) {
-      SuccessBaseResponse<CashOnDeliveryDto>() => SuccessBaseResponse<CashOnDeliveryModel>(
-        data: response.data.toModel(),
-      ),
-      ErrorBaseResponse<CashOnDeliveryDto>() => ErrorBaseResponse<CashOnDeliveryModel>(
-        failure: response.failure,
-      ),
+      SuccessBaseResponse<CashOnDeliveryDto>() =>
+        SuccessBaseResponse<CashOnDeliveryModel>(data: response.data.toModel()),
+      ErrorBaseResponse<CashOnDeliveryDto>() =>
+        ErrorBaseResponse<CashOnDeliveryModel>(failure: response.failure),
     };
   }
 
@@ -35,9 +33,8 @@ class CheckoutRepoImpl implements CheckoutRepo {
   ) async {
     final response = await remoteDataSource.checkoutWithCreditCard(params);
     return switch (response) {
-      SuccessBaseResponse<CreditCardDto>() => SuccessBaseResponse<CreditCardModel>(
-        data: response.data.toModel(),
-      ),
+      SuccessBaseResponse<CreditCardDto>() =>
+        SuccessBaseResponse<CreditCardModel>(data: response.data.toModel()),
       ErrorBaseResponse<CreditCardDto>() => ErrorBaseResponse<CreditCardModel>(
         failure: response.failure,
       ),

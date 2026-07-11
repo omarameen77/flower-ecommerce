@@ -36,45 +36,49 @@ void main() {
     });
 
     group('GetOrdersEvent', () {
-      test('emits loading then success with orders when use case succeeds',
-          () async {
-        final tOrders = [
-          OrderModel(
-            id: "1",
-            orderNumber: "ORD-123",
-            totalPrice: 100,
-            paymentType: "cash",
-            state: "pending",
-            isPaid: false,
-            isDelivered: false,
-            createdAt: "2024-01-01",
-            productTitle: "Product 1",
-            productImage: "image.jpg",
-            productPrice: 100,
-            quantity: 1,
-          ),
-        ];
+      test(
+        'emits loading then success with orders when use case succeeds',
+        () async {
+          final tOrders = [
+            OrderModel(
+              id: "1",
+              orderNumber: "ORD-123",
+              totalPrice: 100,
+              paymentType: "cash",
+              state: "pending",
+              isPaid: false,
+              isDelivered: false,
+              createdAt: "2024-01-01",
+              productTitle: "Product 1",
+              productImage: "image.jpg",
+              productPrice: 100,
+              quantity: 1,
+            ),
+          ];
 
-        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer((_) async =>
-            SuccessBaseResponse<List<OrderModel>>(data: tOrders));
+          when(mockGetOrdersUseCase.call(1, 10)).thenAnswer(
+            (_) async => SuccessBaseResponse<List<OrderModel>>(data: tOrders),
+          );
 
-        ordersCubit.doEvent(const GetOrdersEvent(page: 1, limit: 10));
+          ordersCubit.doEvent(const GetOrdersEvent(page: 1, limit: 10));
 
-        expect(ordersCubit.state.isLoading, true);
+          expect(ordersCubit.state.isLoading, true);
 
-        await Future.delayed(Duration.zero);
+          await Future.delayed(Duration.zero);
 
-        expect(ordersCubit.state.isLoading, false);
-        expect(ordersCubit.state.allOrders, tOrders);
-        expect(ordersCubit.state.currentPage, 1);
-        verify(mockGetOrdersUseCase.call(1, 10)).called(1);
-      });
+          expect(ordersCubit.state.isLoading, false);
+          expect(ordersCubit.state.allOrders, tOrders);
+          expect(ordersCubit.state.currentPage, 1);
+          verify(mockGetOrdersUseCase.call(1, 10)).called(1);
+        },
+      );
 
       test('emits loading then error when use case fails', () async {
-        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer((_) async =>
-            ErrorBaseResponse<List<OrderModel>>(
-              failure: Failure(message: 'Orders error'),
-            ));
+        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer(
+          (_) async => ErrorBaseResponse<List<OrderModel>>(
+            failure: Failure(message: 'Orders error'),
+          ),
+        );
 
         ordersCubit.doEvent(const GetOrdersEvent(page: 1, limit: 10));
 
@@ -89,27 +93,28 @@ void main() {
 
     group('LoadMoreOrdersEvent', () {
       OrderModel _order(int id) => OrderModel(
-            id: "$id",
-            orderNumber: "ORD-$id",
-            totalPrice: id * 100,
-            paymentType: "cash",
-            state: "pending",
-            isPaid: false,
-            isDelivered: false,
-            createdAt: "2024-01-${id.toString().padLeft(2, '0')}",
-            productTitle: "Product $id",
-            productImage: "image$id.jpg",
-            productPrice: id * 100,
-            quantity: id,
-          );
+        id: "$id",
+        orderNumber: "ORD-$id",
+        totalPrice: id * 100,
+        paymentType: "cash",
+        state: "pending",
+        isPaid: false,
+        isDelivered: false,
+        createdAt: "2024-01-${id.toString().padLeft(2, '0')}",
+        productTitle: "Product $id",
+        productImage: "image$id.jpg",
+        productPrice: id * 100,
+        quantity: id,
+      );
 
       test('loads more orders when hasMore is true', () async {
         // First load initial orders — 10 items so hasMore = true
-        final tInitialOrders =
-            List.generate(10, (i) => _order(i + 1));
+        final tInitialOrders = List.generate(10, (i) => _order(i + 1));
 
-        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer((_) async =>
-            SuccessBaseResponse<List<OrderModel>>(data: tInitialOrders));
+        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer(
+          (_) async =>
+              SuccessBaseResponse<List<OrderModel>>(data: tInitialOrders),
+        );
 
         ordersCubit.doEvent(const GetOrdersEvent(page: 1, limit: 10));
         await Future.delayed(Duration.zero);
@@ -117,8 +122,9 @@ void main() {
         // Setup mock for page 2
         final tMoreOrders = [_order(11)];
 
-        when(mockGetOrdersUseCase.call(2, 10)).thenAnswer((_) async =>
-            SuccessBaseResponse<List<OrderModel>>(data: tMoreOrders));
+        when(mockGetOrdersUseCase.call(2, 10)).thenAnswer(
+          (_) async => SuccessBaseResponse<List<OrderModel>>(data: tMoreOrders),
+        );
 
         ordersCubit.doEvent(const LoadMoreOrdersEvent());
 
@@ -133,8 +139,9 @@ void main() {
 
       test('does not load more when hasMore is false', () async {
         // First load with hasMore = false
-        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer((_) async =>
-            SuccessBaseResponse<List<OrderModel>>(data: []));
+        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer(
+          (_) async => SuccessBaseResponse<List<OrderModel>>(data: []),
+        );
 
         ordersCubit.doEvent(const GetOrdersEvent(page: 1, limit: 10));
         await Future.delayed(Duration.zero);
@@ -150,20 +157,22 @@ void main() {
 
       test('emits error when load more fails', () async {
         // First load — 10 items so hasMore = true
-        final tInitialOrders =
-            List.generate(10, (i) => _order(i + 1));
+        final tInitialOrders = List.generate(10, (i) => _order(i + 1));
 
-        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer((_) async =>
-            SuccessBaseResponse<List<OrderModel>>(data: tInitialOrders));
+        when(mockGetOrdersUseCase.call(1, 10)).thenAnswer(
+          (_) async =>
+              SuccessBaseResponse<List<OrderModel>>(data: tInitialOrders),
+        );
 
         ordersCubit.doEvent(const GetOrdersEvent(page: 1, limit: 10));
         await Future.delayed(Duration.zero);
 
         // Load more fails
-        when(mockGetOrdersUseCase.call(2, 10)).thenAnswer((_) async =>
-            ErrorBaseResponse<List<OrderModel>>(
-              failure: Failure(message: 'Load more error'),
-            ));
+        when(mockGetOrdersUseCase.call(2, 10)).thenAnswer(
+          (_) async => ErrorBaseResponse<List<OrderModel>>(
+            failure: Failure(message: 'Load more error'),
+          ),
+        );
 
         ordersCubit.doEvent(const LoadMoreOrdersEvent());
 

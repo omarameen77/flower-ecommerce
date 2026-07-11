@@ -56,9 +56,7 @@ class CheckoutRemoteDataSourceImpl implements CheckoutRemoteDataSourceContract {
       );
       return SuccessBaseResponse<CreditCardDto>(data: response);
     } catch (e) {
-      return ErrorBaseResponse<CreditCardDto>(
-        failure: ErrorHandler.handle(e),
-      );
+      return ErrorBaseResponse<CreditCardDto>(failure: ErrorHandler.handle(e));
     }
   }
 }

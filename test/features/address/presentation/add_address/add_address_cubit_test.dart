@@ -63,12 +63,7 @@ void main() {
     test('LoadLookupsIntent populates cities and areas', () async {
       const cities = [CityItem(id: '1', nameEn: 'Giza', nameAr: 'الجيزة')];
       const areas = [
-        AreaItem(
-          id: 'a1',
-          cityId: '1',
-          nameEn: 'Dokki',
-          nameAr: 'الدقي',
-        ),
+        AreaItem(id: 'a1', cityId: '1', nameEn: 'Dokki', nameAr: 'الدقي'),
       ];
       when(mockLoadLookupsUseCase()).thenAnswer(
         (_) async => const LocationLookups(cities: cities, areas: areas),
@@ -107,25 +102,28 @@ void main() {
       await expectation;
     });
 
-    test('ResolveCurrentLocationIntent flips locationDenied when denied', () async {
-      when(
-        mockGetCurrentLocationUseCase(),
-      ).thenAnswer((_) async => CurrentLocation.fallback);
+    test(
+      'ResolveCurrentLocationIntent flips locationDenied when denied',
+      () async {
+        when(
+          mockGetCurrentLocationUseCase(),
+        ).thenAnswer((_) async => CurrentLocation.fallback);
 
-      final expectation = expectLater(
-        cubit.stream,
-        emitsInOrder([
-          isA<AddAddressState>().having(
-            (s) => s.locationDenied,
-            'locationDenied',
-            true,
-          ),
-        ]),
-      );
+        final expectation = expectLater(
+          cubit.stream,
+          emitsInOrder([
+            isA<AddAddressState>().having(
+              (s) => s.locationDenied,
+              'locationDenied',
+              true,
+            ),
+          ]),
+        );
 
-      cubit.doIntent(const ResolveCurrentLocationIntent());
-      await expectation;
-    });
+        cubit.doIntent(const ResolveCurrentLocationIntent());
+        await expectation;
+      },
+    );
 
     group('submit (add mode)', () {
       const intent = SubmitAddAddressIntent(
@@ -178,10 +176,7 @@ void main() {
           ),
         ).called(1);
         verifyNever(
-          mockUpdateUseCase(
-            id: anyNamed('id'),
-            params: anyNamed('params'),
-          ),
+          mockUpdateUseCase(id: anyNamed('id'), params: anyNamed('params')),
         );
       });
 
@@ -221,10 +216,7 @@ void main() {
 
       test('routes to UpdateAddressUseCase when editingId is set', () async {
         when(
-          mockUpdateUseCase(
-            id: anyNamed('id'),
-            params: anyNamed('params'),
-          ),
+          mockUpdateUseCase(id: anyNamed('id'), params: anyNamed('params')),
         ).thenAnswer((_) async => SuccessBaseResponse(data: const []));
 
         final expectation = expectLater(

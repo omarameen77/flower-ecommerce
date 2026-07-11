@@ -39,7 +39,9 @@ class DriverInfoWidget extends StatelessWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${TrackOrderConstants.whatsappFailed} $phone')),
+          SnackBar(
+            content: Text('${TrackOrderConstants.whatsappFailed} $phone'),
+          ),
         );
       }
     }
@@ -50,7 +52,9 @@ class DriverInfoWidget extends StatelessWidget {
     final name = user != null
         ? '${user!.firstName ?? ''} ${user!.lastName ?? ''}'.trim()
         : TrackOrderConstants.driverInfo;
-    final initial = name.isNotEmpty ? name[0] : TrackOrderConstants.driverInitial;
+    final initial = name.isNotEmpty
+        ? name[0]
+        : TrackOrderConstants.driverInitial;
 
     return Row(
       children: [
@@ -73,7 +77,11 @@ class DriverInfoWidget extends StatelessWidget {
             child: Center(
               child: Text(
                 initial,
-                style: getBoldStyle(context: context, fontSize: 22, color: AppColors.primary),
+                style: getBoldStyle(
+                  context: context,
+                  fontSize: 22,
+                  color: AppColors.primary,
+                ),
               ),
             ),
           ),
@@ -84,12 +92,20 @@ class DriverInfoWidget extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: getSemiBoldStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+                style: getSemiBoldStyle(
+                  context: context,
+                  fontSize: 14,
+                  color: AppColors.textPrimary,
+                ),
               ),
               const SizedBox(height: 2),
               Text(
                 TrackOrderConstants.deliveryHero,
-                style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textSecondary),
+                style: getRegularStyle(
+                  context: context,
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -106,7 +122,11 @@ class DriverInfoWidget extends StatelessWidget {
                   color: AppColors.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.phone, color: AppColors.primary, size: 20),
+                child: const Icon(
+                  Icons.phone,
+                  color: AppColors.primary,
+                  size: 20,
+                ),
               ),
             ),
             const SizedBox(width: 8),

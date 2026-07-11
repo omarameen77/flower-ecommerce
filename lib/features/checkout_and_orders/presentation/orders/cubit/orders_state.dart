@@ -20,9 +20,7 @@ class OrdersState extends Equatable {
   });
 
   List<OrderModel> get pendingOrders {
-    return allOrders
-        .where((o) => o.state == OrderState.pending.name)
-        .toList();
+    return allOrders.where((o) => o.state == OrderState.pending.name).toList();
   }
 
   List<OrderModel> get inProgressOrders {
@@ -32,9 +30,7 @@ class OrdersState extends Equatable {
   }
 
   List<OrderModel> get canceledOrders {
-    return allOrders
-        .where((o) => o.state == OrderState.canceled.name)
-        .toList();
+    return allOrders.where((o) => o.state == OrderState.canceled.name).toList();
   }
 
   List<OrderModel> get completedOrders {

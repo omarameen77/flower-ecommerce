@@ -52,7 +52,8 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
     try {
       final existing = await _getCurrentOrderUseCase(orderId: event.orderId);
       switch (existing) {
-        case SuccessBaseResponse<TrackOrderEntity?>() when existing.data == null && event.orderData != null:
+        case SuccessBaseResponse<TrackOrderEntity?>()
+            when existing.data == null && event.orderData != null:
           final saveResult = await _saveCurrentOrderUseCase(
             orderId: event.orderId,
             order: event.orderData!,
@@ -61,21 +62,25 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
             case SuccessBaseResponse<void>():
               break;
             case ErrorBaseResponse<void>():
-              emit(state.copyWith(
-                orderData: BaseState(
-                  errorMessage: saveResult.failure.message,
-                  data: state.orderData.data,
+              emit(
+                state.copyWith(
+                  orderData: BaseState(
+                    errorMessage: saveResult.failure.message,
+                    data: state.orderData.data,
+                  ),
                 ),
-              ));
+              );
               return;
           }
         case ErrorBaseResponse<TrackOrderEntity?>():
-          emit(state.copyWith(
-            orderData: BaseState(
-              errorMessage: existing.failure.message,
-              data: state.orderData.data,
+          emit(
+            state.copyWith(
+              orderData: BaseState(
+                errorMessage: existing.failure.message,
+                data: state.orderData.data,
+              ),
             ),
-          ));
+          );
           return;
         default:
           break;
@@ -86,53 +91,65 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
           emit(state.copyWith(orderData: BaseState(data: order)));
         },
         onError: (error) {
-          emit(state.copyWith(
-            orderData: BaseState(
-              errorMessage: error.toString(),
-              data: state.orderData.data,
+          emit(
+            state.copyWith(
+              orderData: BaseState(
+                errorMessage: error.toString(),
+                data: state.orderData.data,
+              ),
             ),
-          ));
+          );
         },
       );
     } catch (e) {
-      emit(state.copyWith(
-        orderData: BaseState(
-          errorMessage: ErrorHandler.handle(e).message,
-          data: state.orderData.data,
+      emit(
+        state.copyWith(
+          orderData: BaseState(
+            errorMessage: ErrorHandler.handle(e).message,
+            data: state.orderData.data,
+          ),
         ),
-      ));
+      );
     }
   }
 
   Future<void> _confirmDelivery(ConfirmDelivery event) async {
-    emit(state.copyWith(
-      confirmDeliveryState: const BaseState(isLoading: true),
-      confirmSuccess: false,
-    ));
+    emit(
+      state.copyWith(
+        confirmDeliveryState: const BaseState(isLoading: true),
+        confirmSuccess: false,
+      ),
+    );
 
     try {
       final result = await _confirmDeliveryUseCase(orderId: event.orderId);
       switch (result) {
         case SuccessBaseResponse<void>():
-          emit(state.copyWith(
-            confirmDeliveryState: const BaseState(data: null),
-            confirmSuccess: true,
-          ));
-        case ErrorBaseResponse<void>():
-          emit(state.copyWith(
-            confirmDeliveryState: BaseState(
-              errorMessage: result.failure.message,
-              data: state.confirmDeliveryState.data,
+          emit(
+            state.copyWith(
+              confirmDeliveryState: const BaseState(data: null),
+              confirmSuccess: true,
             ),
-          ));
+          );
+        case ErrorBaseResponse<void>():
+          emit(
+            state.copyWith(
+              confirmDeliveryState: BaseState(
+                errorMessage: result.failure.message,
+                data: state.confirmDeliveryState.data,
+              ),
+            ),
+          );
       }
     } catch (e) {
-      emit(state.copyWith(
-        confirmDeliveryState: BaseState(
-          errorMessage: ErrorHandler.handle(e).message,
-          data: state.confirmDeliveryState.data,
+      emit(
+        state.copyWith(
+          confirmDeliveryState: BaseState(
+            errorMessage: ErrorHandler.handle(e).message,
+            data: state.confirmDeliveryState.data,
+          ),
         ),
-      ));
+      );
     }
   }
 

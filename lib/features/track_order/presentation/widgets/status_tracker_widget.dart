@@ -19,14 +19,30 @@ class StatusTrackerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stateValue = entity.state ?? entity.order?.state ?? TrackingStatus.inProgress;
+    final stateValue =
+        entity.state ?? entity.order?.state ?? TrackingStatus.inProgress;
 
     final steps = [
-      _StatusStep(label: TrackOrderConstants.inProgress, key: TrackingStatus.inProgress),
-      _StatusStep(label: TrackOrderConstants.picked, key: TrackingStatus.picked),
-      _StatusStep(label: TrackOrderConstants.outForDelivery, key: TrackingStatus.outForDelivery),
-      _StatusStep(label: TrackOrderConstants.arrived, key: TrackingStatus.arrived),
-      _StatusStep(label: TrackOrderConstants.delivered, key: TrackingStatus.completed),
+      _StatusStep(
+        label: TrackOrderConstants.inProgress,
+        key: TrackingStatus.inProgress,
+      ),
+      _StatusStep(
+        label: TrackOrderConstants.picked,
+        key: TrackingStatus.picked,
+      ),
+      _StatusStep(
+        label: TrackOrderConstants.outForDelivery,
+        key: TrackingStatus.outForDelivery,
+      ),
+      _StatusStep(
+        label: TrackOrderConstants.arrived,
+        key: TrackingStatus.arrived,
+      ),
+      _StatusStep(
+        label: TrackOrderConstants.delivered,
+        key: TrackingStatus.completed,
+      ),
     ];
 
     final currentIndex = steps.indexWhere((s) => s.key == stateValue);
@@ -49,7 +65,11 @@ class StatusTrackerWidget extends StatelessWidget {
         children: [
           Text(
             TrackOrderConstants.orderStatus,
-            style: getSemiBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary),
+            style: getSemiBoldStyle(
+              context: context,
+              fontSize: 16,
+              color: AppColors.textPrimary,
+            ),
           ),
           const SizedBox(height: 16),
           ...List.generate(steps.length, (index) {
@@ -58,14 +78,28 @@ class StatusTrackerWidget extends StatelessWidget {
             final isCurrent = index == currentIndex;
             final isLast = index == steps.length - 1;
 
-            return _buildStepRow(context, step, isCompleted, isCurrent, index, isLast);
+            return _buildStepRow(
+              context,
+              step,
+              isCompleted,
+              isCurrent,
+              index,
+              isLast,
+            );
           }),
         ],
       ),
     );
   }
 
-  Widget _buildStepRow(BuildContext context, _StatusStep step, bool isCompleted, bool isCurrent, int index, bool isLast) {
+  Widget _buildStepRow(
+    BuildContext context,
+    _StatusStep step,
+    bool isCompleted,
+    bool isCurrent,
+    int index,
+    bool isLast,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -80,10 +114,18 @@ class StatusTrackerWidget extends StatelessWidget {
               ),
               child: Center(
                 child: isCompleted
-                    ? const Icon(Icons.check, size: 14, color: AppColors.textWhite)
+                    ? const Icon(
+                        Icons.check,
+                        size: 14,
+                        color: AppColors.textWhite,
+                      )
                     : Text(
                         '${index + 1}',
-                        style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textWhite),
+                        style: getRegularStyle(
+                          context: context,
+                          fontSize: 12,
+                          color: AppColors.textWhite,
+                        ),
                       ),
               ),
             ),
@@ -106,13 +148,19 @@ class StatusTrackerWidget extends StatelessWidget {
                 style: getMediumStyle(
                   context: context,
                   fontSize: 14,
-                  color: isCompleted ? AppColors.textPrimary : AppColors.textSecondary,
+                  color: isCompleted
+                      ? AppColors.textPrimary
+                      : AppColors.textSecondary,
                 ),
               ),
               if (isCurrent)
                 Text(
                   TrackOrderConstants.current,
-                  style: getRegularStyle(context: context, fontSize: 12, color: AppColors.primary),
+                  style: getRegularStyle(
+                    context: context,
+                    fontSize: 12,
+                    color: AppColors.primary,
+                  ),
                 ),
             ],
           ),

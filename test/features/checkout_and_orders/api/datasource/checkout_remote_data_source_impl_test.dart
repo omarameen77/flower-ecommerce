@@ -17,8 +17,9 @@ void main() {
 
   setUp(() {
     mockCheckoutApiClient = MockCheckoutApiClient();
-    checkoutRemoteDataSourceImpl =
-        CheckoutRemoteDataSourceImpl(checkoutApiClient: mockCheckoutApiClient);
+    checkoutRemoteDataSourceImpl = CheckoutRemoteDataSourceImpl(
+      checkoutApiClient: mockCheckoutApiClient,
+    );
   });
 
   final tCheckoutParams = CheckoutParams(
@@ -41,71 +42,73 @@ void main() {
 
   group('checkoutWithCashOnDelivery', () {
     test(
-        'should return SuccessBaseResponse when api client returns cash on delivery response',
-        () async {
-      when(mockCheckoutApiClient.checkoutWithCashOnDelivery(any))
-          .thenAnswer((_) async => tCashOnDeliveryDto);
+      'should return SuccessBaseResponse when api client returns cash on delivery response',
+      () async {
+        when(
+          mockCheckoutApiClient.checkoutWithCashOnDelivery(any),
+        ).thenAnswer((_) async => tCashOnDeliveryDto);
 
-      final result =
-          await checkoutRemoteDataSourceImpl.checkoutWithCashOnDelivery(
-        tCheckoutParams,
-      );
+        final result = await checkoutRemoteDataSourceImpl
+            .checkoutWithCashOnDelivery(tCheckoutParams);
 
-      expect(result, isA<SuccessBaseResponse<CashOnDeliveryDto>>());
-      final successResult = result as SuccessBaseResponse<CashOnDeliveryDto>;
-      expect(successResult.data, tCashOnDeliveryDto);
-      verify(mockCheckoutApiClient.checkoutWithCashOnDelivery(any)).called(1);
-      verifyNoMoreInteractions(mockCheckoutApiClient);
-    });
+        expect(result, isA<SuccessBaseResponse<CashOnDeliveryDto>>());
+        final successResult = result as SuccessBaseResponse<CashOnDeliveryDto>;
+        expect(successResult.data, tCashOnDeliveryDto);
+        verify(mockCheckoutApiClient.checkoutWithCashOnDelivery(any)).called(1);
+        verifyNoMoreInteractions(mockCheckoutApiClient);
+      },
+    );
 
-    test('should return ErrorBaseResponse when api client throws an exception',
-        () async {
-      when(mockCheckoutApiClient.checkoutWithCashOnDelivery(any))
-          .thenThrow(Exception('Network error'));
+    test(
+      'should return ErrorBaseResponse when api client throws an exception',
+      () async {
+        when(
+          mockCheckoutApiClient.checkoutWithCashOnDelivery(any),
+        ).thenThrow(Exception('Network error'));
 
-      final result =
-          await checkoutRemoteDataSourceImpl.checkoutWithCashOnDelivery(
-        tCheckoutParams,
-      );
+        final result = await checkoutRemoteDataSourceImpl
+            .checkoutWithCashOnDelivery(tCheckoutParams);
 
-      expect(result, isA<ErrorBaseResponse<CashOnDeliveryDto>>());
-      verify(mockCheckoutApiClient.checkoutWithCashOnDelivery(any)).called(1);
-      verifyNoMoreInteractions(mockCheckoutApiClient);
-    });
+        expect(result, isA<ErrorBaseResponse<CashOnDeliveryDto>>());
+        verify(mockCheckoutApiClient.checkoutWithCashOnDelivery(any)).called(1);
+        verifyNoMoreInteractions(mockCheckoutApiClient);
+      },
+    );
   });
 
   group('checkoutWithCreditCard', () {
     test(
-        'should return SuccessBaseResponse when api client returns credit card response',
-        () async {
-      when(mockCheckoutApiClient.checkoutWithCreditCard(any))
-          .thenAnswer((_) async => tCreditCardDto);
+      'should return SuccessBaseResponse when api client returns credit card response',
+      () async {
+        when(
+          mockCheckoutApiClient.checkoutWithCreditCard(any),
+        ).thenAnswer((_) async => tCreditCardDto);
 
-      final result =
-          await checkoutRemoteDataSourceImpl.checkoutWithCreditCard(
-        tCheckoutParams,
-      );
+        final result = await checkoutRemoteDataSourceImpl
+            .checkoutWithCreditCard(tCheckoutParams);
 
-      expect(result, isA<SuccessBaseResponse<CreditCardDto>>());
-      final successResult = result as SuccessBaseResponse<CreditCardDto>;
-      expect(successResult.data, tCreditCardDto);
-      verify(mockCheckoutApiClient.checkoutWithCreditCard(any)).called(1);
-      verifyNoMoreInteractions(mockCheckoutApiClient);
-    });
+        expect(result, isA<SuccessBaseResponse<CreditCardDto>>());
+        final successResult = result as SuccessBaseResponse<CreditCardDto>;
+        expect(successResult.data, tCreditCardDto);
+        verify(mockCheckoutApiClient.checkoutWithCreditCard(any)).called(1);
+        verifyNoMoreInteractions(mockCheckoutApiClient);
+      },
+    );
 
-    test('should return ErrorBaseResponse when api client throws an exception',
-        () async {
-      when(mockCheckoutApiClient.checkoutWithCreditCard(any))
-          .thenThrow(Exception('Network error'));
+    test(
+      'should return ErrorBaseResponse when api client throws an exception',
+      () async {
+        when(
+          mockCheckoutApiClient.checkoutWithCreditCard(any),
+        ).thenThrow(Exception('Network error'));
 
-      final result =
-          await checkoutRemoteDataSourceImpl.checkoutWithCreditCard(
-        tCheckoutParams,
-      );
+        final result = await checkoutRemoteDataSourceImpl
+            .checkoutWithCreditCard(tCheckoutParams);
 
-      expect(result, isA<ErrorBaseResponse<CreditCardDto>>());
-      verify(mockCheckoutApiClient.checkoutWithCreditCard(any)).called(1);
-      verifyNoMoreInteractions(mockCheckoutApiClient);
-    });
+        expect(result, isA<ErrorBaseResponse<CreditCardDto>>());
+        verify(mockCheckoutApiClient.checkoutWithCreditCard(any)).called(1);
+        verifyNoMoreInteractions(mockCheckoutApiClient);
+      },
+    );
   });
 }

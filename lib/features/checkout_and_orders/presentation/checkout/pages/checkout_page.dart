@@ -87,9 +87,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(CheckoutConstants.title),
-      ),
+      appBar: AppBar(title: Text(CheckoutConstants.title)),
       body: BlocListener<CheckoutCubit, CheckoutState>(
         listenWhen: (previous, current) =>
             previous.status != current.status &&
