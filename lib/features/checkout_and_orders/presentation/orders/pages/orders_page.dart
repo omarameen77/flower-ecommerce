@@ -3,11 +3,12 @@ import 'package:flower/core/localization_constants/orders_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
+import 'package:flower/core/widgets/app_error_widget.dart';
+import 'package:flower/features/checkout_and_orders/domain/models/order_model.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_cubit.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_event.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/widgets/order_card.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/widgets/order_card_shimmer.dart';
-import 'package:flower/features/checkout_and_orders/presentation/orders/widgets/orders_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,29 +19,43 @@ class OrdersPage extends StatefulWidget {
   State<OrdersPage> createState() => _OrdersPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage> {
-  final _scrollController = ScrollController();
+class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+  final _scrollControllers = List.generate(4, (_) => ScrollController());
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<OrdersCubit>().doEvent(const GetOrdersEvent());
     });
-    _scrollController.addListener(_onScroll);
+    for (final controller in _scrollControllers) {
+      controller.addListener(_onScroll);
+    }
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
+    _tabController.dispose();
+    for (final controller in _scrollControllers) {
+      controller.removeListener(_onScroll);
+      controller.dispose();
+    }
     super.dispose();
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
-      context.read<OrdersCubit>().doEvent(const LoadMoreOrdersEvent());
+    for (final controller in _scrollControllers) {
+      if (!controller.hasClients ||
+          controller.position.maxScrollExtent <= 0) {
+        continue;
+      }
+      if (controller.position.pixels >=
+          controller.position.maxScrollExtent - 200) {
+        context.read<OrdersCubit>().doEvent(const LoadMoreOrdersEvent());
+        break;
+      }
     }
   }
 
@@ -61,20 +76,19 @@ class _OrdersPageState extends State<OrdersPage> {
             color: AppColors.textPrimary,
           ),
         ),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: OrdersConstants.pending),
+            Tab(text: OrdersConstants.inProgress),
+            Tab(text: OrdersConstants.canceled),
+            Tab(text: OrdersConstants.completed),
+          ],
+        ),
       ),
       body: BlocBuilder<OrdersCubit, OrdersState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              OrdersTabBar(
-                selectedTab: state.selectedTab,
-                onTabSelected: (tab) {
-                  context.read<OrdersCubit>().doEvent(SelectTabEvent(tab));
-                },
-              ),
-              Expanded(child: _buildContent(context, state)),
-            ],
-          );
+          return _buildContent(context, state);
         },
       ),
     );
@@ -83,7 +97,7 @@ class _OrdersPageState extends State<OrdersPage> {
   Widget _buildContent(BuildContext context, OrdersState state) {
     if (state.isLoading) {
       return ListView.builder(
-        controller: _scrollController,
+        controller: _scrollControllers[0],
         padding: const EdgeInsets.only(top: 8, bottom: 24),
         itemCount: 4,
         itemBuilder: (context, index) => const OrderCardShimmer(),
@@ -91,22 +105,34 @@ class _OrdersPageState extends State<OrdersPage> {
     }
 
     if (state.errorMessage != null) {
-      return Center(
-        child: Text(
-          state.errorMessage!,
-          style: getRegularStyle(context: context, color: AppColors.error),
-        ),
+      return AppErrorWidget(
+        errorMessage: state.errorMessage!,
+        onRetry: () => context.read<OrdersCubit>().doEvent(const GetOrdersEvent()),
       );
     }
 
-    final orders = state.filteredOrders;
+    return TabBarView(
+      controller: _tabController,
+      children: [
+        _buildOrderList(state.pendingOrders, state.isLoadingMore, 0),
+        _buildOrderList(state.inProgressOrders, state.isLoadingMore, 1),
+        _buildOrderList(state.canceledOrders, state.isLoadingMore, 2),
+        _buildOrderList(state.completedOrders, state.isLoadingMore, 3),
+      ],
+    );
+  }
 
+  Widget _buildOrderList(List<OrderModel> orders, bool isLoadingMore, int index) {
     if (orders.isEmpty) {
+      final emptyMessages = [
+        OrdersConstants.noPendingOrders,
+        OrdersConstants.noInProgressOrders,
+        OrdersConstants.noCanceledOrders,
+        OrdersConstants.noCompletedOrders,
+      ];
       return Center(
         child: Text(
-          state.selectedTab == OrdersTab.active
-              ? OrdersConstants.noActiveOrders
-              : OrdersConstants.noCompletedOrders,
+          emptyMessages[index],
           style: getRegularStyle(
             context: context,
             fontSize: FontSizeManager.s16,
@@ -117,17 +143,17 @@ class _OrdersPageState extends State<OrdersPage> {
     }
 
     return ListView.builder(
-      controller: _scrollController,
+      controller: _scrollControllers[index],
       padding: const EdgeInsets.only(top: 8, bottom: 24),
-      itemCount: orders.length + (state.isLoadingMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index == orders.length) {
+      itemCount: orders.length + (isLoadingMore ? 1 : 0),
+      itemBuilder: (context, i) {
+        if (i == orders.length) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: AppSize.s8),
             child: OrderCardShimmer(),
           );
         }
-        return OrderCard(order: orders[index]);
+        return OrderCard(order: orders[i]);
       },
     );
   }

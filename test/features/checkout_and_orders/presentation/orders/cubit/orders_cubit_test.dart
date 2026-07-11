@@ -87,20 +87,6 @@ void main() {
       });
     });
 
-    group('SelectTabEvent', () {
-      test('switches to completed tab', () {
-        ordersCubit.doEvent(const SelectTabEvent(OrdersTab.completed));
-
-        expect(ordersCubit.state.selectedTab, OrdersTab.completed);
-      });
-
-      test('ignores same tab selection', () {
-        ordersCubit.doEvent(const SelectTabEvent(OrdersTab.active));
-
-        expect(ordersCubit.state.selectedTab, OrdersTab.active);
-      });
-    });
-
     group('LoadMoreOrdersEvent', () {
       OrderModel _order(int id) => OrderModel(
             id: "$id",

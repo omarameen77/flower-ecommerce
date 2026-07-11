@@ -37,6 +37,9 @@ import 'package:flower/features/product_sections/presentation/shared_cubit/searc
 import 'package:flower/features/profile/presentation/pages/about_us_page.dart';
 import 'package:flower/features/profile/presentation/pages/terms_conditions_page.dart';
 import 'package:flower/features/splash/presentation/pages/splash_screen.dart';
+import 'package:flower/features/track_order/domain/entities/track_order_entity.dart';
+import 'package:flower/features/track_order/presentation/cubit/track_order_cubit.dart';
+import 'package:flower/features/track_order/presentation/pages/track_order_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -163,6 +166,19 @@ abstract class AppRouter {
             BlocProvider(
               create: (_) => getIt<OrdersCubit>(),
               child: const OrdersPage(),
+            ),
+          );
+
+        case Routes.trackOrder:
+          final args = settings.arguments as Map<String, dynamic>? ?? {};
+          final orderId = args['orderId'] as String? ?? '';
+          final orderData = args['orderData'] != null
+              ? TrackOrderEntity.fromMap(args['orderData'] as Map<String, dynamic>)
+              : null;
+          return PageTransitions.slide(
+            BlocProvider(
+              create: (_) => getIt<TrackOrderCubit>(),
+              child: TrackOrderPage(orderId: orderId, orderData: orderData),
             ),
           );
 
