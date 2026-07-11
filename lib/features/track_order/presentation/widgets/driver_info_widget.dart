@@ -1,9 +1,11 @@
 import 'package:flower/core/localization_constants/track_order_constants.dart';
+import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/cached_network_image.dart';
 import 'package:flower/features/track_order/domain/entities/track_order_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DriverInfoWidget extends StatelessWidget {
@@ -20,7 +22,7 @@ class DriverInfoWidget extends StatelessWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Call $phone')),
+          SnackBar(content: Text('${TrackOrderConstants.callFailed} $phone')),
         );
       }
     }
@@ -37,7 +39,7 @@ class DriverInfoWidget extends StatelessWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('WhatsApp $phone')),
+          SnackBar(content: Text('${TrackOrderConstants.whatsappFailed} $phone')),
         );
       }
     }
@@ -48,90 +50,88 @@ class DriverInfoWidget extends StatelessWidget {
     final name = user != null
         ? '${user!.firstName ?? ''} ${user!.lastName ?? ''}'.trim()
         : TrackOrderConstants.driverInfo;
-    final initial = name.isNotEmpty ? name[0] : 'D';
-    final phone = user?.phone;
+    final initial = name.isNotEmpty ? name[0] : TrackOrderConstants.driverInitial;
 
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.grey700, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          if (user?.photo != null && user!.photo!.isNotEmpty)
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImageWidget(
-                urlToImage: user!.photo!,
-                width: 56,
-                height: 56,
-              ),
-            )
-          else
-            Container(
+    return Row(
+      children: [
+        if (user?.photo != null && user!.photo!.isNotEmpty)
+          ClipOval(
+            child: CachedNetworkImageWidget(
+              urlToImage: user!.photo!,
               width: 56,
               height: 56,
-              decoration: BoxDecoration(
-                color: AppColors.primaryLight.withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  initial,
-                  style: getBoldStyle(context: context, fontSize: 22, color: AppColors.primary),
-                ),
-              ),
             ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: getSemiBoldStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
-                ),
-                if (phone != null && phone.isNotEmpty) ...[
-                  const SizedBox(height: 4),
-                  Text(
-                    phone,
-                    style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textSecondary),
-                  ),
-                ],
-              ],
+          )
+        else
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: AppColors.primaryLight.withValues(alpha: 0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                initial,
+                style: getBoldStyle(context: context, fontSize: 22, color: AppColors.primary),
+              ),
             ),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                onPressed: () => _makePhoneCall(context),
-                icon: const Icon(Icons.phone, color: AppColors.primary),
-                constraints: const BoxConstraints(),
-                padding: EdgeInsets.zero,
-                splashRadius: 20,
+              Text(
+                name,
+                style: getSemiBoldStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
               ),
-              const SizedBox(width: 4),
-              IconButton(
-                onPressed: () => _openWhatsApp(context),
-                icon: const Icon(Icons.chat_bubble, color: AppColors.primary),
-                constraints: const BoxConstraints(),
-                padding: EdgeInsets.zero,
-                splashRadius: 20,
+              const SizedBox(height: 2),
+              Text(
+                TrackOrderConstants.deliveryHero,
+                style: getRegularStyle(context: context, fontSize: 12, color: AppColors.textSecondary),
               ),
             ],
           ),
-        ],
-      ),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () => _makePhoneCall(context),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.phone, color: AppColors.primary, size: 20),
+              ),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => _openWhatsApp(context),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF25D366).withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: SvgPicture.asset(
+                    AppSvgs.whatsapp,
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -21,25 +21,25 @@ class OrdersState extends Equatable {
 
   List<OrderModel> get pendingOrders {
     return allOrders
-        .where((o) => o.state == 'pending')
+        .where((o) => o.state == OrderState.pending.name)
         .toList();
   }
 
   List<OrderModel> get inProgressOrders {
     return allOrders
-        .where((o) => o.state == 'inProgress')
+        .where((o) => o.state == OrderState.inProgress.name)
         .toList();
   }
 
   List<OrderModel> get canceledOrders {
     return allOrders
-        .where((o) => o.state == 'canceled')
+        .where((o) => o.state == OrderState.canceled.name)
         .toList();
   }
 
   List<OrderModel> get completedOrders {
     return allOrders
-        .where((o) => o.state == 'completed')
+        .where((o) => o.state == OrderState.completed.name)
         .toList();
   }
 

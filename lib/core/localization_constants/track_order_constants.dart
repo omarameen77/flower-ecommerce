@@ -24,4 +24,12 @@ abstract class TrackOrderConstants {
   static String get total => 'track_order.total'.tr();
   static String get payment => 'track_order.payment'.tr();
   static String get driverInfo => 'track_order.driver_info'.tr();
+  static String get estimatedArrival => 'track_order.estimated_arrival'.tr();
+  static String get estimatedArrivalTime => 'track_order.estimated_arrival_time'.tr();
+  static String get deliveryHero => 'track_order.delivery_hero'.tr();
+  static String get orderInfo => 'track_order.order_info'.tr();
+  static String get orderId => 'track_order.order_id'.tr();
+  static String get callFailed => 'track_order.call_failed'.tr();
+  static String get whatsappFailed => 'track_order.whatsapp_failed'.tr();
+  static String get driverInitial => 'track_order.driver_initial'.tr();
 }

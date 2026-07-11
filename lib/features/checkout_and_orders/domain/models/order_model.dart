@@ -1,7 +1,7 @@
 class OrderModel {
   final String id;
   final String orderNumber;
-  final int totalPrice;
+  final double totalPrice;
   final String paymentType;
   final String state;
   final bool isPaid;
@@ -9,7 +9,7 @@ class OrderModel {
   final String createdAt;
   final String productTitle;
   final String productImage;
-  final int productPrice;
+  final double productPrice;
   final int quantity;
 
   OrderModel({
