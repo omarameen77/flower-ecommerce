@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/features/checkout_and_orders/domain/models/order_model.dart';
+import 'package:flower/features/checkout_and_orders/domain/models/order_state.dart';
 import 'package:flower/features/checkout_and_orders/domain/usecases/get_orders_usecase.dart';
 import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_event.dart';
 import 'package:injectable/injectable.dart';

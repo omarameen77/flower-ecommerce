@@ -96,7 +96,7 @@ class OrderDto {
     return OrderModel(
       id: id ?? '',
       orderNumber: orderNumber ?? '',
-      totalPrice: totalPrice ?? 0,
+      totalPrice: (totalPrice ?? 0).toDouble(),
       paymentType: paymentType ?? '',
       state: state ?? '',
       isPaid: isPaid ?? false,
@@ -104,7 +104,7 @@ class OrderDto {
       createdAt: createdAt ?? '',
       productTitle: firstItem?.product?.title ?? '',
       productImage: firstItem?.product?.imgCover ?? '',
-      productPrice: firstItem?.product?.price ?? 0,
+      productPrice: (firstItem?.product?.price ?? 0).toDouble(),
       quantity: firstItem?.quantity ?? 0,
     );
   }
@@ -112,7 +112,7 @@ class OrderDto {
 
 class OrderItemDto {
   final ProductDto? product;
-  final int? price;
+  final num? price;
   final int? quantity;
   final String? id;
 
@@ -123,8 +123,8 @@ class OrderItemDto {
       product: json['product'] != null
           ? ProductDto.fromJson(json['product'] as Map<String, dynamic>)
           : null,
-      price: json['price'] as int?,
-      quantity: json['quantity'] as int?,
+      price: json['price'] as num?,
+      quantity: (json['quantity'] as num?)?.toInt(),
       id: json['_id'] as String?,
     );
   }
@@ -137,9 +137,9 @@ class ProductDto {
   final String? description;
   final String? imgCover;
   final List<String>? images;
-  final int? price;
-  final int? priceAfterDiscount;
-  final int? discount;
+  final num? price;
+  final num? priceAfterDiscount;
+  final num? discount;
 
   ProductDto({
     this.id,
@@ -163,9 +163,9 @@ class ProductDto {
       images: (json['images'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      price: json['price'] as int?,
-      priceAfterDiscount: json['priceAfterDiscount'] as int?,
-      discount: json['discount'] as int?,
+      price: json['price'] as num?,
+      priceAfterDiscount: json['priceAfterDiscount'] as num?,
+      discount: json['discount'] as num?,
     );
   }
 }

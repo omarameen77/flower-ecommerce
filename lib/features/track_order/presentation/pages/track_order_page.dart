@@ -1,4 +1,6 @@
+import 'package:flower/core/localization_constants/checkout_constants.dart';
 import 'package:flower/core/localization_constants/track_order_constants.dart';
+import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_loading_widget.dart';
@@ -9,13 +11,11 @@ import 'package:flower/features/track_order/presentation/cubit/track_order_event
 import 'package:flower/features/track_order/presentation/widgets/confirm_delivery_button.dart';
 import 'package:flower/features/track_order/presentation/widgets/delivered_view_widget.dart';
 import 'package:flower/features/track_order/presentation/widgets/driver_info_widget.dart';
-import 'package:flower/features/track_order/presentation/widgets/order_header_widget.dart';
 import 'package:flower/features/track_order/presentation/widgets/order_items_widget.dart';
 import 'package:flower/features/track_order/presentation/widgets/status_tracker_widget.dart';
-import 'package:flower/features/track_order/presentation/widgets/store_info_widget.dart';
-import 'package:flower/features/track_order/presentation/widgets/total_section_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class TrackOrderPage extends StatefulWidget {
   final String orderId;
@@ -137,7 +137,6 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
 
   Widget _buildTrackingView(TrackOrderEntity entity) {
     final order = entity.order;
-    final store = entity.store;
     final items = order?.orderItems ?? [];
 
     return SingleChildScrollView(
@@ -145,9 +144,27 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          OrderHeaderWidget(order: order),
-          const SizedBox(height: 24),
+          Text(
+            TrackOrderConstants.estimatedArrival,
+            style: getBoldStyle(context: context, fontSize: 18, color: AppColors.textPrimary),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            TrackOrderConstants.estimatedArrivalTime,
+            style: getRegularStyle(context: context, fontSize: 14, color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: 16),
+          const Divider(color: AppColors.divider, height: 1),
+          const SizedBox(height: 16),
           DriverInfoWidget(user: entity.user),
+          const SizedBox(height: 24),
+          Center(
+            child: SvgPicture.asset(
+              AppSvgs.car,
+              width: 220,
+              height: 85,
+            ),
+          ),
           const SizedBox(height: 24),
           StatusTrackerWidget(entity: entity),
           const SizedBox(height: 24),
@@ -156,18 +173,56 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
             ConfirmDeliveryButton(orderId: widget.orderId),
             const SizedBox(height: 24),
           ],
-          if (store != null) ...[
-            StoreInfoWidget(store: store),
-            const SizedBox(height: 24),
+          Text(
+            TrackOrderConstants.orderInfo,
+            style: getSemiBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary),
+          ),
+          const SizedBox(height: 12),
+          if (order?.orderNumber != null) ...[
+            _buildInfoRow(context, TrackOrderConstants.orderId, order!.orderNumber!),
+            const SizedBox(height: 8),
           ],
           OrderItemsWidget(items: items),
           if (order != null) ...[
-            const SizedBox(height: 16),
-            TotalSectionWidget(order: order),
+            const SizedBox(height: 12),
+            const Divider(color: AppColors.divider, height: 1),
+            const SizedBox(height: 12),
+            _buildInfoRow(
+              context,
+              TrackOrderConstants.total,
+              '${CheckoutConstants.egp}${order.totalPrice?.toStringAsFixed(2) ?? '0.00'}',
+              valueBold: true,
+            ),
+            if (order.paymentType != null) ...[
+              const SizedBox(height: 8),
+              _buildInfoRow(
+                context,
+                TrackOrderConstants.payment,
+                order.paymentType!.toUpperCase(),
+              ),
+            ],
           ],
           const SizedBox(height: 24),
         ],
       ),
+    );
+  }
+
+  Widget _buildInfoRow(BuildContext context, String label, String value, {bool valueBold = false}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: getRegularStyle(context: context, fontSize: 14, color: AppColors.textSecondary),
+        ),
+        Text(
+          value,
+          style: valueBold
+              ? getBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary)
+              : getMediumStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+        ),
+      ],
     );
   }
 }
