@@ -60,46 +60,6 @@ class DriverInfoWidget extends StatelessWidget {
               urlToImage: user!.photo!,
               width: 56,
               height: 56,
-              decoration: BoxDecoration(
-                color: AppColors.primaryLight.withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  initial,
-                  style: getBoldStyle(
-                    context: context,
-                    fontSize: 22,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-            ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: getSemiBoldStyle(
-                    context: context,
-                    fontSize: 14,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                if (phone != null && phone.isNotEmpty) ...[
-                  const SizedBox(height: 4),
-                  Text(
-                    phone,
-                    style: getRegularStyle(
-                      context: context,
-                      fontSize: 12,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ],
-              ],
             ),
           )
         else
