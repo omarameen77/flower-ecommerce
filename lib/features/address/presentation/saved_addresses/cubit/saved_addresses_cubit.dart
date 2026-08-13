@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 
 part 'saved_addresses_state.dart';
 
-@lazySingleton
+@injectable
 class SavedAddressesCubit extends Cubit<SavedAddressesState> {
   final GetAddressesUseCase _getAddressesUseCase;
   final RemoveAddressUseCase _removeAddressUseCase;

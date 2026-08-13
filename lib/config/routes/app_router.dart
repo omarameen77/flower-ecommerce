@@ -18,16 +18,16 @@ import 'package:flower/features/auth/presentation/reset_password/cubit/reset_pas
 import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
 import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
-import 'package:flower/features/checkout_and_orders/presentation/checkout/cubit/checkout_cubit.dart';
-import 'package:flower/features/checkout_and_orders/presentation/checkout/pages/checkout_page.dart';
-import 'package:flower/features/checkout_and_orders/presentation/checkout/pages/payment_web_view_page.dart';
-import 'package:flower/features/checkout_and_orders/presentation/checkout/pages/thank_you_page.dart';
-import 'package:flower/features/checkout_and_orders/presentation/orders/cubit/orders_cubit.dart';
-import 'package:flower/features/checkout_and_orders/presentation/orders/pages/orders_page.dart';
-import 'package:flower/features/edit_profile/domain/usecases/edit_profile_use_case.dart';
-import 'package:flower/features/edit_profile/domain/usecases/upload_photo_use_case.dart';
-import 'package:flower/features/edit_profile/presentation/cubit/edit_profile_cubit.dart';
-import 'package:flower/features/edit_profile/presentation/pages/edit_profile_page.dart';
+import 'package:flower/features/checkout/presentation/checkout/cubit/checkout_cubit.dart';
+import 'package:flower/features/checkout/presentation/checkout/pages/checkout_page.dart';
+import 'package:flower/features/checkout/presentation/checkout/pages/payment_web_view_page.dart';
+import 'package:flower/features/checkout/presentation/checkout/pages/thank_you_page.dart';
+import 'package:flower/features/orders/presentation/orders/cubit/orders_cubit.dart';
+import 'package:flower/features/orders/presentation/orders/pages/orders_page.dart';
+import 'package:flower/features/profile/domain/usecases/update_profile_use_case.dart';
+import 'package:flower/features/profile/domain/usecases/upload_photo_use_case.dart';
+import 'package:flower/features/profile/presentation/cubit/profile_edit_cubit.dart';
+import 'package:flower/features/profile/presentation/pages/profile_edit_page.dart';
 import 'package:flower/features/notifications/ui/pages/notifications_page.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/pages/best_sellers_page.dart';
 import 'package:flower/features/product_sections/presentation/occasions/pages/occasions_page.dart';
@@ -128,12 +128,12 @@ abstract class AppRouter {
           }
           return PageTransitions.slide(
             BlocProvider(
-              create: (_) => EditProfileCubit(
-                getIt<EditProfileUseCase>(),
+              create: (_) => ProfileEditCubit(
+                getIt<UpdateProfileUseCase>(),
                 getIt<UploadPhotoUseCase>(),
                 user,
               ),
-              child: const EditProfilePage(),
+              child: const ProfileEditPage(),
             ),
           );
 
