@@ -20,30 +20,25 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           final count = state.cart?.numOfCartItems ?? 0;
-          return Row(
-            children: [
-              Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
-              Text.rich(
+          return Text.rich(
+            TextSpan(
+              text: CartConstants.cart,
+              style: getMediumStyle(
+                context: context,
+                color: AppColors.textPrimary,
+                fontSize: AppSize.s18,
+              ),
+              children: [
                 TextSpan(
-                  text: CartConstants.cart,
+                  text: ' ($count ${CartConstants.items})',
                   style: getMediumStyle(
                     context: context,
-                    color: AppColors.textPrimary,
-                    fontSize: AppSize.s18,
+                    color: AppColors.grey800,
+                    fontSize: AppSize.s16,
                   ),
-                  children: [
-                    TextSpan(
-                      text: ' ($count ${CartConstants.items})',
-                      style: getMediumStyle(
-                        context: context,
-                        color: AppColors.grey800,
-                        fontSize: AppSize.s16,
-                      ),
-                    ),
-                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

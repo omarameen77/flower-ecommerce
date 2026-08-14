@@ -5,6 +5,7 @@ import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/button_with_prefix.dart';
+import 'package:flower/features/address/presentation/helpers/ensure_address_extension.dart';
 import 'package:flower/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flower/features/cart/presentation/cubit/cart_events.dart';
 import 'package:flower/features/cart/presentation/cubit/cart_state.dart';
@@ -141,9 +142,15 @@ class ProductWidget extends StatelessWidget {
                   return ButtonWithPrefix(
                     text: isAdded ? 'Added' : AppStrings.addToCart,
                     onTap: productId != null && !isAdded
-                        ? () {
+                        ? () async {
+                            final hasAddress = await context
+                                .ensureUserHasAddress();
+                            if (!hasAddress || !context.mounted) return;
                             context.read<CartCubit>().onEvent(
-                              AddToCartEvent(productId: productId, quantity: 1),
+                              AddToCartEvent(
+                                productId: productId,
+                                quantity: 1,
+                              ),
                             );
                           }
                         : null,

@@ -141,7 +141,8 @@
     "delete_address_message": "Are you sure you want to delete this address?",
     "cancel": "Cancel",
     "delete": "Delete",
-    "deliver_to": "Deliver to "
+    "deliver_to": "Deliver to ",
+    "add_address_required": "Please add a delivery address first"
   },
   "cart": {
     "cart": "Cart",

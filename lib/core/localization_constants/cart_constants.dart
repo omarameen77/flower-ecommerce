@@ -9,10 +9,6 @@ abstract class CartConstants {
 
   static String get checkOut => "cart.checkout".tr();
 
-  static const String staticLocation = '2XVP+XC - Sheikh Zayed.....';
-
-  static String get deliveringTo => 'cart.delivery'.tr();
-
   static String get total => "cart.total".tr();
 
   static String get subTotal => "cart.subtotal".tr();

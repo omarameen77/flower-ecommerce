@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/localization_constants/edit_profile_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -28,6 +29,8 @@ class ProfileEditUpdateSection extends StatelessWidget {
       children: [
         if (loading)
           const ButtonLoadingWidget()
+        else if (!canSubmit)
+          PrimaryButton(text: context.update, onTap: null)
         else
           PrimaryButton(
             text: EditProfileConstants.update,
