@@ -105,12 +105,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 Navigator.pushNamed(
                   context,
                   Routes.paymentWebView,
-                  arguments: {'url': url, 'successUrl': state.successUrl},
+                  arguments: {
+                    'url': url,
+                    'successUrl': state.successUrl,
+                    'cancelUrl': state.cancelUrl,
+                  },
                 ).then((success) {
-                  if (success == true && context.mounted) {
-                    context.read<CheckoutCubit>().doEvent(
-                      const PaymentCompleted(),
-                    );
+                  if (!context.mounted) return;
+                  final cubit = context.read<CheckoutCubit>();
+                  if (success == true) {
+                    cubit.doEvent(const PaymentCompleted());
+                  } else {
+                    cubit.doEvent(const ResetCheckout());
                   }
                 });
               }

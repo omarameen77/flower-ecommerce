@@ -1,6 +1,7 @@
 import 'package:flower/config/dependency_injection/di.dart';
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/layout/app_size.dart';
+import 'package:flower/core/localization_constants/address_constants.dart';
 import 'package:flower/core/localization_constants/cart_constants.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
@@ -92,7 +93,7 @@ class ProductDetailsPage extends StatelessWidget {
                       onTap: productId != null && !isAdded
                           ? () async {
                               final hasAddress = await context
-                                  .ensureUserHasAddress();
+                                  .ensureUserHasAddress(context.addAddressRequired);
                               if (!hasAddress || !context.mounted) return;
                               context.read<CartCubit>().onEvent(
                                 AddToCartEvent(

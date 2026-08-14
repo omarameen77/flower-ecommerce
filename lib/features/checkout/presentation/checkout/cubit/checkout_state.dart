@@ -9,6 +9,7 @@ class CheckoutState extends Equatable {
   final bool isGift;
   final String? paymentUrl;
   final String? successUrl;
+  final String? cancelUrl;
 
   const CheckoutState({
     this.status = CheckoutStatus.initial,
@@ -17,6 +18,7 @@ class CheckoutState extends Equatable {
     this.isGift = false,
     this.paymentUrl,
     this.successUrl,
+    this.cancelUrl,
   });
 
   CheckoutState copyWith({
@@ -26,15 +28,18 @@ class CheckoutState extends Equatable {
     bool? isGift,
     String? paymentUrl,
     String? successUrl,
+    String? cancelUrl,
     bool clearError = false,
+    bool clearPayment = false,
   }) {
     return CheckoutState(
       status: status ?? this.status,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       selectedPayment: selectedPayment ?? this.selectedPayment,
       isGift: isGift ?? this.isGift,
-      paymentUrl: paymentUrl ?? this.paymentUrl,
-      successUrl: successUrl ?? this.successUrl,
+      paymentUrl: clearPayment ? null : (paymentUrl ?? this.paymentUrl),
+      successUrl: clearPayment ? null : (successUrl ?? this.successUrl),
+      cancelUrl: clearPayment ? null : (cancelUrl ?? this.cancelUrl),
     );
   }
 
@@ -46,5 +51,6 @@ class CheckoutState extends Equatable {
     isGift,
     paymentUrl,
     successUrl,
+    cancelUrl,
   ];
 }

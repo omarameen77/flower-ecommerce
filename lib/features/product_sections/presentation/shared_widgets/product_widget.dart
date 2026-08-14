@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flower/config/routes/routes.dart';
+import 'package:flower/core/localization_constants/address_constants.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -144,7 +145,7 @@ class ProductWidget extends StatelessWidget {
                     onTap: productId != null && !isAdded
                         ? () async {
                             final hasAddress = await context
-                                .ensureUserHasAddress();
+                                .ensureUserHasAddress(context.addAddressRequired);
                             if (!hasAddress || !context.mounted) return;
                             context.read<CartCubit>().onEvent(
                               AddToCartEvent(

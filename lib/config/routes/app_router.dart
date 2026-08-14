@@ -159,8 +159,13 @@ abstract class AppRouter {
           final args = settings.arguments as Map<String, dynamic>? ?? {};
           final url = args['url'] as String? ?? '';
           final successUrl = args['successUrl'] as String?;
+          final cancelUrl = args['cancelUrl'] as String?;
           return PageTransitions.slide(
-            PaymentWebViewPage(url: url, successUrl: successUrl),
+            PaymentWebViewPage(
+              url: url,
+              successUrl: successUrl,
+              cancelUrl: cancelUrl,
+            ),
           );
 
         case Routes.orders:
