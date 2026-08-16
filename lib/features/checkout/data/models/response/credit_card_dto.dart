@@ -19,6 +19,7 @@ class CreditCardDto {
     message: message,
     url: session?.url,
     successUrl: session?.successUrl,
+    cancelUrl: session?.cancelUrl,
     orderId: session?.clientReferenceId,
   );
 

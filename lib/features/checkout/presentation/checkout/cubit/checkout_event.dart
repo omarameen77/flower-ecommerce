@@ -42,6 +42,10 @@ final class PaymentCompleted extends CheckoutEvent {
   const PaymentCompleted({this.success = true});
 }
 
+final class ResetCheckout extends CheckoutEvent {
+  const ResetCheckout();
+}
+
 final class PlaceOrderWithCard extends CheckoutEvent {
   final String street;
   final String phone;

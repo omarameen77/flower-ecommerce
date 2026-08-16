@@ -12,7 +12,7 @@ import 'package:flower/features/cart/presentation/widgets/cart_appbar_widget.dar
 import 'package:flower/features/cart/presentation/widgets/cart_item_card_widget.dart';
 import 'package:flower/features/cart/presentation/widgets/cart_summary_section_widget.dart';
 import 'package:flower/features/cart/presentation/widgets/empty_cart_view_widget.dart';
-import 'package:flower/features/cart/presentation/widgets/static_location_widget.dart';
+import 'package:flower/features/address/presentation/saved_addresses/widgets/deliver_to_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,7 +67,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const StaticLocationWidget(),
+                  const DeliverToWidget(),
                   const AppSizedBox(height: AppSize.s16),
                   Expanded(
                     child: ListView.separated(

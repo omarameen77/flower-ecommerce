@@ -7,8 +7,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 class PaymentWebViewPage extends StatefulWidget {
   final String url;
   final String? successUrl;
+  final String? cancelUrl;
 
-  const PaymentWebViewPage({super.key, required this.url, this.successUrl});
+  const PaymentWebViewPage({
+    super.key,
+    required this.url,
+    this.successUrl,
+    this.cancelUrl,
+  });
 
   @override
   State<PaymentWebViewPage> createState() => _PaymentWebViewPageState();
@@ -19,6 +25,7 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
 
   bool _isLoading = true;
   bool _initialPageLoaded = false;
+  bool _completed = false;
 
   @override
   void initState() {
@@ -45,10 +52,25 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
             }
           },
           onNavigationRequest: (request) {
-            if (widget.successUrl != null &&
-                request.url.startsWith(widget.successUrl!)) {
-              Navigator.of(context).pop(true);
+            if (_completed) {
+              return NavigationDecision.prevent;
+            }
 
+            final successUrl = widget.successUrl;
+            if (successUrl != null &&
+                successUrl.isNotEmpty &&
+                request.url.startsWith(successUrl)) {
+              _completed = true;
+              Navigator.of(context).pop(true);
+              return NavigationDecision.prevent;
+            }
+
+            final cancelUrl = widget.cancelUrl;
+            if (cancelUrl != null &&
+                cancelUrl.isNotEmpty &&
+                request.url.startsWith(cancelUrl)) {
+              _completed = true;
+              Navigator.of(context).pop(false);
               return NavigationDecision.prevent;
             }
 

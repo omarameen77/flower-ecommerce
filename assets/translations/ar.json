@@ -108,6 +108,12 @@
     "discount": "الخصم",
     "filter": "تصفية"
   },
+  "categories": {
+    "title": "الأقسام",
+    "subtitle": "تصفح مجموعاتنا",
+    "no_categories_found": "لم يتم العثور على أقسام.",
+    "no_products_for_category": "لا توجد منتجات في هذا القسم بعد."
+  },
   "general": {
     "ok": "حسناً",
     "cancel": "إلغاء",
@@ -140,7 +146,8 @@
     "delete_address_message": "هل أنت متأكد أنك تريد حذف هذا العنوان؟",
     "cancel": "إلغاء",
     "delete": "حذف",
-    "deliver_to": "التوصيل إلى "
+    "deliver_to": "التوصيل إلى ",
+    "add_address_required": "يرجى إضافة عنوان التوصيل أولاً"
   },
   "cart": {
     "cart": "السله",

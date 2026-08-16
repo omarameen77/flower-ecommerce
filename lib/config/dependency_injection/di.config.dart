@@ -183,6 +183,8 @@ import '../../features/product_sections/domain/use_cases/get_product_by_id_use_c
     as _i1049;
 import '../../features/product_sections/domain/use_cases/get_products_use_case.dart'
     as _i713;
+import '../../features/product_sections/presentation/categories/cubit/category_products_cubit.dart'
+    as _i783;
 import '../../features/product_sections/presentation/occasions/cubit/occasions_products_cubit.dart'
     as _i309;
 import '../../features/product_sections/presentation/product_details/cubit/product_details_cubit.dart'
@@ -563,6 +565,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i404.RegisterCubit>(
       () => _i404.RegisterCubit(gh<_i1010.RegisterUseCase>()),
+    );
+    gh.factory<_i783.CategoryProductsCubit>(
+      () => _i783.CategoryProductsCubit(
+        getCategoriesUseCase: gh<_i406.GetCategoriesUseCase>(),
+        getProductUseCase: gh<_i713.GetProductsUseCase>(),
+      ),
     );
     gh.factory<_i995.ForgetPasswordCubit>(
       () => _i995.ForgetPasswordCubit(gh<_i27.ForgetPasswordUseCase>()),

@@ -1,19 +1,12 @@
-import 'package:flower/config/routes/page_transitions.dart';
-import 'package:flower/config/routes/routes.dart';
-import 'package:flower/core/localization_constants/home_constants.dart';
-import 'package:flower/core/resources/app_strings.dart';
-import 'package:flower/core/theme/app_colors.dart';
-import 'package:flower/core/widgets/app_sizebox.dart';
-import 'package:flower/core/widgets/custom_text_field.dart';
+import 'package:flower/config/base/base_state.dart';
+import 'package:flower/config/dependency_injection/di.dart';
+import 'package:flower/core/localization_constants/categories_constants.dart';
+import 'package:flower/core/widgets/app_loading_widget.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/features/product_sections/domain/entities/category_entity.dart';
-import 'package:flower/features/product_sections/presentation/categories/widgets/linear_indicator_widget.dart';
-import 'package:flower/features/product_sections/presentation/categories/widgets/sliver_tab_bar_delegate.dart';
-import 'package:flower/features/product_sections/presentation/categories/widgets/sort_filter_bottom_sheet.dart';
-import 'package:flower/features/product_sections/presentation/categories/widgets/view_product_widget.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_cubit.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/category_cubit/categories_event.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
+import 'package:flower/features/product_sections/presentation/categories/cubit/category_products_cubit.dart';
+import 'package:flower/features/product_sections/presentation/categories/widgets/category_error_view.dart';
+import 'package:flower/features/product_sections/presentation/categories/widgets/category_tabs_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,183 +17,76 @@ class CategoryScreen extends StatefulWidget {
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen>
-    with TickerProviderStateMixin {
-  TabController? _tabController;
+class _CategoryScreenState extends State<CategoryScreen> {
+  final ScrollController _scrollController = ScrollController();
+  late final CategoryProductsCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = getIt<CategoryProductsCubit>()
+      ..doEvent(const LoadInitialDataEvent());
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    _cubit.doEvent(HandleScrollEvent(_scrollController));
+  }
+
   @override
   void dispose() {
-    _tabController?.dispose();
+    _scrollController.dispose();
+    _cubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoriesCubit, CategoriesState>(
-      builder: (context, state) {
-        final originalCategories = state.categoriesState.data?.categories ?? [];
-        final categories = [
-          CategoryEntity(name: HomeConstants.all, id: null),
-          ...originalCategories,
-        ];
-
-        if (_tabController == null ||
-            _tabController!.length != categories.length) {
-          _tabController?.dispose();
-
-          _tabController = TabController(
-            length: categories.length,
-            vsync: this,
-            initialIndex: state.selectedCategoryIndex,
-          );
-
-          _tabController!.addListener(() {
-            if (_tabController!.indexIsChanging) {
-              final index = _tabController!.index;
-
-              context.read<CategoriesCubit>().onEvent(
-                ChangeSelectedCategoryEvent(index),
-              );
-
-              context.read<ProductCubit>().doEvent(
-                GetProductEvent(categoryId: categories[index].id),
-              );
-            }
-          });
-        }
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (_tabController?.index != state.selectedCategoryIndex) {
-            _tabController?.animateTo(state.selectedCategoryIndex);
-          }
-        });
-
-        return Scaffold(
-          backgroundColor: AppColors.background,
-          body: SafeArea(
-            child: NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    floating: true,
-                    snap: true,
-                    elevation: 0,
-                    toolbarHeight: 80,
-                    backgroundColor: AppColors.background,
-                    surfaceTintColor: AppColors.background,
-                    title: Row(
-                      children: [
-                        Expanded(
-                          child: Hero(
-                            tag: AppStrings.searchFieldHeroTag,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    Routes.searchScreen,
-                                    arguments: {
-                                      'productCubit': context
-                                          .read<ProductCubit>(),
-                                      'transitionType':
-                                          SearchTransitionType.category,
-                                    },
-                                  );
-                                },
-                                child: IgnorePointer(
-                                  child: CustomTextField(
-                                    hintText: HomeConstants.search,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const AppSizedBox(width: 10),
-                        _buildFilterButton(
-                          context,
-                          categories[state.selectedCategoryIndex].id,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverTabBarDelegate(
-                      child: Container(
-                        color: AppColors.background,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TabBar(
-                              controller: _tabController,
-                              isScrollable: true,
-                              tabAlignment: TabAlignment.start,
-                              dividerColor: AppColors.transparent,
-                              indicatorColor:
-                                  context
-                                      .watch<ProductCubit>()
-                                      .state
-                                      .productBaseState
-                                      .isLoading
-                                  ? AppColors.transparent
-                                  : AppColors.primary,
-                              indicatorSize: TabBarIndicatorSize.label,
-                              labelColor: AppColors.primary,
-                              unselectedLabelColor: AppColors.grey700,
-                              tabs: categories
-                                  .map(
-                                    (cat) => Tab(text: cat.name ?? "notfound"),
-                                  )
-                                  .toList(),
-                            ),
-                            BlocBuilder<ProductCubit, ProductState>(
-                              builder: (context, productState) {
-                                return SizedBox(
-                                  height: 4,
-                                  child: productState.productBaseState.isLoading
-                                      ? LinearIndicatorWidget(
-                                          productState: productState
-                                              .productBaseState
-                                              .isLoading,
-                                        )
-                                      : const SizedBox.shrink(),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ];
-              },
-              body: ViewProductWidget(
-                categories: categories,
-                tabController: _tabController!,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildFilterButton(BuildContext context, String? activeCategoryId) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () =>
-          showSortFilterSheet(context, activeCategoryId: activeCategoryId),
-      child: Container(
-        height: 50,
-        width: 50,
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.textSecondary),
-          borderRadius: BorderRadius.circular(8),
+    return BlocProvider.value(
+      value: _cubit,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: CategoriesConstants.title,
+          subtitle: CategoriesConstants.subtitle,
+          showBackButton: false,
         ),
-        child: const Center(child: Icon(Icons.filter_list_sharp)),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: BlocSelector<
+            CategoryProductsCubit,
+            CategoryProductsState,
+            BaseState<List<CategoryEntity>>
+          >(
+            selector: (state) => state.categoriesState,
+            builder: (context, categoryState) {
+              final categories = categoryState.data ?? [];
+
+              if (categoryState.isLoading && categories.isEmpty) {
+                return const AppLoadingWidget();
+              }
+
+              if (categoryState.errorMessage != null && categories.isEmpty) {
+                return CategoryErrorView(
+                  message: categoryState.errorMessage!,
+                  onRetry: () => context
+                      .read<CategoryProductsCubit>()
+                      .doEvent(RetryEvent()),
+                );
+              }
+
+              if (categories.isEmpty) {
+                return Center(
+                  child: Text(CategoriesConstants.noCategoriesFound),
+                );
+              }
+
+              return CategoryTabsView(
+                categories: categories,
+                scrollController: _scrollController,
+              );
+            },
+          ),
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/custom_text_field.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget.dart';
+import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -101,14 +102,18 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Expanded(
               child: state.productsState.isLoading
-                  ? Center(
-                      child: Text(
-                        HomeConstants.searching,
-                        style: getMediumStyle(
-                          context: context,
-                          color: AppColors.primary,
-                        ),
-                      ),
+                  ? GridView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: .72,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
+                      itemCount: 6,
+                      itemBuilder: (_, __) => const ProductWidgetShimmer(),
                     )
                   : products.isEmpty
                   ? Center(
@@ -138,9 +143,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           : products.length + (state.isLoadingMore ? 1 : 0),
                       itemBuilder: (_, index) {
                         if (index >= products.length) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const ProductWidgetShimmer();
                         }
 
                         return ProductWidget(product: products[index]);

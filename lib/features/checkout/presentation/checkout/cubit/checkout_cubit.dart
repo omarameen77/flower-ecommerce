@@ -38,11 +38,20 @@ class CheckoutCubit extends Cubit<CheckoutState> {
           state.copyWith(
             selectedPayment: event.index,
             clearError: true,
-            paymentUrl: null,
+            clearPayment: true,
           ),
         );
       case ToggleGift():
         emit(state.copyWith(isGift: event.value, clearError: true));
+      case ResetCheckout():
+        _clearPendingOrder();
+        emit(
+          state.copyWith(
+            status: CheckoutStatus.initial,
+            clearError: true,
+            clearPayment: true,
+          ),
+        );
       case PlaceOrderWithCash():
         await _placeOrderWithCash(event);
       case PlaceOrderWithCard():
@@ -114,6 +123,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
             status: CheckoutStatus.paymentPending,
             paymentUrl: response.data.url,
             successUrl: response.data.successUrl,
+            cancelUrl: response.data.cancelUrl,
           ),
         );
       case ErrorBaseResponse():

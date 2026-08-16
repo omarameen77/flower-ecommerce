@@ -1,4 +1,3 @@
-import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/checkout_constants.dart';
 import 'package:flower/core/widgets/button_loading_widget.dart';
@@ -29,12 +28,8 @@ class CheckoutBottomButton extends StatelessWidget {
         width: double.infinity,
         height: AppSize.s50,
         child: switch (status) {
-          CheckoutStatus.loading => const ButtonLoadingWidget(),
-          CheckoutStatus.paymentPending => PrimaryButton(
-            text: CheckoutConstants.paymentCompleted,
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, Routes.thankYou),
-          ),
+          CheckoutStatus.loading ||
+          CheckoutStatus.paymentPending => const ButtonLoadingWidget(),
           _ => PrimaryButton(text: CheckoutConstants.placeOrder, onTap: onTap),
         },
       ),

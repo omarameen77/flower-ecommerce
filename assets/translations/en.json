@@ -109,6 +109,12 @@
     "discount": "Discount",
     "filter": "Filter"
   },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Browse our collections",
+    "no_categories_found": "No categories found.",
+    "no_products_for_category": "No products for this category yet."
+  },
   "general": {
     "ok": "OK",
     "cancel": "Cancel",
@@ -141,7 +147,8 @@
     "delete_address_message": "Are you sure you want to delete this address?",
     "cancel": "Cancel",
     "delete": "Delete",
-    "deliver_to": "Deliver to "
+    "deliver_to": "Deliver to ",
+    "add_address_required": "Please add a delivery address first"
   },
   "cart": {
     "cart": "Cart",
