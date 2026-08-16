@@ -108,6 +108,12 @@
     "discount": "الخصم",
     "filter": "تصفية"
   },
+  "categories": {
+    "title": "الأقسام",
+    "subtitle": "تصفح مجموعاتنا",
+    "no_categories_found": "لم يتم العثور على أقسام.",
+    "no_products_for_category": "لا توجد منتجات في هذا القسم بعد."
+  },
   "general": {
     "ok": "حسناً",
     "cancel": "إلغاء",

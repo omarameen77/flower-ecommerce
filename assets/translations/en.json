@@ -109,6 +109,12 @@
     "discount": "Discount",
     "filter": "Filter"
   },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Browse our collections",
+    "no_categories_found": "No categories found.",
+    "no_products_for_category": "No products for this category yet."
+  },
   "general": {
     "ok": "OK",
     "cancel": "Cancel",
