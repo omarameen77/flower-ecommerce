@@ -24,8 +24,7 @@ class ProductWidget extends StatelessWidget {
     final discount = product.discount ?? 0;
 
     final id = product.id;
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
       onTap: id == null
           ? null
           : () => Navigator.pushNamed(

@@ -22,16 +22,23 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: HomeTokens.horizontalPadding,
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 12),
-              const HomeHeader(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: HomeTokens.horizontalPadding,
+                ),
+                child: const HomeHeader(),
+              ),
               const AppSizedBox(height: AppSize.s16),
-              const DeliverToWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: HomeTokens.horizontalPadding,
+                ),
+                child: const DeliverToWidget(),
+              ),
               const AppSizedBox(height: AppSize.s24),
               const CategoriesSection(),
               const AppSizedBox(height: AppSize.s24),

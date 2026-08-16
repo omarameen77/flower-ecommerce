@@ -13,7 +13,12 @@ part 'product_state.dart';
 @injectable
 class ProductCubit extends Cubit<ProductState> {
   final GetProductsUseCase getProductUseCase;
-  List<ProductEntity> _cachedCategoryProducts = [];
+
+  /// Cache products for every category.
+  ///
+  /// null key = All Products
+  /// categoryId = specific category
+  final Map<String?, List<ProductEntity>> _categoryProductsCache = {};
 
   ProductCubit({required this.getProductUseCase}) : super(const ProductState());
 
@@ -29,16 +34,7 @@ class ProductCubit extends Cubit<ProductState> {
         break;
 
       case ClearProductsEvent():
-        emit(
-          state.copyWith(
-            productBaseState: BaseState(
-              isLoading: false,
-              data: _cachedCategoryProducts,
-            ),
-            limit: 8,
-            isLoadingMore: false,
-          ),
-        );
+        _clearProducts();
         break;
     }
   }
@@ -52,6 +48,32 @@ class ProductCubit extends Cubit<ProductState> {
     try {
       if (loadMore && state.isLoadingMore) return;
 
+      final effectiveSort = sort ?? state.currentSort;
+
+      // CACHE
+
+      if (!loadMore && keyword == null && sort == null) {
+        final cachedProducts = _categoryProductsCache[categoryId];
+
+        if (cachedProducts != null) {
+          emit(
+            state.copyWith(
+              productBaseState: BaseState(
+                data: cachedProducts,
+                isLoading: false,
+              ),
+              limit: cachedProducts.length,
+              isLoadingMore: false,
+              currentCategoryId: categoryId,
+            ),
+          );
+
+          return;
+        }
+      }
+
+      // LOADING
+
       final newLimit = loadMore ? state.limit + 8 : 8;
 
       if (!loadMore) {
@@ -59,13 +81,14 @@ class ProductCubit extends Cubit<ProductState> {
           state.copyWith(
             productBaseState: const BaseState(isLoading: true, data: []),
             limit: 8,
+            currentCategoryId: categoryId,
           ),
         );
       } else {
         emit(state.copyWith(isLoadingMore: true));
       }
 
-      final effectiveSort = sort ?? state.currentSort;
+      // API REQUEST
 
       final result = await getProductUseCase.call(
         limit: newLimit,
@@ -76,14 +99,23 @@ class ProductCubit extends Cubit<ProductState> {
 
       switch (result) {
         case SuccessBaseResponse():
-          _cachedCategoryProducts = result.data;
+          final products = result.data;
+
+          // SAVE TO CACHE
+
+          if (keyword == null && sort == null) {
+            _categoryProductsCache[categoryId] = products;
+          }
+
+          // UPDATE STATE
 
           emit(
             state.copyWith(
-              productBaseState: BaseState(data: result.data),
+              productBaseState: BaseState(data: products, isLoading: false),
               limit: newLimit,
               isLoadingMore: false,
               currentSort: effectiveSort,
+              currentCategoryId: categoryId,
             ),
           );
 
@@ -109,5 +141,29 @@ class ProductCubit extends Cubit<ProductState> {
         ),
       );
     }
+  }
+
+  void _clearProducts() {
+    final cachedProducts =
+        _categoryProductsCache[state.currentCategoryId] ?? [];
+
+    emit(
+      state.copyWith(
+        productBaseState: BaseState(isLoading: false, data: cachedProducts),
+        limit: cachedProducts.length,
+        isLoadingMore: false,
+      ),
+    );
+  }
+
+  /// Optional: call this if you ever need to force refresh
+  /// all category products.
+  void clearCategoryCache() {
+    _categoryProductsCache.clear();
+  }
+
+  /// Optional: remove cache for one category only.
+  void clearCategoryCacheById(String? categoryId) {
+    _categoryProductsCache.remove(categoryId);
   }
 }

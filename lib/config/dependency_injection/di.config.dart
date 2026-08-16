@@ -467,7 +467,7 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSourceContract: gh<_i107.AuthRemoteDataSourceContract>(),
       ),
     );
-    gh.lazySingleton<_i1050.SavedAddressesCubit>(
+    gh.factory<_i1050.SavedAddressesCubit>(
       () => _i1050.SavedAddressesCubit(
         gh<_i594.GetAddressesUseCase>(),
         gh<_i465.RemoveAddressUseCase>(),
