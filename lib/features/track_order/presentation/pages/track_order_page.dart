@@ -146,25 +146,27 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
         children: [
           Text(
             TrackOrderConstants.estimatedArrival,
-            style: getBoldStyle(context: context, fontSize: 18, color: AppColors.textPrimary),
+            style: getBoldStyle(
+              context: context,
+              fontSize: 18,
+              color: AppColors.textPrimary,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             TrackOrderConstants.estimatedArrivalTime,
-            style: getRegularStyle(context: context, fontSize: 14, color: AppColors.textSecondary),
+            style: getRegularStyle(
+              context: context,
+              fontSize: 14,
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 16),
           const Divider(color: AppColors.divider, height: 1),
           const SizedBox(height: 16),
           DriverInfoWidget(user: entity.user),
           const SizedBox(height: 24),
-          Center(
-            child: SvgPicture.asset(
-              AppSvgs.car,
-              width: 220,
-              height: 85,
-            ),
-          ),
+          Center(child: SvgPicture.asset(AppSvgs.car, width: 220, height: 85)),
           const SizedBox(height: 24),
           StatusTrackerWidget(entity: entity),
           const SizedBox(height: 24),
@@ -175,11 +177,19 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
           ],
           Text(
             TrackOrderConstants.orderInfo,
-            style: getSemiBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary),
+            style: getSemiBoldStyle(
+              context: context,
+              fontSize: 16,
+              color: AppColors.textPrimary,
+            ),
           ),
           const SizedBox(height: 12),
           if (order?.orderNumber != null) ...[
-            _buildInfoRow(context, TrackOrderConstants.orderId, order!.orderNumber!),
+            _buildInfoRow(
+              context,
+              TrackOrderConstants.orderId,
+              order!.orderNumber!,
+            ),
             const SizedBox(height: 8),
           ],
           OrderItemsWidget(items: items),
@@ -208,19 +218,36 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, String label, String value, {bool valueBold = false}) {
+  Widget _buildInfoRow(
+    BuildContext context,
+    String label,
+    String value, {
+    bool valueBold = false,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
-          style: getRegularStyle(context: context, fontSize: 14, color: AppColors.textSecondary),
+          style: getRegularStyle(
+            context: context,
+            fontSize: 14,
+            color: AppColors.textSecondary,
+          ),
         ),
         Text(
           value,
           style: valueBold
-              ? getBoldStyle(context: context, fontSize: 16, color: AppColors.textPrimary)
-              : getMediumStyle(context: context, fontSize: 14, color: AppColors.textPrimary),
+              ? getBoldStyle(
+                  context: context,
+                  fontSize: 16,
+                  color: AppColors.textPrimary,
+                )
+              : getMediumStyle(
+                  context: context,
+                  fontSize: 14,
+                  color: AppColors.textPrimary,
+                ),
         ),
       ],
     );

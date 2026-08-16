@@ -24,6 +24,8 @@ import 'package:flower/features/checkout/presentation/checkout/pages/payment_web
 import 'package:flower/features/checkout/presentation/checkout/pages/thank_you_page.dart';
 import 'package:flower/features/orders/presentation/orders/cubit/orders_cubit.dart';
 import 'package:flower/features/orders/presentation/orders/pages/orders_page.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
 import 'package:flower/features/profile/domain/usecases/update_profile_use_case.dart';
 import 'package:flower/features/profile/domain/usecases/upload_photo_use_case.dart';
 import 'package:flower/features/profile/presentation/cubit/profile_edit_cubit.dart';
@@ -33,7 +35,6 @@ import 'package:flower/features/product_sections/presentation/best_sellers/pages
 import 'package:flower/features/product_sections/presentation/occasions/pages/occasions_page.dart';
 import 'package:flower/features/product_sections/presentation/product_details/pages/product_details_page.dart';
 import 'package:flower/features/product_sections/presentation/search/search_screen.dart';
-import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
 import 'package:flower/features/profile/presentation/pages/about_us_page.dart';
 import 'package:flower/features/profile/presentation/pages/terms_conditions_page.dart';
 import 'package:flower/features/splash/presentation/pages/splash_screen.dart';
@@ -112,11 +113,24 @@ abstract class AppRouter {
         case Routes.savedAddresses:
           return PageTransitions.slide(const SavedAddressesScreen());
         case Routes.searchScreen:
+          final args = settings.arguments as Map<String, dynamic>? ?? {};
+
+          final productCubit = args['productCubit'] as ProductCubit?;
+
+          final type =
+              args['transitionType'] as SearchTransitionType? ??
+              SearchTransitionType.category;
+
           return PageTransitions.search(
-            BlocProvider(
-              create: (_) => SearchCubit(getIt()),
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (_) => SearchCubit(getIt())),
+                if (productCubit != null)
+                  BlocProvider.value(value: productCubit),
+              ],
               child: const SearchScreen(),
             ),
+            type: type,
           );
 
         case Routes.editProfile:

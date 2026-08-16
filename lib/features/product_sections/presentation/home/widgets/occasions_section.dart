@@ -1,12 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/occasion_item_shimmer.dart';
-import 'package:flower/features/product_sections/presentation/home/widgets/section_title.dart';
+import 'package:flower/features/product_sections/presentation/occasions/widgets/occasion_image.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/occasion_cubit/occasion_cubit.dart';
+import 'package:flower/features/product_sections/presentation/home/widgets/section_title.dart';
+import 'package:flower/config/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,15 +22,23 @@ class OccasionsSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionTitle(
-              title: 'Occasion',
-              onViewAll: () => Navigator.pushNamed(context, Routes.occasions),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: HomeTokens.horizontalPadding,
+              ),
+              child: SectionTitle(
+                title: 'Occasion',
+                onViewAll: () => Navigator.pushNamed(context, Routes.occasions),
+              ),
             ),
             const SizedBox(height: 12),
             SizedBox(
               height: listHeight,
               child: state.occasionBaseState.isLoading
                   ? ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: HomeTokens.horizontalPadding,
+                      ),
                       scrollDirection: Axis.horizontal,
                       itemCount: 4,
                       separatorBuilder: (_, _) =>
@@ -40,12 +48,16 @@ class OccasionsSection extends StatelessWidget {
                   : state.occasionBaseState.data?.isEmpty ?? true
                   ? const SizedBox.shrink()
                   : ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: HomeTokens.horizontalPadding,
+                      ),
                       scrollDirection: Axis.horizontal,
                       itemCount: state.occasionBaseState.data!.length,
                       separatorBuilder: (_, _) =>
                           const SizedBox(width: HomeTokens.sectionItemSpacing),
                       itemBuilder: (_, index) {
                         final occasion = state.occasionBaseState.data![index];
+
                         return GestureDetector(
                           onTap: () => Navigator.pushNamed(
                             context,
@@ -59,21 +71,11 @@ class OccasionsSection extends StatelessWidget {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  child: CachedNetworkImage(
-                                    imageUrl: occasion.image ?? '',
+                                  child: OccasionImage(
+                                    imageUrl: occasion.image,
+                                    occasionName: occasion.name,
                                     width: HomeTokens.occasionCardWidth,
                                     height: HomeTokens.occasionCardImageHeight,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        Container(color: AppColors.grey400),
-                                    errorWidget: (context, url, error) =>
-                                        Container(
-                                          color: AppColors.grey400,
-                                          child: Icon(
-                                            Icons.image_not_supported_outlined,
-                                            color: AppColors.grey700,
-                                          ),
-                                        ),
                                   ),
                                 ),
                                 const SizedBox(height: 8),

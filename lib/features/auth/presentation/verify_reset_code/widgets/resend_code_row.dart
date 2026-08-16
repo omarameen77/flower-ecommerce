@@ -31,7 +31,7 @@ class ResendCodeRow extends StatelessWidget {
             child: CircularProgressIndicator(strokeWidth: 2),
           )
         else
-          InkWell(
+          GestureDetector(
             onTap: onResend,
             child: Text(
               context.resend,
