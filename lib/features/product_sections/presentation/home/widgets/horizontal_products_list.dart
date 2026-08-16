@@ -22,6 +22,9 @@ class HorizontalProductsList extends StatelessWidget {
       return SizedBox(
         height: listHeight,
         child: ListView.separated(
+          padding: const EdgeInsets.symmetric(
+            horizontal: HomeTokens.horizontalPadding,
+          ),
           scrollDirection: Axis.horizontal,
           itemCount: 4,
           separatorBuilder: (_, _) =>
@@ -32,16 +35,23 @@ class HorizontalProductsList extends StatelessWidget {
     }
 
     final items = products ?? [];
-    if (items.isEmpty) return const SizedBox.shrink();
+    if (items.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return SizedBox(
       height: listHeight,
       child: ListView.separated(
+        padding: const EdgeInsets.symmetric(
+          horizontal: HomeTokens.horizontalPadding,
+        ),
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
         separatorBuilder: (_, _) =>
             const SizedBox(width: HomeTokens.sectionItemSpacing),
-        itemBuilder: (_, index) => HomeProductCard(product: items[index]),
+        itemBuilder: (_, index) {
+          return HomeProductCard(product: items[index]);
+        },
       ),
     );
   }

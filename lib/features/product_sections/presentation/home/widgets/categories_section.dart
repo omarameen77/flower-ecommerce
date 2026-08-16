@@ -1,4 +1,5 @@
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/features/app_sections/presentation/cubit/app_sections_cubit.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/category_item.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/section_title.dart';
@@ -8,8 +9,6 @@ import 'package:flower/features/product_sections/presentation/shared_cubit/produ
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-
-import 'package:flower/features/app_sections/presentation/cubit/app_sections_cubit.dart';
 
 class CategoriesSection extends StatelessWidget {
   const CategoriesSection({super.key});
@@ -21,17 +20,20 @@ class CategoriesSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionTitle(
-              title: 'Categories',
-              onViewAll: () {
-                context.read<CategoriesCubit>().resetToAll();
-
-                context.read<AppSectionsCubit>().changeSection(1);
-
-                context.read<ProductCubit>().doEvent(
-                  GetProductEvent(categoryId: null),
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: HomeTokens.horizontalPadding,
+              ),
+              child: SectionTitle(
+                title: 'Categories',
+                onViewAll: () {
+                  context.read<CategoriesCubit>().resetToAll();
+                  context.read<AppSectionsCubit>().changeSection(1);
+                  context.read<ProductCubit>().doEvent(
+                    const GetProductEvent(categoryId: null),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 12),
             SizedBox(
@@ -41,6 +43,9 @@ class CategoriesSection extends StatelessWidget {
                   : state.categoriesState.data?.categories?.isEmpty ?? true
                   ? const SizedBox.shrink()
                   : ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: HomeTokens.horizontalPadding,
+                      ),
                       scrollDirection: Axis.horizontal,
                       itemCount: state.categoriesState.data!.categories!.length,
                       separatorBuilder: (_, _) =>
@@ -62,6 +67,7 @@ class CategoriesSection extends StatelessWidget {
       baseColor: AppColors.grey400,
       highlightColor: AppColors.grey200,
       child: ListView.separated(
+        padding: const EdgeInsets.only(left: HomeTokens.horizontalPadding),
         scrollDirection: Axis.horizontal,
         itemCount: 5,
         separatorBuilder: (_, _) =>

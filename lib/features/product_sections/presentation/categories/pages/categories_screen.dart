@@ -1,3 +1,4 @@
+import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/resources/app_strings.dart';
@@ -100,7 +101,12 @@ class _CategoryScreenState extends State<CategoryScreen>
                                   Navigator.pushNamed(
                                     context,
                                     Routes.searchScreen,
-                                    arguments: context.read<ProductCubit>(),
+                                    arguments: {
+                                      'productCubit': context
+                                          .read<ProductCubit>(),
+                                      'transitionType':
+                                          SearchTransitionType.category,
+                                    },
                                   );
                                 },
                                 child: IgnorePointer(

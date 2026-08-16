@@ -54,9 +54,8 @@ class ProfileUserHeader extends StatelessWidget {
       children: [
         ProfileAvatarPlaceholder(imageUrl: photo),
         AppSizedBox(height: 12),
-        InkWell(
+        GestureDetector(
           onTap: onEditProfileTap,
-          borderRadius: BorderRadius.circular(8),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(

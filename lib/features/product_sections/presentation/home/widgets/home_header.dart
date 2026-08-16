@@ -1,3 +1,4 @@
+import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
@@ -5,7 +6,9 @@ import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,7 +35,16 @@ class HomeHeader extends StatelessWidget {
         AppSizedBox(width: 12),
         Expanded(
           child: GestureDetector(
-            onTap: () => Navigator.pushNamed(context, Routes.searchScreen),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.searchScreen,
+                arguments: {
+                  'productCubit': context.read<ProductCubit>(),
+                  'transitionType': SearchTransitionType.home,
+                },
+              );
+            },
             child: Container(
               height: HomeTokens.searchBarHeight,
               decoration: BoxDecoration(

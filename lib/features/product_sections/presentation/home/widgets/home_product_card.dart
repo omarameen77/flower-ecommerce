@@ -17,7 +17,7 @@ class HomeProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final displayPrice = product.priceAfterDiscount ?? product.price;
 
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
           context,

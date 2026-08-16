@@ -32,7 +32,7 @@ class EmptyCartView extends StatelessWidget {
                   fontSize: AppSize.s14,
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {},
                 child: Text(
                   CartConstants.goShopping,

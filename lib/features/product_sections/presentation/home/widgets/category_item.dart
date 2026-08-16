@@ -20,24 +20,27 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        // 1. Switch to category tab
-        context.read<AppSectionsCubit>().changeSection(1);
+        final productCubit = context.read<ProductCubit>();
 
-        // 2. Select this category in the categories list
-        final categoriesCubit = context.read<CategoriesCubit>();
-        final categories =
-            categoriesCubit.state.categoriesState.data?.categories ?? [];
-        final index = categories.indexWhere((c) => c.id == category.id);
-        if (index != -1) {
-          categoriesCubit.onEvent(ChangeSelectedCategoryEvent(index + 1));
+        // Only fetch products if the category is different from current
+        if (productCubit.state.currentCategoryId != category.id) {
+          // 1. Switch to category tab
+          context.read<AppSectionsCubit>().changeSection(1);
+
+          // 2. Select this category in the categories list
+          final categoriesCubit = context.read<CategoriesCubit>();
+          final categories =
+              categoriesCubit.state.categoriesState.data?.categories ?? [];
+          final index = categories.indexWhere((c) => c.id == category.id);
+          if (index != -1) {
+            categoriesCubit.onEvent(ChangeSelectedCategoryEvent(index + 1));
+          }
+
+          // 3. Filter products by this category
+          productCubit.doEvent(GetProductEvent(categoryId: category.id));
         }
-
-        // 3. Filter products by this category
-        context.read<ProductCubit>().doEvent(
-          GetProductEvent(categoryId: category.id),
-        );
       },
       child: SizedBox(
         width: HomeTokens.categoryItemWidth,

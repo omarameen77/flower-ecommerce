@@ -50,7 +50,7 @@ class GenderSelectionWidget extends StatelessWidget {
                         ),
                       ),
                       const AppSizedBox(width: 40),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           context.read<RegisterCubit>().doEvent(
                             ChangeGender(_femaleValue),
@@ -76,7 +76,7 @@ class GenderSelectionWidget extends StatelessWidget {
                         ),
                       ),
                       const AppSizedBox(width: 20),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           context.read<RegisterCubit>().doEvent(
                             ChangeGender(_maleValue),
