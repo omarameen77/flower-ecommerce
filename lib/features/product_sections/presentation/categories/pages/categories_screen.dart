@@ -52,40 +52,42 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          child: BlocSelector<
-            CategoryProductsCubit,
-            CategoryProductsState,
-            BaseState<List<CategoryEntity>>
-          >(
-            selector: (state) => state.categoriesState,
-            builder: (context, categoryState) {
-              final categories = categoryState.data ?? [];
+          child:
+              BlocSelector<
+                CategoryProductsCubit,
+                CategoryProductsState,
+                BaseState<List<CategoryEntity>>
+              >(
+                selector: (state) => state.categoriesState,
+                builder: (context, categoryState) {
+                  final categories = categoryState.data ?? [];
 
-              if (categoryState.isLoading && categories.isEmpty) {
-                return const AppLoadingWidget();
-              }
+                  if (categoryState.isLoading && categories.isEmpty) {
+                    return const AppLoadingWidget();
+                  }
 
-              if (categoryState.errorMessage != null && categories.isEmpty) {
-                return CategoryErrorView(
-                  message: categoryState.errorMessage!,
-                  onRetry: () => context
-                      .read<CategoryProductsCubit>()
-                      .doEvent(RetryEvent()),
-                );
-              }
+                  if (categoryState.errorMessage != null &&
+                      categories.isEmpty) {
+                    return CategoryErrorView(
+                      message: categoryState.errorMessage!,
+                      onRetry: () => context
+                          .read<CategoryProductsCubit>()
+                          .doEvent(RetryEvent()),
+                    );
+                  }
 
-              if (categories.isEmpty) {
-                return Center(
-                  child: Text(CategoriesConstants.noCategoriesFound),
-                );
-              }
+                  if (categories.isEmpty) {
+                    return Center(
+                      child: Text(CategoriesConstants.noCategoriesFound),
+                    );
+                  }
 
-              return CategoryTabsView(
-                categories: categories,
-                scrollController: _scrollController,
-              );
-            },
-          ),
+                  return CategoryTabsView(
+                    categories: categories,
+                    scrollController: _scrollController,
+                  );
+                },
+              ),
         ),
       ),
     );

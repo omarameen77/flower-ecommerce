@@ -95,7 +95,7 @@ class CategoryProductsCubit extends Cubit<CategoryProductsState> {
 
   Future<void> _loadMoreProducts() async {
     if (state.isSearchActive) {
-       _searchProducts(state.searchKeyword, loadMore: true);
+      _searchProducts(state.searchKeyword, loadMore: true);
     } else {
       await _loadProducts(loadMore: true);
     }
@@ -135,7 +135,6 @@ class CategoryProductsCubit extends Cubit<CategoryProductsState> {
     final currentProducts = state.productsState.data ?? [];
     try {
       if (loadMore && state.isLoadingMore) return;
-
 
       final newLimit = loadMore
           ? state.limit + CategoryProductsState.initialLimit
@@ -185,12 +184,7 @@ class CategoryProductsCubit extends Cubit<CategoryProductsState> {
 
   void _clearSearch() {
     _debounce?.cancel();
-    emit(
-      state.copyWith(
-        searchKeyword: '',
-        isSearching: false,
-      ),
-    );
+    emit(state.copyWith(searchKeyword: '', isSearching: false));
     _loadProducts();
   }
 
@@ -207,11 +201,7 @@ class CategoryProductsCubit extends Cubit<CategoryProductsState> {
       switch (result) {
         case SuccessBaseResponse():
           final categories = result.data.categories ?? [];
-          emit(
-            state.copyWith(
-              categoriesState: BaseState(data: categories),
-            ),
-          );
+          emit(state.copyWith(categoriesState: BaseState(data: categories)));
         case ErrorBaseResponse():
           emit(
             state.copyWith(

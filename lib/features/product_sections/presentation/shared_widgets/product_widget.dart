@@ -144,13 +144,12 @@ class ProductWidget extends StatelessWidget {
                     onTap: productId != null && !isAdded
                         ? () async {
                             final hasAddress = await context
-                                .ensureUserHasAddress(context.addAddressRequired);
+                                .ensureUserHasAddress(
+                                  context.addAddressRequired,
+                                );
                             if (!hasAddress || !context.mounted) return;
                             context.read<CartCubit>().onEvent(
-                              AddToCartEvent(
-                                productId: productId,
-                                quantity: 1,
-                              ),
+                              AddToCartEvent(productId: productId, quantity: 1),
                             );
                           }
                         : null,
