@@ -50,39 +50,83 @@ class ProfileUserHeader extends StatelessWidget {
     ];
     final displayName = nameParts.isEmpty ? '—' : nameParts.join(' ');
 
+    const double avatarSize = 108;
+
     return Column(
       children: [
-        ProfileAvatarPlaceholder(imageUrl: photo),
-        AppSizedBox(height: 12),
-        GestureDetector(
-          onTap: onEditProfileTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  displayName,
-                  style: getSemiBoldStyle(
-                    context: context,
-                    fontSize: FontSizeManager.s16,
-                    color: AppColors.textPrimary,
+        Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppColors.primary,
+                    AppColors.primary.withOpacity(0.35),
+                  ],
+                ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(3),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: ProfileAvatarPlaceholder(
+                  imageUrl: photo,
+                  width: avatarSize,
+                  height: avatarSize,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: onEditProfileTap,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withOpacity(0.35),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.edit_outlined,
+                    size: 12,
+                    color: Colors.white,
                   ),
                 ),
-                const AppSizedBox(width: 6),
-                const Icon(Icons.edit_outlined, size: 18, color: Colors.black),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-
-        AppSizedBox(height: 6),
+        const AppSizedBox(height: 14),
+        Text(
+          displayName,
+          style: getSemiBoldStyle(
+            context: context,
+            fontSize: FontSizeManager.s16,
+            color: AppColors.textPrimary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const AppSizedBox(height: 4),
         Text(
           user.email ?? '',
           style: getRegularStyle(
             context: context,
-            fontSize: FontSizeManager.s20,
+            fontSize: FontSizeManager.s14,
             color: AppColors.grey700,
           ),
           textAlign: TextAlign.center,

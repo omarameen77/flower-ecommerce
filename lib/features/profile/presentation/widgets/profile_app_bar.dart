@@ -15,6 +15,10 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       titleSpacing: horizontalPadding,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      surfaceTintColor: Colors.transparent,
       title: const AppLogoWidget(),
       actions: [
         Padding(

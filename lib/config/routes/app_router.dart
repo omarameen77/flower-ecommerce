@@ -8,16 +8,10 @@ import 'package:flower/features/app_sections/presentation/pages/app_sections_pag
 import 'package:flower/features/address/domain/entities/address_entity.dart';
 import 'package:flower/features/address/presentation/add_address/pages/add_address_screen.dart';
 import 'package:flower/features/address/presentation/saved_addresses/pages/saved_addresses_screen.dart';
-import 'package:flower/features/auth/presentation/change_password/cubit/change_password_cubit.dart';
-import 'package:flower/features/auth/presentation/change_password/pages/change_password_screen.dart';
 import 'package:flower/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:flower/features/auth/presentation/forget_password/pages/forget_password_screen.dart';
 import 'package:flower/features/auth/presentation/login/pages/login_screen.dart';
 import 'package:flower/features/auth/presentation/register/pages/register_page.dart';
-import 'package:flower/features/auth/presentation/reset_password/cubit/reset_password_cubit.dart';
-import 'package:flower/features/auth/presentation/reset_password/pages/reset_password_screen.dart';
-import 'package:flower/features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart';
-import 'package:flower/features/auth/presentation/verify_reset_code/pages/verify_reset_code_screen.dart';
 import 'package:flower/features/checkout/presentation/checkout/cubit/checkout_cubit.dart';
 import 'package:flower/features/checkout/presentation/checkout/pages/checkout_page.dart';
 import 'package:flower/features/checkout/presentation/checkout/pages/payment_web_view_page.dart';
@@ -77,32 +71,6 @@ abstract class AppRouter {
             BlocProvider(
               create: (_) => getIt<ForgetPasswordCubit>(),
               child: const ForgetPasswordScreen(),
-            ),
-          );
-
-        case Routes.verificationCode:
-          final email = settings.arguments as String? ?? '';
-          return PageTransitions.slide(
-            BlocProvider(
-              create: (_) => getIt<VerifyResetCodeCubit>(),
-              child: VerifyResetCodeScreen(email: email),
-            ),
-          );
-
-        case Routes.resetPassword:
-          final email = settings.arguments as String? ?? '';
-          return PageTransitions.slide(
-            BlocProvider(
-              create: (_) => getIt<ResetPasswordCubit>(),
-              child: ResetPasswordScreen(email: email),
-            ),
-          );
-
-        case Routes.changePassword:
-          return PageTransitions.slide(
-            BlocProvider(
-              create: (_) => getIt<ChangePasswordCubit>(),
-              child: const ChangePasswordScreen(),
             ),
           );
 

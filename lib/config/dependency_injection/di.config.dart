@@ -77,17 +77,11 @@ import '../../features/auth/domain/use_cases/reset_password_usecase.dart'
     as _i348;
 import '../../features/auth/domain/use_cases/verify_reset_code_usecase.dart'
     as _i887;
-import '../../features/auth/presentation/change_password/cubit/change_password_cubit.dart'
-    as _i6;
 import '../../features/auth/presentation/forget_password/cubit/forget_password_cubit.dart'
     as _i995;
 import '../../features/auth/presentation/login/cubit/login_cubit.dart' as _i179;
 import '../../features/auth/presentation/register/cubit/register_cubit.dart'
     as _i404;
-import '../../features/auth/presentation/reset_password/cubit/reset_password_cubit.dart'
-    as _i450;
-import '../../features/auth/presentation/verify_reset_code/cubit/verify_reset_code_cubit.dart'
-    as _i660;
 import '../../features/cart/api/api_clint/cart_api_clint.dart' as _i198;
 import '../../features/cart/api/datasource/cart_remote_data_source_impl.dart'
     as _i87;
@@ -555,6 +549,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i990.GetCurrentLocationUseCase>(),
       ),
     );
+    gh.factory<_i995.ForgetPasswordCubit>(
+      () => _i995.ForgetPasswordCubit(
+        gh<_i27.ForgetPasswordUseCase>(),
+        gh<_i887.VerifyResetCodeUseCase>(),
+      ),
+    );
     gh.factory<_i1010.RegisterUseCase>(
       () => _i1010.RegisterUseCase(registerRepoContract: gh<_i723.AuthRepo>()),
     );
@@ -572,20 +572,11 @@ extension GetItInjectableX on _i174.GetIt {
         getProductUseCase: gh<_i713.GetProductsUseCase>(),
       ),
     );
-    gh.factory<_i995.ForgetPasswordCubit>(
-      () => _i995.ForgetPasswordCubit(gh<_i27.ForgetPasswordUseCase>()),
-    );
     gh.factory<_i727.OrdersCubit>(
       () => _i727.OrdersCubit(gh<_i755.GetOrdersUseCase>()),
     );
     gh.factory<_i179.LoginCubit>(
       () => _i179.LoginCubit(gh<_i1038.LoginUseCase>()),
-    );
-    gh.factory<_i660.VerifyResetCodeCubit>(
-      () => _i660.VerifyResetCodeCubit(
-        gh<_i887.VerifyResetCodeUseCase>(),
-        gh<_i27.ForgetPasswordUseCase>(),
-      ),
     );
     gh.factory<_i932.TrackOrderCubit>(
       () => _i932.TrackOrderCubit(
@@ -607,9 +598,6 @@ extension GetItInjectableX on _i174.GetIt {
         getProductUseCase: gh<_i713.GetProductsUseCase>(),
       ),
     );
-    gh.factory<_i6.ChangePasswordCubit>(
-      () => _i6.ChangePasswordCubit(gh<_i771.ChangePasswordUseCase>()),
-    );
     gh.factory<_i532.NotificationsCubit>(
       () => _i532.NotificationsCubit(
         getUserNotificationsUseCase: gh<_i392.GetUserNotificationsUseCase>(),
@@ -618,9 +606,6 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i1043.MarkNotificationAsReadUseCase>(),
         deleteNotificationUseCase: gh<_i516.DeleteNotificationUseCase>(),
       ),
-    );
-    gh.factory<_i450.ResetPasswordCubit>(
-      () => _i450.ResetPasswordCubit(gh<_i348.ResetPasswordUseCase>()),
     );
     gh.factory<_i217.CheckoutCubit>(
       () => _i217.CheckoutCubit(

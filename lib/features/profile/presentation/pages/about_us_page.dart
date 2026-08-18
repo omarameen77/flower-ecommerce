@@ -1,5 +1,6 @@
 import 'package:flower/core/localization_constants/profile_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -18,9 +19,11 @@ class _AboutUsPageState extends State<AboutUsPage> {
   void initState() {
     super.initState();
     _controller = WebViewController()
+      ..setBackgroundColor(AppColors.background)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
+          onPageStarted: (_) => setState(() => _isLoading = true),
           onPageFinished: (_) {
             setState(() => _isLoading = false);
           },
@@ -36,17 +39,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textWhite,
-        title: Text(ProfileConstants.aboutUs),
+      backgroundColor: AppColors.background,
+      appBar: CustomAppBar(
+        title: ProfileConstants.aboutUs,
+        color: AppColors.grey100,
       ),
-      body: Stack(
-        children: [
-          WebViewWidget(controller: _controller),
-          if (_isLoading) const Center(child: CircularProgressIndicator()),
-        ],
-      ),
+      body: Stack(children: [WebViewWidget(controller: _controller)]),
     );
   }
 }

@@ -25,193 +25,261 @@ class ProfileScrollableBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.fromLTRB(
+        _horizontalPadding,
+        16,
+        _horizontalPadding,
+        24,
+      ),
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              BlocSelector<ProfileCubit, ProfileState, BaseState<UserEntity>>(
-                selector: (state) => state.profileState,
-                builder: (context, profileState) {
-                  return ProfileUserHeader(
-                    profileState: profileState,
-                    onEditProfileTap: () {
-                      final user = context
-                          .read<ProfileCubit>()
-                          .state
-                          .profileState
-                          .data;
-                      if (user == null) return;
-                      Navigator.pushNamed(
-                        context,
-                        Routes.editProfile,
-                        arguments: user,
-                      ).then((updated) {
-                        if (updated == true && context.mounted) {
-                          context.read<ProfileCubit>().doEvent(
-                            const LoadProfile(),
-                          );
-                        }
-                      });
-                    },
-                  );
-                },
-              ),
-              AppSizedBox(height: 24),
-              ProfileMenuRow(
-                leading: SvgPicture.asset(
-                  AppSvgs.cart,
-                  width: 22,
-                  height: 22,
-                  colorFilter: const ColorFilter.mode(
-                    Colors.black,
-                    BlendMode.srcIn,
-                  ),
-                ),
-                title: ProfileConstants.myOrders,
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.orders);
-                },
-              ),
-              AppSizedBox(height: 14),
-              ProfileMenuRow(
-                leading: const Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.black,
-                ),
-                title: ProfileConstants.savedAddress,
-                onTap: () =>
-                    Navigator.pushNamed(context, Routes.savedAddresses),
-              ),
-              AppSizedBox(height: 16),
-            ],
-          ),
+        BlocSelector<ProfileCubit, ProfileState, BaseState<UserEntity>>(
+          selector: (state) => state.profileState,
+          builder: (context, profileState) {
+            return ProfileUserHeader(
+              profileState: profileState,
+              onEditProfileTap: () {
+                final user = context
+                    .read<ProfileCubit>()
+                    .state
+                    .profileState
+                    .data;
+                if (user == null) return;
+                Navigator.pushNamed(
+                  context,
+                  Routes.editProfile,
+                  arguments: user,
+                ).then((updated) {
+                  if (updated == true && context.mounted) {
+                    context.read<ProfileCubit>().doEvent(const LoadProfile());
+                  }
+                });
+              },
+            );
+          },
         ),
-        const Divider(height: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AppSizedBox(height: 16),
-              BlocSelector<ProfileCubit, ProfileState, bool>(
-                selector: (state) => state.notificationsEnabled,
-                builder: (context, notificationsEnabled) {
-                  return Row(
+        const AppSizedBox(height: 28),
+
+        _SectionCard(
+          children: [
+            ProfileMenuRow(
+              iconBackgroundColor: AppColors.primary.withOpacity(0.10),
+              leading: SvgPicture.asset(
+                AppSvgs.cart,
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  AppColors.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
+              title: ProfileConstants.myOrders,
+              onTap: () => Navigator.pushNamed(context, Routes.orders),
+            ),
+            const _RowDivider(),
+            ProfileMenuRow(
+              iconBackgroundColor: AppColors.primary.withOpacity(0.10),
+              leading: Icon(
+                Icons.location_on_outlined,
+                color: AppColors.primary,
+                size: 20,
+              ),
+              title: ProfileConstants.savedAddress,
+              onTap: () => Navigator.pushNamed(context, Routes.savedAddresses),
+            ),
+          ],
+        ),
+        const AppSizedBox(height: 16),
+
+        _SectionCard(
+          children: [
+            BlocSelector<ProfileCubit, ProfileState, bool>(
+              selector: (state) => state.notificationsEnabled,
+              builder: (context, notificationsEnabled) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 6,
+                  ),
+                  child: Row(
                     children: [
-                      Switch(
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withOpacity(0.10),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          Icons.notifications_none_rounded,
+                          size: 20,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const AppSizedBox(width: 12),
+                      Expanded(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            Routes.notifications,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  ProfileConstants.notifications,
+                                  style: getRegularStyle(
+                                    context: context,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 14,
+                                color: Colors.black26,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const AppSizedBox(width: 8),
+                      Switch.adaptive(
                         value: notificationsEnabled,
                         activeThumbColor: AppColors.primary,
                         onChanged: (value) => context
                             .read<ProfileCubit>()
                             .doEvent(NotificationsChanged(value)),
                       ),
-                      Expanded(
-                        child: Text(
-                          ProfileConstants.notifications,
-                          style: getRegularStyle(
-                            context: context,
-                            color: AppColors.textPrimary,
-                          ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        const AppSizedBox(height: 16),
+
+        _SectionCard(
+          children: [
+            BlocSelector<ProfileCubit, ProfileState, String>(
+              selector: (state) => state.languageCode,
+              builder: (context, languageCode) {
+                return ProfileMenuRow(
+                  iconBackgroundColor: AppColors.primary.withOpacity(0.10),
+                  leading: Icon(
+                    Icons.language_rounded,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
+                  title: ProfileConstants.language,
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        profileLanguageLabel(languageCode),
+                        style: getMediumStyle(
+                          context: context,
+                          color: AppColors.primaryDark,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.notifications);
-                        },
-                        child: const Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 14,
-                          color: Colors.black,
-                        ),
+                      const AppSizedBox(width: 6),
+                      const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 14,
+                        color: Colors.black26,
                       ),
                     ],
-                  );
-                },
-              ),
-              AppSizedBox(height: 16),
-            ],
-          ),
-        ),
-        const Divider(height: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AppSizedBox(height: 8),
-              BlocSelector<ProfileCubit, ProfileState, String>(
-                selector: (state) => state.languageCode,
-                builder: (context, languageCode) {
-                  return ProfileMenuRow(
-                    leading: const Icon(Icons.language, color: Colors.black),
-                    title: ProfileConstants.language,
-                    trailing: Text(
-                      profileLanguageLabel(languageCode),
-                      style: getMediumStyle(
-                        context: context,
-                        color: AppColors.primaryDark,
-                      ),
-                    ),
-                    onTap: () => context.read<ProfileCubit>().doEvent(
-                      const ToggleLanguage(),
-                    ),
-                  );
-                },
-              ),
-              AppSizedBox(height: 8),
-              ProfileMenuRow(
-                title: ProfileConstants.aboutUs,
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.aboutUs);
-                },
-              ),
-              AppSizedBox(height: 8),
-              ProfileMenuRow(
-                title: ProfileConstants.termsConditions,
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.termsConditions);
-                },
-              ),
-              AppSizedBox(height: 16),
-            ],
-          ),
-        ),
-        const Divider(height: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AppSizedBox(height: 12),
-              ProfileMenuRow(
-                leading: const Icon(
-                  Icons.logout,
-                  color: Colors.black,
-                  size: 20,
-                ),
-                title: ProfileConstants.logout,
-                trailing: const Icon(Icons.logout, color: Colors.black),
-                onTap: () => showProfileLogoutDialogIfConfirmed(context),
-              ),
-              AppSizedBox(height: 32),
-              Center(
-                child: Text(
-                  ProfileConstants.version,
-                  style: getRegularStyle(
-                    context: context,
-                    fontSize: FontSizeManager.s12,
-                    color: AppColors.grey700,
                   ),
-                ),
+                  onTap: () => context.read<ProfileCubit>().doEvent(
+                    const ToggleLanguage(),
+                  ),
+                );
+              },
+            ),
+            const _RowDivider(),
+            ProfileMenuRow(
+              title: ProfileConstants.aboutUs,
+              onTap: () => Navigator.pushNamed(context, Routes.aboutUs),
+            ),
+            const _RowDivider(),
+            ProfileMenuRow(
+              title: ProfileConstants.termsConditions,
+              onTap: () => Navigator.pushNamed(context, Routes.termsConditions),
+            ),
+          ],
+        ),
+        const AppSizedBox(height: 16),
+
+        _SectionCard(
+          children: [
+            ProfileMenuRow(
+              iconBackgroundColor: AppColors.error.withOpacity(0.10),
+              leading: Icon(
+                Icons.logout_rounded,
+                color: AppColors.error,
+                size: 20,
               ),
-              AppSizedBox(height: 16),
-            ],
+              title: ProfileConstants.logout,
+              trailing: const SizedBox.shrink(),
+              titleColor: AppColors.error,
+              onTap: () => showProfileLogoutDialogIfConfirmed(context),
+            ),
+          ],
+        ),
+
+        const AppSizedBox(height: 28),
+        Center(
+          child: Text(
+            ProfileConstants.version,
+            style: getRegularStyle(
+              context: context,
+              fontSize: FontSizeManager.s12,
+              color: AppColors.grey700,
+            ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: children,
+      ),
+    );
+  }
+}
+
+class _RowDivider extends StatelessWidget {
+  const _RowDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Divider(height: 1, thickness: 1, color: Color(0x11000000)),
     );
   }
 }

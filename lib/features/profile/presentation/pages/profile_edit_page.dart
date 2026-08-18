@@ -63,6 +63,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           listenWhen: (previous, current) =>
               previous.uploadPhotoState != current.uploadPhotoState,
           listener: (context, state) {
+            // NOTE: kept exactly as in the original — both branches call
+            // CustomSnackBar.success. Left untouched since this refactor
+            // only concerns visual styling, not behavior; flag for review.
             if (state.uploadPhotoState.data != null) {
               CustomSnackBar.success(
                 context,
@@ -85,13 +88,27 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             key: _formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: ProfileEditFormBody(
-                firstNameController: _firstNameController,
-                lastNameController: _lastNameController,
-                emailController: _emailController,
-                phoneController: _phoneController,
-                formKey: _formKey,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 28, 20, 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: ProfileEditFormBody(
+                  firstNameController: _firstNameController,
+                  lastNameController: _lastNameController,
+                  emailController: _emailController,
+                  phoneController: _phoneController,
+                  formKey: _formKey,
+                ),
               ),
             ),
           ),

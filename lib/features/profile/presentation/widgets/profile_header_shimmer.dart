@@ -13,33 +13,38 @@ class ProfileHeaderShimmer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 72,
-            height: 72,
+            width: 88,
+            height: 88,
             decoration: const BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
             ),
           ),
-
-          const SizedBox(height: 12),
-
+          const SizedBox(height: 14),
           Container(
-            width: 90,
+            width: 110,
             height: 16,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(6),
             ),
           ),
-
           const SizedBox(height: 8),
-
           Container(
             width: 180,
             height: 14,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(6),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
             ),
           ),
         ],
