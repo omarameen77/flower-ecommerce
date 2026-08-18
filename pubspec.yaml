@@ -60,6 +60,9 @@ dependencies:
   webview_flutter: ^4.10.0
   firebase_storage: ^13.4.3
   intl: ^0.20.2
+  google_nav_bar: ^5.0.7
+  lottie: ^3.5.1
+  pinput: ^6.0.2
 
 dev_dependencies:
   flutter_test:
@@ -85,3 +88,4 @@ flutter:
     - assets/svgs/
     - assets/translations/
     - assets/data/
+    - assets/lottie/

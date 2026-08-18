@@ -49,7 +49,7 @@ class ProfileEditFormBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ProfileEditPhotoHeader(initialImageUrl: state.profilePhotoUrl),
-            const AppSizedBox(height: 24),
+            const AppSizedBox(height: 28),
             ProfileEditNameRow(
               firstNameController: firstNameController,
               lastNameController: lastNameController,
@@ -65,27 +65,44 @@ class ProfileEditFormBody extends StatelessWidget {
               onEmailChanged: (v) => cubit.doEvent(ProfileEditEmailChanged(v)),
               onPhoneChanged: (v) => cubit.doEvent(ProfileEditPhoneChanged(v)),
             ),
-            const AppSizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  EditProfileConstants.password,
-                  style: getRegularStyle(
-                    context: context,
-                    color: AppColors.textPrimary,
+            const AppSizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.lock_outline,
+                        size: 18,
+                        color: AppColors.grey700,
+                      ),
+                      const AppSizedBox(width: 10),
+                      Text(
+                        EditProfileConstants.password,
+                        style: getRegularStyle(
+                          context: context,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.changePassword);
-                  },
-                  child: Text(
-                    EditProfileConstants.changePassword,
-                    style: getTextWithLine(context: context),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.changePassword);
+                    },
+                    child: Text(
+                      EditProfileConstants.changePassword,
+                      style: getTextWithLine(context: context),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const AppSizedBox(height: 28),
             ProfileEditUpdateSection(

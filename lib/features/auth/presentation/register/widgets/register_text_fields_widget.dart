@@ -1,7 +1,7 @@
 import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/utils/app_validator.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
-import 'package:flower/core/widgets/custom_text_field.dart';
+import 'package:flower/features/auth/presentation/login/widgets/custom_auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 class RegisterTextFieldsWidget extends StatelessWidget {
@@ -25,55 +25,89 @@ class RegisterTextFieldsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: CustomTextField(
-                controller: firstNameController,
-                hintText: context.enterFirstName,
-                labelText: context.firstName,
-                validator: (value) => AppValidator.name(value),
-              ),
-            ),
-            AppSizedBox(width: 20),
-            Expanded(
-              child: CustomTextField(
-                controller: lastNameController,
-                hintText: context.enterLastName,
-                labelText: context.lastName,
-                validator: (value) => AppValidator.name(value),
-              ),
-            ),
-          ],
+        // First Name
+        CustomAuthTextField(
+          controller: firstNameController,
+          label: context.firstName,
+          hint: context.enterFirstName,
+          keyboardType: TextInputType.name,
+          textInputAction: TextInputAction.next,
+          prefixIcon: Icons.person_outline_rounded,
+          validator: (value) => AppValidator.name(value),
         ),
-        AppSizedBox(height: 20),
 
-        CustomTextField(
+        const AppSizedBox(height: 16),
+
+        // Last Name
+        CustomAuthTextField(
+          controller: lastNameController,
+          label: context.lastName,
+          hint: context.enterLastName,
+          keyboardType: TextInputType.name,
+          textInputAction: TextInputAction.next,
+          prefixIcon: Icons.person_outline_rounded,
+          validator: (value) => AppValidator.name(value),
+        ),
+
+        const AppSizedBox(height: 16),
+
+        // Email
+        CustomAuthTextField(
           controller: emailController,
-          hintText: context.enterEmail,
-          labelText: context.email,
+          label: context.email,
+          hint: context.enterEmail,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          prefixIcon: Icons.email_outlined,
+          autofillHints: const [AutofillHints.email],
           validator: (value) => AppValidator.email(value),
         ),
-        AppSizedBox(height: 20),
 
+        const AppSizedBox(height: 16),
+
+        // Phone
+        CustomAuthTextField(
+          controller: phoneController,
+          label: context.phone,
+          hint: context.enterPhoneNumber,
+          keyboardType: TextInputType.phone,
+          textInputAction: TextInputAction.next,
+          prefixIcon: Icons.phone_outlined,
+          autofillHints: const [AutofillHints.telephoneNumber],
+          validator: (value) => AppValidator.phone(value),
+        ),
+
+        const AppSizedBox(height: 16),
+
+        // Password + Confirm Password
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: CustomTextField(
+              child: CustomAuthTextField(
                 controller: passwordController,
-                hintText: context.enterPassword,
-                labelText: context.password,
+                label: context.password,
+                hint: context.enterPassword,
+                keyboardType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.next,
+                //   prefixIcon: Icons.lock_outline_rounded,
                 isPassword: true,
                 validator: (value) => AppValidator.password(value),
               ),
             ),
-            AppSizedBox(width: 20),
+
+            const AppSizedBox(width: 12),
+
             Expanded(
-              child: CustomTextField(
+              child: CustomAuthTextField(
                 controller: rePasswordController,
-                hintText: context.password,
-                labelText: context.confirmPassword,
+                label: context.confirmPassword,
+                hint: context.confirmPassword,
+                keyboardType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.done,
+                // prefixIcon: Icons.lock_outline_rounded,
                 isPassword: true,
                 validator: (value) => AppValidator.confirmPassword(
                   value,
@@ -82,14 +116,6 @@ class RegisterTextFieldsWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        AppSizedBox(height: 20),
-
-        CustomTextField(
-          controller: phoneController,
-          hintText: context.enterPhoneNumber,
-          labelText: context.phone,
-          validator: (value) => AppValidator.phone(value),
         ),
       ],
     );

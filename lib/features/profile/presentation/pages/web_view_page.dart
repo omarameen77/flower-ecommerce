@@ -1,4 +1,5 @@
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -20,6 +21,7 @@ class _WebViewPageState extends State<WebViewPage> {
   void initState() {
     super.initState();
     _controller = WebViewController()
+      ..setBackgroundColor(AppColors.background)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -33,15 +35,16 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textWhite,
-        title: Text(widget.title),
-      ),
+      backgroundColor: AppColors.background,
+      appBar: CustomAppBar(title: widget.title),
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-          if (_isLoading) const Center(child: CircularProgressIndicator()),
+          if (_isLoading)
+            Container(
+              color: AppColors.background,
+              child: const Center(child: CircularProgressIndicator()),
+            ),
         ],
       ),
     );

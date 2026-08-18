@@ -10,8 +10,8 @@ class CachedNetworkImageWidget extends StatelessWidget {
   const CachedNetworkImageWidget({
     super.key,
     required this.urlToImage,
-    this.width = AppSize.s60,
-    this.height = AppSize.s60,
+    this.width = AppSize.s100,
+    this.height = AppSize.s100,
   });
 
   @override

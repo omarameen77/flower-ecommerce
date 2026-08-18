@@ -12,6 +12,8 @@ class ProfileEditPhotoHeader extends StatelessWidget {
 
   final String? initialImageUrl;
 
+  static const double _size = 108;
+
   Future<void> _pickImage(BuildContext context) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(
@@ -40,31 +42,61 @@ class ProfileEditPhotoHeader extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                width: 100,
-                height: 100,
+                width: _size,
+                height: _size,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary, width: 2),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColors.primary,
+                      AppColors.primary.withOpacity(0.35),
+                    ],
+                  ),
                 ),
-                child: ClipOval(
-                  child: photoFile != null
-                      ? Image.file(photoFile, fit: BoxFit.cover, height: 10)
-                      : ProfileAvatarPlaceholder(
-                          imageUrl: initialImageUrl,
-                          width: 100,
-                          height: 100,
-                        ),
+                padding: const EdgeInsets.all(3),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.all(2),
+                  child: ClipOval(
+                    // fixed: original used `height: 10` on the picked
+                    // image, which squashed it to a sliver — now fills
+                    // the full circle like the placeholder does.
+                    child: photoFile != null
+                        ? Image.file(
+                            photoFile,
+                            fit: BoxFit.cover,
+                            width: _size,
+                            height: _size,
+                          )
+                        : ProfileAvatarPlaceholder(
+                            imageUrl: initialImageUrl,
+                            width: _size,
+                            height: _size,
+                          ),
+                  ),
                 ),
               ),
               if (uploading)
                 Positioned.fill(
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
+                    decoration: const BoxDecoration(
+                      color: Colors.black38,
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
+                      child: SizedBox(
+                        width: 28,
+                        height: 28,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2.5,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -74,15 +106,22 @@ class ProfileEditPhotoHeader extends StatelessWidget {
                 child: GestureDetector(
                   onTap: uploading ? null : () => _pickImage(context),
                   child: Container(
-                    padding: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
+                      border: Border.all(color: Colors.white, width: 2.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.35),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: const Icon(
                       Icons.camera_alt,
-                      size: 18,
+                      size: 16,
                       color: Colors.white,
                     ),
                   ),

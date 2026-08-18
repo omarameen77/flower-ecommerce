@@ -83,7 +83,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
     required String resetCode,
   }) async {
     await Future.delayed(_fakeDelay);
-    final ok = resetCode == '1234';
+    final ok = resetCode == '123456';
     return SuccessBaseResponse(
       data: VerifyResetCodeResponseDto(status: ok ? 'Success' : 'Fail'),
     );

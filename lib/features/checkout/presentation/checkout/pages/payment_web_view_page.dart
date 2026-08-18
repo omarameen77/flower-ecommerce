@@ -1,5 +1,6 @@
 import 'package:flower/core/localization_constants/checkout_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/core/widgets/shimmer_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -84,16 +85,11 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textWhite,
-        title: Text(CheckoutConstants.creditCard),
-      ),
+      backgroundColor: AppColors.background,
+      appBar: CustomAppBar(title: CheckoutConstants.paymentMethod),
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-
           // Only show the skeleton while the payment page
           // is loading for the first time.
           if (_isLoading && !_initialPageLoaded)
