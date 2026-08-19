@@ -15,33 +15,44 @@ class CartSummarySection extends StatelessWidget {
     final total = subtotal + delivery;
 
     return Container(
-      color: AppColors.background,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+      decoration: BoxDecoration(color: AppColors.background),
       child: Column(
         children: [
           _row(CartConstants.subTotal, subtotal, context: context),
+
+          const SizedBox(height: 8),
+
           _row(CartConstants.delivery, delivery, context: context),
-          const Divider(color: AppColors.grey600),
+
+          const SizedBox(height: 10),
+
+          Divider(height: 1, color: AppColors.divider.withValues(alpha: 0.7)),
+
+          const SizedBox(height: 10),
+
           _totalRow(CartConstants.total, total, context: context),
         ],
       ),
     );
   }
 
-  Widget _row(String t, int v, {required BuildContext context}) {
+  Widget _row(String title, int value, {required BuildContext context}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          t,
+          title,
           style: getRegularStyle(
-            color: AppColors.textPrimary,
+            color: AppColors.textSecondary,
             fontSize: AppSize.s14,
             context: context,
           ),
         ),
+
         Text(
-          '${CartConstants.egp}$v',
+          '${CartConstants.egp}$value',
           style: getRegularStyle(
             color: AppColors.textPrimary,
             fontSize: AppSize.s14,
@@ -52,21 +63,22 @@ class CartSummarySection extends StatelessWidget {
     );
   }
 
-  Widget _totalRow(String t, int v, {required BuildContext context}) {
+  Widget _totalRow(String title, int value, {required BuildContext context}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          t,
+          title,
           style: getSemiBoldStyle(
             color: AppColors.textPrimary,
             fontSize: AppSize.s16,
             context: context,
           ),
         ),
+
         Text(
-          '${CartConstants.egp}$v',
-          style: getSemiBoldStyle(
+          '${CartConstants.egp}$value',
+          style: getBoldStyle(
             color: AppColors.textPrimary,
             fontSize: AppSize.s16,
             context: context,

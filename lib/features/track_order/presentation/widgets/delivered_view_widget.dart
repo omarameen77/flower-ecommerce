@@ -14,23 +14,32 @@ class DeliveredViewWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(flex: 2),
+
             Container(
               width: 120,
               height: 120,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.success,
                 shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.success.withValues(alpha: 0.25),
+                    blurRadius: 30,
+                    spreadRadius: 5,
+                  ),
+                ],
               ),
               child: const Icon(
-                Icons.check,
+                Icons.check_rounded,
                 size: 64,
                 color: AppColors.textWhite,
               ),
             ),
+
             const SizedBox(height: 32),
+
             Text(
               TrackOrderConstants.orderDelivered,
               textAlign: TextAlign.center,
@@ -40,22 +49,28 @@ class DeliveredViewWidget extends StatelessWidget {
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(height: 16),
+
+            const SizedBox(height: 12),
+
             Text(
               TrackOrderConstants.thankYouMessage,
               textAlign: TextAlign.center,
               style: getRegularStyle(
                 context: context,
-                fontSize: 16,
+                fontSize: 15,
                 color: AppColors.textSecondary,
               ),
             ),
+
             const Spacer(flex: 2),
+
             PrimaryButton(
               text: TrackOrderConstants.continueShopping,
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.appSections),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.appSections);
+              },
             ),
+
             const SizedBox(height: 32),
           ],
         ),

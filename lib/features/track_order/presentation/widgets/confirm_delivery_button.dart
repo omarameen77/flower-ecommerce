@@ -14,7 +14,7 @@ class ConfirmDeliveryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLoading = context.select<TrackOrderCubit, bool>(
-      (c) => c.state.confirmDeliveryState.isLoading,
+      (cubit) => cubit.state.confirmDeliveryState.isLoading,
     );
 
     return SizedBox(
@@ -28,28 +28,47 @@ class ConfirmDeliveryButton extends StatelessWidget {
                 );
               },
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
+          backgroundColor: AppColors.primary,
+          disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(14),
           ),
         ),
-        child: isLoading
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: AppColors.textWhite,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          child: isLoading
+              ? const SizedBox(
+                  key: ValueKey('loading'),
+                  width: 22,
+                  height: 22,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.2,
+                    color: AppColors.textWhite,
+                  ),
+                )
+              : Row(
+                  key: const ValueKey('content'),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.check_circle_outline_rounded,
+                      size: 21,
+                      color: AppColors.textWhite,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      TrackOrderConstants.confirmDelivery,
+                      style: getSemiBoldStyle(
+                        context: context,
+                        fontSize: 16,
+                        color: AppColors.textWhite,
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            : Text(
-                TrackOrderConstants.confirmDelivery,
-                style: getSemiBoldStyle(
-                  context: context,
-                  fontSize: 16,
-                  color: AppColors.textWhite,
-                ),
-              ),
+        ),
       ),
     );
   }

@@ -17,28 +17,41 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: AppColors.background,
       elevation: 0,
       automaticallyImplyLeading: false,
+      centerTitle: false,
+      titleSpacing: AppSize.s16,
       title: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           final count = state.cart?.numOfCartItems ?? 0;
-          return Text.rich(
-            TextSpan(
-              text: CartConstants.cart,
-              style: getMediumStyle(
-                context: context,
-                color: AppColors.textPrimary,
-                fontSize: AppSize.s18,
+
+          return Row(
+            children: [
+              Text(
+                CartConstants.cart,
+                style: getSemiBoldStyle(
+                  context: context,
+                  color: AppColors.textPrimary,
+                  fontSize: AppSize.s20,
+                ),
               ),
-              children: [
-                TextSpan(
-                  text: ' ($count ${CartConstants.items})',
+
+              const SizedBox(width: 6),
+
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  '$count',
                   style: getMediumStyle(
                     context: context,
-                    color: AppColors.grey800,
-                    fontSize: AppSize.s16,
+                    color: AppColors.primary,
+                    fontSize: AppSize.s12,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),

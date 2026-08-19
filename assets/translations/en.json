@@ -227,7 +227,7 @@
     "no_in_progress_orders": "No in-progress orders",
     "no_canceled_orders": "No canceled orders",
     "no_completed_orders": "No completed orders",
-    "order_number": "Order #{number}",
+    "order_number": "Order",
     "track_order": "Track Order"
   },
   "edit_profile": {
