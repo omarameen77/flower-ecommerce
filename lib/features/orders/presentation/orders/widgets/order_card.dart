@@ -17,92 +17,114 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.grey700, width: 1),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.045),
+            blurRadius: 12,
+            spreadRadius: 0,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
-      padding: const EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Product image
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
             child: CachedNetworkImageWidget(
               urlToImage: order.productImage,
-              width: 130,
-              height: 130,
+              width: 100,
+              height: 105,
             ),
           ),
-          const SizedBox(width: 14),
+
+          const SizedBox(width: 12),
+
+          // Order information
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  order.productTitle,
-                  style: getRegularStyle(
-                    context: context,
-                    fontSize: FontSizeManager.s12,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  '${CheckoutConstants.egp}${order.totalPrice}',
-                  style: getBoldStyle(
-                    context: context,
-                    fontSize: FontSizeManager.s18,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${OrdersConstants.orderNumber}${order.orderNumber.replaceAll('#', '')}',
-                  style: getRegularStyle(
-                    context: context,
-                    fontSize: FontSizeManager.s12,
-                    color: AppColors.grey900,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: PrimaryButton(
-                    text: OrdersConstants.trackOrder,
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      Routes.trackOrder,
-                      arguments: {
-                        'orderId': order.id,
-                        'orderData': {
-                          'orderId': order.id,
-                          'state': order.state,
-                          'isDelivered': order.isDelivered,
-                          'order': {
-                            'id': order.id,
-                            'orderNumber': order.orderNumber,
-                            'totalPrice': order.totalPrice,
-                            'paymentType': order.paymentType,
-                            'isPaid': order.isPaid,
-                            'isDelivered': order.isDelivered,
-                            'state': order.state,
-                            'createdAt': order.createdAt,
-                          },
-                        },
-                      },
+            child: SizedBox(
+              height: 105,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product name
+                  Text(
+                    order.productTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: getMediumStyle(
+                      context: context,
+                      fontSize: FontSizeManager.s14,
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 5),
+
+                  // Price
+                  Text(
+                    '${CheckoutConstants.egp}${order.totalPrice}',
+                    style: getBoldStyle(
+                      context: context,
+                      fontSize: FontSizeManager.s16,
+                      color: AppColors.primary,
+                    ),
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  // Order number
+                  Text(
+                    '${OrdersConstants.orderNumber} ${order.orderNumber}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: getRegularStyle(
+                      context: context,
+                      fontSize: FontSizeManager.s12,
+                      color: AppColors.success,
+                    ),
+                  ),
+
+                  const Spacer(),
+
+                  // Track button
+                  SizedBox(
+                    height: 32,
+                    width: double.infinity,
+                    child: PrimaryButton(
+                      text: OrdersConstants.trackOrder,
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        Routes.trackOrder,
+                        arguments: {
+                          'orderId': order.id,
+                          'orderData': {
+                            'orderId': order.id,
+                            'state': order.state,
+                            'isDelivered': order.isDelivered,
+                            'order': {
+                              'id': order.id,
+                              'orderNumber': order.orderNumber,
+                              'totalPrice': order.totalPrice,
+                              'paymentType': order.paymentType,
+                              'isPaid': order.isPaid,
+                              'isDelivered': order.isDelivered,
+                              'state': order.state,
+                              'createdAt': order.createdAt,
+                            },
+                          },
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

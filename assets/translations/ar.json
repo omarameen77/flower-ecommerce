@@ -226,7 +226,7 @@
     "no_in_progress_orders": "لا توجد طلبات قيد التنفيذ",
     "no_canceled_orders": "لا توجد طلبات ملغاة",
     "no_completed_orders": "لا توجد طلبات مكتملة",
-    "order_number": "طلب #{number}",
+    "order_number": "طلب",
     "track_order": "تتبع الطلب"
   },
   "edit_profile": {

@@ -31,42 +31,50 @@ class CartItemCard extends StatelessWidget {
             .toList()
             .firstOrNull;
 
-        if (item == null) return const SizedBox();
+        if (item == null) {
+          return const SizedBox.shrink();
+        }
 
-        final isLoading = state.loadingProducts.contains(
-          item.product?.id ?? '',
-        );
+        final productId = item.product?.id ?? '';
 
-        final isDeleting = state.deletingCartItemIds.contains(
-          item.product?.id ?? '',
-        );
+        final isLoading = state.loadingProducts.contains(productId);
+
+        final isDeleting = state.deletingCartItemIds.contains(productId);
 
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
-          opacity: isDeleting ? 0.6 : 1,
+          opacity: isDeleting ? 0.55 : 1,
           child: Container(
-            constraints: const BoxConstraints(minHeight: 120),
-            padding: const EdgeInsets.all(8),
+            constraints: const BoxConstraints(minHeight: 112),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.grey700),
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.035),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(12),
                   child: CachedNetworkImageWidget(
                     urlToImage: item.product?.imgCover ?? CartConstants.empty,
-                    height: AppSize.s100,
-                    width: AppSize.s90,
+                    height: AppSize.s90,
+                    width: AppSize.s85,
                   ),
                 ),
+
                 const AppSizedBox(width: 12),
 
                 Expanded(
                   child: SizedBox(
-                    height: AppSize.s100,
+                    height: AppSize.s90,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -81,31 +89,39 @@ class CartItemCard extends StatelessWidget {
                                 style: getMediumStyle(
                                   context: context,
                                   color: AppColors.textPrimary,
-                                  fontSize: AppSize.s16,
+                                  fontSize: AppSize.s15,
                                 ),
                               ),
                             ),
+
                             const SizedBox(width: 8),
-                            isDeleting
-                                ? const Padding(
-                                    padding: EdgeInsets.all(2),
-                                    child: AppLoadingWidget(size: AppSize.s18),
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      final productId = item.product?.id;
-                                      if (productId == null) return;
-                                      context.read<CartCubit>().onEvent(
-                                        RemoveCartItemEvent(
-                                          cartItemId: productId,
-                                        ),
-                                      );
-                                    },
-                                    child: SvgPicture.asset(AppSvgs.delete),
-                                  ),
+
+                            if (isDeleting)
+                              const Padding(
+                                padding: EdgeInsets.all(2),
+                                child: AppLoadingWidget(size: AppSize.s18),
+                              )
+                            else
+                              GestureDetector(
+                                onTap: () {
+                                  if (productId.isEmpty) {
+                                    return;
+                                  }
+
+                                  context.read<CartCubit>().onEvent(
+                                    RemoveCartItemEvent(cartItemId: productId),
+                                  );
+                                },
+                                child: SvgPicture.asset(
+                                  AppSvgs.delete,
+                                  width: 18,
+                                  height: 18,
+                                ),
+                              ),
                           ],
                         ),
-                        const SizedBox(height: 4),
+
+                        const SizedBox(height: 3),
 
                         Text(
                           item.product?.slug ?? CartConstants.empty,
@@ -114,15 +130,18 @@ class CartItemCard extends StatelessWidget {
                           style: getRegularStyle(
                             context: context,
                             color: AppColors.textSecondary,
-                            fontSize: AppSize.s14,
+                            fontSize: AppSize.s12,
                           ),
                         ),
+
                         const Spacer(),
+
                         Row(
                           children: [
                             Expanded(
                               child: Text(
-                                '${CartConstants.egp}${item.product?.price ?? CartConstants.empty}',
+                                '${CartConstants.egp}'
+                                '${item.product?.price ?? CartConstants.empty}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: getSemiBoldStyle(
@@ -133,28 +152,32 @@ class CartItemCard extends StatelessWidget {
                               ),
                             ),
 
-                            GestureDetector(
+                            _QuantityButton(
+                              icon: AppSvgs.minus,
                               onTap: () {
-                                final q = item.quantity ?? 1;
-                                if (q <= 1) return;
+                                final quantity = item.quantity ?? 1;
 
-                                final productId = item.product?.id;
-                                if (productId == null) return;
+                                if (quantity <= 1) {
+                                  return;
+                                }
+
+                                if (productId.isEmpty) {
+                                  return;
+                                }
 
                                 context.read<CartCubit>().onEvent(
                                   UpdateCartQuantityEvent(
-                                    quantity: q - 1,
+                                    quantity: quantity - 1,
                                     cartItemId: productId,
                                   ),
                                 );
                               },
-                              child: SvgPicture.asset(AppSvgs.minus),
                             ),
 
                             const AppSizedBox(width: AppSize.s8),
 
                             isLoading
-                                ? AppLoadingWidget(size: AppSize.s16)
+                                ? const AppLoadingWidget(size: AppSize.s16)
                                 : Text(
                                     '${item.quantity ?? 1}',
                                     style: getSemiBoldStyle(
@@ -163,20 +186,25 @@ class CartItemCard extends StatelessWidget {
                                       fontSize: AppSize.s14,
                                     ),
                                   ),
+
                             const AppSizedBox(width: AppSize.s8),
-                            GestureDetector(
+
+                            _QuantityButton(
+                              icon: AppSvgs.plus,
                               onTap: () {
-                                final q = item.quantity ?? 1;
-                                final productId = item.product?.id;
-                                if (productId == null) return;
+                                final quantity = item.quantity ?? 1;
+
+                                if (productId.isEmpty) {
+                                  return;
+                                }
+
                                 context.read<CartCubit>().onEvent(
                                   UpdateCartQuantityEvent(
-                                    quantity: q + 1,
+                                    quantity: quantity + 1,
                                     cartItemId: productId,
                                   ),
                                 );
                               },
-                              child: SvgPicture.asset(AppSvgs.plus),
                             ),
                           ],
                         ),
@@ -189,6 +217,29 @@ class CartItemCard extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _QuantityButton extends StatelessWidget {
+  final String icon;
+  final VoidCallback onTap;
+
+  const _QuantityButton({required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 28,
+        height: 28,
+        decoration: BoxDecoration(
+          color: AppColors.primary.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(child: SvgPicture.asset(icon, width: 14, height: 14)),
+      ),
     );
   }
 }

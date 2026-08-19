@@ -27,6 +27,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
+
     context.read<CartCubit>().onEvent(GetCartEvent());
   }
 
@@ -37,21 +38,20 @@ class _CartScreenState extends State<CartScreen> {
       appBar: const CartAppBar(),
       body: BlocListener<CartCubit, CartState>(
         listenWhen: (previous, current) =>
-            previous.successMessage != current.successMessage,
+            previous.successMessage != current.successMessage ||
+            previous.errorMessage != current.errorMessage,
         listener: (context, state) {
           if (state.successMessage != null &&
               state.successMessage!.isNotEmpty) {
             CustomSnackBar.info(
               context,
-              state.successMessage ?? CartConstants.empty,
-              icon: Icons.delete,
+              state.successMessage!,
+              icon: Icons.delete_outline_rounded,
             );
           }
+
           if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
-            CustomSnackBar.error(
-              context,
-              state.errorMessage ?? CartConstants.empty,
-            );
+            CustomSnackBar.error(context, state.errorMessage!);
           }
         },
         child: BlocBuilder<CartCubit, CartState>(
@@ -68,20 +68,24 @@ class _CartScreenState extends State<CartScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const DeliverToWidget(),
-                  const AppSizedBox(height: AppSize.s16),
+
+                  const AppSizedBox(height: AppSize.s12),
+
                   Expanded(
                     child: ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          const AppSizedBox(height: AppSize.s12),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppSize.s16,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.only(
+                        top: AppSize.s8,
+                        bottom: AppSize.s12,
                       ),
                       itemCount: items.length,
+                      separatorBuilder: (_, __) =>
+                          const AppSizedBox(height: AppSize.s10),
                       itemBuilder: (context, index) {
                         final item = items[index];
 
                         if (item.id == null) {
-                          return const SizedBox();
+                          return const SizedBox.shrink();
                         }
 
                         return CartItemCard(
@@ -91,18 +95,20 @@ class _CartScreenState extends State<CartScreen> {
                       },
                     ),
                   ),
+
                   CartSummarySection(
                     subtotal: state.cart?.cart?.totalPrice ?? 0,
                   ),
+
+                  const AppSizedBox(height: AppSize.s12),
+
                   Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: AppSize.s70,
-                      top: AppSize.s50,
-                    ),
+                    padding: const EdgeInsets.only(bottom: AppSize.s24),
                     child: PrimaryButton(
                       text: CartConstants.checkOut,
                       onTap: () {
                         final subtotal = state.cart?.cart?.totalPrice ?? 0;
+
                         Navigator.pushNamed(
                           context,
                           Routes.checkout,

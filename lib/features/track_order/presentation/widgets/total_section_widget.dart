@@ -13,16 +13,16 @@ class TotalSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.grey700, width: 1),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.035),
+            blurRadius: 12,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -35,22 +35,30 @@ class TotalSectionWidget extends StatelessWidget {
                 TrackOrderConstants.total,
                 style: getMediumStyle(
                   context: context,
-                  fontSize: 16,
+                  fontSize: 15,
                   color: AppColors.textPrimary,
                 ),
               ),
+
               Text(
-                '${CheckoutConstants.egp}${order.totalPrice?.toStringAsFixed(2) ?? '0.00'}',
+                '${CheckoutConstants.egp}'
+                '${order.totalPrice?.toStringAsFixed(2) ?? '0.00'}',
                 style: getBoldStyle(
                   context: context,
-                  fontSize: 18,
+                  fontSize: 17,
                   color: AppColors.textPrimary,
                 ),
               ),
             ],
           ),
+
           if (order.paymentType != null) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
+
+            Divider(height: 1, color: AppColors.divider.withValues(alpha: 0.7)),
+
+            const SizedBox(height: 10),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -58,15 +66,16 @@ class TotalSectionWidget extends StatelessWidget {
                   TrackOrderConstants.payment,
                   style: getRegularStyle(
                     context: context,
-                    fontSize: 14,
+                    fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
                 ),
+
                 Text(
                   order.paymentType!.toUpperCase(),
                   style: getMediumStyle(
                     context: context,
-                    fontSize: 14,
+                    fontSize: 13,
                     color: AppColors.textPrimary,
                   ),
                 ),
