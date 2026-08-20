@@ -3,13 +3,30 @@ import 'package:flutter/material.dart';
 enum SearchTransitionType { category, home }
 
 abstract class PageTransitions {
-  static PageRoute<dynamic> fade(Widget page) => PageRouteBuilder<dynamic>(
-    pageBuilder: (_, _, _) => page,
-    transitionsBuilder: (_, animation, _, child) {
-      return FadeTransition(opacity: animation, child: child);
-    },
-    transitionDuration: const Duration(milliseconds: 300),
-  );
+  static PageRoute<dynamic> fade(Widget page) {
+    return PageRouteBuilder<dynamic>(
+      pageBuilder: (_, _, _) => page,
+      transitionDuration: const Duration(milliseconds: 450),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+          reverseCurve: Curves.easeInCubic,
+        );
+
+        final scaleAnimation = Tween<double>(
+          begin: 0.985,
+          end: 1.0,
+        ).animate(curvedAnimation);
+
+        return FadeTransition(
+          opacity: curvedAnimation,
+          child: ScaleTransition(scale: scaleAnimation, child: child),
+        );
+      },
+    );
+  }
 
   static PageRoute<dynamic> slide(Widget page) => PageRouteBuilder<dynamic>(
     pageBuilder: (_, _, _) => page,

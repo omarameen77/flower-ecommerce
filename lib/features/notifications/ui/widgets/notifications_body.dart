@@ -2,6 +2,7 @@ import 'package:flower/core/localization_constants/notifications_constants.dart'
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_error_widget.dart';
 import 'package:flower/core/widgets/custom_snack_bar.dart';
+import 'package:flower/core/widgets/loading_dot.dart';
 import 'package:flower/features/notifications/ui/cubit/notifications_cubit.dart';
 import 'package:flower/features/notifications/ui/cubit/notifications_event.dart';
 import 'package:flower/features/notifications/ui/widgets/notifications_item.dart';
@@ -28,7 +29,7 @@ class NotificationsBody extends StatelessWidget {
         }
 
         if (state.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: LoadingDot());
         }
 
         if (state.notifications.isEmpty) {

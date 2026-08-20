@@ -1,7 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'package:flower/core/notifications/firestore_notification_service.dart';
 import 'package:flower/core/notifications/local_notification_service.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
@@ -9,36 +9,56 @@ import 'package:flower/core/storage/secure_storage_service.dart';
 @lazySingleton
 class FcmService {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+
   final LocalNotificationService _localNotificationService;
   final FirestoreService _firestoreService;
 
   FcmService(this._localNotificationService, this._firestoreService);
 
+  // Initialization
+
   Future<void> initialize() async {
-    await _requestPermissions();
     await _setupForegroundOptions();
+
     _listenToForegroundNotifications();
     _listenToNotificationOpened();
     _listenToTokenRefresh();
+
     await _handleInitialMessage();
 
     final token = await getToken();
 
-    debugPrint("FCM TOKEN = $token");
-    debugPrint("TOKEN LENGTH = ${token?.length}");
+    debugPrint('FCM TOKEN = $token');
+    debugPrint('TOKEN LENGTH = ${token?.length}');
   }
 
-  //================ Permissions =================
+  // Notification Permission
 
-  Future<void> _requestPermissions() async {
-    await _messaging.requestPermission(alert: true, badge: true, sound: true);
+  Future<bool> requestNotificationPermission() async {
+    final settings = await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-    if (await Permission.notification.isDenied) {
-      await Permission.notification.request();
+    final status = settings.authorizationStatus;
+
+    if (status == AuthorizationStatus.authorized) {
+      debugPrint('Notification permission: AUTHORIZED');
+      return true;
     }
+
+    if (status == AuthorizationStatus.provisional) {
+      debugPrint('Notification permission: PROVISIONAL');
+      return true;
+    }
+
+    debugPrint('Notification permission: DENIED');
+
+    return false;
   }
 
-  //================ Foreground =================
+  // Foreground Notifications
 
   Future<void> _setupForegroundOptions() async {
     await _messaging.setForegroundNotificationPresentationOptions(
@@ -62,7 +82,7 @@ class FcmService {
     });
   }
 
-  //================ Notification Click =================
+  // Notification Click
 
   void _listenToNotificationOpened() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -82,11 +102,13 @@ class FcmService {
     final orderId = message.data['orderId'];
 
     if (orderId != null) {
-      debugPrint("Navigate To Order : $orderId");
+      debugPrint('Navigate To Order : $orderId');
+
+      // Navigation later
     }
   }
 
-  //================ Token =================
+  // FCM Token
 
   Future<String?> getToken() async {
     return _messaging.getToken();
@@ -94,8 +116,13 @@ class FcmService {
 
   Future<void> saveCurrentUserToken() async {
     final token = await getToken();
+
     final userId = await SecureStorageService.getUserId();
-    if (token == null || userId == null || userId.isEmpty) return;
+
+    if (token == null || userId == null || userId.isEmpty) {
+      return;
+    }
+
     await _firestoreService.saveUserToken(userId: userId, token: token);
   }
 
@@ -103,13 +130,15 @@ class FcmService {
     _messaging.onTokenRefresh.listen((token) async {
       final userId = await SecureStorageService.getUserId();
 
-      if (userId == null || userId.isEmpty) return;
+      if (userId == null || userId.isEmpty) {
+        return;
+      }
 
       await _firestoreService.saveUserToken(userId: userId, token: token);
     });
   }
 
-  //================ Topics =================
+  // Topics
 
   Future<void> subscribeToTopic(String topic) async {
     await _messaging.subscribeToTopic(topic);
