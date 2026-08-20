@@ -1,5 +1,6 @@
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/custom_appbar.dart';
+import 'package:flower/core/widgets/loading_dot.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -43,7 +44,7 @@ class _WebViewPageState extends State<WebViewPage> {
           if (_isLoading)
             Container(
               color: AppColors.background,
-              child: const Center(child: CircularProgressIndicator()),
+              child: const Center(child: LoadingDot()),
             ),
         ],
       ),

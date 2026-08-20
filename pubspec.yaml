@@ -44,6 +44,7 @@ dependencies:
   equatable: ^2.0.8
   flutter_svg: ^2.2.4
   image_picker: ^1.2.2
+
   # Notifications
   firebase_core: ^4.10.0
   cloud_firestore: ^6.6.0
@@ -55,6 +56,8 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   url_launcher: ^6.3.1
   firebase_crashlytics: ^5.2.3
+
+  # UI / Other
   skeletonizer: ^2.1.3
   badges: ^3.2.0
   webview_flutter: ^4.10.0
@@ -63,6 +66,8 @@ dependencies:
   google_nav_bar: ^5.0.7
   lottie: ^3.5.1
   pinput: ^6.0.2
+  animated_text_kit: ^4.3.0
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +85,8 @@ dev_dependencies:
   retrofit_generator: ^10.2.5
   json_serializable: ^6.7.1
 
+  # Launcher Icon
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
@@ -89,3 +96,17 @@ flutter:
     - assets/translations/
     - assets/data/
     - assets/lottie/
+    - assets/icon/flowery2_icon.png
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+
+  image_path: "assets/icon/flowery2_icon.png"
+
+  min_sdk_android: 21
+
+  adaptive_icon_background: "#F5F5F5"
+  adaptive_icon_foreground: "assets/icon/flowery2_icon.png"
+
+  remove_alpha_ios: true

@@ -9,68 +9,132 @@ import 'package:flower/features/profile/presentation/cubit/get_user_data/profile
 Future<void> showProfileLogoutDialogIfConfirmed(BuildContext context) async {
   final shouldLogout = await showDialog<bool>(
     context: context,
+    barrierDismissible: true,
+    barrierColor: Colors.black.withOpacity(0.45),
     builder: (dialogContext) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        icon: Container(
-          width: 48,
-          height: 48,
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
           decoration: BoxDecoration(
-            color: AppColors.error.withOpacity(0.10),
-            shape: BoxShape.circle,
+            color: AppColors.background,
+            borderRadius: BorderRadius.circular(28),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.12),
+                blurRadius: 30,
+                offset: const Offset(0, 12),
+              ),
+            ],
           ),
-          child: Icon(Icons.logout_rounded, color: AppColors.error),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Logout Icon
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: AppColors.error.withOpacity(0.10),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.logout_rounded,
+                  size: 30,
+                  color: AppColors.error,
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Title
+              Text(
+                ProfileConstants.logoutTitle,
+                textAlign: TextAlign.center,
+                style: getSemiBoldStyle(
+                  context: dialogContext,
+                  color: AppColors.textPrimary,
+                ).copyWith(fontSize: 20),
+              ),
+
+              const SizedBox(height: 10),
+
+              // Description
+              Text(
+                ProfileConstants.logoutMessage,
+                textAlign: TextAlign.center,
+                style: getRegularStyle(
+                  context: dialogContext,
+                  color: AppColors.textSecondary,
+                ).copyWith(fontSize: 14, height: 1.5),
+              ),
+
+              const SizedBox(height: 26),
+
+              // Buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop(false);
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.textPrimary,
+                          side: BorderSide(
+                            color: AppColors.textSecondary.withOpacity(0.25),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        child: Text(
+                          ProfileConstants.cancel,
+                          style: getMediumStyle(
+                            context: dialogContext,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop(true);
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.error,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        child: Text(
+                          ProfileConstants.logout,
+                          style: getMediumStyle(
+                            context: dialogContext,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        title: Text(
-          ProfileConstants.logoutTitle,
-          textAlign: TextAlign.center,
-          style: getSemiBoldStyle(
-            context: dialogContext,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        content: Text(
-          ProfileConstants.logoutMessage,
-          textAlign: TextAlign.center,
-          style: getRegularStyle(
-            context: dialogContext,
-            color: AppColors.textSecondary,
-          ),
-        ),
-        actionsAlignment: MainAxisAlignment.center,
-        actions: [
-          OutlinedButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            style: OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text(
-              ProfileConstants.cancel,
-              style: getMediumStyle(
-                context: dialogContext,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.error,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text(
-              ProfileConstants.logout,
-              style: getMediumStyle(
-                context: dialogContext,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
       );
     },
   );
