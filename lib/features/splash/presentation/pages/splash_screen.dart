@@ -1,12 +1,10 @@
 import 'package:flower/config/routes/routes.dart';
-import 'package:flower/core/resources/app_lotie.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,8 +20,6 @@ class _SplashScreenState extends State<SplashScreen>
   late final Animation<double> _scaleAnimation;
   late final Animation<double> _fadeAnimation;
 
-  AnimationController? _lottieController;
-
   bool _showBrand = false;
   bool _isNavigating = false;
 
@@ -31,10 +27,9 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Main splash entrance animation
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 800),
     );
 
     _scaleAnimation = Tween<double>(
@@ -48,32 +43,12 @@ class _SplashScreenState extends State<SplashScreen>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward();
+
+    _startSplashSequence();
   }
 
-  // Lottie
-
-  void _onLottieLoaded(LottieComposition composition) {
-    if (_lottieController != null) return;
-
-    _lottieController = AnimationController(
-      vsync: this,
-      duration: composition.duration,
-    );
-
-    _lottieController!.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _onLottieCompleted();
-      }
-    });
-
-    _lottieController!.forward();
-  }
-
-  Future<void> _onLottieCompleted() async {
-    if (!mounted || _showBrand) return;
-
-    // Small pause after Lottie finishes
-    await Future.delayed(const Duration(milliseconds: 150));
+  Future<void> _startSplashSequence() async {
+    await Future.delayed(const Duration(milliseconds: 900));
 
     if (!mounted) return;
 
@@ -81,8 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
       _showBrand = true;
     });
 
-    // Give Flowery + logo enough time to appear
-    await Future.delayed(const Duration(milliseconds: 1300));
+    await Future.delayed(const Duration(milliseconds: 1100));
 
     if (!mounted || _isNavigating) return;
 
@@ -90,8 +64,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     await _checkAuth();
   }
-
-  // Authentication
 
   Future<void> _checkAuth() async {
     final token = await SecureStorageService.getToken();
@@ -107,16 +79,11 @@ class _SplashScreenState extends State<SplashScreen>
     }
   }
 
-  // Dispose
-
   @override
   void dispose() {
-    _lottieController?.dispose();
     _controller.dispose();
     super.dispose();
   }
-
-  // Build
 
   @override
   Widget build(BuildContext context) {
@@ -179,64 +146,62 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Lottie
-                    Lottie.asset(
-                      AppLotie.splashAnimation,
-                      width: 270,
-                      height: 270,
-                      fit: BoxFit.contain,
-                      repeat: false,
-                      controller: _lottieController,
-                      onLoaded: _onLottieLoaded,
-                    ),
+                    // Main Flower Logo Animation
+                    SvgPicture.asset(
+                          AppSvgs.splashLogo,
+                          width: 125,
+                          height: 125,
+                          fit: BoxFit.contain,
+                        )
+                        .animate()
+                        .fadeIn(
+                          duration: const Duration(milliseconds: 600),
+                          curve: Curves.easeOut,
+                        )
+                        .slideY(
+                          begin: 0.35,
+                          end: 0,
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutCubic,
+                        )
+                        .scale(
+                          begin: const Offset(0.65, 0.65),
+                          end: const Offset(1, 1),
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutCubic,
+                        ),
 
-                    // Flowery + Logo
+                    const SizedBox(height: 18),
+
+                    // App Name
                     AnimatedOpacity(
                       opacity: _showBrand ? 1.0 : 0.0,
                       duration: const Duration(milliseconds: 250),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Flowery
+                      child:
                           const Text(
                                 'Flowery',
                                 style: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 35,
                                   fontWeight: FontWeight.w700,
-                                  letterSpacing: 0.8,
+                                  letterSpacing: 1,
                                   color: AppColors.primary,
                                 ),
                               )
                               .animate(target: _showBrand ? 1 : 0)
                               .fadeIn(
-                                duration: const Duration(milliseconds: 600),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeOut,
+                              )
+                              .slideY(
+                                begin: 0.3,
+                                end: 0,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeOutCubic,
                               )
                               .shimmer(
                                 delay: const Duration(milliseconds: 300),
-                                duration: const Duration(milliseconds: 1000),
+                                duration: const Duration(milliseconds: 800),
                               ),
-                          const SizedBox(width: 6),
-                          // Flower
-                          SvgPicture.asset(
-                                AppSvgs.splashLogo,
-                                width: 24,
-                                height: 24,
-                                fit: BoxFit.contain,
-                              )
-                              .animate(target: _showBrand ? 1 : 0)
-                              .fadeIn(
-                                duration: const Duration(milliseconds: 400),
-                              )
-                              .scale(
-                                begin: const Offset(0.2, 0.2),
-                                end: const Offset(1, 1),
-                                duration: const Duration(milliseconds: 550),
-                                curve: Curves.easeOutBack,
-                              ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -247,8 +212,6 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
-
-  // Glow Circle
 
   Widget _buildGlowCircle({required double size, required double opacity}) {
     return Container(
