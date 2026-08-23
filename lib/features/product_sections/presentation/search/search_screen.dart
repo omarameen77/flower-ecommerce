@@ -4,7 +4,7 @@ import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
-import 'package:flower/core/widgets/custom_text_field.dart';
+import 'package:flower/core/widgets/custom_search_text_field.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/search_cubit/search_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget.dart';
 import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget_shimmer.dart';
@@ -86,9 +86,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 tag: AppStrings.searchFieldHeroTag,
                 child: Material(
                   color: Colors.transparent,
-                  child: CustomTextField(
+                  child: CustomSearchTextField(
                     controller: controller,
-                    hintText: HomeConstants.search,
+                    hint: HomeConstants.search,
                     onChanged: onSearch,
                     prefixIcon: IconButton(
                       onPressed: () {

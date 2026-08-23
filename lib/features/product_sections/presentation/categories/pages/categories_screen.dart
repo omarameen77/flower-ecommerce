@@ -4,7 +4,7 @@ import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/resources/app_strings.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
-import 'package:flower/core/widgets/custom_text_field.dart';
+import 'package:flower/core/widgets/custom_search_text_field.dart';
 import 'package:flower/features/product_sections/domain/entities/category_entity.dart';
 import 'package:flower/features/product_sections/presentation/categories/widgets/linear_indicator_widget.dart';
 import 'package:flower/features/product_sections/presentation/categories/widgets/sliver_tab_bar_delegate.dart';
@@ -110,8 +110,8 @@ class _CategoryScreenState extends State<CategoryScreen>
                                   );
                                 },
                                 child: IgnorePointer(
-                                  child: CustomTextField(
-                                    hintText: HomeConstants.search,
+                                  child: CustomSearchTextField(
+                                    hint: HomeConstants.search,
                                   ),
                                 ),
                               ),
@@ -197,10 +197,18 @@ class _CategoryScreenState extends State<CategoryScreen>
         height: 50,
         width: 50,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.textSecondary),
-          borderRadius: BorderRadius.circular(8),
+          color: AppColors.background.withOpacity(0.65),
+          border: Border.all(
+            color: AppColors.grey900.withOpacity(0.25),
+            width: 1.2,
+          ),
+          borderRadius: BorderRadius.circular(14),
         ),
-        child: const Center(child: Icon(Icons.filter_list_sharp)),
+        child: Icon(
+          Icons.filter_list_rounded,
+          size: 22,
+          color: AppColors.grey700,
+        ),
       ),
     );
   }
