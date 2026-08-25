@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
@@ -14,19 +15,24 @@ class SectionTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: getBoldStyle(
-            context: context,
-            fontSize: FontSizeManager.s18,
-            color: AppColors.textPrimary,
+        Flexible(
+          child: Text(
+            title,
+            maxLines: 1,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
+            style: getBoldStyle(
+              context: context,
+              fontSize: FontSizeManager.s18,
+              color: AppColors.textPrimary,
+            ),
           ),
         ),
         if (onViewAll != null)
           GestureDetector(
             onTap: onViewAll,
             child: Text(
-              'View All',
+              GeneralConstants.viewAll,
               style: getTextWithLine(
                 context: context,
                 fontSize: FontSizeManager.s12,

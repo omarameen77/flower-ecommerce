@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/services.dart';
 class CustomSearchTextField extends StatelessWidget {
   const CustomSearchTextField({
     super.key,
-    this.hint = 'Search',
+    this.hint,
     this.controller,
     this.focusNode,
     this.onChanged,
@@ -18,7 +19,7 @@ class CustomSearchTextField extends StatelessWidget {
     this.prefixIcon,
   });
 
-  final String hint;
+  final String? hint;
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -53,7 +54,7 @@ class CustomSearchTextField extends StatelessWidget {
       ),
 
       decoration: InputDecoration(
-        hintText: hint,
+        hintText: hint ?? HomeConstants.search,
 
         hintStyle: getRegularStyle(
           context: context,

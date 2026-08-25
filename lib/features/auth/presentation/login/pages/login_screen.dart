@@ -157,9 +157,9 @@ class _LoginViewState extends State<_LoginView> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: const AuthHeader(
-                        title: 'Welcome Back',
-                        subtitle: 'Log in to continue to your account',
+                      child: AuthHeader(
+                        title: context.welcomeBackTitle,
+                        subtitle: context.welcomeBackSubtitle,
                       ),
                     ),
 

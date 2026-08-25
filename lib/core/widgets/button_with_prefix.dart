@@ -31,13 +31,16 @@ class ButtonWithPrefix extends StatelessWidget {
           prefixIcon,
           const AppSizedBox(width: 8),
           Flexible(
-            child: Text(
-              text,
-              maxLines: 1,
-              style: getMediumStyle(
-                context: context,
-                color: AppColors.textWhite,
-                fontSize: 14,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                text,
+                maxLines: 1,
+                style: getMediumStyle(
+                  context: context,
+                  color: AppColors.textWhite,
+                  fontSize: 14,
+                ),
               ),
             ),
           ),

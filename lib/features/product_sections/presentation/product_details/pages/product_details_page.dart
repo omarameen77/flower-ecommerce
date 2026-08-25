@@ -3,7 +3,7 @@ import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/layout/app_size.dart';
 import 'package:flower/core/localization_constants/address_constants.dart';
 import 'package:flower/core/localization_constants/cart_constants.dart';
-import 'package:flower/core/resources/app_strings.dart';
+import 'package:flower/core/localization_constants/product_details_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/widgets/app_loading_widget.dart';
 import 'package:flower/core/widgets/button_loading_widget.dart';
@@ -41,7 +41,7 @@ class ProductDetailsPage extends StatelessWidget {
                 }
                 final product = base.data;
                 if (product == null) {
-                  return const Center(child: Text('Product not found'));
+                  return Center(child: Text(ProductDetailsConstants.notFound));
                 }
                 return ProductDetailsBody(product: product);
               },
@@ -89,7 +89,7 @@ class ProductDetailsPage extends StatelessWidget {
                     return ButtonWithPrefix(
                       text: isAdded
                           ? CartConstants.alreadyAdded
-                          : AppStrings.addToCart,
+                          : CartConstants.addToCart,
                       onTap: productId != null && !isAdded
                           ? () async {
                               final hasAddress = await context

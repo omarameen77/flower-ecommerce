@@ -49,7 +49,7 @@ class OrderCard extends StatelessWidget {
           // Order information
           Expanded(
             child: SizedBox(
-              height: 105,
+              height: 112,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

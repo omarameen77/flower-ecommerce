@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
@@ -27,7 +28,7 @@ class OccasionsSection extends StatelessWidget {
                 horizontal: HomeTokens.horizontalPadding,
               ),
               child: SectionTitle(
-                title: 'Occasion',
+                title: HomeConstants.occasion,
                 onViewAll: () => Navigator.pushNamed(context, Routes.occasions),
               ),
             ),

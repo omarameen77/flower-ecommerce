@@ -1,3 +1,6 @@
+import 'package:flower/core/localization_constants/auth_constants.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
+import 'package:flower/core/localization_constants/validation_constants.dart';
 import 'package:flower/core/resources/app_lotie.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/primary_button.dart';
@@ -28,11 +31,11 @@ class _ForgetPasswordResetStepState extends State<ForgetPasswordResetStep> {
 
   String? _passwordValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Password is required';
+      return ValidationConstants.passwordRequired;
     }
 
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return ValidationConstants.shortPassword;
     }
 
     return null;
@@ -40,11 +43,11 @@ class _ForgetPasswordResetStepState extends State<ForgetPasswordResetStep> {
 
   String? _confirmPasswordValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please confirm your password';
+      return ValidationConstants.confirmPasswordRequired;
     }
 
     if (value != widget.newPasswordController.text) {
-      return 'Passwords do not match';
+      return ValidationConstants.passwordNotMatch;
     }
 
     return null;
@@ -58,9 +61,9 @@ class _ForgetPasswordResetStepState extends State<ForgetPasswordResetStep> {
         key: _formKey,
         child: Column(
           children: [
-            const AuthHeader(
-              title: 'Reset Password',
-              subtitle: 'Create a new password for your account',
+            AuthHeader(
+              title: context.resetPassword,
+              subtitle: context.resetPasswordSubtitle,
             ),
 
             const AppSizedBox(height: 30),
@@ -78,8 +81,8 @@ class _ForgetPasswordResetStepState extends State<ForgetPasswordResetStep> {
             const AppSizedBox(height: 25),
 
             CustomAuthTextField(
-              label: 'New Password',
-              hint: 'Enter your new password',
+              label: context.newPassword,
+              hint: context.enterNewPassword,
               controller: widget.newPasswordController,
               keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.next,
@@ -91,8 +94,8 @@ class _ForgetPasswordResetStepState extends State<ForgetPasswordResetStep> {
             const AppSizedBox(height: 20),
 
             CustomAuthTextField(
-              label: 'Confirm Password',
-              hint: 'Re-enter your password',
+              label: context.confirmPassword,
+              hint: context.reEnterPassword,
               controller: widget.confirmPasswordController,
               keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
@@ -106,7 +109,7 @@ class _ForgetPasswordResetStepState extends State<ForgetPasswordResetStep> {
             SizedBox(
               width: double.infinity,
               child: PrimaryButton(
-                text: 'Continue',
+                text: GeneralConstants.continueText,
                 onTap: () {
                   if (_formKey.currentState?.validate() ?? false) {
                     widget.onSubmit();

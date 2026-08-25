@@ -26,10 +26,20 @@ class FcmService {
 
     await _handleInitialMessage();
 
-    final token = await getToken();
+    final granted = await requestNotificationPermission();
 
-    debugPrint('FCM TOKEN = $token');
-    debugPrint('TOKEN LENGTH = ${token?.length}');
+    if (!granted) return;
+
+    try {
+      final token = await getToken();
+
+      debugPrint('FCM TOKEN = $token');
+      debugPrint('TOKEN LENGTH = ${token?.length}');
+    } catch (e) {
+      // A missing FCM token (e.g. APNs registration never completing on this
+      // device/simulator) must not block app startup.
+      debugPrint('FCM token unavailable: $e');
+    }
   }
 
   // Notification Permission
@@ -111,11 +121,35 @@ class FcmService {
   // FCM Token
 
   Future<String?> getToken() async {
+    await _waitForApnsToken();
     return _messaging.getToken();
   }
 
+  /// On iOS/macOS, [FirebaseMessaging.getToken] requires an APNs token to
+  /// already be registered, but registration happens asynchronously after
+  /// [requestNotificationPermission] triggers it. Poll briefly until it's
+  /// available instead of racing it.
+  Future<void> _waitForApnsToken() async {
+    if (kIsWeb ||
+        !(defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.macOS)) {
+      return;
+    }
+
+    for (var attempt = 0; attempt < 10; attempt++) {
+      if (await _messaging.getAPNSToken() != null) return;
+      await Future.delayed(const Duration(seconds: 1));
+    }
+  }
+
   Future<void> saveCurrentUserToken() async {
-    final token = await getToken();
+    String? token;
+    try {
+      token = await getToken();
+    } catch (e) {
+      debugPrint('FCM token unavailable: $e');
+      return;
+    }
 
     final userId = await SecureStorageService.getUserId();
 

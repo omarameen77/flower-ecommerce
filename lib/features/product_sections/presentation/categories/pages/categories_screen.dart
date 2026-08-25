@@ -43,6 +43,15 @@ class _CategoryScreenState extends State<CategoryScreen>
           ...originalCategories,
         ];
 
+        // `selectedCategoryIndex` lives in a shared cubit and can outlive the
+        // category list it was chosen from (e.g. after navigating away and
+        // back while the list reloads with fewer entries), so it must always
+        // be re-validated against the current `categories.length` before use.
+        final selectedIndex = state.selectedCategoryIndex.clamp(
+          0,
+          categories.length - 1,
+        );
+
         if (_tabController == null ||
             _tabController!.length != categories.length) {
           _tabController?.dispose();
@@ -50,7 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen>
           _tabController = TabController(
             length: categories.length,
             vsync: this,
-            initialIndex: state.selectedCategoryIndex,
+            initialIndex: selectedIndex,
           );
 
           _tabController!.addListener(() {
@@ -69,8 +78,8 @@ class _CategoryScreenState extends State<CategoryScreen>
         }
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (_tabController?.index != state.selectedCategoryIndex) {
-            _tabController?.animateTo(state.selectedCategoryIndex);
+          if (_tabController?.index != selectedIndex) {
+            _tabController?.animateTo(selectedIndex);
           }
         });
 
@@ -121,7 +130,7 @@ class _CategoryScreenState extends State<CategoryScreen>
                         const AppSizedBox(width: 10),
                         _buildFilterButton(
                           context,
-                          categories[state.selectedCategoryIndex].id,
+                          categories[selectedIndex].id,
                         ),
                       ],
                     ),

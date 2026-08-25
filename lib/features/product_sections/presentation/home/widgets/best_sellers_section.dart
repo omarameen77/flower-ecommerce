@@ -1,4 +1,5 @@
 import 'package:flower/config/routes/routes.dart';
+import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
 import 'package:flower/features/product_sections/presentation/home/widgets/horizontal_products_list.dart';
@@ -22,7 +23,7 @@ class BestSellersSection extends StatelessWidget {
                 horizontal: HomeTokens.horizontalPadding,
               ),
               child: SectionTitle(
-                title: 'Best seller',
+                title: HomeConstants.bestSeller,
                 onViewAll: () =>
                     Navigator.pushNamed(context, Routes.bestSellers),
               ),

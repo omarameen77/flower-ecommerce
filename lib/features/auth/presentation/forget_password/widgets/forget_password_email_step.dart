@@ -1,4 +1,5 @@
 import 'package:flower/core/localization_constants/auth_constants.dart';
+import 'package:flower/core/localization_constants/validation_constants.dart';
 import 'package:flower/core/resources/app_lotie.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
 import 'package:flower/core/widgets/primary_button.dart';
@@ -27,9 +28,9 @@ class ForgetPasswordEmailStep extends StatelessWidget {
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
             child: Column(
               children: [
-                const AuthHeader(
-                  title: 'Forgot Password',
-                  subtitle: 'Enter your email to reset your password',
+                AuthHeader(
+                  title: context.forgetPasswordTitle,
+                  subtitle: context.forgetPasswordSubtitle,
                 ),
 
                 const AppSizedBox(height: 45),
@@ -54,7 +55,7 @@ class ForgetPasswordEmailStep extends StatelessWidget {
                     }
 
                     if (!value.contains('@')) {
-                      return 'Please enter a valid email';
+                      return ValidationConstants.invalidEmail;
                     }
 
                     return null;
@@ -65,7 +66,7 @@ class ForgetPasswordEmailStep extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
-                  child: PrimaryButton(text: 'Send Code', onTap: onSubmit),
+                  child: PrimaryButton(text: context.sendCode, onTap: onSubmit),
                 ),
 
                 const AppSizedBox(height: 20),

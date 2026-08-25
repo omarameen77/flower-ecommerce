@@ -50,6 +50,7 @@ extension AuthConstants on BuildContext {
 
   // ───────── Reset Password ─────────
   String get resetPassword => "auth.reset_password".tr();
+  String get resetPasswordSubtitle => "auth.reset_password_subtitle".tr();
   String get resetPasswordCondition => "auth.reset_password_condition".tr();
   String get newPassword => "auth.new_password".tr();
 
@@ -64,4 +65,23 @@ extension AuthConstants on BuildContext {
   // ───────── Terms ─────────
   String get termsAndConditionsStatement =>
       "auth.terms_and_conditions_statement".tr();
+
+  // ───────── Titles ─────────
+  String get createAccountTitle => "auth.create_account_title".tr();
+  String get createAccountSubtitle => "auth.create_account_subtitle".tr();
+  String get welcomeBackTitle => "auth.welcome_back_title".tr();
+  String get welcomeBackSubtitle => "auth.welcome_back_subtitle".tr();
+
+  // ───────── Verification ─────────
+  String get sendCode => "auth.send_code".tr();
+  String get codeVerifiedSuccessfully =>
+      "auth.code_verified_successfully".tr();
+  String get resendCode => "auth.resend_code".tr();
+  String get verifying => "auth.verifying".tr();
+  String get verifyCode => "auth.verify_code".tr();
+
+  // ───────── Password Field ─────────
+  String get reEnterPassword => "auth.re_enter_password".tr();
+  String get showPassword => "auth.show_password".tr();
+  String get hidePassword => "auth.hide_password".tr();
 }

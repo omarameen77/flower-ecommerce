@@ -1,4 +1,6 @@
 import 'package:flower/config/dependency_injection/di.dart';
+import 'package:flower/core/localization_constants/home_constants.dart';
+import 'package:flower/core/localization_constants/occasions_constants.dart';
 import 'package:flower/core/widgets/app_loading_widget.dart';
 import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/config/base/base_state.dart';
@@ -47,9 +49,9 @@ class _OccasionsPageState extends State<OccasionsPage> {
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
-        appBar: const CustomAppBar(
-          title: 'Occasion',
-          subtitle: 'Bloom with our exquisite occasions',
+        appBar: CustomAppBar(
+          title: HomeConstants.occasion,
+          subtitle: HomeConstants.occasionSubtitle,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -77,7 +79,9 @@ class _OccasionsPageState extends State<OccasionsPage> {
                   }
 
                   if (occasions.isEmpty) {
-                    return const Center(child: Text('No occasions found.'));
+                    return Center(
+                      child: Text(OccasionsConstants.noOccasionsFound),
+                    );
                   }
 
                   return OccasionTabsView(

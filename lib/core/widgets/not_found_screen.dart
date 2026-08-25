@@ -1,4 +1,5 @@
 import 'package:flower/config/routes/routes.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flutter/material.dart';
 
 class NotFoundScreen extends StatelessWidget {
@@ -19,7 +20,7 @@ class NotFoundScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Route not found',
+              GeneralConstants.routeNotFound,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
@@ -31,7 +32,7 @@ class NotFoundScreen extends StatelessWidget {
                 Routes.login,
                 (_) => false,
               ),
-              child: const Text('Go to Login'),
+              child: Text(GeneralConstants.goToLogin),
             ),
           ],
         ),

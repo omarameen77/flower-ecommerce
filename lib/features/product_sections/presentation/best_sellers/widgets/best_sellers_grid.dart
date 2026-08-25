@@ -1,5 +1,7 @@
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/layout/app_size.dart';
+import 'package:flower/core/localization_constants/best_sellers_constants.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
@@ -92,7 +94,7 @@ class _BestSellersGridState extends State<BestSellersGrid> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              errorMessage ?? 'No products',
+              errorMessage ?? BestSellersConstants.noProducts,
               textAlign: TextAlign.center,
               style: getRegularStyle(
                 context: context,
@@ -101,7 +103,7 @@ class _BestSellersGridState extends State<BestSellersGrid> {
             ),
             const AppSizedBox(height: AppSize.s16),
             PrimaryButton(
-              text: 'Retry',
+              text: GeneralConstants.retry,
               onTap: () =>
                   context.read<ProductCubit>().doEvent(const GetProductEvent()),
             ),

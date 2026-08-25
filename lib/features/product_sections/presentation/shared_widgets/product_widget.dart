@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flower/config/routes/routes.dart';
 import 'package:flower/core/localization_constants/address_constants.dart';
-import 'package:flower/core/resources/app_strings.dart';
+import 'package:flower/core/localization_constants/cart_constants.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
@@ -65,7 +66,7 @@ class ProductWidget extends StatelessWidget {
             ),
             const AppSizedBox(height: 8),
             Text(
-              product.title ?? AppStrings.noNmae,
+              product.title ?? GeneralConstants.noName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: getRegularStyle(
@@ -140,7 +141,9 @@ class ProductWidget extends StatelessWidget {
                   }
 
                   return ButtonWithPrefix(
-                    text: isAdded ? 'Added' : AppStrings.addToCart,
+                    text: isAdded
+                        ? CartConstants.alreadyAdded
+                        : CartConstants.addToCart,
                     onTap: productId != null && !isAdded
                         ? () async {
                             final hasAddress = await context

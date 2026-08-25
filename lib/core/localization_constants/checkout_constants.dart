@@ -25,4 +25,6 @@ abstract class CheckoutConstants {
   static String get deliveryTime => 'checkout.delivery_time'.tr();
   static String get instant => 'checkout.instant'.tr();
   static String get paymentCompleted => 'checkout.payment_completed'.tr();
+  static String get selectAddressRequired =>
+      'checkout.select_address_required'.tr();
 }

@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
@@ -199,13 +200,13 @@ class _PasswordToggleButton extends StatelessWidget {
       icon: AnimatedSwitcher(
         duration: const Duration(milliseconds: 180),
         child: Icon(
-          isObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          isObscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
           key: ValueKey(isObscure),
           size: 19,
           color: AppColors.grey700,
         ),
       ),
-      tooltip: isObscure ? 'Show password' : 'Hide password',
+      tooltip: isObscure ? context.showPassword : context.hidePassword,
     );
   }
 }

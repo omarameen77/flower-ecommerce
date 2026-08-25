@@ -1,5 +1,7 @@
 import 'package:flower/core/layout/app_padding.dart';
 import 'package:flower/core/layout/app_size.dart';
+import 'package:flower/core/localization_constants/cart_constants.dart';
+import 'package:flower/core/localization_constants/product_details_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
@@ -41,7 +43,7 @@ class ProductDetailsBody extends StatelessWidget {
                 _buildPriceAndStatus(context),
                 const AppSizedBox(height: AppSize.s4),
                 Text(
-                  'All prices include tax',
+                  ProductDetailsConstants.allPricesIncludeTax,
                   style: getRegularStyle(
                     context: context,
                     color: AppColors.textSecondary,
@@ -60,7 +62,7 @@ class ProductDetailsBody extends StatelessWidget {
                 const AppSizedBox(height: AppSize.s24),
                 _buildSection(
                   context,
-                  title: 'Description',
+                  title: ProductDetailsConstants.description,
                   body: product.description ?? '—',
                 ),
               ],
@@ -79,7 +81,7 @@ class ProductDetailsBody extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
-            'EGP $discountedPrice',
+            '${CartConstants.egp}$discountedPrice',
             overflow: TextOverflow.ellipsis,
             style: getSemiBoldStyle(
               context: context,
@@ -94,7 +96,7 @@ class ProductDetailsBody extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Status: ',
+                ProductDetailsConstants.statusLabel,
                 style: getMediumStyle(
                   context: context,
                   color: AppColors.textPrimary,
@@ -103,7 +105,9 @@ class ProductDetailsBody extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  _inStock ? 'In stock' : 'Out of stock',
+                  _inStock
+                      ? ProductDetailsConstants.inStock
+                      : ProductDetailsConstants.outOfStock,
                   overflow: TextOverflow.ellipsis,
                   style: getRegularStyle(
                     context: context,

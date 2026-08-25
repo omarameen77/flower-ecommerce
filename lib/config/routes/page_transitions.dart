@@ -1,11 +1,32 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 enum SearchTransitionType { category, home }
 
+/// Every route is built once by [Navigator] and is not rebuilt just because
+/// an ancestor (like `MaterialApp`) rebuilds with a new `locale` — screens
+/// only pick up translated text again if something else happens to rebuild
+/// them. Reading [context.locale] here subscribes this wrapper to
+/// `EasyLocalization`'s `InheritedWidget`, so switching languages marks it
+/// dirty; giving the subtree a new [ValueKey] then forces that page (and
+/// everything inside it, including screens sitting inactive in the
+/// navigation stack) to be rebuilt from scratch with the new language,
+/// without resetting the navigation stack itself.
+class _LocaleAwarePage extends StatelessWidget {
+  const _LocaleAwarePage({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(key: ValueKey(context.locale), child: child);
+  }
+}
+
 abstract class PageTransitions {
   static PageRoute<dynamic> fade(Widget page) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, _, _) => page,
+      pageBuilder: (_, _, _) => _LocaleAwarePage(child: page),
       transitionDuration: const Duration(milliseconds: 450),
       reverseTransitionDuration: const Duration(milliseconds: 300),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -29,7 +50,7 @@ abstract class PageTransitions {
   }
 
   static PageRoute<dynamic> slide(Widget page) => PageRouteBuilder<dynamic>(
-    pageBuilder: (_, _, _) => page,
+    pageBuilder: (_, _, _) => _LocaleAwarePage(child: page),
     transitionsBuilder: (_, animation, _, child) {
       return SlideTransition(
         position: Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero)
@@ -58,7 +79,7 @@ abstract class PageTransitions {
   // Category → Search
   static PageRoute<dynamic> _categorySearch(Widget page) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, _, _) => page,
+      pageBuilder: (_, _, _) => _LocaleAwarePage(child: page),
 
       transitionDuration: const Duration(milliseconds: 450),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -89,7 +110,7 @@ abstract class PageTransitions {
   // Home → Search
   static PageRoute<dynamic> _homeSearch(Widget page) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, _, _) => page,
+      pageBuilder: (_, _, _) => _LocaleAwarePage(child: page),
       transitionDuration: const Duration(milliseconds: 350),
       reverseTransitionDuration: const Duration(milliseconds: 1),
       transitionsBuilder: (_, animation, _, child) {

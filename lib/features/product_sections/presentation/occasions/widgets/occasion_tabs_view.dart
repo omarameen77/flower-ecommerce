@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
@@ -51,7 +52,7 @@ class OccasionTabsView extends StatelessWidget {
               SelectOccasionEvent(index),
             ),
             tabs: occasions.map((occasion) {
-              return Tab(text: occasion.name ?? 'Unknown');
+              return Tab(text: occasion.name ?? GeneralConstants.unknown);
             }).toList(),
           ),
           const AppSizedBox(height: 8),

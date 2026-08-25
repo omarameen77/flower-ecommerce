@@ -53,7 +53,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     final address = context.read<SavedAddressesCubit>().state.currentAddress;
 
     if (address == null) {
-      CustomSnackBar.error(context, 'Please select a shipping address');
+      CustomSnackBar.error(context, CheckoutConstants.selectAddressRequired);
       return;
     }
 

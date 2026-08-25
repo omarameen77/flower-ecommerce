@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flower/core/localization_constants/occasions_constants.dart';
 import 'package:flower/features/product_sections/presentation/occasions/cubit/occasions_products_cubit.dart';
 import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget.dart';
 import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget_shimmer.dart';
@@ -43,8 +44,8 @@ class ProductsGridByOccasion extends StatelessWidget {
         }
 
         if (filteredProducts.isEmpty) {
-          return const Center(
-            child: Text('No products for this occasion yet.'),
+          return Center(
+            child: Text(OccasionsConstants.noProductsForOccasion),
           );
         }
 

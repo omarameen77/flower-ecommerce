@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/address_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/theme/font_size_manager.dart';
@@ -21,7 +22,7 @@ class LocationWidget extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'Deliver to ',
+                  text: context.deliverTo,
                   style: getRegularStyle(
                     context: context,
                     fontSize: FontSizeManager.s14,

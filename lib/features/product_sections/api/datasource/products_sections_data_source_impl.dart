@@ -1,5 +1,6 @@
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/core/error/error_handler.dart';
+import 'package:flower/core/localization_constants/product_details_constants.dart';
 import 'package:flower/features/product_sections/api/api_client/products_sections_api_client.dart';
 import 'package:flower/features/product_sections/data/datasource/products_section_data_source_contract.dart';
 import 'package:flower/features/product_sections/data/models/dtos/occasion_dto.dart';
@@ -63,7 +64,7 @@ class ProductsSectionsDataSourceImpl
       final product = response.product;
       if (product == null) {
         return ErrorBaseResponse<ProductDto>(
-          failure: Failure(message: 'Product not found'),
+          failure: Failure(message: ProductDetailsConstants.notFound),
         );
       }
       return SuccessBaseResponse<ProductDto>(data: product);

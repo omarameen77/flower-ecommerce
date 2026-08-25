@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/categories_constants.dart';
 import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -82,7 +83,7 @@ class _ViewProductWidgetState extends State<ViewProductWidget> {
             },
             child: Center(
               child: Text(
-                "No products found for this category.",
+                CategoriesConstants.noProductsForCategory,
                 style: getLightStyle(
                   context: context,
                   color: AppColors.textPrimary,

@@ -145,11 +145,11 @@ class _RegisterView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: AuthHeader(
-                      title: 'Create Account',
-                      subtitle: 'Create your account to get started',
+                      title: context.createAccountTitle,
+                      subtitle: context.createAccountSubtitle,
                     ),
                   ),
 

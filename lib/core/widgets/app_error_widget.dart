@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 class AppErrorWidget extends StatelessWidget {
   final String errorMessage;
   final VoidCallback onRetry;
-  final String retryButtonText;
+  final String? retryButtonText;
 
   const AppErrorWidget({
     super.key,
     required this.errorMessage,
     required this.onRetry,
-    this.retryButtonText = NotificationsConstants.retry,
+    this.retryButtonText,
   });
 
   @override
@@ -72,7 +72,7 @@ class AppErrorWidget extends StatelessWidget {
                     const Icon(Icons.refresh_rounded, size: 18),
                     const AppSizedBox(width: 8),
                     Text(
-                      retryButtonText,
+                      retryButtonText ?? NotificationsConstants.retry,
                       style: getMediumStyle(
                         color: AppColors.textWhite,
                         context: context,

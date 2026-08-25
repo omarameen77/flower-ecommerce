@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/categories_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/features/app_sections/presentation/cubit/app_sections_cubit.dart';
 import 'package:flower/features/product_sections/presentation/home/home_design_token.dart';
@@ -25,7 +26,7 @@ class CategoriesSection extends StatelessWidget {
                 horizontal: HomeTokens.horizontalPadding,
               ),
               child: SectionTitle(
-                title: 'Categories',
+                title: CategoriesConstants.title,
                 onViewAll: () {
                   context.read<CategoriesCubit>().resetToAll();
                   context.read<AppSectionsCubit>().changeSection(1);

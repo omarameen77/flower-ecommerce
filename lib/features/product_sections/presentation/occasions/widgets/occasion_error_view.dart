@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
 import 'package:flower/core/widgets/app_sizebox.dart';
@@ -29,7 +30,10 @@ class OccasionErrorView extends StatelessWidget {
             ),
           ),
           const AppSizedBox(height: 16),
-          ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
+          ElevatedButton(
+            onPressed: onRetry,
+            child: Text(GeneralConstants.retry),
+          ),
         ],
       ),
     );

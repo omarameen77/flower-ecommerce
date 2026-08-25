@@ -1,5 +1,6 @@
 import 'package:flower/config/routes/page_transitions.dart';
 import 'package:flower/config/routes/routes.dart';
+import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/resources/app_svgs.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -62,7 +63,7 @@ class HomeHeader extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Search',
+                    HomeConstants.search,
                     style: getRegularStyle(
                       context: context,
                       color: AppColors.textHint,

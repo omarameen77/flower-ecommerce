@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flower/config/base/base_response.dart';
 import 'package:flower/config/base/base_state.dart';
@@ -63,7 +64,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
           state.copyWith(
             isVerifyingCode: false,
             isCodeValid: false,
-            codeErrorMessage: 'Invalid verification code',
+            codeErrorMessage: 'auth.invalid_code'.tr(),
           ),
         );
 

@@ -1,4 +1,5 @@
 import 'package:flower/config/dependency_injection/di.dart';
+import 'package:flower/core/localization_constants/home_constants.dart';
 import 'package:flower/core/widgets/custom_appbar.dart';
 import 'package:flower/features/product_sections/presentation/best_sellers/widgets/best_sellers_grid.dart';
 import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
@@ -14,12 +15,12 @@ class BestSellersPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           getIt<ProductCubit>()..doEvent(const GetProductEvent(sort: '-sold')),
-      child: const Scaffold(
+      child: Scaffold(
         appBar: CustomAppBar(
-          title: 'Best seller',
-          subtitle: 'Bloom with our exquisite best sellers',
+          title: HomeConstants.bestSeller,
+          subtitle: HomeConstants.bestSellerSubtitle,
         ),
-        body: BestSellersGrid(),
+        body: const BestSellersGrid(),
       ),
     );
   }

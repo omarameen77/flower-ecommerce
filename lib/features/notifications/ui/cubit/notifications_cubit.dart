@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flower/core/localization_constants/notifications_constants.dart';
 import 'package:flower/core/storage/secure_storage_service.dart';
 import 'package:flower/features/notifications/domain/entity/notifications_entity.dart';
 import 'package:flower/features/notifications/domain/usecases/delete_notifications_use_case.dart';
@@ -47,7 +48,12 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     final userId = await SecureStorageService.getUserId();
 
     if (userId == null || userId.isEmpty) {
-      emit(state.copyWith(isLoading: false, errorMessage: "User not found"));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          errorMessage: NotificationsConstants.userNotFound,
+        ),
+      );
       return;
     }
 

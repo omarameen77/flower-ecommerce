@@ -1,3 +1,4 @@
+import 'package:flower/core/localization_constants/auth_constants.dart';
 import 'package:flower/core/resources/app_lotie.dart';
 import 'package:flower/core/theme/app_colors.dart';
 import 'package:flower/core/theme/app_text_style.dart';
@@ -115,9 +116,9 @@ class _ForgetPasswordOtpStepState extends State<ForgetPasswordOtpStep> {
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       child: Column(
         children: [
-          const AuthHeader(
-            title: 'Email Verification',
-            subtitle: 'Enter the code sent to your email',
+          AuthHeader(
+            title: context.emailVerification,
+            subtitle: context.verificationCodeSubtitle,
           ),
           const AppSizedBox(height: 35),
           SizedBox(
@@ -172,7 +173,7 @@ class _ForgetPasswordOtpStepState extends State<ForgetPasswordOtpStep> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'Code verified successfully',
+                context.codeVerifiedSuccessfully,
                 style: getSemiBoldStyle(
                   context: context,
                   fontSize: FontSizeManager.s12,
@@ -190,7 +191,7 @@ class _ForgetPasswordOtpStepState extends State<ForgetPasswordOtpStep> {
                     widget.controller.clear();
                   },
             child: Text(
-              'Resend Code',
+              context.resendCode,
               style:
                   getSemiBoldStyle(
                     context: context,
@@ -209,7 +210,9 @@ class _ForgetPasswordOtpStepState extends State<ForgetPasswordOtpStep> {
           SizedBox(
             width: double.infinity,
             child: PrimaryButton(
-              text: widget.isVerifyingCode ? 'Verifying...' : 'Verify Code',
+              text: widget.isVerifyingCode
+                  ? context.verifying
+                  : context.verifyCode,
               onTap: !isComplete || widget.isVerifyingCode
                   ? null
                   : widget.onSubmit,

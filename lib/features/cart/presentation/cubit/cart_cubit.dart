@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flower/config/base/base_response.dart';
+import 'package:flower/core/localization_constants/general_constants.dart';
 import 'package:flower/features/cart/domain/entity/add_to_cart_request_entity.dart';
 import 'package:flower/features/cart/domain/entity/cart_response_entity.dart';
 import 'package:flower/features/cart/domain/usecases/add_product_to_cart_use_case.dart';
@@ -139,7 +140,7 @@ class CartCubit extends Cubit<CartState> {
     final item = state.cart?.cart?.cartItems?.firstWhere(
       (e) => e.product?.id == event.cartItemId,
     );
-    final productName = item?.product?.title ?? 'Item';
+    final productName = item?.product?.title ?? GeneralConstants.item;
 
     final response = await removeCartItemUseCase(cartItemId: event.cartItemId);
 

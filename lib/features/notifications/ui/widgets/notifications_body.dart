@@ -33,7 +33,7 @@ class NotificationsBody extends StatelessWidget {
         }
 
         if (state.notifications.isEmpty) {
-          return const Center(
+          return Center(
             child: Text(NotificationsConstants.noNotificationsFound),
           );
         }
@@ -71,7 +71,7 @@ class NotificationsBody extends StatelessWidget {
 
                 CustomSnackBar.info(
                   context,
-                  "${"Notification deleted"} ${notification.title}",
+                  "${NotificationsConstants.notificationDeleted} ${notification.title}",
                 );
               },
 

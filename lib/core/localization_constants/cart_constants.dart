@@ -22,5 +22,6 @@ abstract class CartConstants {
   static String get items => "cart.items".tr();
 
   static String get alreadyAdded => "cart.already_added".tr();
+  static String get addToCart => "cart.add_to_cart".tr();
   static const String empty = '';
 }
