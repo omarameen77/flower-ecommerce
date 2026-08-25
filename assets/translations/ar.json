@@ -40,6 +40,7 @@
     "code_sent_again": "تم إرسال الكود مرة أخرى",
 
     "reset_password": "إعادة تعيين كلمة المرور",
+    "reset_password_subtitle": "أنشئ كلمة مرور جديدة لحسابك",
     "reset_password_condition": "يجب ألا تكون كلمة المرور فارغة وأن تحتوي على 6 أحرف على الأقل مع حرف كبير ورقم واحد على الأقل",
     "new_password": "كلمة مرور جديدة",
 
@@ -50,7 +51,20 @@
     "password_changed_success": "تم تغيير كلمة المرور بنجاح",
     "update": "تحديث",
 
-    "terms_and_conditions_statement": "بإنشاء حساب، أنت توافق على الشروط والأحكام"
+    "terms_and_conditions_statement": "بإنشاء حساب، أنت توافق على الشروط والأحكام",
+
+    "create_account_title": "إنشاء حساب",
+    "create_account_subtitle": "أنشئ حسابك للبدء",
+    "welcome_back_title": "مرحباً بعودتك",
+    "welcome_back_subtitle": "سجل الدخول لمتابعة استخدام حسابك",
+    "send_code": "إرسال الكود",
+    "code_verified_successfully": "تم التحقق من الكود بنجاح",
+    "resend_code": "إعادة إرسال الكود",
+    "verifying": "جارٍ التحقق...",
+    "verify_code": "تحقق من الكود",
+    "re_enter_password": "أعد إدخال كلمة المرور",
+    "show_password": "إظهار كلمة المرور",
+    "hide_password": "إخفاء كلمة المرور"
   },
   "validation": {
     "required": "هذا الحقل مطلوب",
@@ -106,7 +120,11 @@
     "new": "الأحدث",
     "old": "الأقدم",
     "discount": "الخصم",
-    "filter": "تصفية"
+    "filter": "تصفية",
+    "occasion": "مناسبة",
+    "occasion_subtitle": "تألق بمناسباتنا الرائعة",
+    "best_seller": "الأكثر مبيعاً",
+    "best_seller_subtitle": "تألق بمنتجاتنا الأكثر مبيعاً"
   },
   "categories": {
     "title": "الأقسام",
@@ -122,7 +140,14 @@
     "retry": "إعادة المحاولة",
     "close": "إغلاق",
     "loading": "جار التحميل...",
-    "press_back_again_to_exit": "اضغط مرة أخرى للخروج"
+    "press_back_again_to_exit": "اضغط مرة أخرى للخروج",
+    "view_all": "عرض الكل",
+    "unknown": "غير معروف",
+    "route_not_found": "الصفحة غير موجودة",
+    "go_to_login": "الذهاب لتسجيل الدخول",
+    "item": "منتج",
+    "no_name": "بدون اسم",
+    "continue_text": "متابعة"
   },
   "address": {
     "title": "العنوان",
@@ -160,7 +185,8 @@
     "items": "منتجات",
     "egp": "ج.م ",
     "go_shopping": "تسوق الآن",
-    "already_added": "تمت إضافته بالفعل"
+    "already_added": "تمت إضافته بالفعل",
+    "add_to_cart": "أضف إلى السلة"
   },
   "checkout": {
     "title": "إتمام الشراء",
@@ -183,7 +209,8 @@
     "total": "الإجمالي",
     "delivery_time": "وقت التوصيل",
     "instant": "فوري",
-    "payment_completed": "تم الدفع"
+    "payment_completed": "تم الدفع",
+    "select_address_required": "يرجى اختيار عنوان الشحن"
   },
   "track_order": {
     "track_order": "تتبع الطلب",
@@ -257,5 +284,28 @@
     "logout_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
     "cancel": "إلغاء",
     "version": "الإصدار 1.0.0+1"
+  },
+  "occasions": {
+    "no_occasions_found": "لم يتم العثور على مناسبات.",
+    "no_products_for_occasion": "لا توجد منتجات لهذه المناسبة بعد."
+  },
+  "best_sellers": {
+    "no_products": "لا توجد منتجات"
+  },
+  "product_details": {
+    "not_found": "المنتج غير موجود",
+    "description": "الوصف",
+    "all_prices_include_tax": "جميع الأسعار شاملة الضريبة",
+    "in_stock": "متوفر",
+    "out_of_stock": "غير متوفر",
+    "status_label": "الحالة: "
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "no_notifications_found": "لا توجد إشعارات",
+    "error_title": "عذراً! حدث خطأ ما",
+    "retry": "إعادة المحاولة",
+    "user_not_found": "المستخدم غير موجود",
+    "notification_deleted": "تم حذف الإشعار"
   }
 }

@@ -40,6 +40,7 @@
     "code_sent_again": "Code sent again",
 
     "reset_password": "Reset password",
+    "reset_password_subtitle": "Create a new password for your account",
     "reset_password_condition": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
     "new_password": "New password",
 
@@ -50,7 +51,20 @@
     "password_changed_success": "Password changed successfully",
     "update": "Update",
 
-    "terms_and_conditions_statement": "Creating an account, you agree to our Terms & Conditions"
+    "terms_and_conditions_statement": "Creating an account, you agree to our Terms & Conditions",
+
+    "create_account_title": "Create Account",
+    "create_account_subtitle": "Create your account to get started",
+    "welcome_back_title": "Welcome Back",
+    "welcome_back_subtitle": "Log in to continue to your account",
+    "send_code": "Send Code",
+    "code_verified_successfully": "Code verified successfully",
+    "resend_code": "Resend Code",
+    "verifying": "Verifying...",
+    "verify_code": "Verify Code",
+    "re_enter_password": "Re-enter your password",
+    "show_password": "Show password",
+    "hide_password": "Hide password"
   },
   "validation": {
     "required": "This field is required",
@@ -107,7 +121,11 @@
     "new": "New",
     "old": "Old",
     "discount": "Discount",
-    "filter": "Filter"
+    "filter": "Filter",
+    "occasion": "Occasion",
+    "occasion_subtitle": "Bloom with our exquisite occasions",
+    "best_seller": "Best seller",
+    "best_seller_subtitle": "Bloom with our exquisite best sellers"
   },
   "categories": {
     "title": "Categories",
@@ -123,7 +141,14 @@
     "retry": "Retry",
     "close": "Close",
     "loading": "Loading...",
-    "press_back_again_to_exit": "Press back again to exit"
+    "press_back_again_to_exit": "Press back again to exit",
+    "view_all": "View All",
+    "unknown": "Unknown",
+    "route_not_found": "Route not found",
+    "go_to_login": "Go to Login",
+    "item": "Item",
+    "no_name": "No name",
+    "continue_text": "Continue"
   },
   "address": {
     "title": "Address",
@@ -161,7 +186,8 @@
     "items": "Items",
     "egp": "EGP ",
     "go_shopping": "Go shopping",
-    "already_added": "Added"
+    "already_added": "Added",
+    "add_to_cart": "Add to cart"
   },
   "checkout": {
     "title": "Checkout",
@@ -184,7 +210,8 @@
     "total": "Total",
     "delivery_time": "Delivery Time",
     "instant": "Instant",
-    "payment_completed": "Payment Completed"
+    "payment_completed": "Payment Completed",
+    "select_address_required": "Please select a shipping address"
   },
   "track_order": {
     "track_order": "Track Order",
@@ -258,5 +285,28 @@
     "logout_message": "Are you sure you want to logout?",
     "cancel": "Cancel",
     "version": "Version 1.0.0+1"
+  },
+  "occasions": {
+    "no_occasions_found": "No occasions found.",
+    "no_products_for_occasion": "No products for this occasion yet."
+  },
+  "best_sellers": {
+    "no_products": "No products"
+  },
+  "product_details": {
+    "not_found": "Product not found",
+    "description": "Description",
+    "all_prices_include_tax": "All prices include tax",
+    "in_stock": "In stock",
+    "out_of_stock": "Out of stock",
+    "status_label": "Status: "
+  },
+  "notifications": {
+    "title": "Notifications",
+    "no_notifications_found": "No notifications found",
+    "error_title": "Oops! Something went wrong",
+    "retry": "Retry",
+    "user_not_found": "User not found",
+    "notification_deleted": "Notification deleted"
   }
 }
