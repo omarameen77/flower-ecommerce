@@ -25,7 +25,15 @@
 ---
 
 <p align="center">
-  <img src="screenshots/cover.png" alt="Flowery App Cover" width="1000"/>
+  <a href="https://youtu.be/gFJznvhCz_A">
+    <img src="https://img.youtube.com/vi/gFJznvhCz_A/maxresdefault.jpg" alt="Flowery App Demo" width="800"/>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://youtu.be/gFJznvhCz_A">
+     <strong>Watch the Demo on YouTube</strong>
+  </a>
 </p>
 
 ---
