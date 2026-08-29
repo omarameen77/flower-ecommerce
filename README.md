@@ -141,11 +141,11 @@ The customer application communicates with the **Elevate Flower backend** and in
 ### Home
 
 <p align="center">
-  <img src="screenshots/home.png" width="170"/>
-  <img src="screenshots/home2.png" width="170"/>
-  <img src="screenshots/home-search.png" width="170"/>
-  <img src="screenshots/occasion1.png" width="170"/>
-  <img src="screenshots/occasion2.png" width="170"/>
+  <img src="screenshots/home.png" width="160"/>
+  <img src="screenshots/home2.png" width="160"/>
+  <img src="screenshots/home-search.png" width="160"/>
+  <img src="screenshots/occasion1.png" width="160"/>
+  <img src="screenshots/occasion2.png" width="160"/>
 </p>
 
 
