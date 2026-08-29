@@ -1,0 +1,40 @@
+name: Validate PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  validate-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR title format
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prTitle = context.payload.pull_request.title;
+            /*
+              Format:
+                type(scope): {TicketNum}-task-name
+
+              Allowed types  : fix, release, feat, hotfix, build, test
+              Allowed scopes : JIRA-<num> or any uppercase project ID, e.g. ECOM-<num>
+
+              Example:
+                feat(ECOM-27): ECOM-27-Initialize-Project
+            */
+            const pattern = /^(fix|release|feat|hotfix|build|test)\((JIRA-\d+|[A-Z]+-\d+)\):\s\2-[A-Za-z0-9]+([-_][A-Za-z0-9]+)*$/;
+
+            if (!pattern.test(prTitle)) {
+              core.setFailed(
+                '❌ Invalid PR title: "' + prTitle + '"\n\n' +
+                'Expected format:\n' +
+                'type(scope): {TicketNum}-task-name\n\n' +
+                'Allowed types  : fix, release, feat, hotfix, build, test\n' +
+                'Allowed scopes : JIRA-<num> or any uppercase project ID (e.g. ECOM-27)\n\n' +
+                'Example:\n' +
+                'feat(ECOM-27): ECOM-27-Initialize-Project'
+              );
+            } else {
+              console.log('✅ PR title is valid:', prTitle);
+            }

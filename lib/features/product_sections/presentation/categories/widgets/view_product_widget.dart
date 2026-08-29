@@ -1,0 +1,127 @@
+import 'package:flower/core/localization_constants/categories_constants.dart';
+import 'package:flower/core/localization_constants/home_constants.dart';
+import 'package:flower/core/theme/app_colors.dart';
+import 'package:flower/core/theme/app_text_style.dart';
+import 'package:flower/features/product_sections/domain/entities/category_entity.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_cubit.dart';
+import 'package:flower/features/product_sections/presentation/shared_cubit/product_cubit/product_event.dart';
+import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget.dart';
+import 'package:flower/features/product_sections/presentation/shared_widgets/product_widget_shimmer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ViewProductWidget extends StatefulWidget {
+  final List<CategoryEntity> categories;
+  final TabController tabController;
+
+  const ViewProductWidget({
+    super.key,
+    required this.categories,
+    required this.tabController,
+  });
+
+  @override
+  State<ViewProductWidget> createState() => _ViewProductWidgetState();
+}
+
+class _ViewProductWidgetState extends State<ViewProductWidget> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        final currentIndex = widget.tabController.index;
+
+        context.read<ProductCubit>().doEvent(
+          GetProductEvent(
+            loadMore: true,
+            categoryId: widget.categories[currentIndex].id,
+          ),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProductCubit, ProductState>(
+      builder: (context, productState) {
+        if (productState.productBaseState.isLoading &&
+            !productState.isLoadingMore) {
+          return Center(
+            child: Text(
+              HomeConstants.productloading,
+              style: getLightStyle(
+                color: AppColors.primary,
+                context: context,
+                fontSize: 15,
+              ),
+            ),
+          );
+        }
+
+        final products = productState.productBaseState.data ?? [];
+
+        if (products.isEmpty) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              final currentIndex = widget.tabController.index;
+
+              context.read<ProductCubit>().doEvent(
+                GetProductEvent(categoryId: widget.categories[currentIndex].id),
+              );
+            },
+            child: Center(
+              child: Text(
+                CategoriesConstants.noProductsForCategory,
+                style: getLightStyle(
+                  context: context,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          );
+        }
+
+        return RefreshIndicator(
+          onRefresh: () async {
+            final currentIndex = widget.tabController.index;
+
+            context.read<ProductCubit>().doEvent(
+              GetProductEvent(categoryId: widget.categories[currentIndex].id),
+            );
+          },
+          child: GridView.builder(
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.75,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+            itemCount: products.length + (productState.isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index >= products.length) {
+                return ProductWidgetShimmer();
+              }
+
+              return ProductWidget(product: products[index]);
+            },
+          ),
+        );
+      },
+    );
+  }
+}

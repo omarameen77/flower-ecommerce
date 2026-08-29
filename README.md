@@ -131,9 +131,11 @@ The customer application communicates with the **Elevate Flower backend** and in
 ### Authentication
 
 <p align="center">
-  <img src="screenshots/login.png" width="240"/>
-  <img src="screenshots/signup.png" width="240"/>
-  <img src="screenshots/forgot_password.png" width="240"/>
+  <img src="screenshots/Create-Account1.png" width="180"/>
+  <img src="screenshots/login.png" width="180"/>
+  <img src="screenshots/Email-Verification.png" width="180"/>
+  <img src="screenshots/reset-password.png" width="180"/>
+  <img src="screenshots/logout.png" width="180"/>
 </p>
 
 ### Home
@@ -141,7 +143,8 @@ The customer application communicates with the **Elevate Flower backend** and in
 <p align="center">
   <img src="screenshots/home.png" width="240"/>
   <img src="screenshots/home2.png" width="240"/>
-  <img src="screenshots/categories.png" width="240"/>
+  <img src="screenshots/home-search.png" width="240"/>
+  <img src="screenshots/occasion1.png" width="240"/>
 </p>
 
 ### Product Discovery
@@ -848,5 +851,4 @@ flutter analyze
 <p align="center">
 
 **Built with ❤️ using Flutter**
-
 </p>
