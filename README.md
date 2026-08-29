@@ -8,17 +8,17 @@
 
 <p align="center">
 
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge\&logo=flutter\&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge\&logo=dart\&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20%2F%20Feature--First-00599C?style=for-the-badge)
 ![BLoC](https://img.shields.io/badge/BLoC-0175C2?style=for-the-badge)
 ![Dio](https://img.shields.io/badge/Dio-EA4335?style=for-the-badge)
 ![Retrofit](https://img.shields.io/badge/Retrofit-4CAF50?style=for-the-badge)
 ![GetIt](https://img.shields.io/badge/GetIt-7B1FA2?style=for-the-badge)
 ![Injectable](https://img.shields.io/badge/Injectable-009688?style=for-the-badge)
-![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=for-the-badge\&logo=githubactions\&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge\&logo=git\&logoColor=white)
-![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84?style=for-the-badge\&logo=androidstudio\&logoColor=white)
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white)
 
 </p>
 
@@ -852,7 +852,7 @@ flutter analyze
 <tr>
 <td width="20%" align="center" valign="middle">
 
-<img src="https://via.placeholder.com/110" width="110" alt="Ziad Sleem"/>
+<img src="https://github.com/ziad-sleem.png" width="110" alt="Ziad Sleem"/>
 
 </td>
 
@@ -862,19 +862,19 @@ flutter analyze
 
 **Mobile Developer**
 
-<a href="YOUR_ZIAD_GITHUB_URL">
+<a href="https://github.com/ziad-sleem">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
-<a href="YOUR_ZIAD_LINKEDIN_URL">
+<a href="https://www.linkedin.com/in/ziad-selim-26a153427/">
 <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
 </a>
-<a href="https://wa.me/YOUR_ZIAD_WHATSAPP_NUMBER">
+<a href="https://wa.me/201202728355">
 <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
 </a>
 
-📧 **Email:** YOUR_ZIAD_EMAIL
+📧 **Email:** [ziadselim03@gmail.com](mailto:ziadselim03@gmail.com)
 
-📱 **Phone:** YOUR_ZIAD_PHONE
+📱 **Phone:** +20 120 272 8355
 
 </td>
 </tr>
