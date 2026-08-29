@@ -130,7 +130,7 @@ The customer application communicates with the **Elevate Flower backend** and in
 
 ### Authentication
 
-<p align="center">
+<p align="left">
   <img src="screenshots/Create-Account1.png" width="165"/>
   <img src="screenshots/login.png" width="165"/>
   <img src="screenshots/Email-Verification.png" width="165"/>
