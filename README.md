@@ -131,79 +131,120 @@ The customer application communicates with the **Elevate Flower backend** and in
 ### Authentication
 
 <p align="center">
-  <img src="screenshots/Create-Account1.png" width="180"/>
-  <img src="screenshots/login.png" width="180"/>
-  <img src="screenshots/Email-Verification.png" width="180"/>
-  <img src="screenshots/reset-password.png" width="180"/>
-  <img src="screenshots/logout.png" width="180"/>
+  <img src="screenshots/Create-Account1.png" width="170"/>
+  <img src="screenshots/login.png" width="170"/>
+  <img src="screenshots/Email-Verification.png" width="170"/>
+  <img src="screenshots/reset-password.png" width="170"/>
+  <img src="screenshots/logout.png" width="170"/>
 </p>
 
 ### Home
 
 <p align="center">
-  <img src="screenshots/home.png" width="240"/>
-  <img src="screenshots/home2.png" width="240"/>
-  <img src="screenshots/home-search.png" width="240"/>
-  <img src="screenshots/occasion1.png" width="240"/>
+  <img src="screenshots/home.png" width="170"/>
+  <img src="screenshots/home2.png" width="170"/>
+  <img src="screenshots/home-search.png" width="170"/>
+  <img src="screenshots/occasion1.png" width="170"/>
+  <img src="screenshots/occasion2.png" width="170"/>
 </p>
+
 
 ### Product Discovery
 
 <p align="center">
-  <img src="screenshots/product_listing.png" width="240"/>
-  <img src="screenshots/best_sellers.png" width="240"/>
-  <img src="screenshots/search.png" width="240"/>
+  <img src="screenshots/explore1.png" width="170"/>
+  <img src="screenshots/explore2.png" width="170"/>
+  <img src="screenshots/best-seller.png" width="170"/>
+  <img src="screenshots/best-seller2.png" width="170"/>
 </p>
+<p align="center">
+  <img src="screenshots/product-sort-by.png" width="220"/>
+  <img src="screenshots/product-sort-by-ar.png" width="220"/>
+</p>
+
 
 ### Product Details
 
 <p align="center">
-  <img src="screenshots/product_details.png" width="240"/>
+  <img src="screenshots/product-details.png" width="220"/>
+  <img src="screenshots/added-product-details.png" width="220"/>
 </p>
 
-### Cart & Checkout
+
+### Cart
 
 <p align="center">
-  <img src="screenshots/cart.png" width="240"/>
-  <img src="screenshots/checkout.png" width="240"/>
+  <img src="screenshots/cart1.png" width="220"/>
+  <img src="screenshots/cart-ar.png" width="220"/>
+  <img src="screenshots/delete-product-cart.png" width="220"/>
 </p>
+
+<p align="center">
+  <img src="screenshots/empty-cart.png" width="220"/>
+  <img src="screenshots/empty-cart-ar.png" width="220"/>
+</p>
+
+
+### Checkout
+
+<p align="center">
+  <img src="screenshots/checkout.png" width="220"/>
+  <img src="screenshots/checkout2.png" width="220"/>
+  <img src="screenshots/select-address.png" width="220"/>
+</p>
+
 
 ### Orders
 
 <p align="center">
-  <img src="screenshots/orders.png" width="240"/>
-  <img src="screenshots/order_details.png" width="240"/>
+  <img src="screenshots/order-placed.png" width="200"/>
+  <img src="screenshots/order-placed-ar.png" width="200"/>
+  <img src="screenshots/my-orders.png" width="200"/>
+  <img src="screenshots/my-orders-ar.png" width="200"/>
 </p>
 
-### Real-Time Tracking
+
+### Order Tracking
 
 <p align="center">
-  <img src="screenshots/tracking.png" width="240"/>
-  <img src="screenshots/tracking_driver.png" width="240"/>
+  <img src="screenshots/Track-Order1.png" width="220"/>
+  <img src="screenshots/Track-Order1-ar.png" width="220"/>
+  <img src="screenshots/Track-Order2.png" width="220"/>
+</p>
+
+<p align="center">
+  <img src="screenshots/Order-Delivered4.png" width="220"/>
+  <img src="screenshots/Order-Delivered4-ar.png" width="220"/>
+</p>
+
+
+
+### Profile
+
+<p align="center">
+  <img src="screenshots/profile.png" width="200"/>
+  <img src="screenshots/profile-ar.png" width="200"/>
+  <img src="screenshots/edit-profile.png" width="200"/>
+  <img src="screenshots/edit-profile-ar.png" width="200"/>
+</p>
+
+
+### Addresses
+
+<p align="center">
+  <img src="screenshots/address.png" width="200"/>
+  <img src="screenshots/select-address.png" width="200"/>
+  <img src="screenshots/saved-address.png" width="200"/>
+  <img src="screenshots/Saved-address2.png" width="200"/>
 </p>
 
 ### Notifications
 
 <p align="center">
-  <img src="screenshots/notification_list.png" width="240"/>
-  <img src="screenshots/push_notification.png" width="240"/>
+  <img src="screenshots/notifications.png" width="220"/>
+  <img src="screenshots/about-us.png" width="220"/>
+  <img src="screenshots/Terms-Conditions-ar.png" width="220"/>
 </p>
-
-### Profile
-
-<p align="center">
-  <img src="screenshots/profile.png" width="240"/>
-  <img src="screenshots/edit_profile.png" width="240"/>
-</p>
-
-### Localization
-
-<p align="center">
-  <img src="screenshots/arabic.png" width="240"/>
-  <img src="screenshots/language.png" width="240"/>
-</p>
-
----
 
 ## Tech Stack
 
