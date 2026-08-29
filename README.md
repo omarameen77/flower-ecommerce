@@ -769,23 +769,23 @@ flutter test
 ```bash
 flutter analyze
 ```
-
----
-
-# 👥 Team
-
-<table align="left" width="100%">
-
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&duration=3000&pause=1000&color=36BCF7&center=true&vCenter=true&width=500&lines=Team+Members;Flutter+Developers" alt="Team Animation"/>
+</p>
+<table width="100%">
 <tr>
-<td align="left" width="20%">
+<td width="20%" align="center" valign="middle">
+
 <img src="https://github.com/omarameen77.png" width="110" alt="Omar Ameen"/>
+
 </td>
 
-<td align="left" width="80%">
+<td width="80%" valign="middle">
 
-### Omar Ameen | Mobile Developer
+### Omar Ameen
 
-<p>
+**Mobile Developer**
+
 <a href="https://github.com/omarameen77">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
@@ -795,101 +795,93 @@ flutter analyze
 <a href="https://wa.me/201031430691">
 <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
 </a>
-</p>
 
-**Email:** <a href="mailto:omar3meen11@gmail.com">[omar3meen11@gmail.com](mailto:omar3meen11@gmail.com)</a>
-**Phone:** +201031430691
+📧 **Email:** [omar.amin.saad1@gmail.com](mailto:omar.amin.saad1@gmail.com)
+
+📱 **Phone:** +20 103 143 0691
 
 </td>
 </tr>
 
 <tr>
-<td align="left" width="20%">
+<td colspan="2" align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=3&color=36BCF7" width="92%"/>
+
+</td>
+</tr>
+
+<tr>
+<td width="20%" align="center" valign="middle">
+
 <img src="https://github.com/YassmenaAbdullah.png" width="110" alt="Yasmeen Abdallah"/>
+
 </td>
 
-<td align="left" width="80%">
+<td width="80%" valign="middle">
 
-### Yasmeen Abdallah | Mobile Developer
+### Yasmeen Abdallah
 
-<p>
+**Mobile Developer**
+
 <a href="https://github.com/YassmenaAbdullah">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
 <a href="https://www.linkedin.com/in/yasmena-abdallah">
 <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
 </a>
-</p>
+<a href="https://wa.me/20155188312">
+<img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
+</a>
 
-**Email:** <a href="mailto:yassmenabdallah76@gmail.com">[yassmenabdallah76@gmail.com](mailto:yassmenabdallah76@gmail.com)</a>
-**Phone:** +20155188312
+📧 **Email:** [yassmenabdallah76@gmail.com](mailto:yassmenabdallah76@gmail.com)
+
+📱 **Phone:** +20 155 188 312
 
 </td>
 </tr>
 
 <tr>
-<td align="left" width="20%">
-<img src="https://via.placeholder.com/110" width="110" alt="Team Member 3"/>
-</td>
+<td colspan="2" align="center">
 
-<td align="left" width="80%">
-
-### Team Member 3 | Mobile Developer
-
-<p>
-<a href="#">
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
-</a>
-<a href="#">
-<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
-</a>
-</p>
-
-**Email:** <a href="mailto:email@example.com">[email@example.com](mailto:email@example.com)</a>
-**Phone:** +20XXXXXXXXXX
+<img src="https://capsule-render.vercel.app/api?type=rect&height=3&color=36BCF7" width="92%"/>
 
 </td>
 </tr>
 
 <tr>
-<td align="left" width="20%">
-<img src="https://via.placeholder.com/110" width="110" alt="Team Member 4"/>
+<td width="20%" align="center" valign="middle">
+
+<img src="https://via.placeholder.com/110" width="110" alt="Ziad Sleem"/>
+
 </td>
 
-<td align="left" width="80%">
+<td width="80%" valign="middle">
 
-### Team Member 4 | Mobile Developer
+### Ziad Sleem
 
-<p>
-<a href="#">
+**Mobile Developer**
+
+<a href="YOUR_ZIAD_GITHUB_URL">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
-<a href="#">
+<a href="YOUR_ZIAD_LINKEDIN_URL">
 <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
 </a>
-</p>
+<a href="https://wa.me/YOUR_ZIAD_WHATSAPP_NUMBER">
+<img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
+</a>
 
-**Email:** <a href="mailto:email@example.com">[email@example.com](mailto:email@example.com)</a>
-**Phone:** +20XXXXXXXXXX
+📧 **Email:** YOUR_ZIAD_EMAIL
+
+📱 **Phone:** YOUR_ZIAD_PHONE
 
 </td>
 </tr>
-
 </table>
-
-<br clear="left"/>
-
----
 
 <p align="left">
 
 🌸 **Flowery — Flowers, Gifts & Moments**
 
-</p>
-
----
-
-<p align="center">
-
-**Built with ❤️ using Flutter**
 </p>
